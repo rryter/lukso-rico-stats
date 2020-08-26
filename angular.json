@@ -21,13 +21,8 @@
             "polyfills": "apps/rtm/src/polyfills.ts",
             "tsConfig": "apps/rtm/tsconfig.app.json",
             "aot": true,
-            "assets": [
-              "apps/rtm/src/favicon.ico",
-              "apps/rtm/src/assets"
-            ],
-            "styles": [
-              "apps/rtm/src/styles.scss"
-            ],
+            "assets": ["apps/rtm/src/favicon.ico", "apps/rtm/src/assets"],
+            "styles": ["apps/rtm/src/styles.scss"],
             "scripts": []
           },
           "configurations": {
@@ -85,10 +80,7 @@
               "apps/rtm/tsconfig.app.json",
               "apps/rtm/tsconfig.spec.json"
             ],
-            "exclude": [
-              "**/node_modules/**",
-              "!apps/rtm/**/*"
-            ]
+            "exclude": ["**/node_modules/**", "!apps/rtm/**/*"]
           }
         },
         "test": {
@@ -127,13 +119,8 @@
         "lint": {
           "builder": "@angular-devkit/build-angular:tslint",
           "options": {
-            "tsConfig": [
-              "apps/rtm-e2e/tsconfig.e2e.json"
-            ],
-            "exclude": [
-              "**/node_modules/**",
-              "!apps/rtm-e2e/**/*"
-            ]
+            "tsConfig": ["apps/rtm-e2e/tsconfig.e2e.json"],
+            "exclude": ["**/node_modules/**", "!apps/rtm-e2e/**/*"]
           }
         }
       }

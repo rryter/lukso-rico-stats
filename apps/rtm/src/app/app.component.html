@@ -1,6 +1,7 @@
 <ng-container *ngIf="balance$ | async as balance" class="content box">
-  <h1 class="title">LUKSO</h1>
-  <h2 class="subtitle">Reversible ICO</h2>
+  <h1 class="title">LUKSO Reversible ICO</h1>
+  <h2 class="subtitle">Unofficial Stats</h2>
+
   <div class="grid">
     <div style="position: relative;">
       <img src="https://rico.lukso.network/images/lukso_token_logo.png" />
@@ -11,16 +12,24 @@
         <div class="hexagon"></div>
       </div>
     </div>
+
     <div class="stats">
       <div>
         <h3 class="stats__label">Available:</h3>
         <span class="stats__percentage is-size-2"
-          >{{ balance.percentage | number: '1.1-1' }}%<br
+          ><span *ngIf="balance.percentage > 0"
+            >{{ balance.percentage | number: '1.1-1' }}%</span
+          ><span *ngIf="!(balance.percentage > 0)">Loading...</span><br
         /></span>
-        {{ balance.tokens || 1000000 | shortNumber }} LYXe<br />
+        <span *ngIf="balance.tokens"
+          >{{ balance.tokens || 1000000 | shortNumber }} LYXe<br
+        /></span>
+        <span *ngIf="!balance.tokens">...</span>
       </div>
     </div>
   </div>
+
   <lukso-spinner [dataLoaded]="dataLoaded$ | async"></lukso-spinner>
+
   <div class="last-updated">Last updated: {{ updatedAt | timeAgo }}</div>
 </ng-container>

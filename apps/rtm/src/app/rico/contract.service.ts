@@ -1,4 +1,4 @@
-import { HostBinding, Injectable } from '@angular/core';
+import { Injectable } from '@angular/core';
 import light, { MakeContract, makeContract } from '@parity/light.js';
 import Api from '@parity/api';
 import { eip20 } from '@parity/contracts/lib/abi/index';
@@ -10,9 +10,11 @@ import { map, startWith } from 'rxjs/operators';
 })
 export class ContractService {
   rICOBalance$: Observable<{ tokens: number; percentage: number }>;
+
   private luksoContract: MakeContract;
 
   constructor() {
+    const localStorage = window.localStorage;
     const provider = new Api.Provider.Ws(
       'wss://mainnet.infura.io/ws/v3/ec449b4c06864799a269f3859effc0f3'
     );
@@ -27,25 +29,16 @@ export class ContractService {
       .balanceOf$('0xe417b912f6cb6592ec2d71dbf6f2b48191b2cdf6')
       .pipe(
         startWith({
-          c: [
-            parseFloat(window.localStorage.getItem('availableLyxeTokens')) *
-              10000,
-          ],
+          c: [parseFloat(localStorage.getItem('availableLyxeTokens')) * 10_000],
         }),
-        map((balance: any) => {
+        map((balance: { c: number[] }) => {
           const reversibleIcoSupply = 10_000_000;
           const availableLyxeTokens = Math.round(balance.c[0] / 10_000);
           const availablePercentage =
             (100 / reversibleIcoSupply) * availableLyxeTokens;
 
-          window.localStorage.setItem(
-            'availablePercentage',
-            availablePercentage.toString()
-          );
-          window.localStorage.setItem(
-            'availableLyxeTokens',
-            availableLyxeTokens.toString()
-          );
+          localStorage.setItem('availablePercentage', availablePercentage + '');
+          localStorage.setItem('availableLyxeTokens', availableLyxeTokens + '');
 
           return {
             tokens: availableLyxeTokens,
