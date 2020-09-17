@@ -11,26 +11,16 @@ import { SpinnerComponent } from './shared/components/spinner/spinner.component'
 import { AppComponent } from './app.component';
 
 @NgModule({
-  declarations: [
-    RicoComponent,
-    ShortNumberPipe,
-    LargeBuysComponent,
-    SpinnerComponent,
-    AppComponent,
-  ],
+  declarations: [RicoComponent, ShortNumberPipe, LargeBuysComponent, SpinnerComponent, AppComponent],
   imports: [
     SharedModule,
     BrowserModule,
     HttpClientModule,
     RouterModule.forRoot(
       [
-        { path: '', pathMatch: 'full', redirectTo: 'block-explorer' },
         {
-          path: 'block-explorer',
-          loadChildren: () =>
-            import('./block-explorer/block-explorer.module').then(
-              (m) => m.BlockExplorerModule
-            ),
+          path: '',
+          loadChildren: () => import('./block-explorer/block-explorer.module').then((m) => m.BlockExplorerModule),
         },
       ],
       { initialNavigation: 'enabled' }

@@ -1,0 +1,13 @@
+<button
+  class="button is-danger"
+  *ngIf="!hasPendingTransaction; else lockingInProgres"
+  (click)="lockFunds.emit()"
+>
+  Lock funds
+</button>
+
+<ng-template #lockingInProgres>
+  <button class="button is-danger is-loading">
+    Loading
+  </button>
+</ng-template>

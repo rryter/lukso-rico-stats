@@ -1,4 +1,22 @@
-# Lukso
+# DAPP
+
+## Events
+
+- WalletChange
+- New Block
+- Funds Locked
+- Funds Withdrawn
+
+## Functions
+
+- isLocked
+- getVaultBalance
+- getAccountBalance
+
+- lockFunds
+- widhdrawFunds
+
+# Angular
 
 This project was generated using [Nx](https://nx.dev).
 

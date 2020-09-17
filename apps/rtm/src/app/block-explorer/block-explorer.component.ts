@@ -23,11 +23,11 @@ export class BlockExplorerComponent {
     this.transactions = this.contractService.transactions;
   }
 
-  lockFunds() {
+  onLockFunds() {
     this.contractService.lockFunds();
   }
 
-  withdraw() {
+  onWithdraw() {
     this.contractService.withdraw();
   }
 

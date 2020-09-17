@@ -1,44 +1,4 @@
-<nav class="navbar" role="navigation" aria-label="main navigation">
-  <div class="navbar-brand">
-    <a class="navbar-item" href="https://bulma.io">
-      <img
-        src="https://bulma.io/images/bulma-logo.png"
-        width="112"
-        height="28"
-      />
-    </a>
-
-    <a
-      role="button"
-      class="navbar-burger burger"
-      aria-label="menu"
-      aria-expanded="false"
-      data-target="navbarBasicExample"
-    >
-      <span aria-hidden="true"></span>
-      <span aria-hidden="true"></span>
-      <span aria-hidden="true"></span>
-    </a>
-  </div>
-
-  <div id="navbarBasicExample" class="navbar-menu">
-    <div class="navbar-start">
-      <a class="navbar-item">
-        Home
-      </a>
-
-      <a class="navbar-item">
-        Documentation
-      </a>
-    </div>
-  </div>
-</nav>
-<br />
-<div
-  *ngIf="vault$ | async as vault"
-  class="vault"
-  [ngClass]="{ 'vault--locked': vault.isLocked }"
->
+<div *ngIf="vault$ | async as vault" class="vault" [ngClass]="{ 'vault--locked': vault.isLocked }">
   <div class="content box">
     Account Balance:<br />
     <span class="is-size-2">
@@ -46,16 +6,10 @@
     >
     <br />
 
-    <button
-      *ngIf="!transactions.locking"
-      class="button is-danger"
-      (click)="lockFunds()"
-    >
-      Lock funds
-    </button>
-    <button *ngIf="transactions.locking" class="button is-danger is-loading">
-      Loading
-    </button>
+    <lukso-lock-button
+      [hasPendingTransaction]="transactions.locking"
+      (lockFunds)="onLockFunds()"
+    ></lukso-lock-button>
   </div>
   <div class="notification is-success">
     Vault Balance: <br />
@@ -63,38 +17,13 @@
       ><b>{{ vault.balanceVault | number: '0.4' }} ETH</b></span
     >
     <br />
-    <button
-      class="button is-success"
-      *ngIf="!vault.isLocked && !transactions.withdrawing"
-      (click)="withdraw()"
-    >
-      Withdraw
-    </button>
-    <button
-      *ngIf="transactions.withdrawing"
-      class="button is-success is-loading"
-    >
-      Loading
-    </button>
+    <lukso-withdraw-button
+      [hasPendingTransaction]="transactions.withdrawing"
+      [vaultLocked]="vault.isLocked"
+      (withdrawFunds)="onWithdrawFunds()"
+    ></lukso-withdraw-button>
     <span *ngIf="vault.isLocked" class="icon is-large">
       <i class="fas fa-3x fa-lock"></i>
     </span>
-    <span *ngIf="vault.isLocked">
-      The Vault is locked.
-    </span>
   </div>
-  <!-- <button class="button is-warning" (click)="getBalance()"></button> -->
-  <!-- <footer class="footer">
-  <div class="content has-text-centered">
-    <p>
-      <strong>Smart Vault</strong> by
-      <a href="https://rryter.ch">Reto Ryter</a>. The source code is licensed
-      <a href="http://opensource.org/licenses/mit-license.php">MIT</a>. The
-      website content is licensed
-      <a href="http://creativecommons.org/licenses/by-nc-sa/4.0/"
-        >CC BY NC SA 4.0</a
-      >.
-    </p>
-  </div>
-</footer> -->
 </div>

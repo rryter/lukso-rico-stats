@@ -3,12 +3,16 @@
 
 html {
   padding: 20px;
-  background: rgb(242, 155, 151);
-  background: linear-gradient(
-    320deg,
-    rgba(242, 155, 151, 1) 0%,
-    rgba(113, 61, 193, 1) 100%
-  );
+  //   background: rgb(242, 155, 151);
+  //   background: linear-gradient(
+  //     320deg,
+  //     rgba(242, 155, 151, 1) 0%,
+  //     rgba(113, 61, 193, 1) 100%
+  //   );
+  background: #2d3e57;
+  background: -webkit-linear-gradient(top right, #2d3e57, #232536);
+  background: -moz-linear-gradient(top right, #2d3e57, #232536);
+  background: linear-gradient(to bottom left, #2d3e57, #232536);
   height: 100%;
   width: 100%;
 }

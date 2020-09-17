@@ -31,10 +31,8 @@ export class ContractService {
       SmartVoteAbi,
       '0x0Ff38Eff484Fb304e023755624a790bf075F6f87'
     );
-    this.vault$ = concat(
-      this.web3.eth.getBlock('latest'),
-      this.getNewBlocks(subject)
-    ).pipe(
+
+    this.vault$ = concat(this.web3.eth.getBlock('latest'), this.getNewBlocks(subject)).pipe(
       switchMap(() => {
         return forkJoin({
           balanceAccount: this.getBalance(),
@@ -84,7 +82,7 @@ export class ContractService {
         from: this.web3.currentProvider.selectedAddress,
         value: 2 * 10 ** 18,
       })
-      .then((result) => {
+      .finally((result) => {
         this.transactions.locking = false;
       });
   }
@@ -96,16 +94,14 @@ export class ContractService {
       .send({
         from: this.web3.currentProvider.selectedAddress,
       })
-      .then((result) => {
+      .finally((result) => {
         this.transactions.withdrawing = false;
       });
   }
 
   private getBalance(): Promise<number> {
-    return this.web3.eth
-      .getBalance(this.web3.currentProvider.selectedAddress)
-      .then((balance) => {
-        return this.web3.utils.fromWei(balance, 'ether');
-      });
+    return this.web3.eth.getBalance(this.web3.currentProvider.selectedAddress).then((balance) => {
+      return this.web3.utils.fromWei(balance, 'ether');
+    });
   }
 }

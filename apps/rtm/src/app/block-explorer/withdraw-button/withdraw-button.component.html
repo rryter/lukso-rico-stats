@@ -1,0 +1,14 @@
+<button
+  class="button is-warning"
+  *ngIf="!hasPendingTransaction; else lockingInProgres"
+  [disabled]="vaultLocked"
+  (click)="withdrawFunds.emit()"
+>
+  {{ vaultLocked ? 'Locked for another ' + timeUntilUnlockInWords : 'Withdraw' }}
+</button>
+
+<ng-template #lockingInProgres>
+  <button class="button is-warning is-loading">
+    Loading
+  </button>
+</ng-template>
