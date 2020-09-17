@@ -74,13 +74,13 @@ export class ContractService {
     );
   }
 
-  lockFunds() {
+  lockFunds(value: number) {
     this.transactions.locking = true;
     return myContract.methods
       .lockFunds()
       .send({
         from: this.web3.currentProvider.selectedAddress,
-        value: 2 * 10 ** 18,
+        value: value * 10 ** 18,
       })
       .finally((result) => {
         this.transactions.locking = false;

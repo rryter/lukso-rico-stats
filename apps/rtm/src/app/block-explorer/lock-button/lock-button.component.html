@@ -3,7 +3,7 @@
   *ngIf="!hasPendingTransaction; else lockingInProgres"
   (click)="lockFunds.emit()"
 >
-  Lock funds
+  Stash it!
 </button>
 
 <ng-template #lockingInProgres>

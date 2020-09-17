@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { FormControl, Validators } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { ContractService } from '../rico/contract.service';
 import { Vault } from './../shared/interface/vault';
@@ -18,18 +19,22 @@ export class BlockExplorerComponent {
     withdrawing: false,
   };
 
+  inputAmount = new FormControl(2, Validators.required);
+
   constructor(private contractService: ContractService) {
     this.vault$ = this.contractService.vault$;
     this.transactions = this.contractService.transactions;
   }
 
   onLockFunds() {
-    this.contractService.lockFunds();
+    this.contractService.lockFunds(this.inputAmount.value);
   }
 
   onWithdraw() {
     this.contractService.withdraw();
   }
 
-  getBalance() {}
+  calculateAmount(value: number, percentage: number) {
+    this.inputAmount.setValue((value / 100) * percentage);
+  }
 }

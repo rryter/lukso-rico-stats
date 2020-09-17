@@ -5,7 +5,29 @@
       <b>{{ vault.balanceAccount | number: '0.4' }} ETH</b></span
     >
     <br />
-
+    <br />
+    <p>How much would you like to lock up?</p>
+    <div class="field has-addons">
+      <p class="control">
+        <input
+          [formControl]="inputAmount"
+          class="input is-large"
+          type="text"
+          value="2"
+          placeholder="Amount of ETH"
+          required
+        />
+      </p>
+      <p class="control">
+        <button class="button is-large is-static">ETH</button>
+      </p>
+    </div>
+    <div class="buttons has-addons">
+      <button class="button" (click)="calculateAmount(vault.balanceAccount, 25)">25%</button>
+      <button class="button" (click)="calculateAmount(vault.balanceAccount, 50)">50%</button>
+      <button class="button" (click)="calculateAmount(vault.balanceAccount, 75)">75%</button>
+      <button class="button" (click)="calculateAmount(vault.balanceAccount, 100)">100%</button>
+    </div>
     <lukso-lock-button
       [hasPendingTransaction]="transactions.locking"
       (lockFunds)="onLockFunds()"

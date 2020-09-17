@@ -5,12 +5,13 @@ import { BlockExplorerComponent } from './block-explorer.component';
 import { SharedModule } from '../shared/shared.module';
 import { LockButtonComponent } from './lock-button/lock-button.component';
 import { WithdrawButtonComponent } from './withdraw-button/withdraw-button.component';
+import { ReactiveFormsModule } from '@angular/forms';
 
 const routes: Routes = [{ path: '', component: BlockExplorerComponent }];
 
 @NgModule({
   declarations: [BlockExplorerComponent, LockButtonComponent, WithdrawButtonComponent],
   providers: [],
-  imports: [SharedModule, CommonModule, RouterModule.forChild(routes)],
+  imports: [SharedModule, ReactiveFormsModule, CommonModule, RouterModule.forChild(routes)],
 })
 export class BlockExplorerModule {}
