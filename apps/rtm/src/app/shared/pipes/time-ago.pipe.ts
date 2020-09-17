@@ -1,5 +1,9 @@
 import { Pipe, PipeTransform } from '@angular/core';
-import { formatDistanceToNow, toDate } from 'date-fns';
+import {
+  formatDistanceToNow,
+  formatDistanceToNowStrict,
+  toDate,
+} from 'date-fns';
 
 @Pipe({
   name: 'timeAgo',
@@ -7,8 +11,7 @@ import { formatDistanceToNow, toDate } from 'date-fns';
 })
 export class TimeAgoPipe implements PipeTransform {
   transform(value: string, ...args: unknown[]): unknown {
-    return formatDistanceToNow(toDate(parseFloat(value)), {
-      includeSeconds: true,
+    return formatDistanceToNowStrict(toDate(parseFloat(value)), {
       addSuffix: true,
     });
   }
