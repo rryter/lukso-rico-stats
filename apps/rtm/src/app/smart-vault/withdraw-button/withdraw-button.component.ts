@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { addWeeks, format, getDay, getHours, formatDistanceToNow } from 'date-fns';
+import { addWeeks, getDay, getHours, formatDistanceToNow } from 'date-fns';
 import { setDay, setHours, setSeconds, setMinutes } from 'date-fns/fp';
 
 @Component({

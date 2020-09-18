@@ -22,28 +22,33 @@
         <button class="button is-large is-static">LYX</button>
       </p>
     </div>
+
     <div class="buttons has-addons">
       <button class="button" (click)="calculateAmount(vault.balanceAccount, 25)">25%</button>
       <button class="button" (click)="calculateAmount(vault.balanceAccount, 50)">50%</button>
       <button class="button" (click)="calculateAmount(vault.balanceAccount, 75)">75%</button>
       <button class="button" (click)="calculateAmount(vault.balanceAccount, 100)">100%</button>
     </div>
+
     <lukso-lock-button
       [hasPendingTransaction]="transactions.locking"
       (lockFunds)="onLockFunds()"
     ></lukso-lock-button>
   </div>
+
   <div class="notification is-success">
     Vault Balance: <br />
     <span class="is-size-2"
       ><b>{{ vault.balanceVault | number: '0.4' }} LYX</b></span
     >
     <br />
+
     <lukso-withdraw-button
       [hasPendingTransaction]="transactions.withdrawing"
       [vaultLocked]="vault.isLocked"
       (withdrawFunds)="onWithdrawFunds()"
     ></lukso-withdraw-button>
+
     <span *ngIf="vault.isLocked" class="icon is-large">
       <i class="fas fa-3x fa-lock"></i>
     </span>
