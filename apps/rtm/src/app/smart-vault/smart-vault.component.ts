@@ -1,15 +1,15 @@
 import { Component } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
 import { Observable } from 'rxjs';
-import { ContractService } from '../rico/contract.service';
+import { SmartVaultService } from '../shared/services/smart-vault.service';
 import { Vault } from './../shared/interface/vault';
 
 @Component({
-  selector: 'lukso-block-explorer',
-  templateUrl: './block-explorer.component.html',
-  styleUrls: ['./block-explorer.component.css'],
+  selector: 'lukso-smart-vault',
+  templateUrl: './smart-vault.component.html',
+  styleUrls: ['./smart-vault.component.css'],
 })
-export class BlockExplorerComponent {
+export class SmartVaultComponent {
   vault$: Observable<Vault>;
   transactions: {
     locking: boolean;
@@ -21,17 +21,17 @@ export class BlockExplorerComponent {
 
   inputAmount = new FormControl(2, Validators.required);
 
-  constructor(private contractService: ContractService) {
-    this.vault$ = this.contractService.vault$;
-    this.transactions = this.contractService.transactions;
+  constructor(private smartVaultService: SmartVaultService) {
+    this.vault$ = this.smartVaultService.vault$;
+    this.transactions = this.smartVaultService.transactions;
   }
 
   onLockFunds() {
-    this.contractService.lockFunds(this.inputAmount.value);
+    this.smartVaultService.lockFunds(this.inputAmount.value);
   }
 
   onWithdraw() {
-    this.contractService.withdraw();
+    this.smartVaultService.withdraw();
   }
 
   calculateAmount(value: number, percentage: number) {

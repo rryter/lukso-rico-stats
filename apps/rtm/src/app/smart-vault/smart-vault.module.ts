@@ -1,17 +1,17 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Routes, RouterModule } from '@angular/router';
-import { BlockExplorerComponent } from './block-explorer.component';
+import { SmartVaultComponent } from './smart-vault.component';
 import { SharedModule } from '../shared/shared.module';
 import { LockButtonComponent } from './lock-button/lock-button.component';
 import { WithdrawButtonComponent } from './withdraw-button/withdraw-button.component';
 import { ReactiveFormsModule } from '@angular/forms';
 
-const routes: Routes = [{ path: '', component: BlockExplorerComponent }];
+const routes: Routes = [{ path: '', component: SmartVaultComponent }];
 
 @NgModule({
-  declarations: [BlockExplorerComponent, LockButtonComponent, WithdrawButtonComponent],
+  declarations: [SmartVaultComponent, LockButtonComponent, WithdrawButtonComponent],
   providers: [],
   imports: [SharedModule, ReactiveFormsModule, CommonModule, RouterModule.forChild(routes)],
 })
-export class BlockExplorerModule {}
+export class SmartVaultModule {}
