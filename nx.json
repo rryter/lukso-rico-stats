@@ -31,6 +31,9 @@
     "rtm-e2e": {
       "tags": [],
       "implicitDependencies": ["rtm"]
+    },
+    "web3-rx": {
+      "tags": []
     }
   }
 }

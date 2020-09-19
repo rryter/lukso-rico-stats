@@ -76,10 +76,7 @@
         "lint": {
           "builder": "@angular-devkit/build-angular:tslint",
           "options": {
-            "tsConfig": [
-              "apps/rtm/tsconfig.app.json",
-              "apps/rtm/tsconfig.spec.json"
-            ],
+            "tsConfig": ["apps/rtm/tsconfig.app.json", "apps/rtm/tsconfig.spec.json"],
             "exclude": ["**/node_modules/**", "!apps/rtm/**/*"]
           }
         },
@@ -122,6 +119,35 @@
             "tsConfig": ["apps/rtm-e2e/tsconfig.e2e.json"],
             "exclude": ["**/node_modules/**", "!apps/rtm-e2e/**/*"]
           }
+        }
+      }
+    },
+    "web3-rx": {
+      "projectType": "library",
+      "root": "libs/web3-rx",
+      "sourceRoot": "libs/web3-rx/src",
+      "prefix": "lukso",
+      "architect": {
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": ["libs/web3-rx/tsconfig.lib.json", "libs/web3-rx/tsconfig.spec.json"],
+            "exclude": ["**/node_modules/**", "!libs/web3-rx/**/*"]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "options": {
+            "jestConfig": "libs/web3-rx/jest.config.js",
+            "tsConfig": "libs/web3-rx/tsconfig.spec.json",
+            "passWithNoTests": true,
+            "setupFile": "libs/web3-rx/src/test-setup.ts"
+          }
+        }
+      },
+      "schematics": {
+        "@nrwl/angular:component": {
+          "style": "scss"
         }
       }
     }
