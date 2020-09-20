@@ -29,7 +29,7 @@ export class SmartVaultService {
     );
 
     const blocks$ = concat(this.web3Service.web3.eth.getBlock('latest'), this.newBlocks$);
-    this.vault$ = merge(blocks$, this.web3Service.address$).pipe(
+    this.vault$ = merge(blocks$, this.web3Service.address$, this.web3Service.networkId$).pipe(
       switchMap(() => {
         return forkJoin({
           balanceAccount: this.getBalance(),

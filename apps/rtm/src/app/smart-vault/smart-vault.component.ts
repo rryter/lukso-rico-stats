@@ -13,6 +13,7 @@ import { Vault } from './../shared/interface/vault';
 export class SmartVaultComponent {
   vault$: Observable<Vault>;
   address$: Observable<string>;
+  networkId$: Observable<number>;
   transactions: {
     locking: boolean;
     withdrawing: boolean;
@@ -30,6 +31,7 @@ export class SmartVaultComponent {
     this.vault$ = this.smartVaultService.vault$;
     this.transactions = this.smartVaultService.transactions;
     this.address$ = this.web3Service.address$;
+    this.networkId$ = this.web3Service.networkId$;
   }
 
   onLockFunds() {

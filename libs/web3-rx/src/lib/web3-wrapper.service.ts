@@ -8,8 +8,8 @@ import Web3 from 'web3';
 export class Web3WrapperService {
   web3: any; // use proper tyings
 
-  address$ = new BehaviorSubject<any>(null);
-  network$ = new Subject();
+  address$ = new BehaviorSubject<string>(null);
+  networkId$ = new BehaviorSubject<number>(null);
   blocks$ = new Subject();
 
   constructor() {
@@ -19,7 +19,7 @@ export class Web3WrapperService {
   async initialize() {
     const ethEnabled = () => {
       if (window.ethereum) {
-        // window.ethereum.autoRefreshOnNetworkChange = false;
+        window.ethereum.autoRefreshOnNetworkChange = false;
         this.web3 = new Web3(window.ethereum);
         window.ethereum.enable();
         return true;
@@ -33,19 +33,19 @@ export class Web3WrapperService {
       );
     }
 
-    const accounts = await this.web3.eth.getAccounts();
-    this.address$.next(accounts[0]);
-
     this.web3.eth.subscribe('newBlockHeaders').on('data', (block) => {
       this.blocks$.next(block);
     });
 
-    window.ethereum.on('accountsChanged', (accounts) => {
+    const addresses = await this.web3.eth.getAccounts();
+    this.address$.next(addresses[0]);
+    window.ethereum.on('accountsChanged', (accounts: string[]) => {
       this.address$.next(accounts[0]);
     });
 
-    window.ethereum.on('chainChanged', (networkId) => {
-      this.network$.next(networkId);
-    });
+    const networkId = await this.web3.eth.getChainId();
+    this.networkId$.next(networkId);
+
+    window.ethereum.on('chainChanged', (_chainId) => window.location.reload());
   }
 }

@@ -6,11 +6,12 @@ import { SharedModule } from '../shared/shared.module';
 import { LockButtonComponent } from './lock-button/lock-button.component';
 import { WithdrawButtonComponent } from './withdraw-button/withdraw-button.component';
 import { ReactiveFormsModule } from '@angular/forms';
+import { WrongNetworkComponent } from './wrong-network/wrong-network.component';
 
 const routes: Routes = [{ path: '', component: SmartVaultComponent }];
 
 @NgModule({
-  declarations: [SmartVaultComponent, LockButtonComponent, WithdrawButtonComponent],
+  declarations: [SmartVaultComponent, LockButtonComponent, WithdrawButtonComponent, WrongNetworkComponent],
   providers: [],
   imports: [SharedModule, ReactiveFormsModule, CommonModule, RouterModule.forChild(routes)],
 })
