@@ -1,7 +1,5 @@
 :host {
   display: block;
-  max-width: 500px;
-  min-width: 400px;
 }
 
 .notification .icon {

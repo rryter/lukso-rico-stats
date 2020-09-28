@@ -1,0 +1,65 @@
+<div class="box">
+  <h1 class="title">
+    <span class="icon"> <i class="fas fa-lock"></i> </span> Manage Privileges
+  </h1>
+  <ng-container *ngIf="keyManagerData$ | async as keyManagerData">
+    <div class="buttons">
+      <button class="button is-link is-small" (click)="initialize()">Initialize / Restore</button>
+      <button class="button is-info is-small" (click)="addKey(3)">
+        Grant Execution Priviliges
+      </button>
+    </div>
+    <table class="table" width="100%" *ngIf="keyManagerData.key.purpose; else noKeys">
+      <tr>
+        <th></th>
+        <th>Address</th>
+        <th>Type</th>
+        <th></th>
+      </tr>
+      <tr
+        *ngIf="
+          keyManagerData.key.purpose == Capabilities.MANAGEMENT ||
+          keyManagerData.key.purpose == Capabilities.EXECUTION_AND_MANAGEMENT
+        "
+      >
+        <td>
+          <span class="icon"> <i class="fas fa-lock"></i></span>
+        </td>
+        <td>
+          <code>{{ keyManagerData.address }}</code>
+        </td>
+        <td>
+          Management
+        </td>
+        <td>
+          <span class="icon" (click)="addKey(2)">
+            <i class="fas fa-trash-alt"></i>
+          </span>
+        </td>
+      </tr>
+
+      <tr
+        *ngIf="
+          keyManagerData.key.purpose == Capabilities.EXECUTION ||
+          keyManagerData.key.purpose == Capabilities.EXECUTION_AND_MANAGEMENT
+        "
+      >
+        <td>
+          <span class="icon"> <i class="fas fa-shipping-fast"></i></span>
+        </td>
+        <td>
+          <code>{{ keyManagerData.address }}</code>
+        </td>
+        <td>
+          Excecution
+        </td>
+        <td>
+          <span class="icon" (click)="addKey(1)">
+            <i class="fas fa-trash-alt"></i>
+          </span>
+        </td>
+      </tr>
+    </table>
+    <ng-template #noKeys>No Keys Available for this Address</ng-template>
+  </ng-container>
+</div>

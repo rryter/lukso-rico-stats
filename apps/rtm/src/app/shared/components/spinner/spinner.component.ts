@@ -14,8 +14,6 @@ export class SpinnerComponent implements OnChanges {
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    console.log('changes');
-    console.log(changes);
     if (changes.dataLoaded) {
       this.showSpinner = false;
     }

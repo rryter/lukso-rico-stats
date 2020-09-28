@@ -1,0 +1,18 @@
+<ng-container *ngIf="vault$ | async as vault">
+  <div class="box has-background-success" [ngClass]="{ 'vault--locked': vault?.isLocked }">
+    <h1 class="title">Smart Vault</h1>
+    <!-- <h2 class="subtitle">
+      <code>{{ vault.address }}</code>
+    </h2> -->
+    <span class="is-size-2"
+      ><b>{{ vault.balanceVault | number: '0.4' }} LYX</b></span
+    >
+    <br />
+
+    <lukso-withdraw-button
+      [hasPendingTransaction]="transactions.withdrawing"
+      [vaultLocked]="vault.isLocked"
+      (withdrawFunds)="onWithdrawFunds()"
+    ></lukso-withdraw-button>
+  </div>
+</ng-container>

@@ -2,8 +2,8 @@ import { Component } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
 import { Web3WrapperService } from '@lukso/web3-rx';
 import { Observable } from 'rxjs';
-import { SmartVaultService } from '../shared/services/smart-vault.service';
-import { Vault } from './../shared/interface/vault';
+import { SmartVaultService } from '../../shared/services/smart-vault.service';
+import { Vault } from './../../shared/interface/vault';
 
 @Component({
   selector: 'lukso-smart-vault',
@@ -21,7 +21,7 @@ export class SmartVaultComponent {
     locking: false,
     withdrawing: false,
   };
-
+  smartVaultContractAddress: any;
   inputAmount = new FormControl(2, Validators.required);
 
   constructor(
@@ -32,13 +32,14 @@ export class SmartVaultComponent {
     this.transactions = this.smartVaultService.transactions;
     this.address$ = this.web3Service.address$;
     this.networkId$ = this.web3Service.networkId$;
+    this.smartVaultContractAddress = JSON.parse(window.localStorage.getItem('acl-address'));
   }
 
   onLockFunds() {
     this.smartVaultService.lockFunds(this.inputAmount.value);
   }
 
-  onWithdraw() {
+  onWithdrawFunds() {
     this.smartVaultService.withdraw();
   }
 

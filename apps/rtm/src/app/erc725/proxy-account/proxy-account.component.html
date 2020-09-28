@@ -1,0 +1,51 @@
+<ng-container *ngFor="let account of accounts$ | async">
+  <div class="box">
+    <h1 class="title">
+      <span class="icon"> <i class="fas fa-user"></i></span>
+      {{ account.nickName ? account.nickName : 'Account #1' }}
+      <button
+        class="button is-small is-dark"
+        (click)="setNickName(account.address, nickName.value)"
+      >
+        Set Nickname
+      </button>
+    </h1>
+    <h2 class="subtitle is-small">
+      <code>{{ account.address }}</code>
+    </h2>
+    <div class="hero-body">
+      <div class="container has-text-centered">
+        <h1 class="title">{{ account.balance | number: '0.4' }} LYX</h1>
+        <h2 class="subtitle">
+          XY USD
+        </h2>
+      </div>
+    </div>
+
+    <!-- <td>
+      {{ account.nickName }}
+       [ngClass]="{ 'is-loading': true }"
+    </td> -->
+
+    <div class="buttons is-centered">
+      <button class="button is-info" (click)="topUp(account.address)">
+        Reveice 2 LYX
+      </button>
+      <button
+        class="button is-warning"
+        [disabled]="!account.isExecutable"
+        (click)="withdraw(account.address)"
+      >
+        Withdraw 2 LYX
+      </button>
+      <button
+        *ngIf="stage === Stages.CustomContract"
+        [disabled]="!account.isExecutable"
+        class="button is-success"
+        (click)="lockFunds(account.address)"
+      >
+        Lock Funds
+      </button>
+    </div>
+  </div>
+</ng-container>

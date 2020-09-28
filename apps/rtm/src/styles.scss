@@ -2,29 +2,19 @@
 @import url('https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap');
 
 html {
-  padding: 20px;
-  //   background: rgb(242, 155, 151);
-  //   background: linear-gradient(
-  //     320deg,
-  //     rgba(242, 155, 151, 1) 0%,
-  //     rgba(113, 61, 193, 1) 100%
-  //   );
   background: #2d3e57;
   background: -webkit-linear-gradient(top right, #2d3e57, #232536);
   background: -moz-linear-gradient(top right, #2d3e57, #232536);
   background: linear-gradient(to bottom left, #2d3e57, #232536);
-  height: 100%;
-  width: 100%;
 }
 
-@keyframes color {
-  0% {
-    background-color: rgba(255, 255, 255, 1);
-  }
-  50% {
-    background-color: rgba(255, 255, 255, 0.7);
-  }
-  100% {
-    background-color: rgba(255, 255, 255, 1);
-  }
-}
+$menu-label-font-size: 1rem;
+$menu-item-color: white;
+
+$breadcrumb-item-active-color: white;
+$breadcrumb-item-hover-color: white;
+
+$footer-background-color: transparent;
+$footer-color: white;
+
+@import '../../../node_modules/bulma/bulma.sass';

@@ -1,0 +1,73 @@
+<ng-container>
+  <article class="message is-info" *ngIf="process.currentStage === Stages.Minimal">
+    <div class="message-header">
+      <p>Level 1 - Proxy Account</p>
+    </div>
+    <div class="message-body">
+      <p>
+        ERC 725 is a proposed standard for blockchain-based identity authored by Fabian
+        Vogelsteller, creator of ERC 20 and Web3.js. ERC 725 describes proxy smart contracts that
+        can be controlled by multiple keys and other smart contracts.
+      </p>
+      <br />
+      <button class="button is-success" (click)="deployProxyAccount(wallet)">
+        Create Account
+      </button>
+    </div>
+  </article>
+
+  <article class="message is-warning" *ngIf="process.currentStage === Stages.ProxyAccount">
+    <div class="message-header">
+      <p>Level 2 - Key Manager</p>
+    </div>
+    <div class="message-body">
+      <p>
+        Right now all you have is a plain and simple
+        <a href="https://github.com/ethereum/eips/issues/725" target="_blank">ERC275 </a> proxy
+        account. The
+        <a href="https://github.com/ethereum/eips/issues/734" target="_blank">ERC734</a> key manager
+        standard allows for more complex management of an ERC725 proxy account.
+      </p>
+      <br />
+      <button class="button is-warning" (click)="deployKeyManager()">
+        Make Account Managable
+      </button>
+    </div>
+  </article>
+
+  <article class="message is-success" *ngIf="process.currentStage === Stages.KeyManager">
+    <div class="message-header">
+      <p>Level 3 - Custom Smart Contract</p>
+    </div>
+    <div class="message-body">
+      <p>
+        Right now all you have is a plain and simple
+        <a href="https://github.com/ethereum/eips/issues/725" target="_blank">ERC275 </a> proxy
+        account. The
+        <a href="https://github.com/ethereum/eips/issues/734" target="_blank">ERC734</a> key manager
+        standard allows for more complex management of an ERC725 proxy account.
+      </p>
+      <br />
+      <button class="button is-success" (click)="deployCustomContract()">
+        Enable Smart-Vault
+      </button>
+    </div>
+  </article>
+</ng-container>
+<div class="columns">
+  <div class="column" *ngIf="process.currentStage >= Stages.ProxyAccount">
+    <div class="columns">
+      <div class="column">
+        <lukso-proxy-account
+          [accounts]="accounts"
+          [stage]="process.currentStage"
+        ></lukso-proxy-account>
+      </div>
+      <div class="column">
+        <lukso-key-manager *ngIf="process.currentStage >= Stages.KeyManager"></lukso-key-manager>
+      </div>
+    </div>
+    <br />
+    <lukso-smart-vault *ngIf="process.currentStage >= Stages.CustomContract"></lukso-smart-vault>
+  </div>
+</div>

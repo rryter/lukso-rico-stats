@@ -17,8 +17,7 @@ import { AppComponent } from './app.component';
       [
         {
           path: '',
-          loadChildren: () =>
-            import('./smart-vault/smart-vault.module').then((m) => m.SmartVaultModule),
+          loadChildren: () => import('./erc725/erc725.module').then((m) => m.Erc725Module),
         },
       ],
       { initialNavigation: 'enabled' }

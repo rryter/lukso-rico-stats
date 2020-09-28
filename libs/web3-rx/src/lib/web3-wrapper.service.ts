@@ -1,5 +1,7 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable, Subject } from 'rxjs';
+import { BehaviorSubject, Observable, ReplaySubject, Subject } from 'rxjs';
+import { share } from 'rxjs/operators';
+
 import Web3 from 'web3';
 
 @Injectable({
@@ -8,7 +10,7 @@ import Web3 from 'web3';
 export class Web3WrapperService {
   web3: any; // use proper tyings
 
-  address$ = new BehaviorSubject<string>(null);
+  address$ = new ReplaySubject<string>();
   networkId$ = new BehaviorSubject<number>(null);
   blocks$ = new Subject();
 
@@ -39,13 +41,22 @@ export class Web3WrapperService {
 
     const addresses = await this.web3.eth.getAccounts();
     this.address$.next(addresses[0]);
-    window.ethereum.on('accountsChanged', (accounts: string[]) => {
-      this.address$.next(accounts[0]);
+    window.ethereum.on('accountsChanged', (addresses: string[]) => {
+      this.address$.next(addresses[0]);
     });
 
     const networkId = await this.web3.eth.getChainId();
     this.networkId$.next(networkId);
 
     window.ethereum.on('chainChanged', (_chainId) => window.location.reload());
+  }
+
+  public getBalance(address: string): Promise<number> {
+    return this.web3.eth.getBalance(address);
+  }
+
+  public getEncodedCall(abi, method, params = []) {
+    const contract = new this.web3.eth.Contract(abi);
+    return contract.methods[method](...params).encodeABI();
   }
 }
