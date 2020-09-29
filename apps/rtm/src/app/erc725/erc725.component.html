@@ -1,20 +1,13 @@
-<ng-container *ngIf="address$ | async as address">
-  <!-- <div class="notification is-dark has-text-centered">
-    Current Wallet:
-    <code>{{ address | ethAddressShort }}</code> Balance:
-    <code>{{ (balance$ | async) / 1000000000000000000 | number: '0.4' }}</code> LYX
-  </div> -->
+<ng-container *ngIf="wallet$ | async as wallet">
   <div class="level">
     <!-- Left side -->
     <div class="level-left">
-      <nav class="breadcrumb is-small" aria-label="breadcrumbs">
-        <ul>
-          <li><a href="#">Bulma</a></li>
-          <li><a href="#">Documentation</a></li>
-          <li><a href="#">Components</a></li>
-          <li class="is-active"><a href="#" aria-current="page">Breadcrumb</a></li>
-        </ul>
-      </nav>
+      <span class="tag is-info">
+        <span class="icon"> <i class="fas fa-wallet"></i></span>
+        {{ wallet.address | ethAddressShort }}
+        <span class="icon"> <i class="fas fa-coins"></i></span>&nbsp;
+        {{ wallet.balance | number: '0.0-4' }} LYX
+      </span>
     </div>
 
     <!-- Right side -->
@@ -22,5 +15,5 @@
       <lukso-loading></lukso-loading>
     </div>
   </div>
-  <lukso-progress [wallet]="address"></lukso-progress>
+  <lukso-progress [wallet]="wallet.address"></lukso-progress>
 </ng-container>

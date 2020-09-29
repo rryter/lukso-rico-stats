@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Web3WrapperService } from '@lukso/web3-rx';
+import { Web3Service } from '@lukso/web3-rx';
 const proxyAccountContract = require('../../../../../../../ERC725/implementations/build/contracts/ERC725Account.json');
 
 @Injectable({
@@ -7,7 +7,7 @@ const proxyAccountContract = require('../../../../../../../ERC725/implementation
 })
 export class ProxyAccountService {
   contract: any;
-  constructor(private web3Service: Web3WrapperService) {
+  constructor(private web3Service: Web3Service) {
     this.contract = new this.web3Service.web3.eth.Contract(proxyAccountContract.abi);
   }
 

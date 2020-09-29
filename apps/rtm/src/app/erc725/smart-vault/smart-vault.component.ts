@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
-import { Web3WrapperService } from '@lukso/web3-rx';
+import { Web3Service } from '@lukso/web3-rx';
 import { Observable } from 'rxjs';
 import { SmartVaultService } from '../../shared/services/smart-vault.service';
 import { Vault } from './../../shared/interface/vault';
@@ -24,10 +24,7 @@ export class SmartVaultComponent {
   smartVaultContractAddress: any;
   inputAmount = new FormControl(2, Validators.required);
 
-  constructor(
-    private smartVaultService: SmartVaultService,
-    private web3Service: Web3WrapperService
-  ) {
+  constructor(private smartVaultService: SmartVaultService, private web3Service: Web3Service) {
     this.vault$ = this.smartVaultService.vault$;
     this.transactions = this.smartVaultService.transactions;
     this.address$ = this.web3Service.address$;

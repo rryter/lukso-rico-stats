@@ -12,6 +12,7 @@ import { ProxyAccountComponent } from './proxy-account/proxy-account.component';
 import { ProgressComponent } from './progress/progress.component';
 import { NewAccountComponent } from './new-account/new-account.component';
 import { LoadingComponent } from './loading/loading.component';
+import { ModalComponent } from './modal/modal.component';
 
 const routes: Routes = [
   { path: '', component: Erc725Component },
@@ -33,6 +34,7 @@ const routes: Routes = [
     ProgressComponent,
     NewAccountComponent,
     LoadingComponent,
+    ModalComponent,
   ],
   imports: [CommonModule, ReactiveFormsModule, RouterModule.forChild(routes), SharedModule],
 })

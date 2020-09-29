@@ -1,29 +1,28 @@
 import { Component, OnInit } from '@angular/core';
-import { Web3WrapperService } from '@lukso/web3-rx';
-import { concat, merge, Observable } from 'rxjs';
-import { filter, share, shareReplay, switchMap, tap, withLatestFrom } from 'rxjs/operators';
-
+import { Web3Service } from '@lukso/web3-rx';
+import { forkJoin, Observable, of } from 'rxjs';
+import { switchMap } from 'rxjs/operators';
+import { fromWei, toBN } from 'web3-utils';
+import { Wallet } from '../shared/interface/wallet';
 @Component({
   selector: 'lukso-erc725',
   templateUrl: './erc725.component.html',
   styleUrls: ['./erc725.component.css'],
 })
 export class Erc725Component implements OnInit {
-  address$: Observable<string>;
-  balance$: Observable<number>;
+  wallet$: Observable<Wallet>;
 
-  constructor(private web3: Web3WrapperService) {
-    this.address$ = this.web3.address$;
-    this.balance$ = merge(
-      concat(this.web3.web3.eth.getBlock('latest'), this.web3.blocks$),
-      this.web3.address$,
-      this.web3.networkId$
-    ).pipe(
-      withLatestFrom(this.address$),
-      switchMap(([blocks, address]) => {
-        return this.web3.getBalance(address);
-      }),
-      shareReplay()
+  constructor(private web3Wrapper: Web3Service) {
+    this.wallet$ = this.web3Wrapper.reloadTrigger$.pipe(
+      switchMap(() => this.web3Wrapper.address$),
+      switchMap((address: string) => {
+        return forkJoin({
+          address: of(address),
+          balance: this.web3Wrapper.getBalance(address).then((balance: number) => {
+            return fromWei(toBN(balance), 'ether');
+          }),
+        });
+      })
     );
   }
 

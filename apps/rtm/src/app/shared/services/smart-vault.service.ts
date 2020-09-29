@@ -2,15 +2,14 @@ import { Injectable } from '@angular/core';
 import { concat, forkJoin, merge, Observable, of, Subject } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
 import { Vault } from '../interface/vault';
-import { Web3WrapperService } from '@lukso/web3-rx';
-import { environment } from '../../../environments/environment';
+import { Web3Service } from '@lukso/web3-rx';
+import { fromWei, toBN } from 'web3-utils';
+
 const smartVaultContract = require('../../../../../../../ERC725/implementations/build/contracts/SmartVault.json');
 @Injectable({
   providedIn: 'root',
 })
 export class SmartVaultService {
-  private newBlocks$ = new Subject<any>();
-
   isContractDeployed: boolean;
   vault$: Observable<Vault>;
   transactions: { locking: boolean; withdrawing: boolean } = {
@@ -20,21 +19,15 @@ export class SmartVaultService {
 
   private contract: any;
 
-  constructor(private web3Service: Web3WrapperService) {
-    this.web3Service.web3.eth.subscribe('newBlockHeaders').on('data', (block) => {
-      this.newBlocks$.next(block);
-    });
-
-    this.contract = new this.web3Service.web3.eth.Contract(require('../smart_vault_abi.json'));
-
-    const blocks$ = concat(this.web3Service.web3.eth.getBlock('latest'), this.newBlocks$);
-    this.vault$ = merge(blocks$, this.web3Service.address$, this.web3Service.networkId$).pipe(
+  constructor(private web3Service: Web3Service) {
+    this.contract = new this.web3Service.web3.eth.Contract(smartVaultContract.abi);
+    this.vault$ = this.web3Service.reloadTrigger$.pipe(
       switchMap(() => {
         return forkJoin({
           balanceAccount: this.getBalance(),
           isLocked: this.getIsLocked(),
           balanceVault: this.getVaultBalance(),
-          address: of(environment.contracts.vault),
+          address: of('whaaat?'), // todo
         });
       })
     );
@@ -66,7 +59,7 @@ export class SmartVaultService {
       .getBalance()
       .call()
       .then((balance: number) => {
-        return this.web3Service.web3.utils.fromWei(balance, 'ether');
+        return fromWei(toBN(balance), 'ether');
       });
   }
 
@@ -98,8 +91,8 @@ export class SmartVaultService {
   private getBalance(): Promise<number> {
     return this.web3Service.web3.eth
       .getBalance(this.web3Service.web3.currentProvider.selectedAddress)
-      .then((balance) => {
-        return this.web3Service.web3.utils.fromWei(balance, 'ether');
+      .then((balance: string) => {
+        return fromWei(balance, 'ether');
       });
   }
 }

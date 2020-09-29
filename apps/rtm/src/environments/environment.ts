@@ -4,11 +4,7 @@
 
 export const environment = {
   production: false,
-  contracts: {
-    account: '0x70895731d88E4Ac685e61F26A42B3Ac6DaF1510F',
-    vault: '0xBcf13EA03202C6e27Ad5043026D893a7D397C448',
-    key: '0x1cB5Cfbc0aa9f7bc8086f63150f69ea5d790D054',
-  },
+  cmc_api_key: '343b0b11-c2cb-483b-865a-eef4fd489aba',
 };
 
 /*

@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { Web3WrapperService } from '@lukso/web3-rx';
+import { Web3Service } from '@lukso/web3-rx';
 import { concat, forkJoin, merge, Observable, of } from 'rxjs';
 import { share, shareReplay, switchMap } from 'rxjs/operators';
 import { Capabilities } from './../../shared/capabilities.enum';
 import { environment } from '../../../environments/environment';
-
+import { keccak256 } from 'web3-utils';
 const keyManagerContract = require('../../../../../../../ERC725/implementations/build/contracts/ERC734KeyManager.json');
 
 enum KEY_TYPE {
@@ -25,12 +25,8 @@ export class KeyManagerComponent implements OnInit {
   Capabilities = Capabilities;
   environment = environment;
 
-  constructor(private web3Service: Web3WrapperService) {
-    this.keyManagerData$ = merge(
-      concat(this.web3Service.web3.eth.getBlock('latest'), this.web3Service.blocks$),
-      this.web3Service.address$,
-      this.web3Service.networkId$
-    ).pipe(
+  constructor(private web3Service: Web3Service) {
+    this.keyManagerData$ = this.web3Service.reloadTrigger$.pipe(
       switchMap(() => {
         return this.getKeymanagerData$();
       }),
@@ -56,11 +52,10 @@ export class KeyManagerComponent implements OnInit {
   }
 
   addKey(keyKuprose: Capabilities) {
+    console.log(this.keyManagerContract.options.address);
     this.keyManagerContract.methods
       .setKey(
-        this.web3Service.web3.utils.keccak256(
-          this.web3Service.web3.currentProvider.selectedAddress
-        ),
+        keccak256(this.web3Service.web3.currentProvider.selectedAddress),
         keyKuprose,
         KEY_TYPE.ECDSA
       )
@@ -80,32 +75,13 @@ export class KeyManagerComponent implements OnInit {
       .send({ from: this.web3Service.web3.currentProvider.selectedAddress });
   }
 
-  deploy() {
-    this.keyManagerContract = new this.web3Service.web3.eth.Contract(keyManagerContract.abi);
-    this.keyManagerContract
-      .deploy({
-        data: keyManagerContract.bytecode,
-      })
-      .send({
-        from: this.web3Service.web3.currentProvider.selectedAddress,
-      })
-      .then((contract) => {
-        console.log(contract);
-        this.isContractDeployed = true;
-        this.keyManagerContract.options.address = contract._address;
-        window.localStorage.setItem('acl-address', JSON.stringify(contract._address));
-      });
-  }
-
   private getOwner() {
     return this.keyManagerContract.methods.owner().call();
   }
 
   private getKey() {
     return this.keyManagerContract.methods
-      .getKey(
-        this.web3Service.web3.utils.keccak256(this.web3Service.web3.currentProvider.selectedAddress)
-      )
+      .getKey(keccak256(this.web3Service.web3.currentProvider.selectedAddress))
       .call()
       .then((result) => {
         const { _purposes, _keyType } = result;

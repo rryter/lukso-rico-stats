@@ -2,6 +2,6 @@ export interface Account {
   address: string;
   owner: string;
   nickName: string;
-  balance: number;
+  balance: string;
   isExecutable: boolean;
 }

@@ -3,7 +3,7 @@ import { ProxyAccountService } from '../../shared/services/proxy-account.service
 import { KeyManagerService } from '../../shared/services/key-manager.service';
 import { LoadingIndicatorService } from '../../shared/services/loading-indicator.service';
 import { Stages } from '../../shared/stages.enum';
-import { Web3WrapperService } from '@lukso/web3-rx';
+import { Web3Service } from '@lukso/web3-rx';
 
 @Component({
   selector: 'lukso-progress',
@@ -24,7 +24,7 @@ export class ProgressComponent implements OnInit {
     private proxyAccountService: ProxyAccountService,
     private keyManagerService: KeyManagerService,
     private loadingIndicatorService: LoadingIndicatorService,
-    private web3Service: Web3WrapperService
+    private web3Service: Web3Service
   ) {}
 
   ngOnInit(): void {
@@ -61,16 +61,16 @@ export class ProgressComponent implements OnInit {
       `Deploying ERC734 Key Manager and initialize it...`
     );
     this.keyManagerService
-      .deploy()
+      .deploy(this.web3Service.web3.currentProvider.selectedAddress)
       .then((contract) => {
         this.setStage(Stages.KeyManager);
-        this.loadingIndicatorService.showLoadingIndicator(`Transfer Ownership of Proxy Account`);
+        this.proxyAccountService.contract.options.address = this.accounts[0].address;
         return this.proxyAccountService.contract.methods
           .transferOwnership(contract._address)
-          .send({ from: this.web3Service.web3.currentProvider.selectedAddress });
-      })
-      .finally(() => {
-        this.loadingIndicatorService.doneLoading();
+          .send({ from: this.web3Service.web3.currentProvider.selectedAddress })
+          .then(() => {
+            this.loadingIndicatorService.doneLoading();
+          });
       });
   }
 
