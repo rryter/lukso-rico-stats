@@ -1,11 +1,13 @@
 import { Injectable } from '@angular/core';
-import { concat, forkJoin, merge, Observable, of, Subject } from 'rxjs';
+import { forkJoin, Observable, of } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
 import { Vault } from '../interface/vault';
 import { Web3Service } from '@lukso/web3-rx';
 import { fromWei, toBN } from 'web3-utils';
+import { Contract } from 'web3-eth-contract';
 
 const smartVaultContract = require('../../../../../../../ERC725/implementations/build/contracts/SmartVault.json');
+
 @Injectable({
   providedIn: 'root',
 })
@@ -17,7 +19,7 @@ export class SmartVaultService {
     withdrawing: false,
   };
 
-  private contract: any;
+  private contract: Contract;
 
   constructor(private web3Service: Web3Service) {
     this.contract = new this.web3Service.web3.eth.Contract(smartVaultContract.abi);
@@ -42,10 +44,12 @@ export class SmartVaultService {
         from: this.web3Service.web3.currentProvider.selectedAddress,
       })
       .then((contract) => {
-        console.log(contract);
         this.isContractDeployed = true;
-        this.contract.options.address = contract._address;
-        window.localStorage.setItem('smart-vault-address', JSON.stringify(contract._address));
+        this.contract.options.address = contract.options.address;
+        window.localStorage.setItem(
+          'smart-vault-address',
+          JSON.stringify(contract.options.address)
+        );
         return contract;
       });
   }
@@ -71,7 +75,7 @@ export class SmartVaultService {
         from: this.web3Service.web3.currentProvider.selectedAddress,
         value: value * 10 ** 18,
       })
-      .finally((result) => {
+      .finally(() => {
         this.transactions.locking = false;
       });
   }
@@ -83,7 +87,7 @@ export class SmartVaultService {
       .send({
         from: this.web3Service.web3.currentProvider.selectedAddress,
       })
-      .finally((result) => {
+      .finally(() => {
         this.transactions.withdrawing = false;
       });
   }

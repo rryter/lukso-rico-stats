@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { Web3Service } from '@lukso/web3-rx';
-import { concat, forkJoin, merge, Observable, of } from 'rxjs';
-import { share, shareReplay, switchMap } from 'rxjs/operators';
+import { forkJoin, Observable, of } from 'rxjs';
+import { shareReplay, switchMap } from 'rxjs/operators';
 import { Capabilities } from './../../shared/capabilities.enum';
+import { KeyManagerService } from '../../shared/services/key-manager.service';
 import { environment } from '../../../environments/environment';
 import { keccak256 } from 'web3-utils';
-const keyManagerContract = require('../../../../../../../ERC725/implementations/build/contracts/ERC734KeyManager.json');
 
 enum KEY_TYPE {
   ECDSA = 1,
@@ -18,70 +18,40 @@ enum KEY_TYPE {
   styleUrls: ['./key-manager.component.css'],
 })
 export class KeyManagerComponent implements OnInit {
-  keyManagerContract: any;
-  keyManagerData$: Observable<any>;
-  keyManagerContractAddress: string;
-  isContractDeployed = false;
+  keyManagerData$: Observable<{ address: string; key: any }>;
+
   Capabilities = Capabilities;
   environment = environment;
 
-  constructor(private web3Service: Web3Service) {
+  constructor(private web3Service: Web3Service, private keyManagerService: KeyManagerService) {
     this.keyManagerData$ = this.web3Service.reloadTrigger$.pipe(
-      switchMap(() => {
-        return this.getKeymanagerData$();
-      }),
+      switchMap(() => this.getKeymanagerData$()),
       shareReplay({ bufferSize: 1, refCount: true })
     );
   }
 
-  ngOnInit(): void {
-    this.keyManagerContractAddress = JSON.parse(window.localStorage.getItem('acl-address'));
-    if (this.keyManagerContractAddress) {
-      this.keyManagerContract = new this.web3Service.web3.eth.Contract(
-        keyManagerContract.abi,
-        this.keyManagerContractAddress
-      );
-      this.isContractDeployed = true;
-    }
-  }
-
-  initialize() {
-    this.keyManagerContract.methods
-      .initialize()
-      .send({ from: this.web3Service.web3.currentProvider.selectedAddress });
-  }
+  ngOnInit(): void {}
 
   addKey(keyKuprose: Capabilities) {
-    console.log(this.keyManagerContract.options.address);
-    this.keyManagerContract.methods
-      .setKey(
-        keccak256(this.web3Service.web3.currentProvider.selectedAddress),
-        keyKuprose,
-        KEY_TYPE.ECDSA
-      )
-      .send({ from: this.web3Service.web3.currentProvider.selectedAddress });
+    this.keyManagerService.contract.methods
+      .setKey(keccak256(this.getSelectedAddress()), keyKuprose, KEY_TYPE.ECDSA)
+      .send({ from: this.getSelectedAddress() });
   }
 
   getKeymanagerData$() {
     return forkJoin({
-      address: of(this.web3Service.web3.currentProvider.selectedAddress),
+      address: of(this.getSelectedAddress()),
       key: this.getKey(),
     });
   }
 
   removeKey() {
-    this.keyManagerContract.methods
-      .removeKey()
-      .send({ from: this.web3Service.web3.currentProvider.selectedAddress });
-  }
-
-  private getOwner() {
-    return this.keyManagerContract.methods.owner().call();
+    this.keyManagerService.contract.methods.removeKey().send({ from: this.getSelectedAddress() });
   }
 
   private getKey() {
-    return this.keyManagerContract.methods
-      .getKey(keccak256(this.web3Service.web3.currentProvider.selectedAddress))
+    return this.keyManagerService.contract.methods
+      .getKey(keccak256(this.getSelectedAddress()))
       .call()
       .then((result) => {
         const { _purposes, _keyType } = result;
@@ -90,5 +60,9 @@ export class KeyManagerComponent implements OnInit {
           keyType: _keyType,
         };
       });
+  }
+
+  private getSelectedAddress() {
+    return this.web3Service.web3.currentProvider.selectedAddress;
   }
 }

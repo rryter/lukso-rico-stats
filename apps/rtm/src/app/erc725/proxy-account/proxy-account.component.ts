@@ -1,17 +1,15 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { Web3Service } from '@lukso/web3-rx';
-import { concat, forkJoin, merge, Observable, of } from 'rxjs';
+import { forkJoin, Observable, of } from 'rxjs';
 import { switchMap, throttleTime } from 'rxjs/operators';
 import { Account } from './../../shared/interface/account';
-import { environment } from '../../../environments/environment';
 import { Stages } from '../../shared/stages.enum';
 import { LoadingIndicatorService } from '../../shared/services/loading-indicator.service';
 import { keccak256, fromAscii, hexToAscii, fromWei, toWei, toBN } from 'web3-utils';
-
-const proxyAccountContract = require('../../../../../../../ERC725/implementations/build/contracts/ERC725Account.json');
-const accessControllerContract = require('../../../../../../../ERC725/implementations/build/contracts/ERC734KeyManager.json');
-const smartVaultContract = require('../../../../../../../ERC725/implementations/build/contracts/SmartVault.json');
+import { Contract } from 'web3-eth-contract';
+import { ProxyAccountService } from '../../shared/services/proxy-account.service';
+import { KeyManagerService } from '../../shared/services/key-manager.service';
 
 @Component({
   selector: 'lukso-proxy-account',
@@ -22,8 +20,8 @@ export class ProxyAccountComponent implements OnInit {
   nickName = new FormControl();
   accounts$: Observable<Account[]>;
 
-  proxyAccountContract: any;
-  accessControllerContract: any;
+  proxyAccountContract: Contract;
+  accessControllerContract: Contract;
 
   @Input() accounts: any[];
   @Input() stage: any;
@@ -32,22 +30,19 @@ export class ProxyAccountComponent implements OnInit {
 
   constructor(
     private web3Service: Web3Service,
-    private loadingIndicatorService: LoadingIndicatorService
+    private loadingIndicatorService: LoadingIndicatorService,
+    private proxyAccountService: ProxyAccountService,
+    private keyManagerServerice: KeyManagerService
   ) {
     this.accounts$ = this.web3Service.reloadTrigger$.pipe(
-      switchMap(() => {
-        return this.loadAllAccounts();
-      }),
-      throttleTime(100) // get rid off
+      switchMap(() => this.loadAllAccounts()),
+      throttleTime(100) // todo: should not be necessary
     );
   }
 
   ngOnInit(): void {
-    this.proxyAccountContract = new this.web3Service.web3.eth.Contract(proxyAccountContract.abi);
-    this.accessControllerContract = new this.web3Service.web3.eth.Contract(
-      accessControllerContract.abi,
-      JSON.parse(window.localStorage.getItem('acl-address'))
-    );
+    this.proxyAccountContract = this.proxyAccountService.contract;
+    this.accessControllerContract = this.keyManagerServerice.contract;
   }
 
   private loadAllAccounts(): Observable<Account[]> {
@@ -109,7 +104,7 @@ export class ProxyAccountComponent implements OnInit {
         this.loadingIndicatorService.doneLoading();
       });
   }
-  withdraw(from: string) {
+  withdraw() {
     this.loadingIndicatorService.showLoadingIndicator(`Withdrawing 2 ETH`);
     this.proxyAccountContract.methods
       .withdraw(toWei('2', 'ether').toString())
@@ -123,8 +118,6 @@ export class ProxyAccountComponent implements OnInit {
 
   setNickName(address: string, nickName: string) {
     this.accessControllerContract.options.address = address;
-    const key = fromAscii('nickName');
-    const data = fromAscii(nickName);
     //   this.accessControllerContract.methods.setData(key, data).send({
     //     from: this.web3Service.web3.currentProvider.selectedAddress,
     //   });

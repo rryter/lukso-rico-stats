@@ -1,13 +1,14 @@
 import { Injectable } from '@angular/core';
 import { Web3Service } from '@lukso/web3-rx';
 import { LoadingIndicatorService } from './loading-indicator.service';
+import { Contract } from 'web3-eth-contract';
 const keyManagerContract = require('../../../../../../../ERC725/implementations/build/contracts/ERC734KeyManager.json');
 
 @Injectable({
   providedIn: 'root',
 })
 export class KeyManagerService {
-  contract: any;
+  contract: Contract;
   isContractDeployed = false;
 
   constructor(
@@ -33,9 +34,9 @@ export class KeyManagerService {
       })
       .then((contract) => {
         this.isContractDeployed = true;
-        this.contract.options.address = contract._address;
-        window.localStorage.setItem('acl-address', JSON.stringify(contract._address));
+        this.contract.options.address = contract.options.address;
         this.loadingIndicatorService.showLoadingIndicator(`Transfer Ownership of Proxy Account`);
+        window.localStorage.setItem('acl-address', JSON.stringify(contract.options.address));
         return contract;
       });
   }

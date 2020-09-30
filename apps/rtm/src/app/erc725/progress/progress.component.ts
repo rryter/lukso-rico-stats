@@ -62,11 +62,11 @@ export class ProgressComponent implements OnInit {
     );
     this.keyManagerService
       .deploy(this.web3Service.web3.currentProvider.selectedAddress)
-      .then((contract) => {
+      .then((deployedContract) => {
         this.setStage(Stages.KeyManager);
         this.proxyAccountService.contract.options.address = this.accounts[0].address;
         return this.proxyAccountService.contract.methods
-          .transferOwnership(contract._address)
+          .transferOwnership(deployedContract.options.address)
           .send({ from: this.web3Service.web3.currentProvider.selectedAddress })
           .then(() => {
             this.loadingIndicatorService.doneLoading();
