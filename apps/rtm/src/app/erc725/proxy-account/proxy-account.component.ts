@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { Web3Service } from '@lukso/web3-rx';
 import { forkJoin, Observable, of } from 'rxjs';
@@ -15,6 +15,7 @@ import { KeyManagerService } from '../../shared/services/key-manager.service';
   selector: 'lukso-proxy-account',
   templateUrl: './proxy-account.component.html',
   styleUrls: ['./proxy-account.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ProxyAccountComponent implements OnInit {
   nickName = new FormControl();

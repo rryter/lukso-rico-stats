@@ -41,9 +41,9 @@ export class ProgressComponent implements OnInit {
     this.proxyAccountService
       .deployProxyAccount()
       .then((contract) => {
-        this.proxyAccountService.contract.options.address = contract._address;
+        this.proxyAccountService.contract.options.address = contract.options.address;
         this.setStage(Stages.ProxyAccount);
-        this.accounts.push({ address: contract._address });
+        this.accounts.push({ address: contract.options.address });
         window.localStorage.setItem('accounts', JSON.stringify(this.accounts));
       })
       .finally(() => {
