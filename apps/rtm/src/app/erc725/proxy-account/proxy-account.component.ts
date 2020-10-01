@@ -105,6 +105,7 @@ export class ProxyAccountComponent implements OnInit {
         this.loadingIndicatorService.doneLoading();
       });
   }
+
   withdraw() {
     this.loadingIndicatorService.showLoadingIndicator(`Withdrawing 2 ETH`);
     this.proxyAccountContract.methods

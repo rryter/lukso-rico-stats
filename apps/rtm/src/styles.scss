@@ -8,6 +8,10 @@ html {
   background: linear-gradient(to bottom left, #2d3e57, #232536);
 }
 
+code {
+  word-break: break-all;
+}
+
 $menu-label-font-size: 1rem;
 $menu-item-color: white;
 

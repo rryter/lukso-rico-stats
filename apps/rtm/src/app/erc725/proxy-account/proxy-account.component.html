@@ -28,7 +28,7 @@
     <div class="buttons is-centered">
       <button class="button is-info" (click)="topUp(account.address)">
         <span class="icon is-small"> <i class="fa fa-sign-in-alt"></i></span
-        ><span> Top up 2 LYX</span>
+        ><span>Receive 2 LYX</span>
       </button>
       <button
         class="button is-warning"
@@ -38,16 +38,16 @@
         <span class="icon">
           <i class="fa fa-sign-out-alt"></i>
         </span>
-        <span>Withdraw 2 LYX</span>
+        <span>Send 2 LYX</span>
       </button>
-      <button
+      <!-- <button
         *ngIf="stage === Stages.CustomContract"
         [disabled]="!account.isExecutable"
         class="button is-success"
         (click)="lockFunds(account.address)"
       >
         Lock Funds
-      </button>
+      </button> -->
     </div>
     <div class="is-size-7 has-text-centered">Owner: {{ account.owner }}</div>
     <br />
