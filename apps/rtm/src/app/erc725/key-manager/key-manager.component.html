@@ -3,6 +3,7 @@
     <h1 class="title">
       Access Control
     </h1>
+
     <table class="table" width="100%" *ngIf="keyManagerData.key.purpose; else noKeys">
       <tr>
         <th></th>
@@ -12,13 +13,13 @@
       </tr>
       <tr>
         <td>
-          <span class="icon"> <i class="fas fa-cog"></i></span>
+          <span class="icon"> <i class="fas fa-key"></i></span>
         </td>
         <td>
           <code>{{ keyManagerData.address | ethAddressShort }}</code>
         </td>
         <td>
-          Management
+          <span class="icon"> <i class="fas fa-cog"></i></span> Management
         </td>
         <td>
           <button class="button is-small" (click)="addKey(2)" disabled>
@@ -31,12 +32,14 @@
 
       <tr [ngClass]="{ active: keyManagerData.key.purpose == 1 }">
         <td>
-          <span class="icon"> <i class="fas fa-shipping-fast"></i></span>
+          <span class="icon"> <i class="fas fa-key"></i></span>
         </td>
         <td>
           <code>{{ keyManagerData.address | ethAddressShort }}</code>
         </td>
-        <td>Excecution</td>
+        <td>
+          <span class="icon"> <i class="fas fa-shipping-fast"></i></span> Excecution
+        </td>
         <td>
           <div class="field is-grouped">
             <div class="buttons">
@@ -62,6 +65,8 @@
           </div>
         </td>
       </tr>
+
+      <tr lukso-add-key></tr>
     </table>
     <ng-template #noKeys>No Keys Available for this Address</ng-template>
   </div>

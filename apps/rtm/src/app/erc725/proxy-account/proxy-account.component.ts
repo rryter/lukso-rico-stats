@@ -2,7 +2,7 @@ import { ChangeDetectionStrategy, Component, Input, OnInit } from '@angular/core
 import { FormControl } from '@angular/forms';
 import { Web3Service } from '@lukso/web3-rx';
 import { forkJoin, Observable, of } from 'rxjs';
-import { switchMap, throttleTime } from 'rxjs/operators';
+import { pluck, switchMap, throttleTime } from 'rxjs/operators';
 import { Account } from './../../shared/interface/account';
 import { Stages } from '../../shared/stages.enum';
 import { LoadingIndicatorService } from '../../shared/services/loading-indicator.service';
@@ -10,6 +10,7 @@ import { keccak256, fromAscii, hexToAscii, fromWei, toWei, toBN } from 'web3-uti
 import { Contract } from 'web3-eth-contract';
 import { ProxyAccountService } from '../../shared/services/proxy-account.service';
 import { KeyManagerService } from '../../shared/services/key-manager.service';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'lukso-proxy-account',
@@ -19,7 +20,7 @@ import { KeyManagerService } from '../../shared/services/key-manager.service';
 })
 export class ProxyAccountComponent implements OnInit {
   nickName = new FormControl();
-  accounts$: Observable<Account[]>;
+  account$: Observable<Account>;
 
   proxyAccountContract: Contract;
   accessControllerContract: Contract;
@@ -33,10 +34,11 @@ export class ProxyAccountComponent implements OnInit {
     private web3Service: Web3Service,
     private loadingIndicatorService: LoadingIndicatorService,
     private proxyAccountService: ProxyAccountService,
-    private keyManagerServerice: KeyManagerService
+    private keyManagerServerice: KeyManagerService,
+    private route: ActivatedRoute
   ) {
-    this.accounts$ = this.web3Service.reloadTrigger$.pipe(
-      switchMap(() => this.loadAllAccounts()),
+    this.account$ = this.web3Service.reloadTrigger$.pipe(
+      switchMap(() => this.loadAccount()),
       throttleTime(100) // todo: should not be necessary
     );
   }
@@ -46,19 +48,20 @@ export class ProxyAccountComponent implements OnInit {
     this.accessControllerContract = this.keyManagerServerice.contract;
   }
 
-  private loadAllAccounts(): Observable<Account[]> {
-    return forkJoin(
-      this.accounts.map((account) => {
-        this.proxyAccountContract.options.address = account.address;
-        return this.getAccountDetails(account);
+  private loadAccount(): Observable<Account> {
+    return this.route.params.pipe(
+      pluck('address'),
+      switchMap((address) => {
+        this.proxyAccountContract.options.address = address;
+        return this.getAccountDetails(address);
       })
     );
   }
 
-  private getAccountDetails(account: any): Observable<Account> {
+  private getAccountDetails(address: string): Observable<Account> {
     return forkJoin({
-      address: of(account.address),
-      balance: this.getBalance(account.address),
+      address: of(address),
+      balance: this.getBalance(address),
       owner: this.proxyAccountContract.methods.owner().call(),
       nickName: this.getNickName(),
       isExecutable: this.getIsExecutable(),
@@ -94,7 +97,7 @@ export class ProxyAccountComponent implements OnInit {
   }
 
   topUp(to: string) {
-    this.loadingIndicatorService.showLoadingIndicator(`Funding Account with 2 ETH`);
+    this.loadingIndicatorService.showLoadingIndicator(`Receiving 2 LYX`);
     this.web3Service.web3.eth
       .sendTransaction({
         from: this.web3Service.web3.currentProvider.selectedAddress,
@@ -107,7 +110,7 @@ export class ProxyAccountComponent implements OnInit {
   }
 
   withdraw() {
-    this.loadingIndicatorService.showLoadingIndicator(`Withdrawing 2 ETH`);
+    this.loadingIndicatorService.showLoadingIndicator(`Sending 2 LYX`);
     this.proxyAccountContract.methods
       .withdraw(toWei('2', 'ether').toString())
       .send({

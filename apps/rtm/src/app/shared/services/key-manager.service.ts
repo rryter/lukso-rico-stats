@@ -15,12 +15,7 @@ export class KeyManagerService {
     private web3Service: Web3Service,
     private loadingIndicatorService: LoadingIndicatorService
   ) {
-    const address = JSON.parse(window.localStorage.getItem('acl-address'));
-    if (address) {
-      this.contract = new this.web3Service.web3.eth.Contract(keyManagerContract.abi, address);
-    } else {
-      this.contract = new this.web3Service.web3.eth.Contract(keyManagerContract.abi);
-    }
+    this.contract = new this.web3Service.web3.eth.Contract(keyManagerContract.abi);
   }
 
   deploy(managementAddress: string) {
@@ -36,7 +31,6 @@ export class KeyManagerService {
         this.isContractDeployed = true;
         this.contract.options.address = contract.options.address;
         this.loadingIndicatorService.showLoadingIndicator(`Transfer Ownership of Proxy Account`);
-        window.localStorage.setItem('acl-address', JSON.stringify(contract.options.address));
         return contract;
       });
   }

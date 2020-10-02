@@ -1,4 +1,4 @@
-<ng-container *ngFor="let account of accounts$ | async">
+<ng-container *ngIf="account$ | async as account">
   <div class="box">
     <h1 class="title">
       <!-- {{ account.nickName ? account.nickName : 'Wallet' }} -->
@@ -25,16 +25,12 @@
        [ngClass]="{ 'is-loading': true }"
     </td> -->
 
-    <div class="buttons is-centered">
+    <div class="buttons is-centered" *ngIf="account.isExecutable">
       <button class="button is-info" (click)="topUp(account.address)">
         <span class="icon is-small"> <i class="fa fa-sign-in-alt"></i></span
         ><span>Receive 2 LYX</span>
       </button>
-      <button
-        class="button is-warning"
-        [disabled]="!account.isExecutable"
-        (click)="withdraw(account.address)"
-      >
+      <button class="button is-warning" (click)="withdraw(account.address)">
         <span class="icon">
           <i class="fa fa-sign-out-alt"></i>
         </span>
@@ -52,4 +48,8 @@
     <div class="is-size-7 has-text-centered">Owner: {{ account.owner }}</div>
     <br />
   </div>
+  <lukso-key-manager
+    *ngIf="stage >= Stages.KeyManager"
+    [contractAddress]="account.owner"
+  ></lukso-key-manager>
 </ng-container>

@@ -21,7 +21,6 @@ export class SmartVaultComponent {
     locking: false,
     withdrawing: false,
   };
-  smartVaultContractAddress: any;
   inputAmount = new FormControl(2, Validators.required);
 
   constructor(private smartVaultService: SmartVaultService, private web3Service: Web3Service) {
@@ -29,7 +28,6 @@ export class SmartVaultComponent {
     this.transactions = this.smartVaultService.transactions;
     this.address$ = this.web3Service.address$;
     this.networkId$ = this.web3Service.networkId$;
-    this.smartVaultContractAddress = JSON.parse(window.localStorage.getItem('acl-address'));
   }
 
   onLockFunds() {

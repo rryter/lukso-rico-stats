@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { Web3Service } from '@lukso/web3-rx';
 import { forkJoin, Observable, of } from 'rxjs';
 import { shareReplay, switchMap } from 'rxjs/operators';
@@ -19,9 +19,11 @@ enum KEY_TYPE {
 })
 export class KeyManagerComponent implements OnInit {
   keyManagerData$: Observable<{ address: string; key: any }>;
-
+  isManageDropdownActive = false;
   Capabilities = Capabilities;
   environment = environment;
+
+  @Input() contractAddress: string;
 
   constructor(private web3Service: Web3Service, private keyManagerService: KeyManagerService) {
     this.keyManagerData$ = this.web3Service.reloadTrigger$.pipe(
@@ -50,6 +52,7 @@ export class KeyManagerComponent implements OnInit {
   }
 
   private getKey() {
+    this.keyManagerService.contract.options.address = this.contractAddress;
     return this.keyManagerService.contract.methods
       .getKey(keccak256(this.getSelectedAddress()))
       .call()

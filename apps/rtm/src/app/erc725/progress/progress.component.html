@@ -9,7 +9,7 @@
   <div class="column" *ngIf="process.currentStage >= Stages.ProxyAccount">
     <lukso-proxy-account [accounts]="accounts" [stage]="process.currentStage"></lukso-proxy-account>
     <br />
-    <lukso-key-manager *ngIf="process.currentStage >= Stages.KeyManager"></lukso-key-manager>
+
     <br />
     <lukso-smart-vault *ngIf="process.currentStage >= Stages.CustomContract"></lukso-smart-vault>
   </div>
@@ -17,9 +17,16 @@
 <ng-container>
   <article class="message is-info" *ngIf="process.currentStage === Stages.Minimal">
     <div class="message-header">
-      <p>Level 0 - Normal Wallet</p>
+      <p>Level 0 - Status Quo</p>
     </div>
     <div class="message-body">
+      <p>
+        Welcome. In case you are wondering: This is a very basic demonstration of ERC 725 and 734.
+        So let's get into it.
+      </p>
+      <ul>
+        <li>Your Wallet</li>
+      </ul>
       <p>
         ERC 725 is a proposed standard for blockchain-based identity authored by Fabian
         Vogelsteller, creator of ERC 20 and Web3.js. ERC 725 describes proxy smart contracts that

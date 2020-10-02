@@ -13,12 +13,13 @@ import { ProgressComponent } from './progress/progress.component';
 import { NewAccountComponent } from './new-account/new-account.component';
 import { LoadingComponent } from './loading/loading.component';
 import { ModalComponent } from './modal/modal.component';
+import { AddKeyComponent } from './key-manager/add-key/add-key.component';
 
 const routes: Routes = [
   { path: '', component: Erc725Component },
   { path: 'create-wallet', component: NewAccountComponent },
   {
-    path: ':address',
+    path: 'accounts/:address',
     component: Erc725Component,
   },
 ];
@@ -35,6 +36,7 @@ const routes: Routes = [
     NewAccountComponent,
     LoadingComponent,
     ModalComponent,
+    AddKeyComponent,
   ],
   imports: [CommonModule, ReactiveFormsModule, RouterModule.forChild(routes), SharedModule],
 })

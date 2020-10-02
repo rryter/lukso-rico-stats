@@ -34,7 +34,9 @@ export class Web3Service {
     });
 
     this.web3.eth.getAccounts().then((accounts) => {
-      this.address$.next(accounts[0]);
+      if (accounts.length > 0) {
+        this.address$.next(accounts[0]);
+      }
       window.ethereum.on('accountsChanged', (addresses: string[]) => {
         this.address$.next(addresses[0]);
       });
