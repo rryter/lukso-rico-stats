@@ -1,55 +1,44 @@
 <ng-container *ngIf="account$ | async as account">
-  <div class="box">
-    <h1 class="title">
-      <!-- {{ account.nickName ? account.nickName : 'Wallet' }} -->
-      Wallet
-      <!-- <button
-        class="button is-small is-dark"
-        (click)="setNickName(account.address, nickName.value)"
-      >
-        Set Nickname
-      </button> -->
-    </h1>
-    <div class="hero-body">
-      <div class="container has-text-centered">
+  <ng-container *ngIf="errorMessage.message">
+    <h1 class="mat-display-1">{{ errorMessage?.title }}</h1>
+    <h2 class="mat-h2" [innerHTML]="errorMessage?.message"></h2>
+  </ng-container>
+
+  <ng-container *ngIf="!errorMessage.message">
+    <mat-card class="example-card">
+      <mat-toolbar>
+        <span>Your Account</span>
+      </mat-toolbar>
+
+      <mat-card-content class="wallet">
+        <img [src]="qrCode" /><br />
         <code>{{ account.address }}</code>
         <br />
         <br />
-        <h1 class="title">{{ account.balance | number: '0.4' }} LYX</h1>
-        <h2 class="subtitle">$ {{ account.balance | cmcPrice | async | number: '0.0-2' }}</h2>
-      </div>
-    </div>
+        <h1>{{ account.balance | number: '0.4' }} LYX</h1>
+        <span>$ {{ account.balance | cmcPrice | async | number: '0.0-2' }}</span>
+      </mat-card-content>
 
-    <!-- <td>
-      {{ account.nickName }}
-       [ngClass]="{ 'is-loading': true }"
-    </td> -->
-
-    <div class="buttons is-centered" *ngIf="account.isExecutable">
-      <button class="button is-info" (click)="topUp(account.address)">
-        <span class="icon is-small"> <i class="fa fa-sign-in-alt"></i></span
-        ><span>Receive 2 LYX</span>
-      </button>
-      <button class="button is-warning" (click)="withdraw(account.address)">
-        <span class="icon">
-          <i class="fa fa-sign-out-alt"></i>
-        </span>
-        <span>Send 2 LYX</span>
-      </button>
-      <!-- <button
-        *ngIf="stage === Stages.CustomContract"
-        [disabled]="!account.isExecutable"
-        class="button is-success"
-        (click)="lockFunds(account.address)"
-      >
-        Lock Funds
-      </button> -->
-    </div>
-    <div class="is-size-7 has-text-centered">Owner: {{ account.owner }}</div>
+      <mat-card-actions *ngIf="account.isExecutable" class="wallet">
+        <button mat-raised-button color="primary" (click)="topUp(account.address)">
+          <span>Receive 2 LYX</span>
+        </button>
+        <button mat-raised-button color="accent" (click)="withdraw(account.address)">
+          <span>Send 2 LYX</span>
+        </button>
+        <!-- <button
+            *ngIf="stage === Stages.CustomContract"
+            [disabled]="!account.isExecutable"
+            class="button is-success"
+            (click)="lockFunds(account.address)"
+        >
+            Lock Funds
+        </button> -->
+      </mat-card-actions>
+    </mat-card>
     <br />
-  </div>
-  <lukso-key-manager
-    *ngIf="stage >= Stages.KeyManager"
-    [contractAddress]="account.owner"
-  ></lukso-key-manager>
+    <mat-card *ngIf="stage >= Stages.KeyManager && account.isManagable">
+      <lukso-key-manager [contractAddress]="account.owner"></lukso-key-manager>
+    </mat-card>
+  </ng-container>
 </ng-container>

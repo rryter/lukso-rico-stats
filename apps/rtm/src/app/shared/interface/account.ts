@@ -4,4 +4,5 @@ export interface Account {
   nickName: string;
   balance: string;
   isExecutable: boolean;
+  isManagable: boolean;
 }

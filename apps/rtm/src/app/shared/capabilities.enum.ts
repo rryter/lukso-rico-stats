@@ -3,3 +3,7 @@ export enum Capabilities {
   EXECUTION,
   EXECUTION_AND_MANAGEMENT,
 }
+export enum KEY_TYPE {
+  ECDSA = 1,
+  RSA,
+}

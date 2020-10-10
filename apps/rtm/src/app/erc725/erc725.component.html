@@ -1,19 +1,15 @@
 <ng-container *ngIf="wallet$ | async as wallet">
-  <div class="level">
-    <!-- Left side -->
-    <div class="level-left">
-      <span class="tag is-info">
-        <span class="icon"> <i class="fas fa-wallet"></i></span>
-        {{ wallet.address | ethAddressShort }}
-        <span class="icon"> <i class="fas fa-coins"></i></span>&nbsp;
-        {{ wallet.balance | number: '0.0-4' }} LYX
-      </span>
-    </div>
+  <mat-toolbar color="primary">
+    <mat-icon color="secondary">vpn_key</mat-icon>&nbsp;
+    <span>
+      {{ wallet.address | ethAddressShort }}
+    </span>
+    <span class="spacer"></span>
+    <mat-icon color="secondary">payments</mat-icon>&nbsp;
+    <span> {{ wallet.balance | number: '0.0-4' }} LYX</span>
+  </mat-toolbar>
 
-    <!-- Right side -->
-    <div class="level-right">
-      <lukso-loading></lukso-loading>
-    </div>
-  </div>
+  <!-- <lukso-loading></lukso-loading> -->
+  <br />
   <lukso-progress [wallet]="wallet.address"></lukso-progress>
 </ng-container>

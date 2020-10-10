@@ -1,11 +1,4 @@
 :host {
   display: block;
-}
-
-.account__icon {
-  width: 20px;
-}
-
-.is-dark code {
-  background: rgba(0, 0, 0, 0.2);
+  max-width: 800px;
 }

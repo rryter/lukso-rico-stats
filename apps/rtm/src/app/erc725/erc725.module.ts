@@ -14,6 +14,7 @@ import { NewAccountComponent } from './new-account/new-account.component';
 import { LoadingComponent } from './loading/loading.component';
 import { ModalComponent } from './modal/modal.component';
 import { AddKeyComponent } from './key-manager/add-key/add-key.component';
+import { PriviligesComponent } from './key-manager/priviliges/priviliges.component';
 
 const routes: Routes = [
   { path: '', component: Erc725Component },
@@ -37,6 +38,7 @@ const routes: Routes = [
     LoadingComponent,
     ModalComponent,
     AddKeyComponent,
+    PriviligesComponent,
   ],
   imports: [CommonModule, ReactiveFormsModule, RouterModule.forChild(routes), SharedModule],
 })

@@ -1,30 +1,28 @@
-<ng-container [formGroup]="newKeyForm">
-  <td>
-    <span class="icon"> <i class="fas fa-key"></i></span>
-  </td>
-  <td>
-    <input class="input is-small" type="text" placeholder="Public Key" formControlName="address" />
-  </td>
-  <td>
-    <div class="field">
-      <div class="control">
-        <div class="select is-small">
-          <select formControlName="type">
-            <option value="1">Excecution</option>
-            <option value="2">Management</option>
-          </select>
-        </div>
-        <!-- <div class="icon is-small is-left">
-        <i class="fas fa-key"></i>
-      </div> -->
-      </div>
-    </div>
-  </td>
-  <td>
-    <button class="button is-small is-success" type="submit" (click)="saveNewKey(newKeyForm.value)">
-      <span class="icon is-small">
-        <i class="fas fa-save"></i>
-      </span>
-    </button>
-  </td>
-</ng-container>
+<form [formGroup]="newKeyForm" (submit)="saveNewKey(newKeyForm)">
+  <p>
+    <mat-form-field class="form-field" appearance="fill">
+      <mat-label>Address</mat-label>
+      <mat-icon matPrefix>vpn_key</mat-icon>
+      <input matInput formControlName="address" />
+      <mat-error *ngIf="newKeyForm.controls['address'].hasError('isETHAddress')">
+        ETH Address check failed
+      </mat-error>
+    </mat-form-field>
+  </p>
+
+  <p>
+    <mat-form-field class="form-field" appearance="fill">
+      <mat-label>Privilige</mat-label>
+      <mat-icon matPrefix>security</mat-icon>
+      <mat-select formControlName="type">
+        <mat-option value="2">Execution </mat-option>
+        <mat-option value="1">Management</mat-option>
+      </mat-select>
+    </mat-form-field>
+  </p>
+
+  <div style="text-align: right;">
+    <button mat-button style="margin-right: 10px;" (click)="onNoClick()">Cancel</button>
+    <button mat-raised-button color="primary" type="submit">Add Key</button>
+  </div>
+</form>

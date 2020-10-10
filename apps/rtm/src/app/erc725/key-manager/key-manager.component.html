@@ -1,73 +1,14 @@
-<ng-container *ngIf="keyManagerData$ | async as keyManagerData">
-  <div class="box" *ngIf="keyManagerData.key.purpose == 1 || keyManagerData.key.purpose == 3">
-    <h1 class="title">
-      Access Control
-    </h1>
-
-    <table class="table" width="100%" *ngIf="keyManagerData.key.purpose; else noKeys">
-      <tr>
-        <th></th>
-        <th>Address</th>
-        <th width="60%">Type</th>
-        <th></th>
-      </tr>
-      <tr>
-        <td>
-          <span class="icon"> <i class="fas fa-key"></i></span>
-        </td>
-        <td>
-          <code>{{ keyManagerData.address | ethAddressShort }}</code>
-        </td>
-        <td>
-          <span class="icon"> <i class="fas fa-cog"></i></span> Management
-        </td>
-        <td>
-          <button class="button is-small" (click)="addKey(2)" disabled>
-            <span class="icon is-small">
-              <i class="fas fa-trash-alt"></i>
-            </span>
-          </button>
-        </td>
-      </tr>
-
-      <tr [ngClass]="{ active: keyManagerData.key.purpose == 1 }">
-        <td>
-          <span class="icon"> <i class="fas fa-key"></i></span>
-        </td>
-        <td>
-          <code>{{ keyManagerData.address | ethAddressShort }}</code>
-        </td>
-        <td>
-          <span class="icon"> <i class="fas fa-shipping-fast"></i></span> Excecution
-        </td>
-        <td>
-          <div class="field is-grouped">
-            <div class="buttons">
-              <button
-                class="button is-success is-small"
-                (click)="addKey(3)"
-                *ngIf="keyManagerData.key.purpose == 1"
-              >
-                <span class="icon is-small">
-                  <i class="fas fa-check-circle"></i>
-                </span>
-              </button>
-              <button
-                class="button is-danger is-small"
-                (click)="addKey(1)"
-                *ngIf="keyManagerData.key.purpose != 1"
-              >
-                <span class="icon is-small">
-                  <i class="fas fa-trash-alt"></i>
-                </span>
-              </button>
-            </div>
-          </div>
-        </td>
-      </tr>
-
-      <tr lukso-add-key></tr>
-    </table>
-    <ng-template #noKeys>No Keys Available for this Address</ng-template>
-  </div>
-</ng-container>
+<mat-toolbar>
+  <span>
+    Access Control
+  </span>
+  <span class="spacer"></span>
+  <button mat-icon-button (click)="openDialog('Add', {})" color="primary">
+    <mat-icon>add_box</mat-icon>
+  </button>
+</mat-toolbar>
+<lukso-priviliges
+  *ngIf="keyManagerData$ | async as keyManagerData"
+  (removeKey)="removeKey($event)"
+  [keys]="keyManagerData"
+></lukso-priviliges>

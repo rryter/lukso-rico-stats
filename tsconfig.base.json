@@ -17,7 +17,8 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
-      "@lukso/web3-rx": ["libs/web3-rx/src/index.ts"]
+      "@lukso/web3-rx": ["libs/web3-rx/src/index.ts"],
+      "@shared/*": ["./apps/rtm/src/app/shared/*"]
     }
   },
   "exclude": ["node_modules", "tmp"]

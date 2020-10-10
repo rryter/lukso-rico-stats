@@ -9,7 +9,6 @@
   <div class="column" *ngIf="process.currentStage >= Stages.ProxyAccount">
     <lukso-proxy-account [accounts]="accounts" [stage]="process.currentStage"></lukso-proxy-account>
     <br />
-
     <br />
     <lukso-smart-vault *ngIf="process.currentStage >= Stages.CustomContract"></lukso-smart-vault>
   </div>
