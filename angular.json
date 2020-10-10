@@ -21,7 +21,7 @@
             "polyfills": "apps/rtm/src/polyfills.ts",
             "tsConfig": "apps/rtm/tsconfig.app.json",
             "aot": true,
-            "assets": ["apps/rtm/src/favicon.ico", "apps/rtm/src/assets"],
+            "assets": ["apps/rtm/src/favicon.ico", "apps/rtm/src/assets", "apps/rtm/src/.htaccess"],
             "styles": ["apps/rtm/src/styles.scss"],
             "scripts": []
           },
