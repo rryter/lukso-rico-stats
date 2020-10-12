@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
 import { Web3Service } from '@lukso/web3-rx';
 import { forkJoin, Observable, of } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
@@ -20,7 +19,7 @@ export class Erc725Component implements OnInit {
         return forkJoin({
           address: of(address),
           balance: this.web3Wrapper.getBalance(address).then((balance: number) => {
-            return fromWei(toBN(balance), 'ether');
+            return parseFloat(fromWei(toBN(balance), 'ether'));
           }),
         });
       })

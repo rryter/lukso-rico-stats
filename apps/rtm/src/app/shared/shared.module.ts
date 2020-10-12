@@ -21,6 +21,9 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatInputModule } from '@angular/material/input';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort';
+import { LayoutModule } from '@angular/cdk/layout';
+import { LayoutComponent } from './components/layout/layout.component';
+import { RouterModule } from '@angular/router';
 
 const materialModules = [
   MatTableModule,
@@ -43,8 +46,25 @@ const materialModules = [
   MatSortModule,
 ];
 @NgModule({
-  declarations: [TimeAgoPipe, EthAddressShortPipe, CmcPricePipe, ConfirmComponent],
-  imports: [CommonModule, ...materialModules],
-  exports: [TimeAgoPipe, EthAddressShortPipe, CmcPricePipe, ...materialModules, ConfirmComponent],
+  declarations: [TimeAgoPipe, EthAddressShortPipe, CmcPricePipe, ConfirmComponent, LayoutComponent],
+  imports: [
+    RouterModule,
+    CommonModule,
+    MatGridListModule,
+    MatCardModule,
+    MatMenuModule,
+    MatIconModule,
+    MatButtonModule,
+    LayoutModule,
+    ...materialModules,
+  ],
+  exports: [
+    TimeAgoPipe,
+    EthAddressShortPipe,
+    CmcPricePipe,
+    ConfirmComponent,
+    LayoutComponent,
+    ...materialModules,
+  ],
 })
 export class SharedModule {}

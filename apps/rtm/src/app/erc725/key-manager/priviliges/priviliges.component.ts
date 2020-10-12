@@ -49,6 +49,6 @@ export class PriviligesComponent implements AfterViewInit, OnInit, OnChanges {
   }
 
   removePrivilege(privilege: PriviligesItem) {
-    this.removeKey.emit(privilege.key);
+    this.removeKey.emit(privilege.address);
   }
 }

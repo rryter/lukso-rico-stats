@@ -51,11 +51,6 @@ export class ProgressComponent implements OnInit {
       });
   }
 
-  private setStage(stage: Stages) {
-    window.localStorage.setItem('stage', JSON.stringify(stage));
-    this.process.currentStage = stage;
-  }
-
   deployKeyManager() {
     this.loadingIndicatorService.showLoadingIndicator(
       `Deploying ERC734 Key Manager and initialize it...`
@@ -72,6 +67,11 @@ export class ProgressComponent implements OnInit {
             this.loadingIndicatorService.doneLoading();
           });
       });
+  }
+
+  private setStage(stage: Stages) {
+    window.localStorage.setItem('stage', JSON.stringify(stage));
+    this.process.currentStage = stage;
   }
 
   deployCustomContract() {

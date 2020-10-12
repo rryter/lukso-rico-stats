@@ -6,7 +6,6 @@ import { LoadingIndicatorService } from '../../shared/services/loading-indicator
   selector: 'lukso-loading',
   templateUrl: './loading.component.html',
   styleUrls: ['./loading.component.css'],
-  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class LoadingComponent implements OnInit {
   loading$: Observable<{ isLoading: boolean; text?: string }>;

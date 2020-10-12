@@ -8,7 +8,6 @@ import { environment } from '../../../environments/environment';
 import { keccak256 } from 'web3-utils';
 import { MatDialog } from '@angular/material/dialog';
 import { AddKeyComponent } from './add-key/add-key.component';
-import { PriviligesItem } from './priviliges/priviliges-datasource';
 
 @Component({
   selector: 'lukso-key-manager',
@@ -39,7 +38,7 @@ export class KeyManagerComponent implements OnInit {
 
   ngOnInit(): void {}
 
-  openDialog(): void {
+  openDialog(a, b): void {
     const dialogRef = this.dialog.open(AddKeyComponent, {
       data: {
         address: this.getSelectedAddress(),

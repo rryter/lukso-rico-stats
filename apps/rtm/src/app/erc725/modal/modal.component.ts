@@ -5,7 +5,6 @@ import { ModalService } from '../../shared/services/modal.service';
   selector: 'lukso-modal',
   templateUrl: './modal.component.html',
   styleUrls: ['./modal.component.css'],
-  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ModalComponent implements OnInit {
   constructor(private modalService: ModalService) {}

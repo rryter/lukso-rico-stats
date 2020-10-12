@@ -5,7 +5,6 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
   selector: 'lukso-confirm',
   templateUrl: './confirm.component.html',
   styleUrls: ['./confirm.component.css'],
-  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ConfirmComponent implements OnInit {
   constructor(

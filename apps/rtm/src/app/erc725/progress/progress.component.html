@@ -1,16 +1,7 @@
-<!-- <div class="tabs">
-  <ul>
-    <li class="is-active"><a>Account / Identity</a></li>
-    <li><a>Profile</a></li>
-    <li><a>Settings</a></li>
-  </ul>
-</div> -->
 <div class="columns">
   <div class="column" *ngIf="process.currentStage >= Stages.ProxyAccount">
     <lukso-proxy-account [accounts]="accounts" [stage]="process.currentStage"></lukso-proxy-account>
-    <br />
-    <br />
-    <lukso-smart-vault *ngIf="process.currentStage >= Stages.CustomContract"></lukso-smart-vault>
+    <!-- <lukso-smart-vault *ngIf="process.currentStage >= Stages.CustomContract"></lukso-smart-vault> -->
   </div>
 </div>
 <ng-container>

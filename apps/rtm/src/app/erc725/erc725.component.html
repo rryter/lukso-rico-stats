@@ -1,15 +1,3 @@
 <ng-container *ngIf="wallet$ | async as wallet">
-  <mat-toolbar color="primary">
-    <mat-icon color="secondary">vpn_key</mat-icon>&nbsp;
-    <span>
-      {{ wallet.address | ethAddressShort }}
-    </span>
-    <span class="spacer"></span>
-    <mat-icon color="secondary">payments</mat-icon>&nbsp;
-    <span> {{ wallet.balance | number: '0.0-4' }} LYX</span>
-  </mat-toolbar>
-
-  <!-- <lukso-loading></lukso-loading> -->
-  <br />
   <lukso-progress [wallet]="wallet.address"></lukso-progress>
 </ng-container>

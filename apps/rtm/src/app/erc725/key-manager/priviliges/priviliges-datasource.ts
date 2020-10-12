@@ -71,9 +71,9 @@ export class PriviligesDataSource extends DataSource<PriviligesItem> {
       const isAsc = this.sort.direction === 'asc';
       switch (this.sort.active) {
         case 'key':
-          return compare(a.key, b.key, isAsc);
+          return compare(a.address, b.address, isAsc);
         case 'type':
-          return compare(+a.type, +b.type, isAsc);
+          return compare(+a.keyType, +b.keyType, isAsc);
         default:
           return 0;
       }

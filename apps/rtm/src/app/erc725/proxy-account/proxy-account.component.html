@@ -5,7 +5,7 @@
   </ng-container>
 
   <ng-container *ngIf="!errorMessage.message">
-    <mat-card class="example-card">
+    <mat-card>
       <mat-toolbar>
         <span>Your Account</span>
       </mat-toolbar>
@@ -16,10 +16,11 @@
         <br />
         <br />
         <h1>{{ account.balance | number: '0.4' }} LYX</h1>
-        <span>$ {{ account.balance | cmcPrice | async | number: '0.0-2' }}</span>
+        <span>$ {{ account.balance }}</span>
+        <!-- <span>$ {{ account.balance | cmcPrice | async | number: '0.0-2' }}</span> -->
       </mat-card-content>
 
-      <mat-card-actions *ngIf="account.isExecutable" class="wallet">
+      <mat-card-actions *ngIf="account.isExecutable || account.isManagable" class="wallet">
         <button mat-raised-button color="primary" (click)="topUp(account.address)">
           <span>Receive 2 LYX</span>
         </button>
@@ -37,7 +38,7 @@
       </mat-card-actions>
     </mat-card>
     <br />
-    <mat-card *ngIf="stage >= Stages.KeyManager && account.isManagable">
+    <mat-card *ngIf="account.isManagable">
       <lukso-key-manager [contractAddress]="account.owner"></lukso-key-manager>
     </mat-card>
   </ng-container>

@@ -1,6 +1,6 @@
-import { Injectable } from '@angular/core';
-import { concat, Subject, Observable, ReplaySubject, of, merge } from 'rxjs';
-import { catchError, mapTo, tap, withLatestFrom } from 'rxjs/operators';
+import { Injectable, NgZone } from '@angular/core';
+import { Observable, ReplaySubject, merge } from 'rxjs';
+import { mapTo, tap } from 'rxjs/operators';
 import Web3 from 'web3';
 
 @Injectable({
@@ -9,13 +9,13 @@ import Web3 from 'web3';
 export class Web3Service {
   web3: any; // use proper tyings
 
-  address$ = new ReplaySubject<string>();
-  networkId$ = new ReplaySubject<number>();
-  blocks$ = new Subject();
+  address$ = new ReplaySubject<string>(1);
+  networkId$ = new ReplaySubject<number>(1);
+  blocks$ = new ReplaySubject(1);
 
   reloadTrigger$: Observable<boolean>;
 
-  constructor() {
+  constructor(private ngZone: NgZone) {
     this.initializeProvider();
     this.initializeObservables();
     window.ethereum.on('chainChanged', (_chainId) => window.location.reload());
@@ -27,18 +27,27 @@ export class Web3Service {
 
   private initializeObservables(): void {
     this.web3.eth.getBlock('latest').then((latestBlock) => {
-      this.blocks$.next(latestBlock);
+      this.ngZone.run(() => {
+        this.blocks$.next(latestBlock);
+      });
+
       this.web3.eth.subscribe('newBlockHeaders').on('data', (block) => {
-        this.blocks$.next(block);
+        this.ngZone.run(() => {
+          this.blocks$.next(block);
+        });
       });
     });
 
     this.web3.eth.getAccounts().then((accounts) => {
       if (accounts.length > 0) {
-        this.address$.next(accounts[0]);
+        this.ngZone.run(() => {
+          this.address$.next(accounts[0]);
+        });
       }
       window.ethereum.on('accountsChanged', (addresses: string[]) => {
-        this.address$.next(addresses[0]);
+        this.ngZone.run(() => {
+          this.address$.next(addresses[0]);
+        });
       });
     });
 

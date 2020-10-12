@@ -1,4 +1,10 @@
-import { ChangeDetectionStrategy, Component, Input, OnInit } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  Input,
+  OnInit,
+} from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { Web3Service } from '@lukso/web3-rx';
@@ -7,12 +13,13 @@ import { KeyManagerService } from '@shared/services/key-manager.service';
 import { LoadingIndicatorService } from '@shared/services/loading-indicator.service';
 import { ProxyAccountService } from '@shared/services/proxy-account.service';
 import { Stages } from '@shared/stages.enum';
-import { forkJoin, Observable, of, throwError } from 'rxjs';
+import { combineLatest, forkJoin, Observable, of } from 'rxjs';
 import { catchError, onErrorResumeNext, pluck, switchMap, tap, throttleTime } from 'rxjs/operators';
 import { Contract } from 'web3-eth-contract';
-import { fromAscii, fromWei, hexToAscii, keccak256, toBN, toWei } from 'web3-utils';
+import { keccak256, toWei } from 'web3-utils';
 import QRCode from 'qrcode';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { Capabilities } from '@shared/capabilities.enum';
 
 @Component({
   selector: 'lukso-proxy-account',
@@ -29,7 +36,7 @@ export class ProxyAccountComponent implements OnInit {
   qrCode: any;
 
   proxyAccountContract: Contract;
-  accessControllerContract: Contract;
+  aclContract: Contract;
 
   Stages = Stages;
 
@@ -68,23 +75,34 @@ export class ProxyAccountComponent implements OnInit {
           );
         }
       }),
-      throttleTime(100) // todo: should not be necessary
+      throttleTime(100)
     );
   }
 
   ngOnInit(): void {
     this.proxyAccountContract = this.proxyAccountService.contract;
-    this.accessControllerContract = this.keyManagerServerice.contract;
+    this.aclContract = this.keyManagerServerice.contract;
   }
 
   private loadAccount(): Observable<Account> {
+    console.log(this.route);
     return this.route.params.pipe(
       pluck('address'),
+      tap((address) => {
+        console.log('xxx address proxycontract', address);
+      }),
       switchMap((address) => {
         this.proxyAccountContract.options.address = address;
-        return this.getAccountDetails(address);
+        return combineLatest([this.proxyAccountContract.methods.owner().call(), of(address)]);
       }),
-      onErrorResumeNext()
+      tap(([owner, address]) => {
+        console.log('xxx address actlContract', owner);
+      }),
+      switchMap(([owner, address]) => {
+        this.aclContract.options.address = owner as string;
+        return this.getAccountDetails(address);
+      })
+      //   onErrorResumeNext()
     );
   }
 
@@ -95,49 +113,26 @@ export class ProxyAccountComponent implements OnInit {
       isExecutable: this.getIsExecutor(),
       isManagable: this.getIsManager(),
     }).pipe(
-      catchError((_error: any, _caught: Observable<Account>) => {
-        this._snackBar.open('Account not found.', null, {
-          duration: 2000000,
-          panelClass: 'error',
-        });
-        const error = {
-          title: 'Account not found.',
-          message: `There was a problem when loading the account with the address <code>${address}</code>. Please make sure it is indeed a deployed implementation of an ERC-725 Account.`,
-        };
-        this.errorMessage = error;
-        return of({});
+      tap((result) => {
+        console.log('YAY, result', result);
       })
     ) as Observable<Account>;
   }
 
   private getIsExecutor(): Promise<boolean> {
-    return this.accessControllerContract.methods
+    return this.aclContract.methods
       .keyHasPurpose(keccak256(this.web3Service.web3.currentProvider.selectedAddress), 2)
       .call();
   }
 
   private getIsManager(): Promise<boolean> {
-    return this.accessControllerContract.methods
+    return this.aclContract.methods
       .keyHasPurpose(keccak256(this.web3Service.web3.currentProvider.selectedAddress), 1)
       .call();
   }
 
-  private getNickName(): any {
-    return this.proxyAccountContract.methods
-      .getData(fromAscii('nickName'))
-      .call()
-      .then((result) => {
-        if (result === null) {
-          return null;
-        }
-        return hexToAscii(result);
-      });
-  }
-
-  getBalance(address: string): Promise<string> {
-    return this.web3Service.getBalance(address).then((balance) => {
-      return fromWei(toBN(balance), 'ether');
-    });
+  getBalance(address: string): Promise<number> {
+    return this.web3Service.getBalance(address);
   }
 
   topUp(to: string) {
@@ -165,8 +160,8 @@ export class ProxyAccountComponent implements OnInit {
       });
   }
 
-  setNickName(address: string, nickName: string) {
-    this.accessControllerContract.options.address = address;
+  setNickName(address: string) {
+    this.aclContract.options.address = address;
     //   this.accessControllerContract.methods.setData(key, data).send({
     //     from: this.web3Service.web3.currentProvider.selectedAddress,
     //   });
