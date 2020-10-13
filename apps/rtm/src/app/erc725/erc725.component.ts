@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { Web3Service } from '@lukso/web3-rx';
 import { forkJoin, Observable, of } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
-import { fromWei, toBN } from 'web3-utils';
 import { Wallet } from '../shared/interface/wallet';
 @Component({
   selector: 'lukso-erc725',
@@ -18,9 +17,7 @@ export class Erc725Component implements OnInit {
       switchMap((address: string) => {
         return forkJoin({
           address: of(address),
-          balance: this.web3Wrapper.getBalance(address).then((balance: number) => {
-            return parseFloat(fromWei(toBN(balance), 'ether'));
-          }),
+          balance: this.web3Wrapper.getBalance(address),
         });
       })
     );

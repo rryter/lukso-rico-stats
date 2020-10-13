@@ -112,11 +112,7 @@ export class ProxyAccountComponent implements OnInit {
       balance: this.getBalance(address),
       isExecutable: this.getIsExecutor(),
       isManagable: this.getIsManager(),
-    }).pipe(
-      tap((result) => {
-        console.log('YAY, result', result);
-      })
-    ) as Observable<Account>;
+    }) as Observable<Account>;
   }
 
   private getIsExecutor(): Promise<boolean> {

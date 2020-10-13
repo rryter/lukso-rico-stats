@@ -93,10 +93,8 @@ export class SmartVaultService {
   }
 
   private getBalance(): Promise<number> {
-    return this.web3Service.web3.eth
-      .getBalance(this.web3Service.web3.currentProvider.selectedAddress)
-      .then((balance: string) => {
-        return fromWei(balance, 'ether');
-      });
+    return this.web3Service.web3.eth.getBalance(
+      this.web3Service.web3.currentProvider.selectedAddress
+    );
   }
 }

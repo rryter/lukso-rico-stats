@@ -1,6 +1,6 @@
 import { Injectable, NgZone } from '@angular/core';
 import { Observable, ReplaySubject, merge } from 'rxjs';
-import { mapTo, tap } from 'rxjs/operators';
+import { mapTo } from 'rxjs/operators';
 import Web3 from 'web3';
 
 @Injectable({
