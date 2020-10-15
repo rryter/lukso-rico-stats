@@ -59,14 +59,14 @@ export class KeyManagerComponent implements OnInit {
   getKeymanagerData$(keys: any[]) {
     return forkJoin(
       keys.map((key) => {
-        return this.getKey(key);
+        return this.getKey(key, keys);
       })
     );
   }
 
-  removeKey(address) {
+  removeKey(key: { address: string; index: number }) {
     this.keyManagerService.contract.methods
-      .removeKey(keccak256(address))
+      .removeKey(keccak256(key.address), key.index)
       .send({ from: this.getSelectedAddress() });
   }
 
@@ -75,7 +75,10 @@ export class KeyManagerComponent implements OnInit {
     return this.keyManagerService.contract.methods.getAllKeys().call();
   }
 
-  private getKey(key: string): Promise<{ address: string; keyType: any; purpose: any }> {
+  private getKey(
+    key: string,
+    keys: string[]
+  ): Promise<{ address: string; keyType: any; purpose: any }> {
     return this.keyManagerService.contract.methods
       .getKey(key)
       .call()
@@ -88,6 +91,7 @@ export class KeyManagerComponent implements OnInit {
           address: _keyAddress,
           purpose: _purpose,
           keyType: _keyType,
+          index: keys.indexOf(key),
         };
       });
   }

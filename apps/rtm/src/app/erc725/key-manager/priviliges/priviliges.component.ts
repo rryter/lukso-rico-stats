@@ -1,10 +1,9 @@
 import {
-  AfterViewInit,
+  ChangeDetectorRef,
   Component,
   EventEmitter,
   Input,
   OnChanges,
-  OnInit,
   Output,
   SimpleChanges,
   ViewChild,
@@ -12,14 +11,17 @@ import {
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTable } from '@angular/material/table';
-import { PriviligesDataSource, PriviligesItem } from './priviliges-datasource';
-
+export interface PriviligesItem {
+  address: string;
+  purpose: string;
+  keyType: string;
+}
 @Component({
   selector: 'lukso-priviliges',
   templateUrl: './priviliges.component.html',
   styleUrls: ['./priviliges.component.css'],
 })
-export class PriviligesComponent implements AfterViewInit, OnInit, OnChanges {
+export class PriviligesComponent implements OnChanges {
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
   @ViewChild(MatTable) table: MatTable<PriviligesItem>;
@@ -27,28 +29,17 @@ export class PriviligesComponent implements AfterViewInit, OnInit, OnChanges {
   @Output() removeKey = new EventEmitter();
   @Input() wallet: string;
   @Input() keys: any;
-  dataSource: PriviligesDataSource;
 
   /** Columns displayed in the table. Columns IDs can be added, removed, or reordered. */
   displayedColumns = ['key', 'privilege', 'actions'];
 
-  constructor() {}
-
-  ngOnInit() {
-    this.dataSource = new PriviligesDataSource(this.keys);
-  }
+  constructor(private cdRef: ChangeDetectorRef) {}
 
   ngOnChanges(changes: SimpleChanges): void {
-    this.dataSource = new PriviligesDataSource(changes.keys.currentValue);
-  }
-
-  ngAfterViewInit() {
-    this.dataSource.sort = this.sort;
-    this.dataSource.paginator = this.paginator;
-    this.table.dataSource = this.dataSource;
+    this.cdRef.detectChanges();
   }
 
   removePrivilege(privilege: PriviligesItem) {
-    this.removeKey.emit(privilege.address);
+    this.removeKey.emit({ ...privilege });
   }
 }
