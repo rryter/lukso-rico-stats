@@ -4,12 +4,11 @@
   <mat-toolbar class="navbar" color="primary" *ngIf="wallet$ | async as wallet">
     <img src="./../../assets/logo.png" style="height: 30px;" />
     <span class="spacer"></span>
-    <div>
-      <mat-icon color="secondary">vpn_key</mat-icon>&nbsp;
-      <span> {{ wallet.address | ethAddressShort }} </span><br />
-      <mat-icon color="secondary">payments</mat-icon>&nbsp;
-      <span> {{ wallet.balance | number: '0.0-4' }} LYX</span>
-    </div>
+    <mat-icon color="secondary">vpn_key</mat-icon>&nbsp; <span> {{ wallet.address }} </span><br />
+    <span class="spacer"></span>
+
+    <mat-icon color="secondary">payments</mat-icon>&nbsp;
+    <span> {{ wallet.balance | number: '0.0-4' }} LYX</span>
   </mat-toolbar>
 
   <mat-sidenav-container class="navbar-sidenav-container">

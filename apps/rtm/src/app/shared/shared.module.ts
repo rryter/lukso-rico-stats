@@ -24,6 +24,9 @@ import { MatSortModule } from '@angular/material/sort';
 import { LayoutModule } from '@angular/cdk/layout';
 import { LayoutComponent } from './components/layout/layout.component';
 import { RouterModule } from '@angular/router';
+import { AmountComponent } from './components/dialog/amount/amount.component';
+import { MatSliderModule } from '@angular/material/slider';
+import { ReactiveFormsModule } from '@angular/forms';
 
 const materialModules = [
   MatTableModule,
@@ -44,9 +47,17 @@ const materialModules = [
   MatTableModule,
   MatPaginatorModule,
   MatSortModule,
+  MatSliderModule,
 ];
 @NgModule({
-  declarations: [TimeAgoPipe, EthAddressShortPipe, CmcPricePipe, ConfirmComponent, LayoutComponent],
+  declarations: [
+    TimeAgoPipe,
+    EthAddressShortPipe,
+    CmcPricePipe,
+    ConfirmComponent,
+    LayoutComponent,
+    AmountComponent,
+  ],
   imports: [
     RouterModule,
     CommonModule,
@@ -56,14 +67,16 @@ const materialModules = [
     MatIconModule,
     MatButtonModule,
     LayoutModule,
+    ReactiveFormsModule,
     ...materialModules,
   ],
   exports: [
     TimeAgoPipe,
     EthAddressShortPipe,
     CmcPricePipe,
-    ConfirmComponent,
     LayoutComponent,
+    ConfirmComponent,
+    AmountComponent,
     ...materialModules,
   ],
 })

@@ -10,14 +10,17 @@
   <!-- Name Column -->
   <ng-container matColumnDef="privilege">
     <th mat-header-cell *matHeaderCellDef mat-sort-header>Privilege</th>
-    <td mat-cell *matCellDef="let row">{{ row.purpose }}</td>
+    <td mat-cell *matCellDef="let row">
+      <span *ngIf="row.purpose == 1">Manage & Execute</span>
+      <span *ngIf="row.purpose == 2">Execute</span>
+    </td>
   </ng-container>
 
   <!-- Name Column -->
-  <ng-container matColumnDef="type">
+  <!-- <ng-container matColumnDef="type">
     <th mat-header-cell *matHeaderCellDef mat-sort-header>Type</th>
     <td mat-cell *matCellDef="let row">{{ row.keyType }}</td>
-  </ng-container>
+  </ng-container> -->
 
   <!-- Action Column -->
   <ng-container matColumnDef="actions">

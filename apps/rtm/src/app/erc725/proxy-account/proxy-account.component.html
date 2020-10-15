@@ -11,7 +11,7 @@
       </mat-toolbar>
 
       <mat-card-content class="wallet">
-        <img [src]="qrCode" /><br />
+        <img [src]="account.qrCode" /><br />
         <code>{{ account.address }}</code>
         <br />
         <br />
@@ -21,11 +21,11 @@
       </mat-card-content>
 
       <mat-card-actions *ngIf="account.isExecutable || account.isManagable" class="wallet">
-        <button mat-raised-button color="primary" (click)="topUp(account.address)">
-          <span>Receive 2 LYX</span>
+        <button mat-raised-button class="btn-success" (click)="topUp(account)">
+          <span>Top Up</span>
         </button>
-        <button mat-raised-button color="accent" (click)="withdraw(account.address)">
-          <span>Send 2 LYX</span>
+        <button mat-raised-button color="primary" (click)="withdraw(account.address)">
+          <span>Send</span>
         </button>
         <!-- <button
             *ngIf="stage === Stages.CustomContract"

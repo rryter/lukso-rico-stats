@@ -1,0 +1,46 @@
+<h1 mat-dialog-title>Confirm Amount</h1>
+
+<div mat-dialog-content matRipple>
+  <p>
+    <mat-form-field class="form-field" appearance="fill">
+      <mat-icon matPrefix>payments</mat-icon>
+      <input
+        matInput
+        type="number"
+        [formControl]="amount"
+        placeholder="2"
+        (input)="valueChanged(amount.value)"
+        [min]="0"
+        [max]="wallet"
+      />
+      <span matSuffix>&nbsp;LYX</span>
+
+      <mat-error>
+        <span *ngIf="amount.errors?.max">Not enough LYX in your current wallet.</span>
+      </mat-error>
+
+      <mat-hint align="start" *ngIf="amount.value > 0"
+        ><strong>$ {{ amount.value | cmcPrice | async | number: '0.0-4' }}</strong>
+      </mat-hint>
+      <mat-hint align="end">{{ percentage }} %</mat-hint>
+    </mat-form-field>
+    <mat-slider
+      class="slider"
+      [max]="100"
+      [min]="0"
+      [step]="5"
+      [tickInterval]="1"
+      [thumbLabel]="true"
+      color="primary"
+      [value]="amount.value"
+      (input)="sliderMoved($event)"
+    >
+    </mat-slider>
+  </p>
+</div>
+<div mat-dialog-actions align="end">
+  <button mat-raised-button (click)="onNoClick()">Cancel</button>
+  <button mat-raised-button class="btn-success" [mat-dialog-close]="amount.value">
+    Top up
+  </button>
+</div>

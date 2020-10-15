@@ -2,7 +2,7 @@ import { Injectable, NgZone } from '@angular/core';
 import { Observable, ReplaySubject, merge } from 'rxjs';
 import { mapTo } from 'rxjs/operators';
 import Web3 from 'web3';
-
+import { fromWei, toBN } from 'web3-utils';
 @Injectable({
   providedIn: 'root',
 })
@@ -22,7 +22,9 @@ export class Web3Service {
   }
 
   public getBalance(address: string): Promise<number> {
-    return this.web3.eth.getBalance(address);
+    return this.web3.eth.getBalance(address).then((balance) => {
+      return parseFloat(fromWei(toBN(balance), 'ether'));
+    });
   }
 
   private initializeObservables(): void {

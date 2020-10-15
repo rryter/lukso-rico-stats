@@ -30,7 +30,7 @@ export class PriviligesComponent implements AfterViewInit, OnInit, OnChanges {
   dataSource: PriviligesDataSource;
 
   /** Columns displayed in the table. Columns IDs can be added, removed, or reordered. */
-  displayedColumns = ['key', 'privilege', 'type', 'actions'];
+  displayedColumns = ['key', 'privilege', 'actions'];
 
   constructor() {}
 

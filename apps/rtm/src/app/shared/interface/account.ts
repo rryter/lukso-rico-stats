@@ -4,4 +4,5 @@ export interface Account {
   balance: number;
   isExecutable: boolean;
   isManagable: boolean;
+  qrCode: string;
 }

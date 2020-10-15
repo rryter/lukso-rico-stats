@@ -1,0 +1,49 @@
+:host {
+  display: block;
+  height: 280px;
+  width: 400px;
+}
+h1 {
+  padding-bottom: 20px;
+}
+p {
+  position: relative;
+}
+
+.form-field {
+  display: block;
+}
+
+.slider {
+  margin-top: 16px;
+  height: 60px;
+  position: absolute;
+  top: -39px;
+  right: -8px;
+  left: -8px;
+}
+
+mat-icon {
+  width: 50px;
+  padding-right: 10px;
+}
+
+mat-hint {
+  text-align: center;
+}
+
+.mat-form-field-suffix {
+  padding-left: 10px !important;
+}
+
+mat-form-field.mat-form-field {
+  font-size: 26px;
+}
+
+input {
+  text-align: right;
+}
+
+button {
+  height: 40px;
+}

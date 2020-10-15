@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { shareReplay } from 'rxjs/operators';
+import { interval, Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -19,7 +20,7 @@ export class AssetPriceService {
             'X-CMC_PRO_API_KEY': '343b0b11-c2cb-483b-865a-eef4fd489aba',
           },
         })
-        .pipe(shareReplay({ bufferSize: 1, refCount: true }));
+        .pipe(shareReplay(1));
     }
     return this.priceMapping[symbol];
   }
