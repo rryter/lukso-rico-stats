@@ -1,6 +1,14 @@
 <h1 mat-dialog-title>Confirm Amount</h1>
 
 <div mat-dialog-content matRipple>
+  <p *ngIf="viewType === 'send'">
+    <mat-form-field class="form-field" appearance="fill">
+      <mat-label>Address</mat-label>
+      <mat-icon matPrefix>vpn_key</mat-icon>
+      <input matInput [formControl]="address" />
+    </mat-form-field>
+  </p>
+
   <p>
     <mat-form-field class="form-field" appearance="fill">
       <mat-icon matPrefix>payments</mat-icon>
@@ -12,6 +20,7 @@
         (input)="valueChanged(amount.value)"
         [min]="0"
         [max]="wallet"
+        class="text-align-right"
       />
       <span matSuffix>&nbsp;LYX</span>
 
@@ -32,7 +41,7 @@
       [tickInterval]="1"
       [thumbLabel]="true"
       color="primary"
-      [value]="amount.value"
+      [value]="percentage"
       (input)="sliderMoved($event)"
     >
     </mat-slider>
@@ -40,7 +49,7 @@
 </div>
 <div mat-dialog-actions align="end">
   <button mat-raised-button (click)="onNoClick()">Cancel</button>
-  <button mat-raised-button class="btn-success" [mat-dialog-close]="amount.value">
-    Top up
+  <button mat-raised-button class="btn-success" [mat-dialog-close]="getReturnValues()">
+    {{ confirmLabel }}
   </button>
 </div>

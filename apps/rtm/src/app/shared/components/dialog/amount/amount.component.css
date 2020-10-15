@@ -1,7 +1,7 @@
 :host {
   display: block;
-  height: 280px;
-  width: 400px;
+  height: 200px;
+  width: 300px;
 }
 h1 {
   padding-bottom: 20px;
@@ -24,7 +24,6 @@ p {
 }
 
 mat-icon {
-  width: 50px;
   padding-right: 10px;
 }
 
@@ -37,10 +36,9 @@ mat-hint {
 }
 
 mat-form-field.mat-form-field {
-  font-size: 26px;
 }
 
-input {
+input.text-align-right {
   text-align: right;
 }
 

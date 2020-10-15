@@ -43,15 +43,12 @@ html {
   background: linear-gradient(to bottom left, #2d3e57, #232536);
 }
 
-code {
-  word-break: break-all;
-}
-
 .spacer {
   flex: 1 1 auto;
 }
 
 code {
+  word-break: break-all;
   display: inline-block;
   background: rgb(216, 216, 216);
   color: black;
@@ -61,6 +58,7 @@ code {
 mat-dialog-container ng-component {
   display: block;
 }
+
 div.mat-dialog-content {
   overflow: visible;
 }

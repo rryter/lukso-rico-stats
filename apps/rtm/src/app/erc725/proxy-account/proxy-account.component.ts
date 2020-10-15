@@ -14,6 +14,7 @@ import { combineLatest, forkJoin, Observable, of } from 'rxjs';
 import { pluck, switchMap } from 'rxjs/operators';
 import { Contract } from 'web3-eth-contract';
 import { keccak256, toWei } from 'web3-utils';
+import { ConfirmDialogOutput } from '@shared/interface/dialog';
 
 @Component({
   selector: 'lukso-proxy-account',
@@ -118,16 +119,20 @@ export class ProxyAccountComponent implements OnInit {
     const dialogRef = this.dialog.open(AmountComponent, {
       data: {
         account,
+        confirmLabel: 'Top up',
+        type: 'topup',
       },
     });
-    dialogRef.afterClosed().subscribe((result) => {
-      if (result >= 0) {
-        this.loadingIndicatorService.showLoadingIndicator(`Topping up Account with ${result} LYX`);
+    dialogRef.afterClosed().subscribe((dialogOutput: ConfirmDialogOutput) => {
+      if (dialogOutput?.value) {
+        this.loadingIndicatorService.showLoadingIndicator(
+          `Topping up Account with ${dialogOutput} LYX`
+        );
         this.web3Service.web3.eth
           .sendTransaction({
             from: this.web3Service.web3.currentProvider.selectedAddress,
             to: account.address,
-            value: toWei(result, 'ether'),
+            value: toWei(dialogOutput.value, 'ether'),
           })
           .finally(() => {
             this.loadingIndicatorService.doneLoading();
@@ -136,16 +141,27 @@ export class ProxyAccountComponent implements OnInit {
     });
   }
 
-  withdraw() {
-    this.loadingIndicatorService.showLoadingIndicator(`Sending 2 LYX`);
-    this.proxyAccountContract.methods
-      .withdraw(toWei('2', 'ether').toString())
-      .send({
-        from: this.web3Service.web3.currentProvider.selectedAddress,
-      })
-      .finally(() => {
-        this.loadingIndicatorService.doneLoading();
-      });
+  withdraw(account) {
+    const dialogRef = this.dialog.open(AmountComponent, {
+      data: {
+        account,
+        confirmLabel: 'Withdraw',
+        type: 'withdraw',
+      },
+    });
+    dialogRef.afterClosed().subscribe((dialogOutput: ConfirmDialogOutput) => {
+      if (dialogOutput?.value) {
+        this.loadingIndicatorService.showLoadingIndicator(`Withdrawing ${dialogOutput.value} LYX`);
+        this.proxyAccountContract.methods
+          .withdraw(toWei(dialogOutput.value, 'ether').toString())
+          .send({
+            from: this.web3Service.web3.currentProvider.selectedAddress,
+          })
+          .finally(() => {
+            this.loadingIndicatorService.doneLoading();
+          });
+      }
+    });
   }
 
   setNickName(address: string) {

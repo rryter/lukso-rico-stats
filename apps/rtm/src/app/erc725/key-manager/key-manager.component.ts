@@ -82,6 +82,9 @@ export class KeyManagerComponent implements OnInit {
       .then((result) => {
         const { _keyAddress, _purpose, _keyType } = result;
         return {
+          isCurrentWallet:
+            _keyAddress.toLowerCase() ===
+            this.web3Service.web3.currentProvider.selectedAddress.toLowerCase(),
           address: _keyAddress,
           purpose: _purpose,
           keyType: _keyType,

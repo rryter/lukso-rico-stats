@@ -26,6 +26,7 @@ import { LayoutComponent } from './components/layout/layout.component';
 import { RouterModule } from '@angular/router';
 import { AmountComponent } from './components/dialog/amount/amount.component';
 import { MatSliderModule } from '@angular/material/slider';
+import { MatChipsModule } from '@angular/material/chips';
 import { ReactiveFormsModule } from '@angular/forms';
 
 const materialModules = [
@@ -48,6 +49,7 @@ const materialModules = [
   MatPaginatorModule,
   MatSortModule,
   MatSliderModule,
+  MatChipsModule,
 ];
 @NgModule({
   declarations: [
