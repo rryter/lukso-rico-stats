@@ -7,7 +7,7 @@
 <ng-container>
   <article class="message is-info" *ngIf="process.currentStage === Stages.Minimal">
     <div class="message-header">
-      <p>Level 0 - Status Quo</p>
+      <p class="mat-headline">Level 0 - Status Quo</p>
     </div>
     <div class="message-body">
       <p>
@@ -23,7 +23,12 @@
         can be controlled by multiple keys and other smart contracts.
       </p>
       <br />
-      <button class="button is-success" (click)="deployProxyAccount(wallet)">
+      <button
+        mat-raised-button
+        color="primary"
+        class="button is-success"
+        (click)="deployProxyAccount(wallet)"
+      >
         Create Account
       </button>
     </div>
@@ -31,7 +36,7 @@
 
   <article class="message is-warning" *ngIf="process.currentStage === Stages.ProxyAccount">
     <div class="message-header">
-      <p>Level 1 -Proxy Account</p>
+      <p class="mat-headline">Level 1 -Proxy Account</p>
     </div>
     <div class="message-body">
       <p>
@@ -42,7 +47,12 @@
         standard allows for more complex management of an ERC725 proxy account.
       </p>
       <br />
-      <button class="button is-warning" (click)="deployKeyManager()">
+      <button
+        mat-raised-button
+        color="primary"
+        class="button is-warning"
+        (click)="deployKeyManager()"
+      >
         Make Account Managable
       </button>
     </div>

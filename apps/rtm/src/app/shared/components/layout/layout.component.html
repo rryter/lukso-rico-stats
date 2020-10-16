@@ -15,23 +15,18 @@
     <!-- Side nav -->
     <mat-sidenav #snav [opened]="true" [mode]="'side'" fixedTopGap="56" class="sidenav">
       <mat-nav-list>
-        <h3 mat-subheader>Home</h3>
+        <h3 mat-subheader>ERC725 Demo</h3>
 
         <a mat-list-item [routerLink]="['/dashboard']" routerLinkActive="active">
           <mat-icon mat-list-icon>
-            dashboard
+            payments
           </mat-icon>
-          <p mat-line>Dashboard</p>
+          <p mat-line>Account</p>
         </a>
 
-        <a mat-list-item [routerLink]="['/account/profile']">
+        <a mat-list-item [routerLink]="['/account', 123123, 'profile']">
           <mat-icon mat-list-icon>person</mat-icon>
-          <p mat-line>Profile</p>
-        </a>
-
-        <a mat-list-item [routerLink]="['/auth/login']">
-          <mat-icon mat-list-icon>exit_to_app</mat-icon>
-          <p mat-line>Log out</p>
+          <p mat-line>Profile (Soon)</p>
         </a>
 
         <a id="push-bottom" mat-list-item [routerLink]="['/about']" routerLinkActive="active">

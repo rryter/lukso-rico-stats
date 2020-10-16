@@ -11,7 +11,7 @@ import { LoadingIndicatorService } from '@shared/services/loading-indicator.serv
 import { ProxyAccountService } from '@shared/services/proxy-account.service';
 import { Stages } from '@shared/stages.enum';
 import { combineLatest, forkJoin, Observable, of } from 'rxjs';
-import { pluck, switchMap } from 'rxjs/operators';
+import { onErrorResumeNext, pluck, switchMap } from 'rxjs/operators';
 import { Contract } from 'web3-eth-contract';
 import { keccak256, toWei } from 'web3-utils';
 import { ConfirmDialogOutput } from '@shared/interface/dialog';
@@ -102,13 +102,19 @@ export class ProxyAccountComponent implements OnInit {
   private getIsExecutor(): Promise<boolean> {
     return this.aclContract.methods
       .keyHasPurpose(keccak256(this.web3Service.web3.currentProvider.selectedAddress), 2)
-      .call();
+      .call()
+      .catch(() => {
+        return false;
+      });
   }
 
   private getIsManager(): Promise<boolean> {
     return this.aclContract.methods
       .keyHasPurpose(keccak256(this.web3Service.web3.currentProvider.selectedAddress), 1)
-      .call();
+      .call()
+      .catch(() => {
+        return false;
+      });
   }
 
   getBalance(address: string): Promise<number> {

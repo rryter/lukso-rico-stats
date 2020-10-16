@@ -4,6 +4,7 @@ import { KeyManagerService } from '../../shared/services/key-manager.service';
 import { LoadingIndicatorService } from '../../shared/services/loading-indicator.service';
 import { Stages } from '../../shared/stages.enum';
 import { Web3Service } from '@lukso/web3-rx';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'lukso-progress',
@@ -24,6 +25,7 @@ export class ProgressComponent implements OnInit {
     private proxyAccountService: ProxyAccountService,
     private keyManagerService: KeyManagerService,
     private loadingIndicatorService: LoadingIndicatorService,
+    private router: Router,
     private web3Service: Web3Service
   ) {}
 
@@ -45,6 +47,7 @@ export class ProgressComponent implements OnInit {
         this.setStage(Stages.ProxyAccount);
         this.accounts.push({ address: contract.options.address });
         window.localStorage.setItem('accounts', JSON.stringify(this.accounts));
+        this.router.navigate(['accounts', contract.options.address]);
       })
       .finally(() => {
         this.loadingIndicatorService.doneLoading();
