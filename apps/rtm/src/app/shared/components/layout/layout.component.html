@@ -1,10 +1,10 @@
 <div class="navbar-container" *ngIf="!(showWrongNetworkError$ | async); else wrongNetwork">
   <!-- Top navbar -->
   <mat-toolbar class="navbar" color="primary" *ngIf="wallet$ | async as wallet">
-    <button mat-button class="menu-button" (click)="snav.toggle()">
+    <!-- <button mat-button class="menu-button" (click)="snav.toggle()">
       <mat-icon>{{ snav.opened ? 'menu_open' : 'menu' }}</mat-icon>
     </button>
-    &nbsp;
+    &nbsp; -->
     <img src="./../../assets/logo.png" style="height: 30px;" />
     <span class="spacer"></span>
     <mat-icon color="secondary">vpn_key</mat-icon>&nbsp; <span> {{ wallet.address }} </span><br />
