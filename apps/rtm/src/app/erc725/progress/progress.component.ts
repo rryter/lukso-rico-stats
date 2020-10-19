@@ -65,10 +65,10 @@ export class ProgressComponent implements OnInit {
         this.proxyAccountService.contract.options.address = this.accounts[0].address;
         return this.proxyAccountService.contract.methods
           .transferOwnership(deployedContract.options.address)
-          .send({ from: this.web3Service.web3.currentProvider.selectedAddress })
-          .then(() => {
-            this.loadingIndicatorService.doneLoading();
-          });
+          .send({ from: this.web3Service.web3.currentProvider.selectedAddress });
+      })
+      .finally(() => {
+        this.loadingIndicatorService.doneLoading();
       });
   }
 

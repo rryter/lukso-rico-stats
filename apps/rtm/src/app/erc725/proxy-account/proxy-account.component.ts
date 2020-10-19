@@ -11,7 +11,7 @@ import { LoadingIndicatorService } from '@shared/services/loading-indicator.serv
 import { ProxyAccountService } from '@shared/services/proxy-account.service';
 import { Stages } from '@shared/stages.enum';
 import { combineLatest, forkJoin, Observable, of } from 'rxjs';
-import { onErrorResumeNext, pluck, switchMap } from 'rxjs/operators';
+import { filter, onErrorResumeNext, pluck, switchMap } from 'rxjs/operators';
 import { Contract } from 'web3-eth-contract';
 import { keccak256, toWei } from 'web3-utils';
 import { ConfirmDialogOutput } from '@shared/interface/dialog';
@@ -23,9 +23,6 @@ import { ConfirmDialogOutput } from '@shared/interface/dialog';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ProxyAccountComponent implements OnInit {
-  @Input() accounts: any[];
-  @Input() stage: any;
-
   nickName = new FormControl();
   account$: Observable<any>;
   qrCode: any;
@@ -66,8 +63,8 @@ export class ProxyAccountComponent implements OnInit {
     return QRCode.toDataURL(account.address, {
       width: 200,
       color: {
-        dark: '#000',
-        light: '#fff',
+        dark: '#fff',
+        light: '#2c2c2c',
       },
     }).then((result: string) => {
       account.qrCode = result;
@@ -78,7 +75,8 @@ export class ProxyAccountComponent implements OnInit {
   private loadAccount(): Observable<Account> {
     return this.route.params.pipe(
       pluck('address'),
-      switchMap((address) => {
+      filter(Boolean),
+      switchMap((address: string) => {
         this.proxyAccountContract.options.address = address;
         return combineLatest([this.proxyAccountContract.methods.owner().call(), of(address)]);
       }),
@@ -86,7 +84,6 @@ export class ProxyAccountComponent implements OnInit {
         this.aclContract.options.address = owner as string;
         return this.getAccountDetails(address);
       })
-      //   onErrorResumeNext()
     );
   }
 
@@ -132,7 +129,7 @@ export class ProxyAccountComponent implements OnInit {
     dialogRef.afterClosed().subscribe((dialogOutput: ConfirmDialogOutput) => {
       if (dialogOutput?.value) {
         this.loadingIndicatorService.showLoadingIndicator(
-          `Topping up Account with ${dialogOutput} LYX`
+          `Topping up Account with ${dialogOutput.value} LYX`
         );
         this.web3Service.web3.eth
           .sendTransaction({

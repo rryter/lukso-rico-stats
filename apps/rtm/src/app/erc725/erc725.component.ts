@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Web3Service } from '@lukso/web3-rx';
 import { forkJoin, Observable, of } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
@@ -11,7 +12,11 @@ import { Wallet } from '../shared/interface/wallet';
 export class Erc725Component implements OnInit {
   wallet$: Observable<Wallet>;
 
-  constructor(private web3Wrapper: Web3Service) {
+  constructor(
+    private web3Wrapper: Web3Service,
+    private route: ActivatedRoute,
+    private router: Router
+  ) {
     this.wallet$ = this.web3Wrapper.reloadTrigger$.pipe(
       switchMap(() => this.web3Wrapper.address$),
       switchMap((address: string) => {
@@ -23,5 +28,11 @@ export class Erc725Component implements OnInit {
     );
   }
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.route.params.subscribe((params: { address: string }) => {
+      if (params.address) {
+        this.router.navigate(['accounts', params.address]);
+      }
+    });
+  }
 }

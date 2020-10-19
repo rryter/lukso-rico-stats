@@ -1,5 +1,9 @@
-<ng-container *ngIf="loading$ | async as loading">
-  <span class="tag is-info" *ngIf="loading.isLoading"
-    >{{ loading.text }}&nbsp;<span class="fas fa-spinner fa-pulse"></span
-  ></span>
+<ng-container *ngIf="loading$ | async as loadingStatus">
+  <div class="loading-overlay" *ngIf="loadingStatus.isLoading">
+    <mat-spinner></mat-spinner>
+    <br />
+    <div class="tag is-info" *ngIf="loadingStatus.isLoading">
+      {{ loadingStatus.text }}&nbsp;<span class="fas fa-spinner fa-pulse"></span>
+    </div>
+  </div>
 </ng-container>

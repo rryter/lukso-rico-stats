@@ -13,9 +13,11 @@ export class LoadingIndicatorService {
       const a = {};
       a[idendtifier] = true;
     }
+    console.count('show');
     this.loading$.next({ isLoading: true, text });
   }
   doneLoading() {
+    console.count('hide');
     this.loading$.next({ isLoading: false });
   }
 }

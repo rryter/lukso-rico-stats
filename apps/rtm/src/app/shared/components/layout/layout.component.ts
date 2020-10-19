@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Web3Service } from '@lukso/web3-rx';
 import { Wallet } from '@shared/interface/wallet';
 import { environment } from './../../../../environments/environment';
@@ -15,7 +15,11 @@ export class LayoutComponent implements OnInit {
   wallet$: Observable<Wallet>;
   address$: Observable<any>;
   showWrongNetworkError$: Observable<boolean>;
-  constructor(private web3Wrapper: Web3Service, private router: Router) {
+  constructor(
+    private web3Wrapper: Web3Service,
+    private router: Router,
+    private route: ActivatedRoute
+  ) {
     this.address$ = this.web3Wrapper.address$;
     this.showWrongNetworkError$ = this.web3Wrapper.networkId$.pipe(
       map((networkId) => {
@@ -35,11 +39,6 @@ export class LayoutComponent implements OnInit {
         });
       })
     );
-
-    const accountAddress = JSON.parse(window.localStorage.getItem('accounts'));
-    if (accountAddress) {
-      this.router.navigate(['accounts', accountAddress[0].address]);
-    }
   }
   ngOnInit(): void {}
 }

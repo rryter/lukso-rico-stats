@@ -1,3 +1,4 @@
 <ng-container *ngIf="wallet$ | async as wallet">
   <lukso-progress [wallet]="wallet.address"></lukso-progress>
+  <lukso-loading></lukso-loading>
 </ng-container>

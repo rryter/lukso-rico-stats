@@ -5,3 +5,11 @@
 .message {
   padding: 50px;
 }
+
+.mat-card-header-text {
+  padding: 0;
+}
+
+a {
+  color: white;
+}

@@ -27,6 +27,7 @@ import { RouterModule } from '@angular/router';
 import { AmountComponent } from './components/dialog/amount/amount.component';
 import { MatSliderModule } from '@angular/material/slider';
 import { MatChipsModule } from '@angular/material/chips';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { ReactiveFormsModule } from '@angular/forms';
 import { WrongNetworkComponent } from '@shared/components/wrong-network/wrong-network.component';
 
@@ -51,6 +52,7 @@ const materialModules = [
   MatSortModule,
   MatSliderModule,
   MatChipsModule,
+  MatProgressSpinnerModule,
 ];
 @NgModule({
   declarations: [
