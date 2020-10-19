@@ -1,9 +1,17 @@
+:host {
+  display: block;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
 .navbar-spacer {
   flex: 1 1 auto;
 }
 
 .navbar {
   z-index: 2;
+  background: rgb(46, 68, 95);
+  background: linear-gradient(-144deg, rgba(46, 68, 95, 1) 0%, rgba(36, 37, 55, 1) 100%);
 }
 
 .navbar span {
@@ -19,11 +27,6 @@
 .navbar-container {
   display: flex;
   flex-direction: column;
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  right: 0;
 }
 
 .navbar-is-mobile .navbar {

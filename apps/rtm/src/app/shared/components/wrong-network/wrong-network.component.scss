@@ -1,0 +1,21 @@
+:host {
+  display: block;
+  width: 500px;
+  margin: 0 auto;
+  padding-top: 100px;
+}
+
+.warning {
+  background: #ff3d3d;
+
+  a {
+    color: black;
+  }
+}
+
+.mat-card-avatar {
+  text-align: center;
+  mat-icon {
+    font-size: 35px;
+  }
+}

@@ -1,5 +1,4 @@
-<!-- <div class="navbar-container" [class.example-is-mobile]="mobileQuery.matches"> -->
-<div class="navbar-container">
+<div class="navbar-container" *ngIf="!(showWrongNetworkError$ | async); else wrongNetwork">
   <!-- Top navbar -->
   <mat-toolbar class="navbar" color="primary" *ngIf="wallet$ | async as wallet">
     <img src="./../../assets/logo.png" style="height: 30px;" />
@@ -13,18 +12,18 @@
 
   <mat-sidenav-container class="navbar-sidenav-container">
     <!-- Side nav -->
-    <mat-sidenav #snav [opened]="true" [mode]="'side'" fixedTopGap="56" class="sidenav">
+    <!-- <mat-sidenav #snav [opened]="true" [mode]="'side'" fixedTopGap="56" class="sidenav">
       <mat-nav-list>
         <h3 mat-subheader>ERC725 Demo</h3>
 
-        <a mat-list-item [routerLink]="['/dashboard']" routerLinkActive="active">
+        <a mat-list-item [routerLink]="['/']" routerLinkActive="active">
           <mat-icon mat-list-icon>
             payments
           </mat-icon>
           <p mat-line>Account</p>
         </a>
 
-        <a mat-list-item [routerLink]="['/account', 123123, 'profile']">
+        <a mat-list-item [routerLink]="['/account', 123123, 'profile']" disabled>
           <mat-icon mat-list-icon>person</mat-icon>
           <p mat-line>Profile (Soon)</p>
         </a>
@@ -36,7 +35,7 @@
           <p mat-line>About</p>
         </a>
       </mat-nav-list>
-    </mat-sidenav>
+    </mat-sidenav> -->
 
     <!-- Main content -->
     <mat-sidenav-content class="sidenav-content">
@@ -54,3 +53,7 @@
     </mat-sidenav-content>
   </mat-sidenav-container>
 </div>
+
+<ng-template #wrongNetwork>
+  <lukso-wrong-network></lukso-wrong-network>
+</ng-template>

@@ -28,6 +28,7 @@ import { AmountComponent } from './components/dialog/amount/amount.component';
 import { MatSliderModule } from '@angular/material/slider';
 import { MatChipsModule } from '@angular/material/chips';
 import { ReactiveFormsModule } from '@angular/forms';
+import { WrongNetworkComponent } from '@shared/components/wrong-network/wrong-network.component';
 
 const materialModules = [
   MatTableModule,
@@ -59,6 +60,7 @@ const materialModules = [
     ConfirmComponent,
     LayoutComponent,
     AmountComponent,
+    WrongNetworkComponent,
   ],
   imports: [
     RouterModule,
