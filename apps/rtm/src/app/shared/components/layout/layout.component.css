@@ -70,3 +70,7 @@ a.mat-list-item.active {
   position: absolute;
   bottom: 0;
 }
+
+.mat-drawer-content {
+  min-height: 600px;
+}

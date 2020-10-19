@@ -7,10 +7,11 @@
   <ng-container *ngIf="!errorMessage.message">
     <mat-card>
       <mat-toolbar>
-        <span>Your Account</span>
+        <span>Account</span>
       </mat-toolbar>
 
       <mat-card-content class="wallet">
+        <br />
         <img [src]="account.qrCode" /><br />
         <br />
         <code>{{ account.address }}</code>
