@@ -1,20 +1,6 @@
-# DAPP
+# ERC 725 and ERC 734 Demo
 
-## Events
-
-- WalletChange
-- New Block
-- Funds Locked
-- Funds Withdrawn
-
-## Functions
-
-- isLocked
-- getVaultBalance
-- getAccountBalance
-
-- lockFunds
-- widhdrawFunds
+This is a very basic demonstration of [ERC 725](https://github.com/ethereum/eips/issues/725) in combination with [ERC 734](https://github.com/ethereum/eips/issues/725).
 
 # Angular
 
