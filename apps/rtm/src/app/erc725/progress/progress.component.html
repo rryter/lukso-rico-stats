@@ -1,7 +1,10 @@
 <ng-container>
   <mat-card class="message-body" *ngIf="process.currentStage === Stages.Minimal">
     <mat-card-content>
-      <h1>Level 0 - Status Quo</h1>
+      <mat-toolbar>
+        Level 0 - Status Quo
+      </mat-toolbar>
+      <br />
       <p>
         This is a very basic demonstration of
         <a href="https://github.com/ethereum/eips/issues/725" target="_blank">ERC 725 </a> in

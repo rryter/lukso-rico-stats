@@ -14,11 +14,7 @@ export class AssetPriceService {
   getPrice(symbol: string) {
     if (!this.priceMapping[symbol]) {
       this.priceMapping[symbol] = this.http
-        .get(`/api/v1/cryptocurrency/quotes/latest?symbol=${symbol}`, {
-          headers: {
-            'X-CMC_PRO_API_KEY': '343b0b11-c2cb-483b-865a-eef4fd489aba',
-          },
-        })
+        .get(`https://api.wallet.rryter.ch`)
         .pipe(shareReplay(1));
     }
     return this.priceMapping[symbol];

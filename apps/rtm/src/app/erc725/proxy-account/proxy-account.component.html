@@ -1,4 +1,4 @@
-<ng-container *ngIf="account$ | async as account; else noAccount">
+<ng-container *ngIf="account$ | async as account">
   <ng-container *ngIf="errorMessage.message">
     <h1 class="mat-display-1">{{ errorMessage?.title }}</h1>
     <h2 class="mat-h2" [innerHTML]="errorMessage?.message"></h2>
@@ -43,6 +43,4 @@
     </mat-card>
   </ng-container>
 </ng-container>
-<ng-template #noAccount>
-  <lukso-progress></lukso-progress>
-</ng-template>
+<lukso-progress></lukso-progress>

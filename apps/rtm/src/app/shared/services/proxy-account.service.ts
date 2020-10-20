@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Web3Service } from '@lukso/web3-rx';
 import { Contract } from 'web3-eth-contract';
-
 const proxyAccountContract = require('../../../../../../../ERC725/implementations/build/contracts/ERC725Account.json');
 
 @Injectable({

@@ -5,6 +5,7 @@ import { LoadingIndicatorService } from '../../shared/services/loading-indicator
 import { Stages } from '../../shared/stages.enum';
 import { Web3Service } from '@lukso/web3-rx';
 import { Router } from '@angular/router';
+import { Account } from '@shared/interface/account';
 
 @Component({
   selector: 'lukso-progress',
@@ -12,13 +13,11 @@ import { Router } from '@angular/router';
   styleUrls: ['./progress.component.css'],
 })
 export class ProgressComponent implements OnInit {
-  process: {
-    currentStage: Stages;
-  } = {
-    currentStage: Stages.Minimal,
-  };
   Stages = Stages;
   accounts: any[] = JSON.parse(window.localStorage.getItem('accounts')) || [];
+  process: {
+    currentStage: Stages;
+  };
   @Input() wallet: any;
 
   constructor(
@@ -27,11 +26,16 @@ export class ProgressComponent implements OnInit {
     private loadingIndicatorService: LoadingIndicatorService,
     private router: Router,
     private web3Service: Web3Service
-  ) {}
+  ) {
+    this.process = {
+      currentStage: this.accounts[0]?.stage || 1,
+    };
+  }
 
   ngOnInit(): void {
-    if (parseInt(window.localStorage.getItem('stage'), 0) >= 0) {
-      this.process.currentStage = parseInt(window.localStorage.getItem('stage'), 0);
+    const accountsInLocalStorage = JSON.parse(window.localStorage.getItem('accounts'));
+    if (accountsInLocalStorage?.length > 0) {
+      this.process.currentStage = accountsInLocalStorage[0].stage;
     }
   }
 
@@ -44,8 +48,7 @@ export class ProgressComponent implements OnInit {
       .deployProxyAccount()
       .then((contract) => {
         this.proxyAccountService.contract.options.address = contract.options.address;
-        this.setStage(Stages.ProxyAccount);
-        this.accounts.push({ address: contract.options.address });
+        this.accounts.push({ address: contract.options.address, stage: 2 });
         window.localStorage.setItem('accounts', JSON.stringify(this.accounts));
         this.router.navigate(['accounts', contract.options.address]);
       })
@@ -61,7 +64,7 @@ export class ProgressComponent implements OnInit {
     this.keyManagerService
       .deploy(this.web3Service.web3.currentProvider.selectedAddress)
       .then((deployedContract) => {
-        this.setStage(Stages.KeyManager);
+        this.setStage(this.accounts, Stages.KeyManager);
         this.proxyAccountService.contract.options.address = this.accounts[0].address;
         return this.proxyAccountService.contract.methods
           .transferOwnership(deployedContract.options.address)
@@ -72,8 +75,10 @@ export class ProgressComponent implements OnInit {
       });
   }
 
-  private setStage(stage: Stages) {
-    window.localStorage.setItem('stage', JSON.stringify(stage));
+  private setStage(accounts, stage: Stages) {
+    console.log('setStage', stage);
+    accounts[0].stage = stage;
+    window.localStorage.setItem('accounts', JSON.stringify(accounts));
     this.process.currentStage = stage;
   }
 

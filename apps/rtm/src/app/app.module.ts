@@ -21,7 +21,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
           loadChildren: () => import('./erc725/erc725.module').then((m) => m.Erc725Module),
         },
       ],
-      { initialNavigation: 'enabled', enableTracing: true }
+      { initialNavigation: 'enabled', enableTracing: false }
     ),
     BrowserAnimationsModule,
   ],
