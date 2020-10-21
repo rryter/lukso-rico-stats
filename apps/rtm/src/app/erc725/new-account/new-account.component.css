@@ -1,0 +1,29 @@
+:host {
+  display: grid;
+  grid-template-columns: 1fr 200px 20px 200px 1fr;
+  grid-template-rows: 30% 1fr 30%;
+  height: 600px;
+}
+
+.box {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+.box--new {
+  grid-column: 2 / span 1;
+  grid-row: 2;
+}
+
+.box--existing {
+  grid-column: 4 / span 1;
+  grid-row: 2;
+}
+
+mat-icon {
+  padding-bottom: 10px;
+  font-size: 40px;
+  width: 40px;
+  height: 40px;
+}
