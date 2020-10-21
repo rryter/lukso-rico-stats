@@ -14,9 +14,12 @@
   background: linear-gradient(-144deg, rgba(46, 68, 95, 1) 0%, rgba(36, 37, 55, 1) 100%);
 }
 
-.navbar span {
+.navbar span,
+.navbar a {
   font-weight: 300;
   font-size: 15px;
+  text-decoration: none;
+  color: white;
 }
 
 .navbar-brand {
