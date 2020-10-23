@@ -184,4 +184,8 @@ export class ProxyAccountComponent implements OnInit {
     //     from: this.web3Service.web3.currentProvider.selectedAddress,
     //   });
   }
+
+  navigateToBlockExplorer(address: string) {
+    window.open('https://blockscout.com/lukso/l14/address/' + address + '/transactions', '_blank');
+  }
 }

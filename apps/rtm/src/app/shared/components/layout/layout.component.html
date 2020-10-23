@@ -9,6 +9,7 @@
       <img src="./../../assets/logo.png" style="height: 30px;" />
     </a>
     <span class="spacer"></span>
+    <span>Connected Wallet</span>&nbsp;
     <a
       href="{{ 'https://blockscout.com/lukso/l14/address/' + wallet.address + '/transactions' }}"
       target="_blank"
@@ -20,7 +21,7 @@
       </mat-chip-list> </a
     ><br />
     <span class="spacer"></span>
-
+    <span>Balance&nbsp;</span>
     <mat-icon color="secondary">payments</mat-icon>&nbsp;
     <span> {{ wallet.balance | number: '0.0-4' }} LYX</span>
   </mat-toolbar>

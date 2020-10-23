@@ -14,7 +14,9 @@
         <br />
         <img [src]="account.qrCode" /><br />
         <br />
-        <code>{{ account.address }}</code>
+        <mat-chip (click)="navigateToBlockExplorer(account.address)">
+          <mat-icon>person</mat-icon>&nbsp;{{ account.address }}</mat-chip
+        >
         <br />
         <br />
         <h1>{{ account.balance | number: '0.4' }} LYX</h1>

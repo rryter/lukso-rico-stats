@@ -4,10 +4,11 @@
     <th mat-header-cell *matHeaderCellDef mat-sort-header>Address</th>
     <td mat-cell *matCellDef="let row">
       <mat-chip-list aria-label="Current Wallet" *ngIf="!row.isCurrentWallet">
-        <mat-chip>{{ row.address }}</mat-chip>
+        <mat-chip><mat-icon>vpn_key</mat-icon>&nbsp;{{ row.address }}</mat-chip>
       </mat-chip-list>
       <mat-chip-list aria-label="Current Wallet" *ngIf="row.isCurrentWallet">
-        <mat-chip color="primary" selected>{{ row.address }}</mat-chip>
+        <mat-chip><mat-icon>vpn_key</mat-icon>&nbsp;{{ row.address }}</mat-chip>
+        <mat-chip selected>Current Wallet</mat-chip>
       </mat-chip-list>
     </td>
   </ng-container>
