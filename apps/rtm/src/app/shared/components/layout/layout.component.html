@@ -9,12 +9,15 @@
       <img src="./../../assets/logo.png" style="height: 30px;" />
     </a>
     <span class="spacer"></span>
-    <mat-icon color="secondary">vpn_key</mat-icon>&nbsp;
     <a
       href="{{ 'https://blockscout.com/lukso/l14/address/' + wallet.address + '/transactions' }}"
       target="_blank"
     >
-      {{ wallet.address }} </a
+      <mat-chip-list aria-label="Current Wallet">
+        <mat-chip [color]="'primary'">
+          <mat-icon>vpn_key</mat-icon>&nbsp; {{ wallet.address }}
+        </mat-chip>
+      </mat-chip-list> </a
     ><br />
     <span class="spacer"></span>
 

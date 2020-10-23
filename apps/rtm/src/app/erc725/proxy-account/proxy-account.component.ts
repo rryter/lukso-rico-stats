@@ -148,12 +148,6 @@ export class ProxyAccountComponent implements OnInit {
   }
 
   withdraw(account) {
-    this.aclContract.events.allEvents().on('data', (data) => {
-      console.log('xxx aclContract', data);
-    });
-    this.proxyAccountContract.events.allEvents().on('data', (data) => {
-      console.log('xxx proxyAccountContract', data);
-    });
     const dialogRef = this.dialog.open(AmountComponent, {
       data: {
         account,
@@ -175,7 +169,7 @@ export class ProxyAccountComponent implements OnInit {
             from: this.web3Service.web3.currentProvider.selectedAddress,
           })
           .catch((error) => {
-            console.log(error);
+            console.error(error);
           })
           .finally(() => {
             this.loadingIndicatorService.doneLoading();

@@ -30,6 +30,7 @@ import { MatChipsModule } from '@angular/material/chips';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { ReactiveFormsModule } from '@angular/forms';
 import { WrongNetworkComponent } from '@shared/components/wrong-network/wrong-network.component';
+import { MatRippleModule } from '@angular/material/core';
 
 const materialModules = [
   MatTableModule,
@@ -53,6 +54,7 @@ const materialModules = [
   MatSliderModule,
   MatChipsModule,
   MatProgressSpinnerModule,
+  MatRippleModule,
 ];
 @NgModule({
   declarations: [

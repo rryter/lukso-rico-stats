@@ -1,13 +1,27 @@
-<div class="box box--new" (click)="deployProxyAccount()">
-  <mat-icon mat-list-icon>add_box</mat-icon>
+<div class="box box--new" (click)="deployProxyAccount()" matRipple>
+  <div class="icon">
+    <mat-icon mat-list-icon>add_box</mat-icon>
+  </div>
+  <br />
+  <h1>Create Your On-Chain <br />Wallet / Profile</h1>
+  <br />
+  <p>This will deploy an ERC-725 Account for you.</p>
+  <br />
   <button mat-raised-button color="primary">
-    Create New Account
+    Let's go
   </button>
 </div>
-<div class="box box--existing" [matMenuTriggerFor]="menu">
-  <mat-icon mat-list-icon>person</mat-icon>
-  <button mat-stroked-button color="primary">
-    Load Existing Account
+<div class="box box--existing" matRipple [matMenuTriggerFor]="menu">
+  <div class="icon">
+    <mat-icon mat-list-icon>person</mat-icon>
+  </div>
+  <br />
+  <h1>Load Existing Account</h1>
+  <br />
+  <p>You have already created your account, and just want to access it.</p>
+  <br />
+  <button mat-raised-button color="primary">
+    Select Account
   </button>
   <mat-menu #menu="matMenu" [overlapTrigger]="true">
     <button

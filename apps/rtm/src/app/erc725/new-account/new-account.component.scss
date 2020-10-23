@@ -1,11 +1,13 @@
 :host {
   display: grid;
-  grid-template-columns: 1fr 250px 20px 250px 1fr;
-  grid-template-rows: 30% 1fr 30%;
+  grid-template-columns: 1fr 350px 20px 350px 1fr;
+  grid-template-rows: 10% 1fr 10%;
   height: 600px;
 }
 
 .box {
+  padding: 20px;
+  text-align: center;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -14,6 +16,7 @@
 
   &:hover {
     cursor: pointer;
+    background: rgba(0, 0, 0, 0.6);
   }
 }
 .box--new {
@@ -27,8 +30,19 @@
 }
 
 mat-icon {
-  padding-bottom: 10px;
-  font-size: 40px;
-  width: 40px;
-  height: 40px;
+  $icon-size: 60px;
+  font-size: $icon-size;
+  width: $icon-size;
+  height: $icon-size;
+}
+
+.icon {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 40px;
+  width: 100px;
+  height: 100px;
+  background-color: rgba(#000000, 0.5);
+  margin-bottom: 10px;
 }

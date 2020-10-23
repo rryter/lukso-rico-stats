@@ -76,7 +76,6 @@ export class ProgressComponent implements OnInit {
   }
 
   private setStage(accounts, stage: Stages) {
-    console.log('setStage', stage);
     accounts[0].stage = stage;
     window.localStorage.setItem('accounts', JSON.stringify(accounts));
     this.process.currentStage = stage;
