@@ -1,15 +1,15 @@
-<div class="box box--new" domflag>
+<div class="box box--new" (click)="deployProxyAccount()">
   <mat-icon mat-list-icon>add_box</mat-icon>
-  <button mat-raised-button color="primary" (click)="deployProxyAccount()">
+  <button mat-raised-button color="primary">
     Create New Account
   </button>
 </div>
-<div class="box box--existing">
+<div class="box box--existing" [matMenuTriggerFor]="menu">
   <mat-icon mat-list-icon>person</mat-icon>
-  <button mat-stroked-button color="primary" [matMenuTriggerFor]="menu">
+  <button mat-stroked-button color="primary">
     Load Existing Account
   </button>
-  <mat-menu #menu="matMenu">
+  <mat-menu #menu="matMenu" [overlapTrigger]="true">
     <button
       mat-menu-item
       *ngFor="let account of accounts; let i = index"

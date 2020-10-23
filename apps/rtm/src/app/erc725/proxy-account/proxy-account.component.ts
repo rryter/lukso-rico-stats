@@ -13,7 +13,7 @@ import { Stages } from '@shared/stages.enum';
 import { combineLatest, forkJoin, Observable, of } from 'rxjs';
 import { filter, onErrorResumeNext, pluck, switchMap } from 'rxjs/operators';
 import { Contract } from 'web3-eth-contract';
-import { keccak256, toWei } from 'web3-utils';
+import { keccak256, toWei, toBN } from 'web3-utils';
 import { ConfirmDialogOutput } from '@shared/interface/dialog';
 
 @Component({
@@ -137,6 +137,9 @@ export class ProxyAccountComponent implements OnInit {
             to: account.address,
             value: toWei(dialogOutput.value, 'ether'),
           })
+          .catch((error) => {
+            console.error(error);
+          })
           .finally(() => {
             this.loadingIndicatorService.doneLoading();
           });
@@ -145,6 +148,12 @@ export class ProxyAccountComponent implements OnInit {
   }
 
   withdraw(account) {
+    this.aclContract.events.allEvents().on('data', (data) => {
+      console.log('xxx aclContract', data);
+    });
+    this.proxyAccountContract.events.allEvents().on('data', (data) => {
+      console.log('xxx proxyAccountContract', data);
+    });
     const dialogRef = this.dialog.open(AmountComponent, {
       data: {
         account,
@@ -155,10 +164,18 @@ export class ProxyAccountComponent implements OnInit {
     dialogRef.afterClosed().subscribe((dialogOutput: ConfirmDialogOutput) => {
       if (dialogOutput?.value) {
         this.loadingIndicatorService.showLoadingIndicator(`Withdrawing ${dialogOutput.value} LYX`);
-        this.proxyAccountContract.methods
-          .withdraw(toWei(dialogOutput.value, 'ether').toString())
+
+        // let abi = account.contract.methods.execute("0", accounts[2], oneEth, '0x00').encodeABI();
+        // await keyManager.execute(abi, {from: owner});
+        const value = toBN(toWei(dialogOutput.value, 'ether'));
+        this.aclContract.methods
+          //uint256 _operation, address _to, uint256 _value, bytes memory _data
+          .execute(0, this.web3Service.web3.currentProvider.selectedAddress, value, '0x00')
           .send({
             from: this.web3Service.web3.currentProvider.selectedAddress,
+          })
+          .catch((error) => {
+            console.log(error);
           })
           .finally(() => {
             this.loadingIndicatorService.doneLoading();
