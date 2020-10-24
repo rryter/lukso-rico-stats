@@ -2,12 +2,12 @@
 pragma solidity ^0.6.0;
 
 // modules
-import "./ERC725.sol";
-import "./IERC1271.sol";
+import './ERC725.sol';
+import './IERC1271.sol';
 
 // libraries
-import "@openzeppelin/contracts/cryptography/ECDSA.sol";
-import "./helpers/UtilsLib.sol";
+import '@openzeppelin/contracts/cryptography/ECDSA.sol';
+import './helpers/UtilsLib.sol';
 
 /**
  * @title ERC725Account
@@ -29,8 +29,8 @@ contract ERC725Account is ERC725, IERC1271 {
      * @param _newOwner the owner of the contract.
      */
     constructor(address _newOwner) public ERC725(_newOwner) {
-        bytes32 key = keccak256("ERC725Type");
-        store[key] = abi.encodePacked(keccak256("ERC725Account"));
+        bytes32 key = keccak256('ERC725Type');
+        store[key] = abi.encodePacked(keccak256('ERC725Account'));
         emit DataChanged(key, store[key]);
 
         _registerInterface(_INTERFACE_ID_ERC1271);
@@ -68,10 +68,7 @@ contract ERC725Account is ERC725, IERC1271 {
         view
         returns (bytes4 magicValue)
     {
-        if (
-            UtilsLib.isContract(owner()) &&
-            supportsInterface(_INTERFACE_ID_ERC1271)
-        ) {
+        if (UtilsLib.isContract(owner()) && supportsInterface(_INTERFACE_ID_ERC1271)) {
             return IERC1271(owner()).isValidSignature(_hash, _signature);
         } else {
             return
