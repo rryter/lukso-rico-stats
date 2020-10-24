@@ -1,8 +1,8 @@
 :host {
   display: grid;
   grid-template-columns: 1fr 350px 20px 350px 1fr;
-  grid-template-rows: 10% 1fr 10%;
-  height: 600px;
+  grid-template-rows: 400px 1fr 400px;
+  height: 100%;
 }
 
 .box {
@@ -29,9 +29,8 @@
   grid-row: 2;
 }
 
-mat-icon {
-  $icon-size: 60px;
-  font-size: $icon-size;
+img {
+  $icon-size: 120px;
   width: $icon-size;
   height: $icon-size;
 }
@@ -41,8 +40,4 @@ mat-icon {
   justify-content: center;
   align-items: center;
   border-radius: 40px;
-  width: 100px;
-  height: 100px;
-  background-color: rgba(#000000, 0.5);
-  margin-bottom: 10px;
 }

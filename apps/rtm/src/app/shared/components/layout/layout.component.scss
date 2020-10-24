@@ -1,7 +1,6 @@
 :host {
   display: block;
-  max-width: 1400px;
-  margin: 0 auto;
+  height: 100vh;
 }
 
 .navbar-spacer {
@@ -11,7 +10,8 @@
 .navbar {
   z-index: 2;
   background: rgb(46, 68, 95);
-  background: linear-gradient(-144deg, rgba(46, 68, 95, 1) 0%, rgba(36, 37, 55, 1) 100%);
+  box-shadow: 6px 0 6px rgba(0, 0, 0, 0.1);
+  /* background: linear-gradient(-144deg, rgba(46, 68, 95, 1) 0%, rgba(36, 37, 55, 1) 100%); */
 }
 
 .navbar span,
@@ -30,6 +30,7 @@
 .navbar-container {
   display: flex;
   flex-direction: column;
+  height: 100vh;
 }
 
 .navbar-is-mobile .navbar {
@@ -50,11 +51,18 @@
   flex: 1 0 auto;
 }
 
-/*Set sidenav width*/
+.mat-drawer-container {
+  background: none;
+}
 
+.mat-drawer {
+  background: rgba(0, 0, 0, 0.3);
+}
+/*Set sidenav width*/
 mat-sidenav {
-  min-width: 180px !important;
-  border-right: 1px solid #eee;
+  width: 280px;
+  min-width: 280px !important;
+  border-right: 1px solid transparent;
   box-shadow: 6px 0 6px rgba(0, 0, 0, 0.1);
   /* background-color:rgb(63, 81, 181); */
 }
@@ -65,8 +73,11 @@ mat-sidenav {
   height: 5px;
 }
 
+a.mat-list-item {
+  background: rgba(0, 0, 0, 0.2);
+}
 a.mat-list-item.active {
-  background: rgba(0, 0, 0, 0.04);
+  background: red;
 }
 
 #push-bottom {
@@ -80,4 +91,14 @@ a.mat-list-item.active {
 
 mat-chip:hover {
   cursor: pointer;
+}
+
+.coaster-logo {
+  display: block;
+  padding: 20px;
+
+  img {
+    display: block;
+    width: 90%;
+  }
 }

@@ -1,10 +1,7 @@
 <div class="navbar-container" *ngIf="!(showWrongNetworkError$ | async); else wrongNetwork">
   <!-- Top navbar -->
-  <mat-toolbar class="navbar" color="primary" *ngIf="wallet$ | async as wallet">
-    <!-- <button mat-button class="menu-button" (click)="snav.toggle()">
-      <mat-icon>{{ snav.opened ? 'menu_open' : 'menu' }}</mat-icon>
-    </button>
-    &nbsp; -->
+  <!-- <mat-toolbar class="navbar" color="primary" *ngIf="wallet$ | async as wallet">
+    
     <a href="/" style="display: block; height: 30px;">
       <img src="./../../assets/logo.png" style="height: 30px;" />
     </a>
@@ -24,30 +21,31 @@
     <span>Balance&nbsp;</span>
     <mat-icon color="secondary">payments</mat-icon>&nbsp;
     <span> {{ wallet.balance | number: '0.0-4' }} LYX</span>
-  </mat-toolbar>
+  </mat-toolbar> -->
 
   <mat-sidenav-container class="navbar-sidenav-container">
     <!-- Side nav -->
-    <mat-sidenav #snav [opened]="snav.opened" [mode]="'over'" fixedTopGap="56" class="sidenav">
+    <mat-sidenav #snav [opened]="true" [mode]="'side'" fixedTopGap="56" class="sidenav">
       <mat-nav-list>
-        <h3 mat-subheader>ERC725 Demo</h3>
-
-        <a mat-list-item [routerLink]="['/']" routerLinkActive="active">
-          <mat-icon mat-list-icon>
-            payments
-          </mat-icon>
-          <p mat-line>Account</p>
+        <a href="/" class="coaster-logo">
+          <img src="/assets/coaster_logo.png" />
         </a>
+        <h3 mat-subheader>Accounts</h3>
 
-        <a mat-list-item [routerLink]="['/account', 123123, 'profile']" disabled>
-          <mat-icon mat-list-icon>person</mat-icon>
-          <p mat-line>Profile (Soon)</p>
-        </a>
+        <ng-container *ngIf="accounts?.length > 0; else noAccounts">
+          <a
+            mat-list-item
+            *ngFor="let account of accounts"
+            [routerLink]="['accounts', account.address]"
+          >
+            <mat-icon mat-list-icon> person </mat-icon>
+            <p mat-line>{{ account.address | ethAddressShort }}</p>
+          </a>
+        </ng-container>
+        <ng-template #noAccounts> <a mat-list-item>Create Account</a></ng-template>
 
         <a id="push-bottom" mat-list-item [routerLink]="['/about']" routerLinkActive="active">
-          <mat-icon mat-list-icon>
-            info_outline
-          </mat-icon>
+          <mat-icon mat-list-icon> info_outline </mat-icon>
           <p mat-line>About</p>
         </a>
       </mat-nav-list>

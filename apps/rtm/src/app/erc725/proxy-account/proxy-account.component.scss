@@ -2,10 +2,6 @@
   display: block;
 }
 
-.wallet {
-  text-align: center;
-}
-
 mat-chip {
   &:hover {
     cursor: pointer;
@@ -18,4 +14,51 @@ mat-chip {
 
 mat-toolbar {
   background: rgba(0, 0, 0, 0.2);
+}
+
+.mat-card-header {
+  padding-top: 10px;
+}
+.wrapper {
+  display: flex;
+}
+.wallet {
+  width: 300px;
+  background: rgba(0, 0, 0, 0.1);
+}
+
+.account {
+  width: 500px;
+  background: rgba(0, 0, 0, 0.1);
+  text-align: center;
+
+  &:hover {
+    img {
+      cursor: pointer;
+    }
+  }
+}
+
+.header {
+  display: flex;
+}
+
+.lyx-logo {
+  height: 40px;
+  width: 40px;
+  background: url('/assets/lukso_token_logo.png') no-repeat;
+  background-size: contain;
+}
+
+.balances {
+  mat-icon {
+    height: 40px;
+    margin-right: 10px;
+    margin-left: 10px;
+  }
+  span {
+    line-height: 24px;
+    width: 100px;
+    display: inline-block;
+  }
 }
