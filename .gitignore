@@ -8,6 +8,11 @@
 # dependencies
 /node_modules
 
+/solidity/cache
+/solidity/artifacts
+/solidity/types
+/solidity/node_modules
+
 # IDEs and editors
 /.idea
 .project
