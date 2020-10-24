@@ -6,53 +6,30 @@
 
   <div class="wrapper" *ngIf="!errorMessage.message">
     <mat-card class="wallet">
-      <mat-toolbar>
-        <span>Balance</span>
-      </mat-toolbar>
-      <mat-card-header>
-        <div mat-card-avatar class="lyx-logo"></div>
-        <mat-card-title>LYX</mat-card-title>
-        <mat-card-subtitle>LUKSO</mat-card-subtitle>
-      </mat-card-header>
       <mat-card-content>
+        <div class="circle circle--1"></div>
+        <div class="circle circle--2"></div>
+        <h1>{{ account.address }}</h1>
         <div class="balances">
-          <mat-icon>account_balance_wallet</mat-icon><span>Balance</span
-          >{{ account.balance | number: '0.4' }}
-
-          <br />
-          <mat-icon>attach_money</mat-icon><span>Value</span>
-          {{ account.balance | cmcPrice | async | number: '0.0-2' }}
+          <div class="balance balance--lyx">{{ account.balance | number: '0.4' }} LYX</div>
+          <div class="balance balance--dollar">
+            $ {{ account.balance | cmcPrice | async | number: '0.0-2' }}
+          </div>
+        </div>
+        <!-- <div class="info">
+          <img [src]="account.qrCode" (click)="navigateToBlockExplorer(account.address)" /><br />
+        </div> -->
+        <div class="actions">
+          <button mat-raised-button class="btn-success" (click)="topUp(account)">
+            <span>Top Up</span>
+          </button>
+          &nbsp;
+          <button mat-raised-button color="primary" (click)="withdraw(account)">
+            <span>Withdraw</span>
+          </button>
         </div>
       </mat-card-content>
-      <mat-card-actions *ngIf="account.isExecutable || account.isManagable">
-        <button mat-raised-button class="btn-success" (click)="topUp(account)">
-          <span>Top Up</span>
-        </button>
-        <button mat-raised-button color="primary" (click)="withdraw(account)">
-          <span>Withdraw</span>
-        </button>
-        <!-- <button
-                *ngIf="stage === Stages.CustomContract"
-                [disabled]="!account.isExecutable"
-                class="button is-success"
-                (click)="lockFunds(account.address)"
-            >
-                Lock Funds
-            </button> -->
-      </mat-card-actions>
-    </mat-card>
-    <mat-card class="account">
-      <mat-toolbar>
-        <span>Account</span>
-      </mat-toolbar>
-      <mat-card-content>
-        <br />
-        <img [src]="account.qrCode" (click)="navigateToBlockExplorer(account.address)" /><br />
-        <br />
-        <mat-chip (click)="navigateToBlockExplorer(account.address)">
-          <mat-icon>person</mat-icon>&nbsp;{{ account.address }}</mat-chip
-        >
-      </mat-card-content>
+      <mat-card-actions *ngIf="account.isExecutable || account.isManagable"> </mat-card-actions>
     </mat-card>
   </div>
   <mat-card *ngIf="account.isManagable">

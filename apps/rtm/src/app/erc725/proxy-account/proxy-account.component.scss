@@ -23,8 +23,42 @@ mat-toolbar {
   display: flex;
 }
 .wallet {
+  overflow: hidden;
   width: 300px;
-  background: rgba(0, 0, 0, 0.1);
+  background: rgba(#6e43b9, 1);
+
+  h1 {
+    font-size: 12px;
+  }
+}
+.balance {
+  line-height: 1.5;
+}
+
+.balance--lyx {
+  font-size: 30px;
+}
+
+.balance--dollar {
+  font-size: 20px;
+}
+
+.circle {
+  position: absolute;
+  right: -70px;
+  bottom: 100px;
+  width: 150px;
+  height: 150px;
+  border-radius: 150px;
+  background: rgba(#ffffff, 0.2);
+}
+
+.circle--2 {
+  width: 250px;
+  height: 250px;
+  border-radius: 250px;
+  right: -50px;
+  bottom: -70px;
 }
 
 .account {
@@ -46,19 +80,15 @@ mat-toolbar {
 .lyx-logo {
   height: 40px;
   width: 40px;
-  background: url('/assets/lukso_token_logo.png') no-repeat;
-  background-size: contain;
 }
 
 .balances {
-  mat-icon {
-    height: 40px;
-    margin-right: 10px;
-    margin-left: 10px;
-  }
-  span {
-    line-height: 24px;
-    width: 100px;
-    display: inline-block;
+  height: 100px;
+}
+
+.info {
+  text-align: center;
+  img {
+    opacity: 0.8;
   }
 }

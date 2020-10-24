@@ -63,8 +63,8 @@ export class ProxyAccountComponent implements OnInit {
     return QRCode.toDataURL(account.address, {
       width: 200,
       color: {
-        dark: '#fff',
-        light: '#2c2c2c',
+        dark: '#2c2c2c',
+        light: '#fff',
       },
     }).then((result: string) => {
       account.qrCode = result;
