@@ -62,10 +62,9 @@ export class ProgressComponent implements OnInit {
       `Deploying ERC734 Key Manager and initialize it...`
     );
     this.keyManagerService
-      .deploy(this.web3Service.web3.currentProvider.selectedAddress)
+      .deploy(this.accounts[0].address, this.web3Service.web3.currentProvider.selectedAddress)
       .then((deployedContract) => {
         this.setStage(this.accounts, Stages.KeyManager);
-        this.proxyAccountService.contract.options.address = this.accounts[0].address;
         return this.proxyAccountService.contract.methods
           .transferOwnership(deployedContract.options.address)
           .send({ from: this.web3Service.web3.currentProvider.selectedAddress });

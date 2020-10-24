@@ -162,7 +162,7 @@ $mat-primary: (
   darker: #005aa6,
   200: #0077bd,
   // For slide toggle,
-    contrast:
+  contrast:
     (
       main: $light-primary-text,
       lighter: $dark-primary-text,
@@ -186,7 +186,7 @@ $mat-accent: (
   darker: #248cde,
   200: #38a7e8,
   // For slide toggle,
-    contrast:
+  contrast:
     (
       main: $dark-primary-text,
       lighter: $dark-primary-text,
@@ -210,7 +210,7 @@ $mat-warn: (
   darker: #ff0000,
   200: #ff0000,
   // For slide toggle,
-    contrast:
+  contrast:
     (
       main: $light-primary-text,
       lighter: $dark-primary-text,
@@ -289,9 +289,4 @@ mat-card {
 
 div.mat-dialog-content {
   overflow: visible;
-}
-
-.btn-success {
-  background-color: #5cb85c;
-  color: white;
 }

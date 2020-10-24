@@ -61,7 +61,7 @@ export class ProxyAccountComponent implements OnInit {
 
   private enrichAccountWithQrCode(account: Account) {
     return QRCode.toDataURL(account.address, {
-      width: 200,
+      width: 100,
       color: {
         dark: '#2c2c2c',
         light: '#fff',
@@ -98,7 +98,7 @@ export class ProxyAccountComponent implements OnInit {
 
   private getIsExecutor(): Promise<boolean> {
     return this.aclContract.methods
-      .keyHasPurpose(keccak256(this.web3Service.web3.currentProvider.selectedAddress), 2)
+      .hasPrivilege(this.web3Service.web3.currentProvider.selectedAddress, 2)
       .call()
       .catch(() => {
         return false;
@@ -107,7 +107,7 @@ export class ProxyAccountComponent implements OnInit {
 
   private getIsManager(): Promise<boolean> {
     return this.aclContract.methods
-      .keyHasPurpose(keccak256(this.web3Service.web3.currentProvider.selectedAddress), 1)
+      .hasPrivilege(this.web3Service.web3.currentProvider.selectedAddress, 1)
       .call()
       .catch(() => {
         return false;
@@ -159,12 +159,13 @@ export class ProxyAccountComponent implements OnInit {
       if (dialogOutput?.value) {
         this.loadingIndicatorService.showLoadingIndicator(`Withdrawing ${dialogOutput.value} LYX`);
 
-        // let abi = account.contract.methods.execute("0", accounts[2], oneEth, '0x00').encodeABI();
-        // await keyManager.execute(abi, {from: owner});
         const value = toBN(toWei(dialogOutput.value, 'ether'));
+        const abi = this.proxyAccountContract.methods
+          .execute('0', this.web3Service.web3.currentProvider.selectedAddress, value, '0x00')
+          .encodeABI();
+
         this.aclContract.methods
-          //uint256 _operation, address _to, uint256 _value, bytes memory _data
-          .execute(0, this.web3Service.web3.currentProvider.selectedAddress, value, '0x00')
+          .execute(abi)
           .send({
             from: this.web3Service.web3.currentProvider.selectedAddress,
           })

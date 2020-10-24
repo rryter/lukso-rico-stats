@@ -24,13 +24,19 @@ mat-toolbar {
 }
 .wallet {
   overflow: hidden;
-  width: 300px;
+  width: 400px;
   background: rgba(#6e43b9, 1);
 
   h1 {
     font-size: 12px;
   }
 }
+
+.wordmark {
+  height: 20px;
+  opacity: 0.2;
+}
+
 .balance {
   line-height: 1.5;
 }
@@ -61,18 +67,6 @@ mat-toolbar {
   bottom: -70px;
 }
 
-.account {
-  width: 500px;
-  background: rgba(0, 0, 0, 0.1);
-  text-align: center;
-
-  &:hover {
-    img {
-      cursor: pointer;
-    }
-  }
-}
-
 .header {
   display: flex;
 }
@@ -87,8 +81,20 @@ mat-toolbar {
 }
 
 .info {
+  position: absolute;
+  right: 20px;
+  bottom: 10px;
   text-align: center;
-  img {
-    opacity: 0.8;
+  &:hover {
+    img {
+      cursor: pointer;
+    }
+  }
+}
+
+.actions {
+  button {
+    background: white;
+    color: black;
   }
 }

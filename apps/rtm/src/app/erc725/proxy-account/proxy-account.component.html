@@ -7,6 +7,7 @@
   <div class="wrapper" *ngIf="!errorMessage.message">
     <mat-card class="wallet">
       <mat-card-content>
+        <img class="wordmark" src="assets/lukso-wordmark.png" />
         <div class="circle circle--1"></div>
         <div class="circle circle--2"></div>
         <h1>{{ account.address }}</h1>
@@ -16,10 +17,10 @@
             $ {{ account.balance | cmcPrice | async | number: '0.0-2' }}
           </div>
         </div>
-        <!-- <div class="info">
+        <div class="info">
           <img [src]="account.qrCode" (click)="navigateToBlockExplorer(account.address)" /><br />
-        </div> -->
-        <div class="actions">
+        </div>
+        <div class="actions" *ngIf="account.isExecutable || account.isManagable">
           <button mat-raised-button class="btn-success" (click)="topUp(account)">
             <span>Top Up</span>
           </button>
@@ -29,7 +30,6 @@
           </button>
         </div>
       </mat-card-content>
-      <mat-card-actions *ngIf="account.isExecutable || account.isManagable"> </mat-card-actions>
     </mat-card>
   </div>
   <mat-card *ngIf="account.isManagable">

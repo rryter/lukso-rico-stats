@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Web3Service } from '@lukso/web3-rx';
 import { LoadingIndicatorService } from './loading-indicator.service';
 import { Contract } from 'web3-eth-contract';
-const keyManagerContract = require('../../../../../../../ERC725/implementations/build/contracts/ERC734KeyManager.json');
+const keyManagerContract = require('../../../../../../../TWY/erc725-playground/artifacts/ERC734KeyManager.json');
 
 @Injectable({
   providedIn: 'root',
@@ -18,11 +18,11 @@ export class KeyManagerService {
     this.contract = new this.web3Service.web3.eth.Contract(keyManagerContract.abi);
   }
 
-  deploy(managementAddress: string) {
+  deploy(accountAddress: string, managementAddress: string) {
     return this.contract
       .deploy({
         data: keyManagerContract.bytecode,
-        arguments: [managementAddress],
+        arguments: [accountAddress, managementAddress],
       })
       .send({
         from: this.web3Service.web3.currentProvider.selectedAddress,
