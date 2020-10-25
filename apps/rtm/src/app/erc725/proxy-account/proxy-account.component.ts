@@ -1,5 +1,5 @@
 import QRCode from 'qrcode';
-import { ChangeDetectionStrategy, Component, Input, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute } from '@angular/router';
@@ -11,10 +11,10 @@ import { LoadingIndicatorService } from '@shared/services/loading-indicator.serv
 import { ProxyAccountService } from '@shared/services/proxy-account.service';
 import { Stages } from '@shared/stages.enum';
 import { combineLatest, forkJoin, Observable, of } from 'rxjs';
-import { filter, onErrorResumeNext, pluck, switchMap } from 'rxjs/operators';
-import { Contract } from 'web3-eth-contract';
-import { keccak256, toWei, toBN } from 'web3-utils';
+import { filter, pluck, switchMap } from 'rxjs/operators';
+import { toWei, toBN } from 'web3-utils';
 import { ConfirmDialogOutput } from '@shared/interface/dialog';
+import { Erc725Account, Erc734KeyManager } from '@twy-gmbh/erc725-playground';
 
 @Component({
   selector: 'lukso-proxy-account',
@@ -27,8 +27,8 @@ export class ProxyAccountComponent implements OnInit {
   account$: Observable<any>;
   qrCode: any;
 
-  proxyAccountContract: Contract;
-  aclContract: Contract;
+  proxyAccountContract: Erc725Account;
+  aclContract: Erc734KeyManager;
 
   Stages = Stages;
 

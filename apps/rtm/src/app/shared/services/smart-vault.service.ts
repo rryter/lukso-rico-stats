@@ -6,8 +6,6 @@ import { Web3Service } from '@lukso/web3-rx';
 import { fromWei, toBN } from 'web3-utils';
 import { Contract } from 'web3-eth-contract';
 
-const smartVaultContract = require('../../../../../../../ERC725/implementations/build/contracts/SmartVault.json');
-
 @Injectable({
   providedIn: 'root',
 })

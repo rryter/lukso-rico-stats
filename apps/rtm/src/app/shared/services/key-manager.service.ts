@@ -1,35 +1,21 @@
 import { Injectable } from '@angular/core';
-import { Web3Service } from '@lukso/web3-rx';
+import { Erc734KeyManager, Erc734KeyManagerFactory } from '@twy-gmbh/erc725-playground';
 import { LoadingIndicatorService } from './loading-indicator.service';
-import { Contract } from 'web3-eth-contract';
-const keyManagerContract = require('../../../../../../../TWY/erc725-playground/artifacts/ERC734KeyManager.json');
 
 @Injectable({
   providedIn: 'root',
 })
 export class KeyManagerService {
-  contract: Contract;
+  contract: Erc734KeyManager;
   isContractDeployed = false;
 
-  constructor(
-    private web3Service: Web3Service,
-    private loadingIndicatorService: LoadingIndicatorService
-  ) {
-    this.contract = new this.web3Service.web3.eth.Contract(keyManagerContract.abi);
-  }
+  constructor(private loadingIndicatorService: LoadingIndicatorService) {}
 
-  deploy(accountAddress: string, managementAddress: string) {
-    return this.contract
-      .deploy({
-        data: keyManagerContract.bytecode,
-        arguments: [accountAddress, managementAddress],
-      })
-      .send({
-        from: this.web3Service.web3.currentProvider.selectedAddress,
-      })
+  deploy(accountAddress: string, managementAddress: string): Promise<Erc734KeyManager> {
+    return new Erc734KeyManagerFactory()
+      .deploy(accountAddress, managementAddress)
       .then((contract) => {
-        this.isContractDeployed = true;
-        this.contract.options.address = contract.options.address;
+        this.contract = contract;
         this.loadingIndicatorService.showLoadingIndicator(`Transfer Ownership of Proxy Account`);
         return contract;
       });
