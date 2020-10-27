@@ -3,6 +3,8 @@ import { Observable, ReplaySubject, merge } from 'rxjs';
 import { mapTo } from 'rxjs/operators';
 import Web3 from 'web3';
 import { fromWei, toBN } from 'web3-utils';
+import { ethers } from 'ethers';
+
 @Injectable({
   providedIn: 'root',
 })

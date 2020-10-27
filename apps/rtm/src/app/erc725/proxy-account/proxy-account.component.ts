@@ -11,7 +11,7 @@ import { LoadingIndicatorService } from '@shared/services/loading-indicator.serv
 import { ProxyAccountService } from '@shared/services/proxy-account.service';
 import { Stages } from '@shared/stages.enum';
 import { combineLatest, forkJoin, Observable, of } from 'rxjs';
-import { filter, pluck, switchMap } from 'rxjs/operators';
+import { filter, pluck, switchMap, take } from 'rxjs/operators';
 import { toWei, toBN } from 'web3-utils';
 import { ConfirmDialogOutput } from '@shared/interface/dialog';
 import { Erc725Account, Erc734KeyManager } from '@twy-gmbh/erc725-playground';
@@ -24,11 +24,11 @@ import { Erc725Account, Erc734KeyManager } from '@twy-gmbh/erc725-playground';
 })
 export class ProxyAccountComponent implements OnInit {
   nickName = new FormControl();
-  account$: Observable<any>;
+  account$: Observable<Account>;
   qrCode: any;
 
   proxyAccountContract: Erc725Account;
-  aclContract: Erc734KeyManager;
+  keyManagerContract: Erc734KeyManager;
 
   Stages = Stages;
 
@@ -44,7 +44,7 @@ export class ProxyAccountComponent implements OnInit {
     private web3Service: Web3Service,
     private loadingIndicatorService: LoadingIndicatorService,
     private proxyAccountService: ProxyAccountService,
-    private keyManagerServerice: KeyManagerService,
+    private keyManagerService: KeyManagerService,
     private route: ActivatedRoute,
     public dialog: MatDialog
   ) {
@@ -54,34 +54,32 @@ export class ProxyAccountComponent implements OnInit {
     );
   }
 
-  ngOnInit(): void {
-    this.proxyAccountContract = this.proxyAccountService.contract;
-    this.aclContract = this.keyManagerServerice.contract;
-  }
+  ngOnInit(): void {}
 
-  private enrichAccountWithQrCode(account: Account) {
+  private enrichAccountWithQrCode(account: Account): Promise<Account> {
     return QRCode.toDataURL(account.address, {
       width: 100,
       color: {
         dark: '#2c2c2c',
         light: '#fff',
       },
-    }).then((result: string) => {
-      account.qrCode = result;
+    }).then((base64QRCode: string) => {
+      account.qrCode = base64QRCode;
       return account;
     });
   }
 
   private loadAccount(): Observable<Account> {
     return this.route.params.pipe(
+      take(1),
       pluck('address'),
       filter(Boolean),
       switchMap((address: string) => {
-        this.proxyAccountContract.options.address = address;
-        return combineLatest([this.proxyAccountContract.methods.owner().call(), of(address)]);
+        this.proxyAccountContract = this.proxyAccountService.getContract(address);
+        return combineLatest([this.proxyAccountContract.owner(), of(address)]);
       }),
-      switchMap(([owner, address]) => {
-        this.aclContract.options.address = owner as string;
+      switchMap(([, address]) => {
+        this.keyManagerContract = this.keyManagerService.getContract(address);
         return this.getAccountDetails(address);
       })
     );
@@ -97,18 +95,16 @@ export class ProxyAccountComponent implements OnInit {
   }
 
   private getIsExecutor(): Promise<boolean> {
-    return this.aclContract.methods
+    return this.keyManagerService.contract
       .hasPrivilege(this.web3Service.web3.currentProvider.selectedAddress, 2)
-      .call()
       .catch(() => {
         return false;
       });
   }
 
   private getIsManager(): Promise<boolean> {
-    return this.aclContract.methods
+    return this.keyManagerService.contract
       .hasPrivilege(this.web3Service.web3.currentProvider.selectedAddress, 1)
-      .call()
       .catch(() => {
         return false;
       });
@@ -147,40 +143,42 @@ export class ProxyAccountComponent implements OnInit {
     });
   }
 
-  withdraw(account) {
-    const dialogRef = this.dialog.open(AmountComponent, {
-      data: {
-        account,
-        confirmLabel: 'Withdraw',
-        type: 'withdraw',
-      },
-    });
-    dialogRef.afterClosed().subscribe((dialogOutput: ConfirmDialogOutput) => {
-      if (dialogOutput?.value) {
-        this.loadingIndicatorService.showLoadingIndicator(`Withdrawing ${dialogOutput.value} LYX`);
+  openWithdrawDialog(account) {
+    this.dialog
+      .open(AmountComponent, {
+        data: {
+          account,
+          confirmLabel: 'Withdraw',
+          type: 'withdraw',
+        },
+      })
+      .afterClosed()
+      .subscribe((dialogOutput: ConfirmDialogOutput) => {
+        this.withDraw(dialogOutput);
+      });
+  }
 
-        const value = toBN(toWei(dialogOutput.value, 'ether'));
-        const abi = this.proxyAccountContract.methods
-          .execute('0', this.web3Service.web3.currentProvider.selectedAddress, value, '0x00')
-          .encodeABI();
+  private withDraw(dialogOutput: ConfirmDialogOutput) {
+    if (dialogOutput?.value) {
+      this.loadingIndicatorService.showLoadingIndicator(`Withdrawing ${dialogOutput.value} LYX`);
 
-        this.aclContract.methods
-          .execute(abi)
-          .send({
-            from: this.web3Service.web3.currentProvider.selectedAddress,
-          })
-          .catch((error) => {
-            console.error(error);
-          })
-          .finally(() => {
-            this.loadingIndicatorService.doneLoading();
-          });
-      }
-    });
+      const value = toBN(toWei(dialogOutput.value, 'ether'));
+      const abi = this.proxyAccountContract.methods
+        .execute('0', this.web3Service.web3.currentProvider.selectedAddress, value, '0x00')
+        .encodeABI();
+
+      this.keyManagerContract
+        .execute(abi)
+        .catch((error) => {
+          console.error(error);
+        })
+        .finally(() => {
+          this.loadingIndicatorService.doneLoading();
+        });
+    }
   }
 
   setNickName(address: string) {
-    this.aclContract.options.address = address;
     //   this.accessControllerContract.methods.setData(key, data).send({
     //     from: this.web3Service.web3.currentProvider.selectedAddress,
     //   });

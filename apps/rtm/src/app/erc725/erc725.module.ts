@@ -5,7 +5,6 @@ import { Erc725Component } from './erc725.component';
 import { SharedModule } from '../shared/shared.module';
 import { ReactiveFormsModule } from '@angular/forms';
 import { KeyManagerComponent } from './key-manager/key-manager.component';
-// import { SmartVaultComponent } from './smart-vault/smart-vault.component';
 import { LockButtonComponent } from './smart-vault/lock-button/lock-button.component';
 import { WithdrawButtonComponent } from './smart-vault/withdraw-button/withdraw-button.component';
 import { ProxyAccountComponent } from './proxy-account/proxy-account.component';
@@ -28,7 +27,6 @@ const routes: Routes = [
   declarations: [
     Erc725Component,
     KeyManagerComponent,
-    // SmartVaultComponent,
     LockButtonComponent,
     WithdrawButtonComponent,
     ProxyAccountComponent,
