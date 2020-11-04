@@ -99,7 +99,7 @@ export class ProxyAccountComponent implements OnInit {
       .then(() => {
         return this.keyManagerService.contract.hasPrivilege(
           this.web3Service.web3.currentProvider.selectedAddress,
-          3
+          2
         );
       })
       .catch((result) => {
