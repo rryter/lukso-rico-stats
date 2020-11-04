@@ -1,4 +1,4 @@
-<div class="navbar-container" *ngIf="!(showWrongNetworkError$ | async); else wrongNetwork">
+<div class="navbar-container" *ngIf="(showWrongNetworkError$ | async) === false; else wrongNetwork">
   <!-- Top navbar -->
   <!-- <mat-toolbar class="navbar" color="primary" *ngIf="wallet$ | async as wallet">
     

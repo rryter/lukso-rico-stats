@@ -39,9 +39,10 @@ export class AmountComponent implements OnInit {
       amount: [0],
       address: [''],
     });
-    // if (data.type === 'send') {
-    //   this.address = this.fb.control('', [Validators.required]);
-    // }
+
+    if (data.type === 'send') {
+      this.form.controls.address.setValidators([Validators.required]);
+    }
 
     this.web3Service.getBalance(sourceAddress).then((result) => {
       this.wallet = result;
