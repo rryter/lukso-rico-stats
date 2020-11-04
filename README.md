@@ -1,4 +1,8 @@
+![CI](https://github.com/rryter/smart-vault/workflows/CI/badge.svg)
+
 # ERC 725 and ERC 734 Demo
+
+https://wallet.rryter.ch/
 
 This is a very basic demonstration of [ERC 725](https://github.com/ethereum/eips/issues/725) in combination with [ERC 734](https://github.com/ethereum/eips/issues/725).
 
