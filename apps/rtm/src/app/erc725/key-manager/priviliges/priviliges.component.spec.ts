@@ -3,24 +3,28 @@ import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort';
 import { MatTableModule } from '@angular/material/table';
+import { MatChipsModule } from '@angular/material/chips';
 
 import { PriviligesComponent } from './priviliges.component';
+import { MatIconModule } from '@angular/material/icon';
 
 describe('PriviligesComponent', () => {
   let component: PriviligesComponent;
   let fixture: ComponentFixture<PriviligesComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(() => {
     TestBed.configureTestingModule({
-      declarations: [ PriviligesComponent ],
+      declarations: [PriviligesComponent],
       imports: [
         NoopAnimationsModule,
         MatPaginatorModule,
         MatSortModule,
         MatTableModule,
-      ]
+        MatIconModule,
+        MatChipsModule,
+      ],
     }).compileComponents();
-  }));
+  });
 
   beforeEach(() => {
     fixture = TestBed.createComponent(PriviligesComponent);

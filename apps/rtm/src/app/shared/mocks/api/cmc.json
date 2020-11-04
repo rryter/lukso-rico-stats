@@ -1,0 +1,46 @@
+{
+  "status": {
+    "timestamp": "2020-10-30T13:34:15.283Z",
+    "error_code": 0,
+    "error_message": null,
+    "elapsed": 11,
+    "credit_count": 1,
+    "notice": null
+  },
+  "data": {
+    "LYXe": {
+      "id": 5625,
+      "name": "LUKSO",
+      "symbol": "LYXe",
+      "slug": "lukso",
+      "num_market_pairs": 3,
+      "date_added": "2020-05-25T00:00:00.000Z",
+      "tags": [],
+      "max_supply": 100000000,
+      "circulating_supply": 3803994.48929212,
+      "total_supply": 100000000,
+      "platform": {
+        "id": 1027,
+        "name": "Ethereum",
+        "symbol": "ETH",
+        "slug": "ethereum",
+        "token_address": "0xA8b919680258d369114910511cc87595aec0be6D"
+      },
+      "is_active": 1,
+      "cmc_rank": 847,
+      "is_fiat": 0,
+      "last_updated": "2020-10-30T13:34:05.000Z",
+      "quote": {
+        "USD": {
+          "price": 0.74000031385423,
+          "volume_24h": 1265070.16965213,
+          "percent_change_1h": 0.76949241,
+          "percent_change_24h": 0.09769814,
+          "percent_change_7d": 9.83074901,
+          "market_cap": 2814957.1159759304,
+          "last_updated": "2020-10-30T13:34:05.000Z"
+        }
+      }
+    }
+  }
+}

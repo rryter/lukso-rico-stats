@@ -6,11 +6,11 @@ describe('LockButtonComponent', () => {
   let component: WithdrawButtonComponent;
   let fixture: ComponentFixture<WithdrawButtonComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(() => {
     TestBed.configureTestingModule({
       declarations: [WithdrawButtonComponent],
     }).compileComponents();
-  }));
+  });
 
   beforeEach(() => {
     fixture = TestBed.createComponent(WithdrawButtonComponent);

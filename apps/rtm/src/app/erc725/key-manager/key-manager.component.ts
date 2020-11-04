@@ -51,9 +51,7 @@ export class KeyManagerComponent implements OnInit {
   }
 
   addKey(keyKuprose: Capabilities) {
-    this.keyManagerService.contract.methods
-      .setKey(this.getSelectedAddress(), keyKuprose, KEY_TYPE.ECDSA)
-      .send({ from: this.getSelectedAddress() });
+    this.keyManagerService.contract.setKey(this.getSelectedAddress(), keyKuprose, KEY_TYPE.ECDSA);
   }
 
   getKeymanagerData$(keys: any[]) {
@@ -65,35 +63,29 @@ export class KeyManagerComponent implements OnInit {
   }
 
   removeKey(key: { address: string; index: number }) {
-    this.keyManagerService.contract.methods
-      .removeKey(keccak256(key.address), key.index)
-      .send({ from: this.getSelectedAddress() });
+    this.keyManagerService.contract.removeKey(keccak256(key.address), key.index);
   }
 
   private getAllKeys(): Promise<any[]> {
-    this.keyManagerService.contract.options.address = this.contractAddress;
-    return this.keyManagerService.contract.methods.getAllKeys().call();
+    return this.keyManagerService.contract.getAllKeys();
   }
 
   private getKey(
     key: string,
     keys: string[]
   ): Promise<{ address: string; keyType: any; purpose: any }> {
-    return this.keyManagerService.contract.methods
-      .getKey(key)
-      .call()
-      .then((result) => {
-        const { _keyAddress, _purpose, _keyType } = result;
-        return {
-          isCurrentWallet:
-            _keyAddress.toLowerCase() ===
-            this.web3Service.web3.currentProvider.selectedAddress.toLowerCase(),
-          address: _keyAddress,
-          purpose: _purpose,
-          keyType: _keyType,
-          index: keys.indexOf(key),
-        };
-      });
+    return this.keyManagerService.contract.getKey(key).then((result) => {
+      const { _keyAddress, _purpose, _keyType } = result;
+      return {
+        isCurrentWallet:
+          _keyAddress.toLowerCase() ===
+          this.web3Service.web3.currentProvider.selectedAddress.toLowerCase(),
+        address: _keyAddress,
+        purpose: _purpose,
+        keyType: _keyType,
+        index: keys.indexOf(key),
+      };
+    });
   }
 
   private getSelectedAddress() {

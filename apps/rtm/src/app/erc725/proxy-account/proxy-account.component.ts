@@ -11,8 +11,8 @@ import { LoadingIndicatorService } from '@shared/services/loading-indicator.serv
 import { ProxyAccountService } from '@shared/services/proxy-account.service';
 import { Stages } from '@shared/stages.enum';
 import { combineLatest, forkJoin, Observable, of } from 'rxjs';
-import { filter, pluck, switchMap, take } from 'rxjs/operators';
-import { toWei, toBN } from 'web3-utils';
+import { filter, pluck, switchMap, take, tap } from 'rxjs/operators';
+import { utils } from 'ethers';
 import { ConfirmDialogOutput } from '@shared/interface/dialog';
 import { Erc725Account, Erc734KeyManager } from '@twy-gmbh/erc725-playground';
 
@@ -71,15 +71,14 @@ export class ProxyAccountComponent implements OnInit {
 
   private loadAccount(): Observable<Account> {
     return this.route.params.pipe(
-      take(1),
       pluck('address'),
       filter(Boolean),
       switchMap((address: string) => {
         this.proxyAccountContract = this.proxyAccountService.getContract(address);
         return combineLatest([this.proxyAccountContract.owner(), of(address)]);
       }),
-      switchMap(([, address]) => {
-        this.keyManagerContract = this.keyManagerService.getContract(address);
+      switchMap(([owner, address]) => {
+        this.keyManagerContract = this.keyManagerService.getContract(owner);
         return this.getAccountDetails(address);
       })
     );
@@ -96,16 +95,28 @@ export class ProxyAccountComponent implements OnInit {
 
   private getIsExecutor(): Promise<boolean> {
     return this.keyManagerService.contract
-      .hasPrivilege(this.web3Service.web3.currentProvider.selectedAddress, 2)
-      .catch(() => {
+      .deployed()
+      .then(() => {
+        return this.keyManagerService.contract.hasPrivilege(
+          this.web3Service.web3.currentProvider.selectedAddress,
+          3
+        );
+      })
+      .catch((result) => {
         return false;
       });
   }
 
   private getIsManager(): Promise<boolean> {
     return this.keyManagerService.contract
-      .hasPrivilege(this.web3Service.web3.currentProvider.selectedAddress, 1)
-      .catch(() => {
+      .deployed()
+      .then(() => {
+        return this.keyManagerService.contract.hasPrivilege(
+          this.web3Service.web3.currentProvider.selectedAddress,
+          1
+        );
+      })
+      .catch((result) => {
         return false;
       });
   }
@@ -131,7 +142,7 @@ export class ProxyAccountComponent implements OnInit {
           .sendTransaction({
             from: this.web3Service.web3.currentProvider.selectedAddress,
             to: account.address,
-            value: toWei(dialogOutput.value, 'ether'),
+            value: utils.parseEther(dialogOutput.value),
           })
           .catch((error) => {
             console.error(error);
@@ -162,10 +173,12 @@ export class ProxyAccountComponent implements OnInit {
     if (dialogOutput?.value) {
       this.loadingIndicatorService.showLoadingIndicator(`Withdrawing ${dialogOutput.value} LYX`);
 
-      const value = toBN(toWei(dialogOutput.value, 'ether'));
-      const abi = this.proxyAccountContract.methods
-        .execute('0', this.web3Service.web3.currentProvider.selectedAddress, value, '0x00')
-        .encodeABI();
+      const abi = this.proxyAccountContract.interface.encodeFunctionData('execute', [
+        '0',
+        this.web3Service.web3.currentProvider.selectedAddress as string,
+        utils.parseEther(dialogOutput.value),
+        '0x00',
+      ]);
 
       this.keyManagerContract
         .execute(abi)
@@ -176,12 +189,6 @@ export class ProxyAccountComponent implements OnInit {
           this.loadingIndicatorService.doneLoading();
         });
     }
-  }
-
-  setNickName(address: string) {
-    //   this.accessControllerContract.methods.setData(key, data).send({
-    //     from: this.web3Service.web3.currentProvider.selectedAddress,
-    //   });
   }
 
   navigateToBlockExplorer(address: string) {

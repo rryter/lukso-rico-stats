@@ -18,10 +18,14 @@ export class ProxyAccountService {
   }
 
   deployProxyAccount() {
+    const provider = new ethers.providers.Web3Provider(window.ethereum);
+    const signer = provider.getSigner();
     const selectedAddress = this.web3Service.web3.currentProvider.selectedAddress;
-    return new Erc725AccountFactory().deploy(selectedAddress).then((contract: Erc725Account) => {
-      this.contract = contract;
-      return contract;
-    });
+    return new Erc725AccountFactory(signer)
+      .deploy(selectedAddress)
+      .then((contract: Erc725Account) => {
+        this.contract = contract;
+        return contract;
+      });
   }
 }

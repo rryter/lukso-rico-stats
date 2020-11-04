@@ -1,17 +1,27 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-
+import { NO_ERRORS_SCHEMA } from '@angular/core';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { MatIconModule } from '@angular/material/icon';
+import { MatListModule } from '@angular/material/list';
+import { MatSidenavModule } from '@angular/material/sidenav';
+import { RouterModule } from '@angular/router';
+import { Web3Service } from '@lukso/web3-rx';
+import { web3ServiceMock } from '@lukso/web3-rx/mocks';
+import { CmcPricePipe } from '@shared/pipes/cmc-price.pipe';
+import { EthAddressShortPipe } from '@shared/pipes/eth-address-short.pipe';
 import { LayoutComponent } from './layout.component';
 
 describe('LayoutComponent', () => {
   let component: LayoutComponent;
   let fixture: ComponentFixture<LayoutComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(() => {
     TestBed.configureTestingModule({
-      declarations: [ LayoutComponent ]
-    })
-    .compileComponents();
-  }));
+      declarations: [LayoutComponent, EthAddressShortPipe, CmcPricePipe],
+      providers: [{ provide: Web3Service, useValue: web3ServiceMock }],
+      imports: [MatSidenavModule, MatIconModule, RouterModule, MatListModule],
+      schemas: [NO_ERRORS_SCHEMA],
+    }).compileComponents();
+  });
 
   beforeEach(() => {
     fixture = TestBed.createComponent(LayoutComponent);

@@ -4,7 +4,8 @@ import { switchMap } from 'rxjs/operators';
 import { Vault } from '../interface/vault';
 import { Web3Service } from '@lukso/web3-rx';
 import { fromWei, toBN } from 'web3-utils';
-import { Contract } from 'web3-eth-contract';
+import { SmartVault, SmartVaultFactory } from '@twy-gmbh/erc725-playground';
+import { ethers } from 'ethers';
 
 @Injectable({
   providedIn: 'root',
@@ -17,10 +18,9 @@ export class SmartVaultService {
     withdrawing: false,
   };
 
-  private contract: Contract;
+  private contract: SmartVault;
 
   constructor(private web3Service: Web3Service) {
-    this.contract = new this.web3Service.web3.eth.Contract(smartVaultContract.abi);
     this.vault$ = this.web3Service.reloadTrigger$.pipe(
       switchMap(() => {
         return forkJoin({
@@ -34,22 +34,15 @@ export class SmartVaultService {
   }
 
   deploy() {
-    this.contract
-      .deploy({
-        data: smartVaultContract.bytecode,
-      })
-      .send({
-        from: this.web3Service.web3.currentProvider.selectedAddress,
-      })
-      .then((contract) => {
-        this.isContractDeployed = true;
-        this.contract.options.address = contract.options.address;
-        window.localStorage.setItem(
-          'smart-vault-address',
-          JSON.stringify(contract.options.address)
-        );
-        return contract;
-      });
+    const provider = new ethers.providers.Web3Provider(window.ethereum);
+    const signer = provider.getSigner();
+    const factory = new SmartVaultFactory(signer);
+    factory.deploy().then((contract) => {
+      this.isContractDeployed = true;
+      window.localStorage.setItem('smart-vault-address', JSON.stringify(contract.options.address));
+      this.contract = contract;
+      return contract;
+    });
   }
 
   private getIsLocked(): boolean {

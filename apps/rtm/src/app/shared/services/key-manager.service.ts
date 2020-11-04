@@ -20,7 +20,9 @@ export class KeyManagerService {
   }
 
   deploy(accountAddress: string, managementAddress: string): Promise<Erc734KeyManager> {
-    return new Erc734KeyManagerFactory()
+    const provider = new ethers.providers.Web3Provider(window.ethereum);
+    const signer = provider.getSigner();
+    return new Erc734KeyManagerFactory(signer)
       .deploy(accountAddress, managementAddress)
       .then((contract) => {
         this.contract = contract;

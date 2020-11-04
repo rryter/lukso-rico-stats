@@ -4,13 +4,16 @@ module.exports = {
   setupFilesAfterEnv: ['<rootDir>/src/test-setup.ts'],
   globals: {
     'ts-jest': {
-      tsConfig: '<rootDir>/tsconfig.spec.json',
+      tsconfig: '<rootDir>/tsconfig.spec.json',
       stringifyContentPathRegex: '\\.(html|svg)$',
       astTransformers: [
         'jest-preset-angular/build/InlineFilesTransformer',
         'jest-preset-angular/build/StripStylesTransformer',
       ],
     },
+  },
+  moduleNameMapper: {
+    '^@shared/(.*)$': '<rootDir>/apps/rtm/src/app/shared/$1',
   },
   coverageDirectory: '../../coverage/libs/web3-rx',
   snapshotSerializers: [

@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, Inject, OnInit } from '@angular/core';
-import { FormBuilder, FormControl, Validators } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatSliderChange } from '@angular/material/slider';
 import { Web3Service } from '@lukso/web3-rx';
@@ -11,8 +11,7 @@ import { ConfirmDialogInput } from '@shared/interface/dialog';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AmountComponent implements OnInit {
-  amount: FormControl;
-  address: FormControl;
+  form: FormGroup;
 
   wallet: number;
   percentage = 0;
@@ -36,15 +35,18 @@ export class AmountComponent implements OnInit {
 
     this.confirmLabel = data.confirmLabel;
     this.viewType = data.type;
-    this.amount = this.fb.control(0);
-    if (data.type === 'send') {
-      this.address = this.fb.control('', [Validators.required]);
-    }
+    this.form = this.fb.group({
+      amount: [0],
+      address: [''],
+    });
+    // if (data.type === 'send') {
+    //   this.address = this.fb.control('', [Validators.required]);
+    // }
 
     this.web3Service.getBalance(sourceAddress).then((result) => {
       this.wallet = result;
       this.percentage = 0;
-      this.amount.setValidators([Validators.min(0), Validators.max(result)]);
+      this.form.controls.amount.setValidators([Validators.min(0), Validators.max(result)]);
     });
   }
 
@@ -56,19 +58,19 @@ export class AmountComponent implements OnInit {
 
   getReturnValues() {
     return {
-      value: '' + Math.floor(this.amount.value * 10000) / 10000,
-      address: this.viewType === 'send' ? this.address.value : '',
+      value: '' + Math.floor(this.form.controls.amount.value * 10000) / 10000,
+      address: this.viewType === 'send' ? this.form.controls.address.value : '',
     };
   }
 
   sliderMoved(percentage: MatSliderChange) {
     this.percentage = percentage.value;
     const value = (this.wallet / 100) * percentage.value;
-    this.amount.setValue(Math.floor(value * 10000) / 10000);
+    this.form.controls.amount.setValue(Math.floor(value * 10000) / 10000);
   }
 
   valueChanged(value) {
     this.percentage = Math.round((value / 100) * this.wallet);
-    this.amount.setValue(value);
+    this.form.controls.amount.setValue(value);
   }
 }

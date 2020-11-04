@@ -45,8 +45,6 @@ export class AddKeyComponent implements OnInit {
   }
 
   private addKey(address: string, purpose: Capabilities) {
-    return this.keyManagerService.contract.methods
-      .setKey(address, purpose, KEY_TYPE.ECDSA)
-      .send({ from: this.data.address });
+    return this.keyManagerService.contract.setKey(address, purpose, KEY_TYPE.ECDSA);
   }
 }

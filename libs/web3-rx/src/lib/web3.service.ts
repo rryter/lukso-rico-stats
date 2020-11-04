@@ -1,9 +1,8 @@
 import { Injectable, NgZone } from '@angular/core';
 import { Observable, ReplaySubject, merge } from 'rxjs';
 import { mapTo } from 'rxjs/operators';
-import Web3 from 'web3';
 import { fromWei, toBN } from 'web3-utils';
-import { ethers } from 'ethers';
+const Web3 = require('web3');
 
 @Injectable({
   providedIn: 'root',
@@ -74,7 +73,7 @@ export class Web3Service {
     };
 
     if (!ethEnabled()) {
-      alert(
+      window.alert(
         'Please install an Ethereum-compatible browser or extension like MetaMask to use this dApp!'
       );
     }
