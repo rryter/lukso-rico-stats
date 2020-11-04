@@ -19,7 +19,7 @@
             "index": "apps/rtm/src/index.html",
             "main": "apps/rtm/src/main.ts",
             "polyfills": "apps/rtm/src/polyfills.ts",
-            "tsConfig": "apps/rtm/tsconfig.app.json",
+            "tsconfig": "apps/rtm/tsconfig.app.json",
             "aot": true,
             "assets": ["apps/rtm/src/favicon.ico", "apps/rtm/src/assets", "apps/rtm/src/.htaccess"],
             "styles": ["apps/rtm/src/styles.scss"],
@@ -77,7 +77,7 @@
         "lint": {
           "builder": "@angular-devkit/build-angular:tslint",
           "options": {
-            "tsConfig": ["apps/rtm/tsconfig.app.json", "apps/rtm/tsconfig.spec.json"],
+            "tsconfig": ["apps/rtm/tsconfig.app.json", "apps/rtm/tsconfig.spec.json"],
             "exclude": ["**/node_modules/**", "!apps/rtm/**/*"]
           }
         },
@@ -85,9 +85,8 @@
           "builder": "@nrwl/jest:jest",
           "options": {
             "jestConfig": "apps/rtm/jest.config.js",
-            "tsConfig": "apps/rtm/tsconfig.spec.json",
-            "passWithNoTests": true,
-            "setupFile": "apps/rtm/src/test-setup.ts"
+            "tsconfig": "apps/rtm/tsconfig.spec.json",
+            "passWithNoTests": false
           }
         },
         "deploy": {
@@ -105,7 +104,7 @@
           "builder": "@nrwl/cypress:cypress",
           "options": {
             "cypressConfig": "apps/rtm-e2e/cypress.json",
-            "tsConfig": "apps/rtm-e2e/tsconfig.e2e.json",
+            "tsconfig": "apps/rtm-e2e/tsconfig.e2e.json",
             "devServerTarget": "rtm:serve"
           },
           "configurations": {
@@ -117,7 +116,7 @@
         "lint": {
           "builder": "@angular-devkit/build-angular:tslint",
           "options": {
-            "tsConfig": ["apps/rtm-e2e/tsconfig.e2e.json"],
+            "tsconfig": ["apps/rtm-e2e/tsconfig.e2e.json"],
             "exclude": ["**/node_modules/**", "!apps/rtm-e2e/**/*"]
           }
         }
@@ -132,7 +131,7 @@
         "lint": {
           "builder": "@angular-devkit/build-angular:tslint",
           "options": {
-            "tsConfig": ["libs/web3-rx/tsconfig.lib.json", "libs/web3-rx/tsconfig.spec.json"],
+            "tsconfig": ["libs/web3-rx/tsconfig.lib.json", "libs/web3-rx/tsconfig.spec.json"],
             "exclude": ["**/node_modules/**", "!libs/web3-rx/**/*"]
           }
         },
@@ -140,7 +139,7 @@
           "builder": "@nrwl/jest:jest",
           "options": {
             "jestConfig": "libs/web3-rx/jest.config.js",
-            "tsConfig": "libs/web3-rx/tsconfig.spec.json",
+            "tsconfig": "libs/web3-rx/tsconfig.spec.json",
             "passWithNoTests": true,
             "setupFile": "libs/web3-rx/src/test-setup.ts"
           }
