@@ -8,6 +8,7 @@ import { environment } from '../../../environments/environment';
 import { keccak256 } from 'web3-utils';
 import { MatDialog } from '@angular/material/dialog';
 import { AddKeyComponent } from './add-key/add-key.component';
+import { BigNumber } from 'ethers';
 
 @Component({
   selector: 'lukso-key-manager',
@@ -15,7 +16,7 @@ import { AddKeyComponent } from './add-key/add-key.component';
   styleUrls: ['./key-manager.component.css'],
 })
 export class KeyManagerComponent implements OnInit {
-  keyManagerData$: Observable<{ address: string; keyType: any; purpose: any }[]>;
+  keyManagerData$: Observable<{ address: string; keyType: any; privileges: any[] }[]>;
   isKeyManager$: Observable<boolean>;
 
   isManageDropdownActive = false;
@@ -50,7 +51,7 @@ export class KeyManagerComponent implements OnInit {
     });
   }
 
-  addKey(keyKuprose: Capabilities) {
+  addKey(keyKuprose: Capabilities[]) {
     this.keyManagerService.contract.setKey(this.getSelectedAddress(), keyKuprose, KEY_TYPE.ECDSA);
   }
 
@@ -73,15 +74,15 @@ export class KeyManagerComponent implements OnInit {
   private getKey(
     key: string,
     keys: string[]
-  ): Promise<{ address: string; keyType: any; purpose: any }> {
+  ): Promise<{ address: string; keyType: BigNumber; privileges: BigNumber[] }> {
     return this.keyManagerService.contract.getKey(key).then((result) => {
-      const { _keyAddress, _purpose, _keyType } = result;
+      const { _keyAddress, _privilegesLUT, _keyType } = result;
       return {
         isCurrentWallet:
           _keyAddress.toLowerCase() ===
           this.web3Service.web3.currentProvider.selectedAddress.toLowerCase(),
         address: _keyAddress,
-        purpose: _purpose,
+        privileges: _privilegesLUT,
         keyType: _keyType,
         index: keys.indexOf(key),
       };
