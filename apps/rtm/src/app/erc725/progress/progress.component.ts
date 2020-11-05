@@ -47,10 +47,12 @@ export class ProgressComponent implements OnInit {
     this.proxyAccountService
       .deployProxyAccount()
       .then((contract) => {
-        this.proxyAccountService.contract.options.address = contract.options.address;
-        this.accounts.push({ address: contract.options.address, stage: 2 });
+        this.accounts.push({ address: contract.address, stage: 2 });
         window.localStorage.setItem('accounts', JSON.stringify(this.accounts));
-        this.router.navigate(['accounts', contract.options.address]);
+        this.router.navigate(['accounts', contract.address]);
+      })
+      .catch((error) => {
+        console.log(error);
       })
       .finally(() => {
         this.loadingIndicatorService.doneLoading();
@@ -58,7 +60,6 @@ export class ProgressComponent implements OnInit {
   }
 
   deployKeyManager() {
-    console.log('yes');
     this.loadingIndicatorService.showLoadingIndicator(
       `Deploying ERC734 Key Manager and initialize it...`
     );

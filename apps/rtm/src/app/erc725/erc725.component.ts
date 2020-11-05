@@ -13,16 +13,16 @@ export class Erc725Component implements OnInit {
   wallet$: Observable<Wallet>;
 
   constructor(
-    private web3Wrapper: Web3Service,
+    private web3Service: Web3Service,
     private route: ActivatedRoute,
     private router: Router
   ) {
-    this.wallet$ = this.web3Wrapper.reloadTrigger$.pipe(
-      switchMap(() => this.web3Wrapper.address$),
+    this.wallet$ = this.web3Service.reloadTrigger$.pipe(
+      switchMap(() => this.web3Service.address$),
       switchMap((address: string) => {
         return forkJoin({
           address: of(address),
-          balance: this.web3Wrapper.getBalance(address),
+          balance: this.web3Service.getBalance(address),
         });
       })
     );

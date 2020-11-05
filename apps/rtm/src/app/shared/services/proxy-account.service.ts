@@ -1,29 +1,27 @@
 import { Injectable } from '@angular/core';
-import { Web3Service } from '@lukso/web3-rx';
-import { Erc725Account, Erc725AccountFactory } from '@twy-gmbh/erc725-playground';
+import { ERC725Account, ERC725AccountFactory } from '@twy-gmbh/erc725-playground';
 import { ethers } from 'ethers';
 
 @Injectable({
   providedIn: 'root',
 })
 export class ProxyAccountService {
-  contract: Erc725Account;
+  contract: ERC725Account;
 
-  constructor(private web3Service: Web3Service) {}
+  constructor() {}
 
   getContract(address: string) {
     const provider = new ethers.providers.Web3Provider(window.ethereum);
     const signer = provider.getSigner();
-    return new Erc725AccountFactory(signer).attach(address);
+    return new ERC725AccountFactory(signer).attach(address);
   }
 
-  deployProxyAccount() {
+  async deployProxyAccount() {
     const provider = new ethers.providers.Web3Provider(window.ethereum);
     const signer = provider.getSigner();
-    const selectedAddress = this.web3Service.web3.currentProvider.selectedAddress;
-    return new Erc725AccountFactory(signer)
-      .deploy(selectedAddress)
-      .then((contract: Erc725Account) => {
+    return new ERC725AccountFactory(signer)
+      .deploy(await signer.getAddress())
+      .then((contract: ERC725Account) => {
         this.contract = contract;
         return contract;
       });

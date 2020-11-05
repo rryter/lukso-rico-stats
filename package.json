@@ -57,7 +57,7 @@
     "@nrwl/jest": "10.3.2",
     "@nrwl/nx-cloud": "^10.1.8",
     "@nrwl/workspace": "^10.3.2",
-    "@twy-gmbh/erc725-playground": "^0.1.24",
+    "@twy-gmbh/erc725-playground": "^0.1.26",
     "@types/jest": "^26.0.15",
     "@types/node": "^8.9.5",
     "codelyzer": "^6.0.1",

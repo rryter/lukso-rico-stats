@@ -15,10 +15,10 @@ export class LayoutComponent implements OnInit {
   wallet$: Observable<Wallet>;
   address$: Observable<any>;
   showWrongNetworkError$: Observable<boolean>;
-  constructor(private web3Wrapper: Web3Service) {
+  constructor(private web3Service: Web3Service) {
     this.accounts = JSON.parse(window.localStorage.getItem('accounts'));
-    this.address$ = this.web3Wrapper.address$;
-    this.showWrongNetworkError$ = this.web3Wrapper.networkId$.pipe(
+    this.address$ = this.web3Service.address$;
+    this.showWrongNetworkError$ = this.web3Service.networkId$.pipe(
       map((networkId) => {
         if (environment.production) {
           return networkId !== 22; // L14 LUKSO Testnet
@@ -27,12 +27,12 @@ export class LayoutComponent implements OnInit {
         }
       })
     );
-    this.wallet$ = this.web3Wrapper.reloadTrigger$.pipe(
-      switchMap(() => this.web3Wrapper.address$),
+    this.wallet$ = this.web3Service.reloadTrigger$.pipe(
+      switchMap(() => this.web3Service.address$),
       switchMap((address: string) => {
         return forkJoin({
           address: of(address),
-          balance: this.web3Wrapper.getBalance(address),
+          balance: this.web3Service.getBalance(address),
         });
       }),
       tap(() => {

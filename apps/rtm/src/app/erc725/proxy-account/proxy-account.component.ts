@@ -14,7 +14,7 @@ import { combineLatest, forkJoin, Observable, of } from 'rxjs';
 import { filter, pluck, switchMap, take, tap } from 'rxjs/operators';
 import { utils } from 'ethers';
 import { ConfirmDialogOutput } from '@shared/interface/dialog';
-import { Erc725Account, Erc734KeyManager } from '@twy-gmbh/erc725-playground';
+import { ERC725Account, ERC734KeyManager } from '@twy-gmbh/erc725-playground';
 
 @Component({
   selector: 'lukso-proxy-account',
@@ -27,8 +27,8 @@ export class ProxyAccountComponent implements OnInit {
   account$: Observable<Account>;
   qrCode: any;
 
-  proxyAccountContract: Erc725Account;
-  keyManagerContract: Erc734KeyManager;
+  proxyAccountContract: ERC725Account;
+  keyManagerContract: ERC734KeyManager;
 
   Stages = Stages;
 
