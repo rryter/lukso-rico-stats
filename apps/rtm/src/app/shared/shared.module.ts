@@ -31,6 +31,7 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { ReactiveFormsModule } from '@angular/forms';
 import { WrongNetworkComponent } from '@shared/components/wrong-network/wrong-network.component';
 import { MatRippleModule } from '@angular/material/core';
+import { PrivilegePipe } from './pipes/privilege.pipe';
 
 const materialModules = [
   MatTableModule,
@@ -61,6 +62,7 @@ const materialModules = [
     TimeAgoPipe,
     EthAddressShortPipe,
     CmcPricePipe,
+    PrivilegePipe,
     ConfirmComponent,
     LayoutComponent,
     AmountComponent,
@@ -82,6 +84,7 @@ const materialModules = [
     TimeAgoPipe,
     EthAddressShortPipe,
     CmcPricePipe,
+    PrivilegePipe,
     LayoutComponent,
     ConfirmComponent,
     AmountComponent,

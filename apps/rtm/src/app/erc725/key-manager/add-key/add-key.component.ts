@@ -24,7 +24,7 @@ export class AddKeyComponent implements OnInit {
     this.newKeyForm = this.fb.group(
       {
         address: ['', [Validators.required, isETHAddressValidator()]],
-        type: [1],
+        privileges: [[Capabilities.EXECUTION], [Validators.required]],
       },
       { updateOn: 'blur' }
     );
@@ -34,9 +34,9 @@ export class AddKeyComponent implements OnInit {
 
   saveNewKey(addKeyForm: FormGroup) {
     if (addKeyForm.valid) {
-      this.addKey(addKeyForm.value.address, addKeyForm.value.type);
+      this.addKey(addKeyForm.value.address, addKeyForm.value.privileges);
+      this.dialogRef.close();
     }
-    this.dialogRef.close();
   }
 
   onNoClick(): void {

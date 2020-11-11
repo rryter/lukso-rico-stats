@@ -1,15 +1,14 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Web3Service } from '@lukso/web3-rx';
-import { forkJoin, Observable, of } from 'rxjs';
-import { filter, map, shareReplay, switchMap } from 'rxjs/operators';
+import { forkJoin, Observable } from 'rxjs';
+import { shareReplay, switchMap } from 'rxjs/operators';
 import { Capabilities, KEY_TYPE } from '@shared/capabilities.enum';
 import { KeyManagerService } from '@shared/services/key-manager.service';
 import { environment } from '../../../environments/environment';
 import { keccak256 } from 'web3-utils';
 import { MatDialog } from '@angular/material/dialog';
 import { AddKeyComponent } from './add-key/add-key.component';
-import { BigNumber } from 'ethers';
-
+import { bigNumbertoIntArray } from '@shared/utils/bigNumber';
 @Component({
   selector: 'lukso-key-manager',
   templateUrl: './key-manager.component.html',
@@ -39,7 +38,7 @@ export class KeyManagerComponent implements OnInit {
 
   ngOnInit(): void {}
 
-  openDialog(a, b): void {
+  openDialog(title: string, data: any): void {
     const dialogRef = this.dialog.open(AddKeyComponent, {
       data: {
         address: this.getSelectedAddress(),
@@ -74,7 +73,7 @@ export class KeyManagerComponent implements OnInit {
   private getKey(
     key: string,
     keys: string[]
-  ): Promise<{ address: string; keyType: BigNumber; privileges: BigNumber[] }> {
+  ): Promise<{ address: string; keyType: number; privileges: number[] }> {
     return this.keyManagerService.contract.getKey(key).then((result) => {
       const { _keyAddress, _privilegesLUT, _keyType } = result;
       return {
@@ -82,8 +81,8 @@ export class KeyManagerComponent implements OnInit {
           _keyAddress.toLowerCase() ===
           this.web3Service.web3.currentProvider.selectedAddress.toLowerCase(),
         address: _keyAddress,
-        privileges: _privilegesLUT,
-        keyType: _keyType,
+        privileges: bigNumbertoIntArray(_privilegesLUT),
+        keyType: _keyType.toNumber(),
         index: keys.indexOf(key),
       };
     });

@@ -14,15 +14,17 @@
     <mat-form-field class="form-field" appearance="fill">
       <mat-label>Privilige</mat-label>
       <mat-icon matPrefix>security</mat-icon>
-      <mat-select formControlName="type">
-        <mat-option value="2">Execution </mat-option>
-        <mat-option value="1">Management</mat-option>
+      <mat-select formControlName="privileges" [multiple]="true">
+        <mat-option [value]="2">Execution </mat-option>
+        <mat-option [value]="1">Management</mat-option>
       </mat-select>
     </mat-form-field>
   </p>
 
-  <div style="text-align: right;">
-    <button mat-button style="margin-right: 10px;" (click)="onNoClick()">Cancel</button>
+  {{ newKeyForm.controls.privileges.value | json }}
+
+  <div style="text-align: right">
+    <button mat-button style="margin-right: 10px" (click)="onNoClick()">Cancel</button>
     <button mat-raised-button color="primary" type="submit">Add Key</button>
   </div>
 </form>

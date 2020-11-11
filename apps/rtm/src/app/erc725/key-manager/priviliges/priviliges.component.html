@@ -3,22 +3,21 @@
   <ng-container matColumnDef="key">
     <th mat-header-cell *matHeaderCellDef mat-sort-header>Address</th>
     <td mat-cell *matCellDef="let row">
-      <mat-chip-list aria-label="Current Wallet" *ngIf="!row.isCurrentWallet">
-        <mat-chip><mat-icon>vpn_key</mat-icon>&nbsp;{{ row.address }}</mat-chip>
-      </mat-chip-list>
-      <mat-chip-list aria-label="Current Wallet" *ngIf="row.isCurrentWallet">
+      {{ row.address }}
+      <!-- <mat-chip-list aria-label="Current Wallet" *ngIf="row.isCurrentWallet">
         <mat-chip><mat-icon>vpn_key</mat-icon>&nbsp;{{ row.address }}</mat-chip>
         <mat-chip selected>Current Wallet</mat-chip>
-      </mat-chip-list>
+      </mat-chip-list> -->
     </td>
   </ng-container>
 
   <!-- Name Column -->
   <ng-container matColumnDef="privilege">
-    <th mat-header-cell *matHeaderCellDef mat-sort-header>Privilege</th>
+    <th mat-header-cell *matHeaderCellDef mat-sort-header>Privilege(s)</th>
     <td mat-cell *matCellDef="let row">
-      <span *ngIf="row.purpose == 1">Manage & Execute</span>
-      <span *ngIf="row.purpose == 2">Execute</span>
+      <mat-chip-list aria-label="Privileges">
+        <mat-chip *ngFor="let privilege of row.privileges"> {{ privilege | privilege }}</mat-chip>
+      </mat-chip-list>
     </td>
   </ng-container>
 
@@ -36,7 +35,7 @@
         color="warn"
         mat-stroked-button
         (click)="removePrivilege(element)"
-        [disabled]="element.isCurrentWallet && element.purpose == 1 ? 'disabled' : false"
+        [disabled]="element.isCurrentWallet && element.privileges.includes(1) ? 'disabled' : false"
       >
         Remove
       </button>

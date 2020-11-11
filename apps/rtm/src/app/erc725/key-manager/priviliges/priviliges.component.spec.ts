@@ -7,6 +7,7 @@ import { MatChipsModule } from '@angular/material/chips';
 
 import { PriviligesComponent } from './priviliges.component';
 import { MatIconModule } from '@angular/material/icon';
+import { PrivilegePipe } from '@shared/pipes/privilege.pipe';
 
 describe('PriviligesComponent', () => {
   let component: PriviligesComponent;
@@ -14,7 +15,7 @@ describe('PriviligesComponent', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      declarations: [PriviligesComponent],
+      declarations: [PriviligesComponent, PrivilegePipe],
       imports: [
         NoopAnimationsModule,
         MatPaginatorModule,
