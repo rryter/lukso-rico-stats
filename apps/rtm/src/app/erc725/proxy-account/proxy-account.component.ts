@@ -11,7 +11,7 @@ import { LoadingIndicatorService } from '@shared/services/loading-indicator.serv
 import { ProxyAccountService } from '@shared/services/proxy-account.service';
 import { Stages } from '@shared/stages.enum';
 import { combineLatest, forkJoin, Observable, of } from 'rxjs';
-import { filter, pluck, switchMap, take, tap } from 'rxjs/operators';
+import { filter, pluck, switchMap } from 'rxjs/operators';
 import { utils } from 'ethers';
 import { ConfirmDialogOutput } from '@shared/interface/dialog';
 import { ERC725Account, ERC734KeyManager } from '@twy-gmbh/erc725-playground';
@@ -97,12 +97,9 @@ export class ProxyAccountComponent implements OnInit {
     return this.keyManagerService.contract
       .deployed()
       .then(() => {
-        return this.keyManagerService.contract.hasPrivilege(
-          this.web3Service.web3.currentProvider.selectedAddress,
-          2
-        );
+        return this.keyManagerService.contract.hasPrivilege(this.web3Service.selectedAddress, 2);
       })
-      .catch((result) => {
+      .catch(() => {
         return false;
       });
   }
@@ -111,12 +108,9 @@ export class ProxyAccountComponent implements OnInit {
     return this.keyManagerService.contract
       .deployed()
       .then(() => {
-        return this.keyManagerService.contract.hasPrivilege(
-          this.web3Service.web3.currentProvider.selectedAddress,
-          1
-        );
+        return this.keyManagerService.contract.hasPrivilege(this.web3Service.selectedAddress, 1);
       })
-      .catch((result) => {
+      .catch(() => {
         return false;
       });
   }
@@ -138,9 +132,9 @@ export class ProxyAccountComponent implements OnInit {
         this.loadingIndicatorService.showLoadingIndicator(
           `Topping up Account with ${dialogOutput.value} LYX`
         );
-        this.web3Service.web3.eth
+        this.web3Service.web3
+          .getSigner()
           .sendTransaction({
-            from: this.web3Service.web3.currentProvider.selectedAddress,
             to: account.address,
             value: utils.parseEther(dialogOutput.value),
           })
@@ -175,7 +169,7 @@ export class ProxyAccountComponent implements OnInit {
 
       const abi = this.proxyAccountContract.interface.encodeFunctionData('execute', [
         '0',
-        this.web3Service.web3.currentProvider.selectedAddress as string,
+        this.web3Service.selectedAddress as string,
         utils.parseEther(dialogOutput.value),
         '0x00',
       ]);

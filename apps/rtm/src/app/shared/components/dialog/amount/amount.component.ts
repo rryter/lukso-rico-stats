@@ -30,7 +30,7 @@ export class AmountComponent implements OnInit {
     if (data.type === 'withdraw' || data.type === 'send') {
       sourceAddress = data.account.address;
     } else {
-      sourceAddress = this.web3Service.web3.currentProvider.selectedAddress;
+      sourceAddress = this.web3Service.selectedAddress;
     }
 
     this.confirmLabel = data.confirmLabel;

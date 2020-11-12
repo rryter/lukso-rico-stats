@@ -1,15 +1,14 @@
 import { Injectable, NgZone } from '@angular/core';
 import { Observable, ReplaySubject, merge } from 'rxjs';
 import { mapTo } from 'rxjs/operators';
-import { fromWei, toBN } from 'web3-utils';
-const Web3 = require('web3');
-
+import { ethers, utils, providers } from 'ethers';
+import { Web3Provider } from '@ethersproject/providers';
 @Injectable({
   providedIn: 'root',
 })
 export class Web3Service {
-  web3: any; // use proper tyings
-
+  web3: Web3Provider; // use proper tyings
+  selectedAddress: string;
   address$ = new ReplaySubject<string>(1);
   networkId$ = new ReplaySubject<number>(1);
   blocks$ = new ReplaySubject(1);
@@ -23,25 +22,19 @@ export class Web3Service {
   }
 
   public getBalance(address: string): Promise<number> {
-    return this.web3.eth.getBalance(address).then((balance) => {
-      return parseFloat(fromWei(toBN(balance), 'ether'));
+    return this.web3.getBalance(address).then((balance) => {
+      return parseFloat(utils.formatEther(balance));
     });
   }
 
-  private initializeObservables(): void {
-    this.web3.eth.getBlock('latest').then((latestBlock) => {
+  private initializeObservables() {
+    this.web3.on('block', (block) => {
       this.ngZone.run(() => {
-        this.blocks$.next(latestBlock);
-      });
-
-      this.web3.eth.subscribe('newBlockHeaders').on('data', (block) => {
-        this.ngZone.run(() => {
-          this.blocks$.next(block);
-        });
+        this.blocks$.next(block);
       });
     });
 
-    this.web3.eth.getAccounts().then((accounts) => {
+    this.web3.listAccounts().then((accounts) => {
       if (accounts.length > 0) {
         this.ngZone.run(() => {
           this.address$.next(accounts[0]);
@@ -49,14 +42,27 @@ export class Web3Service {
       }
       window.ethereum.on('accountsChanged', (addresses: string[]) => {
         this.ngZone.run(() => {
+          this.web3
+            .getSigner()
+            .getAddress()
+            .then((address) => {
+              this.selectedAddress = address;
+            });
           this.address$.next(addresses[0]);
         });
       });
     });
 
-    this.web3.eth.getChainId().then((networkId) => {
-      this.networkId$.next(networkId);
+    this.web3.getNetwork().then((network) => {
+      this.networkId$.next(network.chainId);
     });
+
+    this.web3
+      .getSigner()
+      .getAddress()
+      .then((address) => {
+        this.selectedAddress = address;
+      });
 
     this.reloadTrigger$ = merge(this.blocks$, this.address$).pipe(mapTo(true));
   }
@@ -65,7 +71,7 @@ export class Web3Service {
     const ethEnabled = () => {
       if (window.ethereum) {
         window.ethereum.autoRefreshOnNetworkChange = false;
-        this.web3 = new Web3(window.ethereum);
+        this.web3 = new ethers.providers.Web3Provider(window.ethereum);
         window.ethereum.enable();
         return true;
       }

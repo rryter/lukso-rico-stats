@@ -5,10 +5,11 @@ import { shareReplay, switchMap } from 'rxjs/operators';
 import { Capabilities, KEY_TYPE } from '@shared/capabilities.enum';
 import { KeyManagerService } from '@shared/services/key-manager.service';
 import { environment } from '../../../environments/environment';
-import { keccak256 } from 'web3-utils';
 import { MatDialog } from '@angular/material/dialog';
 import { AddKeyComponent } from './add-key/add-key.component';
 import { bigNumbertoIntArray } from '@shared/utils/bigNumber';
+import { utils } from 'ethers';
+
 @Component({
   selector: 'lukso-key-manager',
   templateUrl: './key-manager.component.html',
@@ -63,7 +64,7 @@ export class KeyManagerComponent implements OnInit {
   }
 
   removeKey(key: { address: string; index: number }) {
-    this.keyManagerService.contract.removeKey(keccak256(key.address), key.index);
+    this.keyManagerService.contract.removeKey(utils.keccak256(key.address), key.index);
   }
 
   private getAllKeys(): Promise<any[]> {
@@ -76,10 +77,10 @@ export class KeyManagerComponent implements OnInit {
   ): Promise<{ address: string; keyType: number; privileges: number[] }> {
     return this.keyManagerService.contract.getKey(key).then((result) => {
       const { _keyAddress, _privilegesLUT, _keyType } = result;
+      console.log(_privilegesLUT);
       return {
         isCurrentWallet:
-          _keyAddress.toLowerCase() ===
-          this.web3Service.web3.currentProvider.selectedAddress.toLowerCase(),
+          _keyAddress.toLowerCase() === this.web3Service.selectedAddress.toLowerCase(),
         address: _keyAddress,
         privileges: bigNumbertoIntArray(_privilegesLUT),
         keyType: _keyType.toNumber(),
@@ -89,6 +90,6 @@ export class KeyManagerComponent implements OnInit {
   }
 
   private getSelectedAddress() {
-    return this.web3Service.web3.currentProvider.selectedAddress;
+    return this.web3Service.selectedAddress;
   }
 }

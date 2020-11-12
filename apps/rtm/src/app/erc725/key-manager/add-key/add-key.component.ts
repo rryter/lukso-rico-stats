@@ -34,8 +34,9 @@ export class AddKeyComponent implements OnInit {
 
   saveNewKey(addKeyForm: FormGroup) {
     if (addKeyForm.valid) {
-      this.addKey(addKeyForm.value.address, addKeyForm.value.privileges);
-      this.dialogRef.close();
+      this.addKey(addKeyForm.value.address, addKeyForm.value.privileges).then(() => {
+        this.dialogRef.close();
+      });
     }
   }
 

@@ -3,7 +3,6 @@ import { forkJoin, Observable, of } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
 import { Vault } from '../interface/vault';
 import { Web3Service } from '@lukso/web3-rx';
-import { fromWei, toBN } from 'web3-utils';
 import { SmartVault, SmartVaultFactory } from '@twy-gmbh/erc725-playground';
 import { ethers } from 'ethers';
 
