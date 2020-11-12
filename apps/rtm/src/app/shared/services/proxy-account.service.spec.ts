@@ -1,4 +1,4 @@
-import { async, TestBed } from '@angular/core/testing';
+import { TestBed, waitForAsync } from '@angular/core/testing';
 import { Web3Service } from '@lukso/web3-rx';
 import { web3ServiceMock } from '@lukso/web3-rx/mocks';
 
