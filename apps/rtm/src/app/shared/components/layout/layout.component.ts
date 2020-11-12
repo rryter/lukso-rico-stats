@@ -28,8 +28,10 @@ export class LayoutComponent implements OnInit {
       })
     );
     this.wallet$ = this.web3Service.reloadTrigger$.pipe(
-      switchMap(() => this.web3Service.address$),
-      switchMap((address: string) => {
+      tap(() => {
+        console.count('reloadTrigger$ LAYOUT COMPONENT');
+      }),
+      switchMap(([, address]) => {
         return forkJoin({
           address: of(address),
           balance: this.web3Service.getBalance(address),

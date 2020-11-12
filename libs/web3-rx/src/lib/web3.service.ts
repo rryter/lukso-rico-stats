@@ -1,7 +1,7 @@
 import { Injectable, NgZone } from '@angular/core';
-import { Observable, ReplaySubject, merge } from 'rxjs';
-import { mapTo } from 'rxjs/operators';
-import { ethers, utils, providers } from 'ethers';
+import { Observable, ReplaySubject, combineLatest } from 'rxjs';
+import { shareReplay, throttleTime } from 'rxjs/operators';
+import { ethers, utils } from 'ethers';
 import { Web3Provider } from '@ethersproject/providers';
 @Injectable({
   providedIn: 'root',
@@ -11,9 +11,9 @@ export class Web3Service {
   selectedAddress: string;
   address$ = new ReplaySubject<string>(1);
   networkId$ = new ReplaySubject<number>(1);
-  blocks$ = new ReplaySubject(1);
+  blocks$ = new ReplaySubject<number>(1);
 
-  reloadTrigger$: Observable<boolean>;
+  reloadTrigger$: Observable<[number, string]>;
 
   constructor(private ngZone: NgZone) {
     this.initializeProvider();
@@ -64,7 +64,10 @@ export class Web3Service {
         this.selectedAddress = address;
       });
 
-    this.reloadTrigger$ = merge(this.blocks$, this.address$).pipe(mapTo(true));
+    this.reloadTrigger$ = combineLatest([
+      this.blocks$.asObservable(),
+      this.address$.asObservable(),
+    ]);
   }
 
   private initializeProvider() {

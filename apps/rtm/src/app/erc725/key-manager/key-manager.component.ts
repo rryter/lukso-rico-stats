@@ -1,14 +1,15 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Web3Service } from '@lukso/web3-rx';
-import { forkJoin, Observable } from 'rxjs';
-import { shareReplay, switchMap } from 'rxjs/operators';
+import { forkJoin, Observable, ReplaySubject, Subject } from 'rxjs';
+import { shareReplay, switchMap, tap } from 'rxjs/operators';
 import { Capabilities, KEY_TYPE } from '@shared/capabilities.enum';
 import { KeyManagerService } from '@shared/services/key-manager.service';
 import { environment } from '../../../environments/environment';
 import { MatDialog } from '@angular/material/dialog';
 import { AddKeyComponent } from './add-key/add-key.component';
 import { bigNumbertoIntArray } from '@shared/utils/bigNumber';
-import { utils } from 'ethers';
+import { Contract, ContractTransaction, Transaction, utils } from 'ethers';
+import { LoadingIndicatorService } from '@shared/services/loading-indicator.service';
 
 @Component({
   selector: 'lukso-key-manager',
@@ -16,6 +17,8 @@ import { utils } from 'ethers';
   styleUrls: ['./key-manager.component.css'],
 })
 export class KeyManagerComponent implements OnInit {
+  loadKeys = new ReplaySubject();
+
   keyManagerData$: Observable<{ address: string; keyType: any; privileges: any[] }[]>;
   isKeyManager$: Observable<boolean>;
 
@@ -26,15 +29,27 @@ export class KeyManagerComponent implements OnInit {
   @Input() contractAddress: string;
 
   constructor(
+    public dialog: MatDialog,
     private web3Service: Web3Service,
     private keyManagerService: KeyManagerService,
-    public dialog: MatDialog
+    private loadingIndicatorService: LoadingIndicatorService
   ) {
-    this.keyManagerData$ = this.web3Service.reloadTrigger$.pipe(
+    this.keyManagerData$ = this.loadKeys.pipe(
+      tap(() => {
+        console.count('reloadTrigger$ KeyManagerComponent');
+      }),
       switchMap(() => this.getAllKeys()),
       switchMap((keys: any[]) => this.getKeymanagerData$(keys)),
       shareReplay(1)
     );
+
+    this.loadKeys.next();
+    this.keyManagerService.contract.on('KeyRemoved', () => {
+      this.loadKeys.next();
+    });
+    this.keyManagerService.contract.on('KeySet', () => {
+      this.loadKeys.next();
+    });
   }
 
   ngOnInit(): void {}
@@ -46,12 +61,19 @@ export class KeyManagerComponent implements OnInit {
       },
     });
 
-    dialogRef.afterClosed().subscribe((result) => {
-      console.log('The dialog was closed', result);
+    dialogRef.afterClosed().subscribe((sendAddKey: Promise<ContractTransaction>) => {
+      sendAddKey
+        .then((transaction: ContractTransaction) => {
+          return transaction.wait();
+        })
+        .finally(() => {
+          this.loadingIndicatorService.doneLoading();
+        });
     });
   }
 
   addKey(keyKuprose: Capabilities[]) {
+    this.loadingIndicatorService.showLoadingIndicator('asd');
     this.keyManagerService.contract.setKey(this.getSelectedAddress(), keyKuprose, KEY_TYPE.ECDSA);
   }
 
@@ -64,7 +86,13 @@ export class KeyManagerComponent implements OnInit {
   }
 
   removeKey(key: { address: string; index: number }) {
-    this.keyManagerService.contract.removeKey(utils.keccak256(key.address), key.index);
+    this.loadingIndicatorService.showLoadingIndicator('Removing Key');
+    this.keyManagerService.contract
+      .removeKey(utils.keccak256(key.address), key.index)
+      .then((tx) => tx.wait())
+      .finally(() => {
+        this.loadingIndicatorService.doneLoading();
+      });
   }
 
   private getAllKeys(): Promise<any[]> {
@@ -75,9 +103,9 @@ export class KeyManagerComponent implements OnInit {
     key: string,
     keys: string[]
   ): Promise<{ address: string; keyType: number; privileges: number[] }> {
+    console.count('xxx getKey');
     return this.keyManagerService.contract.getKey(key).then((result) => {
       const { _keyAddress, _privilegesLUT, _keyType } = result;
-      console.log(_privilegesLUT);
       return {
         isCurrentWallet:
           _keyAddress.toLowerCase() === this.web3Service.selectedAddress.toLowerCase(),

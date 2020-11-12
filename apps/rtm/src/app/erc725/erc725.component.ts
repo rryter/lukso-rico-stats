@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Web3Service } from '@lukso/web3-rx';
 import { forkJoin, Observable, of } from 'rxjs';
-import { switchMap } from 'rxjs/operators';
+import { switchMap, tap } from 'rxjs/operators';
 import { Wallet } from '../shared/interface/wallet';
 @Component({
   selector: 'lukso-erc725',
@@ -18,6 +18,9 @@ export class Erc725Component implements OnInit {
     private router: Router
   ) {
     this.wallet$ = this.web3Service.reloadTrigger$.pipe(
+      tap(() => {
+        console.count('reloadTrigger$ ERC725');
+      }),
       switchMap(() => this.web3Service.address$),
       switchMap((address: string) => {
         return forkJoin({

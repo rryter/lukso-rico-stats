@@ -11,7 +11,7 @@ import { LoadingIndicatorService } from '@shared/services/loading-indicator.serv
 import { ProxyAccountService } from '@shared/services/proxy-account.service';
 import { Stages } from '@shared/stages.enum';
 import { combineLatest, forkJoin, Observable, of } from 'rxjs';
-import { filter, pluck, switchMap } from 'rxjs/operators';
+import { distinctUntilChanged, filter, pluck, switchMap, tap } from 'rxjs/operators';
 import { utils } from 'ethers';
 import { ConfirmDialogOutput } from '@shared/interface/dialog';
 import { ERC725Account, ERC734KeyManager } from '@twy-gmbh/erc725-playground';
@@ -49,6 +49,10 @@ export class ProxyAccountComponent implements OnInit {
     public dialog: MatDialog
   ) {
     this.account$ = this.web3Service.reloadTrigger$.pipe(
+      distinctUntilChanged(),
+      tap(() => {
+        console.count('reloadTrigger$ ProxyAccountComponent');
+      }),
       switchMap(() => this.loadAccount()),
       switchMap((account: Account) => this.enrichAccountWithQrCode(account))
     );

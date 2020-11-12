@@ -1,4 +1,4 @@
-<div class="navbar-container" *ngIf="(showWrongNetworkError$ | async) === false; else wrongNetwork">
+<div class="navbar-container" *ngIf="(showWrongNetworkError$ | async) === false">
   <!-- Top navbar -->
   <!-- <mat-toolbar class="navbar" color="primary" *ngIf="wallet$ | async as wallet">
     
@@ -53,21 +53,9 @@
 
     <!-- Main content -->
     <mat-sidenav-content class="sidenav-content">
-      <!-- <div class="progress-bar-container">
-        <mat-progress-bar
-          color="accent"
-          mode="indeterminate"
-          *ngIf="spinnerService.visibility | async"
-        >
-        </mat-progress-bar> -->
-      <!-- <mat-spinner class="spinner" [diameter]="50" *ngIf="showSpinner"></mat-spinner> -->
-      <!-- </div> -->
-
       <router-outlet></router-outlet>
     </mat-sidenav-content>
   </mat-sidenav-container>
 </div>
 
-<ng-template #wrongNetwork>
-  <lukso-wrong-network></lukso-wrong-network>
-</ng-template>
+<lukso-wrong-network *ngIf="(showWrongNetworkError$ | async) === true"></lukso-wrong-network>

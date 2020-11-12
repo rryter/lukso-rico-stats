@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Capabilities, KEY_TYPE } from '@shared/capabilities.enum';
 import { KeyManagerService } from '@shared/services/key-manager.service';
+import { LoadingIndicatorService } from '@shared/services/loading-indicator.service';
 import { isETHAddressValidator } from '@shared/validators/web3-address.validator';
 
 @Component({
@@ -19,6 +20,7 @@ export class AddKeyComponent implements OnInit {
     private fb: FormBuilder,
     public dialogRef: MatDialogRef<AddKeyComponent>,
     private keyManagerService: KeyManagerService,
+    private loadingIndicatorService: LoadingIndicatorService,
     @Inject(MAT_DIALOG_DATA) public data: { address: string }
   ) {
     this.newKeyForm = this.fb.group(
@@ -34,9 +36,8 @@ export class AddKeyComponent implements OnInit {
 
   saveNewKey(addKeyForm: FormGroup) {
     if (addKeyForm.valid) {
-      this.addKey(addKeyForm.value.address, addKeyForm.value.privileges).then(() => {
-        this.dialogRef.close();
-      });
+      this.loadingIndicatorService.showLoadingIndicator('yay');
+      this.dialogRef.close(this.addKey(addKeyForm.value.address, addKeyForm.value.privileges));
     }
   }
 

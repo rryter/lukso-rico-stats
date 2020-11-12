@@ -16,10 +16,7 @@
     <th mat-header-cell *matHeaderCellDef mat-sort-header>Privilege(s)</th>
     <td mat-cell *matCellDef="let row">
       <mat-chip-list aria-label="Privileges">
-        {{ row.privileges | json }}
-        <mat-chip *ngFor="let privilege of row.privileges">
-          {{ privilege | privilege | json }}</mat-chip
-        >
+        <mat-chip *ngFor="let privilege of row.privileges"> {{ privilege | privilege }}</mat-chip>
       </mat-chip-list>
     </td>
   </ng-container>
