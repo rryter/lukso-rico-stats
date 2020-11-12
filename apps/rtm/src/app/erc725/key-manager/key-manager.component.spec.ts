@@ -6,6 +6,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { KeyManagerService } from '@shared/services/key-manager.service';
 
 describe('KeyManagerComponent', () => {
   let component: KeyManagerComponent;
@@ -19,6 +20,14 @@ describe('KeyManagerComponent', () => {
         {
           provide: MatDialog,
           useValue: {},
+        },
+        {
+          provide: KeyManagerService,
+          useValue: {
+            contract: {
+              on: jest.fn(),
+            },
+          },
         },
       ],
       imports: [MatIconModule, MatToolbarModule],

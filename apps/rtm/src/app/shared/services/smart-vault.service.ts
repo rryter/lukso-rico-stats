@@ -4,7 +4,7 @@ import { switchMap } from 'rxjs/operators';
 import { Vault } from '../interface/vault';
 import { Web3Service } from '@lukso/web3-rx';
 import { SmartVault, SmartVaultFactory } from '@twy-gmbh/erc725-playground';
-import { ethers } from 'ethers';
+import { ethers, utils } from 'ethers';
 
 @Injectable({
   providedIn: 'root',
@@ -53,7 +53,7 @@ export class SmartVaultService {
       .getBalance()
       .call()
       .then((balance: number) => {
-        return fromWei(toBN(balance), 'ether');
+        return utils.formatEther(balance);
       });
   }
 
@@ -62,7 +62,7 @@ export class SmartVaultService {
     return this.contract.methods
       .lockFunds()
       .send({
-        from: this.web3Service.web3.currentProvider.selectedAddress,
+        from: this.web3Service.selectedAddress,
         value: value * 10 ** 18,
       })
       .finally(() => {
@@ -75,16 +75,14 @@ export class SmartVaultService {
     return this.contract.methods
       .withdraw(0)
       .send({
-        from: this.web3Service.web3.currentProvider.selectedAddress,
+        from: this.web3Service.selectedAddress,
       })
       .finally(() => {
         this.transactions.withdrawing = false;
       });
   }
 
-  private getBalance(): Promise<number> {
-    return this.web3Service.web3.eth.getBalance(
-      this.web3Service.web3.currentProvider.selectedAddress
-    );
+  private getBalance(): Promise<any> {
+    return this.web3Service.web3.getBalance(this.web3Service.selectedAddress);
   }
 }
