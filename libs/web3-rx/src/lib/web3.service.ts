@@ -71,7 +71,7 @@ export class Web3Service {
       if (window.ethereum) {
         window.ethereum.autoRefreshOnNetworkChange = false;
         this.signer = new ethers.providers.Web3Provider(window.ethereum).getSigner();
-        this.web3 = new ethers.providers.JsonRpcProvider('http://127.0.0.1:8545');
+        this.web3 = new ethers.providers.JsonRpcProvider('http://rpc.l14.lukso.network:8545');
         window.ethereum.enable();
         return true;
       }
