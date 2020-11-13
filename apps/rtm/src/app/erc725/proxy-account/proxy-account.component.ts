@@ -10,8 +10,8 @@ import { KeyManagerService } from '@shared/services/key-manager.service';
 import { LoadingIndicatorService } from '@shared/services/loading-indicator.service';
 import { ProxyAccountService } from '@shared/services/proxy-account.service';
 import { Stages } from '@shared/stages.enum';
-import { combineLatest, forkJoin, Observable, of } from 'rxjs';
-import { distinctUntilChanged, filter, pluck, switchMap, tap } from 'rxjs/operators';
+import { combineLatest, forkJoin, Observable, of, ReplaySubject, Subject } from 'rxjs';
+import { catchError, distinctUntilChanged, filter, pluck, switchMap, tap } from 'rxjs/operators';
 import { utils } from 'ethers';
 import { ConfirmDialogOutput } from '@shared/interface/dialog';
 import { ERC725Account, ERC734KeyManager } from '@twy-gmbh/erc725-playground';
@@ -40,6 +40,8 @@ export class ProxyAccountComponent implements OnInit {
     message: null,
   };
 
+  accountChanged = new ReplaySubject(1);
+
   constructor(
     private web3Service: Web3Service,
     private loadingIndicatorService: LoadingIndicatorService,
@@ -48,13 +50,20 @@ export class ProxyAccountComponent implements OnInit {
     private route: ActivatedRoute,
     public dialog: MatDialog
   ) {
-    this.account$ = this.web3Service.reloadTrigger$.pipe(
-      distinctUntilChanged(),
+    this.accountChanged.next();
+    this.web3Service.web3.on('ValueReceived', () => {
+      this.accountChanged.next();
+    });
+    this.account$ = this.accountChanged.pipe(
       tap(() => {
         console.count('reloadTrigger$ ProxyAccountComponent');
       }),
       switchMap(() => this.loadAccount()),
-      switchMap((account: Account) => this.enrichAccountWithQrCode(account))
+      switchMap((account: Account) => this.enrichAccountWithQrCode(account)),
+      catchError((error) => {
+        console.log('error', error);
+        return of({} as Account);
+      })
     );
   }
 
@@ -136,8 +145,7 @@ export class ProxyAccountComponent implements OnInit {
         this.loadingIndicatorService.showLoadingIndicator(
           `Topping up Account with ${dialogOutput.value} LYX`
         );
-        this.web3Service.web3
-          .getSigner()
+        this.web3Service.signer
           .sendTransaction({
             to: account.address,
             value: utils.parseEther(dialogOutput.value),

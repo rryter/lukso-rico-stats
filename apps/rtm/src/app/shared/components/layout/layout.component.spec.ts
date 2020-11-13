@@ -8,6 +8,7 @@ import { Web3Service } from '@lukso/web3-rx';
 import { web3ServiceMock } from '@lukso/web3-rx/mocks';
 import { CmcPricePipe } from '@shared/pipes/cmc-price.pipe';
 import { EthAddressShortPipe } from '@shared/pipes/eth-address-short.pipe';
+import { TimeAgoPipe } from '@shared/pipes/time-ago.pipe';
 import { LayoutComponent } from './layout.component';
 
 describe('LayoutComponent', () => {
@@ -16,7 +17,7 @@ describe('LayoutComponent', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      declarations: [LayoutComponent, EthAddressShortPipe, CmcPricePipe],
+      declarations: [LayoutComponent, EthAddressShortPipe, CmcPricePipe, TimeAgoPipe],
       providers: [{ provide: Web3Service, useValue: web3ServiceMock }],
       imports: [MatSidenavModule, MatIconModule, RouterModule, MatListModule],
       schemas: [NO_ERRORS_SCHEMA],

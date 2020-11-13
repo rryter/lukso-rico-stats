@@ -46,7 +46,7 @@
 
         <a id="push-bottom" mat-list-item [routerLink]="['/about']" routerLinkActive="active">
           <mat-icon mat-list-icon> info_outline </mat-icon>
-          <p mat-line>About</p>
+          <p mat-line>Current Block: {{ blocks$ | async }}</p>
         </a>
       </mat-nav-list>
     </mat-sidenav>

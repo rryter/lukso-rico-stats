@@ -21,24 +21,21 @@ export class NewAccountComponent implements OnInit {
     this.accounts = JSON.parse(window.localStorage.getItem('accounts')) || [];
   }
 
-  deployProxyAccount() {
+  async deployProxyAccount() {
     this.loadingIndicatorService.showLoadingIndicator(
       `Creating Proxy Account`,
       'create-proxy-account'
     );
-    this.proxyAccountService
-      .deployProxyAccount()
-      .then((contract) => {
-        this.accounts.push({ address: contract.address, stage: 2 });
-        window.localStorage.setItem('accounts', JSON.stringify(this.accounts));
-        this.router.navigate(['accounts', contract.address]);
-      })
-      .catch((error) => {
-        console.error(error);
-      })
-      .finally(() => {
-        this.loadingIndicatorService.doneLoading();
-      });
+
+    const contract = await this.proxyAccountService.deployProxyAccount();
+    console.log('contract', contract);
+    await contract.deployed();
+
+    this.accounts.push({ address: contract.address, stage: 2 });
+    window.localStorage.setItem('accounts', JSON.stringify(this.accounts));
+    this.router.navigate(['accounts', contract.address]);
+
+    this.loadingIndicatorService.doneLoading();
   }
 
   loadExistingAccount(index: number) {

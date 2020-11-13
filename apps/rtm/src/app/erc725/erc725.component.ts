@@ -21,8 +21,7 @@ export class Erc725Component implements OnInit {
       tap(() => {
         console.count('reloadTrigger$ ERC725');
       }),
-      switchMap(() => this.web3Service.address$),
-      switchMap((address: string) => {
+      switchMap(([, address]) => {
         return forkJoin({
           address: of(address),
           balance: this.web3Service.getBalance(address),

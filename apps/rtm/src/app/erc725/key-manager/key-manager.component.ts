@@ -34,7 +34,7 @@ export class KeyManagerComponent implements OnInit {
     private keyManagerService: KeyManagerService,
     private loadingIndicatorService: LoadingIndicatorService
   ) {
-    this.keyManagerData$ = this.loadKeys.pipe(
+    this.keyManagerData$ = this.web3Service.reloadTrigger$.pipe(
       tap(() => {
         console.count('reloadTrigger$ KeyManagerComponent');
       }),
@@ -103,7 +103,6 @@ export class KeyManagerComponent implements OnInit {
     key: string,
     keys: string[]
   ): Promise<{ address: string; keyType: number; privileges: number[] }> {
-    console.count('xxx getKey');
     return this.keyManagerService.contract.getKey(key).then((result) => {
       const { _keyAddress, _privilegesLUT, _keyType } = result;
       return {

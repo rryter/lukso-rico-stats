@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { Web3Service } from '@lukso/web3-rx';
 import { ERC725Account, ERC725AccountFactory } from '@twy-gmbh/erc725-playground';
 import { ethers } from 'ethers';
 
@@ -8,22 +9,18 @@ import { ethers } from 'ethers';
 export class ProxyAccountService {
   contract: ERC725Account;
 
-  constructor() {}
+  constructor(private web3Service: Web3Service) {}
 
   getContract(address: string) {
-    const provider = new ethers.providers.Web3Provider(window.ethereum);
-    const signer = provider.getSigner();
-    return new ERC725AccountFactory(signer).attach(address);
+    return new ERC725AccountFactory(this.web3Service.signer).attach(address);
   }
 
   async deployProxyAccount() {
-    const provider = new ethers.providers.Web3Provider(window.ethereum);
-    const signer = provider.getSigner();
-    return new ERC725AccountFactory(signer)
-      .deploy(await signer.getAddress())
-      .then((contract: ERC725Account) => {
-        this.contract = contract;
-        return contract;
-      });
+    const signer = this.web3Service.signer;
+    const address = await signer.getAddress();
+    return new ERC725AccountFactory(signer).deploy(address).then((contract: ERC725Account) => {
+      this.contract = contract;
+      return contract;
+    });
   }
 }

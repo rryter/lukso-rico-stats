@@ -1,14 +1,16 @@
 import { Injectable, NgZone } from '@angular/core';
 import { Observable, ReplaySubject, combineLatest } from 'rxjs';
 import { shareReplay, throttleTime } from 'rxjs/operators';
-import { ethers, utils } from 'ethers';
-import { Web3Provider } from '@ethersproject/providers';
+import { ethers, Signer, utils } from 'ethers';
+import { JsonRpcProvider } from '@ethersproject/providers';
 @Injectable({
   providedIn: 'root',
 })
 export class Web3Service {
-  web3: Web3Provider; // use proper tyings
+  web3: JsonRpcProvider;
+  signer: Signer;
   selectedAddress: string;
+
   address$ = new ReplaySubject<string>(1);
   networkId$ = new ReplaySubject<number>(1);
   blocks$ = new ReplaySubject<number>(1);
@@ -42,12 +44,9 @@ export class Web3Service {
       }
       window.ethereum.on('accountsChanged', (addresses: string[]) => {
         this.ngZone.run(() => {
-          this.web3
-            .getSigner()
-            .getAddress()
-            .then((address) => {
-              this.selectedAddress = address;
-            });
+          this.signer.getAddress().then((address) => {
+            this.selectedAddress = address;
+          });
           this.address$.next(addresses[0]);
         });
       });
@@ -57,12 +56,9 @@ export class Web3Service {
       this.networkId$.next(network.chainId);
     });
 
-    this.web3
-      .getSigner()
-      .getAddress()
-      .then((address) => {
-        this.selectedAddress = address;
-      });
+    this.signer.getAddress().then((address) => {
+      this.selectedAddress = address;
+    });
 
     this.reloadTrigger$ = combineLatest([
       this.blocks$.asObservable(),
@@ -74,7 +70,8 @@ export class Web3Service {
     const ethEnabled = () => {
       if (window.ethereum) {
         window.ethereum.autoRefreshOnNetworkChange = false;
-        this.web3 = new ethers.providers.Web3Provider(window.ethereum);
+        this.signer = new ethers.providers.Web3Provider(window.ethereum).getSigner();
+        this.web3 = new ethers.providers.JsonRpcProvider('http://127.0.0.1:8545');
         window.ethereum.enable();
         return true;
       }

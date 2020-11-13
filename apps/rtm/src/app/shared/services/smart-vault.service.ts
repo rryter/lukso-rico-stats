@@ -33,10 +33,7 @@ export class SmartVaultService {
   }
 
   deploy() {
-    const provider = new ethers.providers.Web3Provider(window.ethereum);
-    const signer = provider.getSigner();
-    const factory = new SmartVaultFactory(signer);
-    factory.deploy().then((contract) => {
+    new SmartVaultFactory(this.web3Service.signer).deploy().then((contract) => {
       this.isContractDeployed = true;
       window.localStorage.setItem('smart-vault-address', JSON.stringify(contract.options.address));
       this.contract = contract;

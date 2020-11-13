@@ -39,39 +39,23 @@ export class ProgressComponent implements OnInit {
     }
   }
 
-  deployProxyAccount(address: string) {
-    this.loadingIndicatorService.showLoadingIndicator(
-      `Creating Proxy Account`,
-      'create-proxy-account'
-    );
-    this.proxyAccountService
-      .deployProxyAccount()
-      .then((contract) => {
-        this.accounts.push({ address: contract.address, stage: 2 });
-        window.localStorage.setItem('accounts', JSON.stringify(this.accounts));
-        this.router.navigate(['accounts', contract.address]);
-      })
-      .catch((error) => {
-        console.log(error);
-      })
-      .finally(() => {
-        this.loadingIndicatorService.doneLoading();
-      });
-  }
-
   async deployKeyManager() {
     this.loadingIndicatorService.showLoadingIndicator(
       `Deploying ERC734 Key Manager and initialize it...`
     );
-    this.keyManagerService
-      .deploy(this.accounts[0].address, this.web3Service.selectedAddress)
-      .then((deployedContract) => {
-        this.setStage(this.accounts, Stages.KeyManager);
-        return this.proxyAccountService.contract.transferOwnership(deployedContract.address);
-      })
-      .finally(() => {
-        this.loadingIndicatorService.doneLoading();
-      });
+    const contract = await this.keyManagerService.deploy(
+      this.accounts[0].address,
+      this.web3Service.selectedAddress
+    );
+
+    await contract.deployed();
+
+    this.setStage(this.accounts, Stages.KeyManager);
+    this.loadingIndicatorService.showLoadingIndicator(`Transfer Ownership of Proxy Account`);
+    const ownershipTX = await this.proxyAccountService.contract.transferOwnership(contract.address);
+    await ownershipTX.wait();
+
+    this.loadingIndicatorService.doneLoading();
   }
 
   private setStage(accounts, stage: Stages) {
