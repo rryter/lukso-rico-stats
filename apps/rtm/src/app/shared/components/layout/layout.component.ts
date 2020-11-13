@@ -31,15 +31,6 @@ export class LayoutComponent implements OnInit {
       });
     });
 
-    // const provider2 = new ethers.providers.Web3Provider(window.ethereum);
-    // provider2.on('block', (blockNr) => {
-    //   this.ngZone.run(() => {
-    //     debugger;
-    //     console.log('block2 via WEB32', blockNr);
-    //     this.blocks$.next(blockNr);
-    //   });
-    // });
-
     this.updater = interval(1000).pipe(
       map(() => {
         return this.lastBlock;

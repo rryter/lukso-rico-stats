@@ -60,8 +60,7 @@ export class ProxyAccountComponent implements OnInit {
       }),
       switchMap(() => this.loadAccount()),
       switchMap((account: Account) => this.enrichAccountWithQrCode(account)),
-      catchError((error) => {
-        console.log('error', error);
+      catchError(() => {
         return of({} as Account);
       })
     );

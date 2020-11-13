@@ -1,3 +1,4 @@
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { MatCardModule } from '@angular/material/card';
@@ -27,7 +28,7 @@ describe('ProxyAccountComponent', () => {
         { provide: ActivatedRoute, useValue: {} },
         { provide: MatDialog, useValue: {} },
       ],
-      imports: [MatCardModule],
+      imports: [MatCardModule, HttpClientTestingModule],
       schemas: [NO_ERRORS_SCHEMA],
     }).compileComponents();
   });

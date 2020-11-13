@@ -28,7 +28,6 @@ export class NewAccountComponent implements OnInit {
     );
 
     const contract = await this.proxyAccountService.deployProxyAccount();
-    console.log('contract', contract);
     await contract.deployed();
 
     this.accounts.push({ address: contract.address, stage: 2 });

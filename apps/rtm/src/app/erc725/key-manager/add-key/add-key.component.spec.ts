@@ -7,6 +7,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatSelectModule } from '@angular/material/select';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { KeyManagerService } from '@shared/services/key-manager.service';
 import { AddKeyComponent } from './add-key.component';
 
 describe('AddKeyComponent', () => {
@@ -23,6 +24,10 @@ describe('AddKeyComponent', () => {
         },
         {
           provide: MAT_DIALOG_DATA,
+          useValue: {},
+        },
+        {
+          provide: KeyManagerService,
           useValue: {},
         },
       ],

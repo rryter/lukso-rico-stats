@@ -8,6 +8,9 @@ const web3ServiceMock = {
     eth: {
       getBlock: jest.fn(),
     },
+    on: jest.fn().mockImplementation(() => {
+      return of({});
+    }),
   },
   getBalance: jest.fn().mockImplementation(() => {
     return Promise.resolve(0);
