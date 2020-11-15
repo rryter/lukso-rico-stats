@@ -62,7 +62,7 @@ jobs:
 
       - name: Archive Cypress Video
         if: always()
-      - uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v2
         with:
           name: cypress-videos
           path: dist/cypress/apps/rtm-e2e/videos
