@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Web3Service } from '@lukso/web3-rx';
+import { Web3Service } from '@shared/services/web3.service';
 import { ERC734KeyManager, ERC734KeyManagerFactory } from '@twy-gmbh/erc725-playground';
 import { ethers } from 'ethers';
 import { LoadingIndicatorService } from './loading-indicator.service';

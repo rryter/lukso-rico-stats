@@ -6,7 +6,7 @@ import { MatSidenavModule } from '@angular/material/sidenav';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterModule } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
-import { Web3Service } from '@lukso/web3-rx';
+import { Web3Service } from '@shared/services/web3.service';
 import { web3ServiceMock } from '@lukso/web3-rx/mocks';
 import { CmcPricePipe } from '@shared/pipes/cmc-price.pipe';
 import { EthAddressShortPipe } from '@shared/pipes/eth-address-short.pipe';

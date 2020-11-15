@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { forkJoin, Observable, of } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
 import { Vault } from '../interface/vault';
-import { Web3Service } from '@lukso/web3-rx';
+import { Web3Service } from '@shared/services/web3.service';
 import { SmartVault, SmartVaultFactory } from '@twy-gmbh/erc725-playground';
 import { ethers, utils } from 'ethers';
 

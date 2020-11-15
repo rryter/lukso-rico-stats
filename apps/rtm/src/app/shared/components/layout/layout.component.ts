@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, NgZone, OnInit } from '@angular/core';
-import { Web3Service } from '@lukso/web3-rx';
+import { Web3Service } from '@shared/services/web3.service';
 import { Wallet } from '@shared/interface/wallet';
 import { environment } from './../../../../environments/environment';
 import { Observable, forkJoin, of, interval, Subject } from 'rxjs';

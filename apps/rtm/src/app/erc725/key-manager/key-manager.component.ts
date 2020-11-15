@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { Web3Service } from '@lukso/web3-rx';
+import { Web3Service } from '@shared/services/web3.service';
 import { forkJoin, Observable, ReplaySubject, Subject } from 'rxjs';
 import { shareReplay, switchMap, tap } from 'rxjs/operators';
 import { Capabilities, KEY_TYPE } from '@shared/capabilities.enum';

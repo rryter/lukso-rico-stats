@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
-import { Web3Service } from '@lukso/web3-rx';
+import { Web3Service } from '@shared/services/web3.service';
 import { Observable } from 'rxjs';
 import { SmartVaultService } from '../../shared/services/smart-vault.service';
 import { Vault } from './../../shared/interface/vault';

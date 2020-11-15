@@ -17,8 +17,10 @@ export class Web3Service {
 
   reloadTrigger$: Observable<any>;
 
-  constructor(private ngZone: NgZone) {
-    this.initializeProvider();
+  constructor(private ngZone: NgZone) {}
+
+  initialize(url: string) {
+    this.initializeProvider(url);
     this.initializeObservables();
     if (window.ethereum) {
       window.ethereum.on('chainChanged', (_chainId) => window.location.reload());

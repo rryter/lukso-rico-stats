@@ -11,7 +11,7 @@ import { CmcPricePipe } from '@shared/pipes/cmc-price.pipe';
 import { MatSliderModule } from '@angular/material/slider';
 import { MatDialogModule, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { web3ServiceMock } from '@lukso/web3-rx/mocks';
-import { Web3Service } from '@lukso/web3-rx';
+import { Web3Service } from '@shared/services/web3.service';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
 
 describe('AmountComponent', () => {

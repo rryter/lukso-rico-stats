@@ -1,5 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { Web3Service } from '@lukso/web3-rx';
+import { Web3Service } from '@shared/services/web3.service';
 import { web3ServiceMock } from '@lukso/web3-rx/mocks';
 import { KeyManagerComponent } from './key-manager.component';
 import { MatIconModule } from '@angular/material/icon';

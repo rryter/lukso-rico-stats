@@ -3,7 +3,7 @@ import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute } from '@angular/router';
-import { Web3Service } from '@lukso/web3-rx';
+import { Web3Service } from '@shared/services/web3.service';
 import { AmountComponent } from '@shared/components/dialog/amount/amount.component';
 import { Account } from '@shared/interface/account';
 import { KeyManagerService } from '@shared/services/key-manager.service';

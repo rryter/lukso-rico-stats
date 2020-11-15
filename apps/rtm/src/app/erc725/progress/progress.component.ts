@@ -3,7 +3,7 @@ import { ProxyAccountService } from '../../shared/services/proxy-account.service
 import { KeyManagerService } from '../../shared/services/key-manager.service';
 import { LoadingIndicatorService } from '../../shared/services/loading-indicator.service';
 import { Stages } from '../../shared/stages.enum';
-import { Web3Service } from '@lukso/web3-rx';
+import { Web3Service } from '@shared/services/web3.service';
 
 @Component({
   selector: 'lukso-progress',

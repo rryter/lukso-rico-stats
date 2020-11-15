@@ -2,7 +2,7 @@ import { ChangeDetectionStrategy, Component, Inject, OnInit } from '@angular/cor
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatSliderChange } from '@angular/material/slider';
-import { Web3Service } from '@lukso/web3-rx';
+import { Web3Service } from '@shared/services/web3.service';
 import { ConfirmDialogInput } from '@shared/interface/dialog';
 
 @Component({
