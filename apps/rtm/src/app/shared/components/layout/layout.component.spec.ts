@@ -3,7 +3,9 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { MatIconModule } from '@angular/material/icon';
 import { MatListModule } from '@angular/material/list';
 import { MatSidenavModule } from '@angular/material/sidenav';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterModule } from '@angular/router';
+import { RouterTestingModule } from '@angular/router/testing';
 import { Web3Service } from '@lukso/web3-rx';
 import { web3ServiceMock } from '@lukso/web3-rx/mocks';
 import { CmcPricePipe } from '@shared/pipes/cmc-price.pipe';
@@ -19,7 +21,13 @@ describe('LayoutComponent', () => {
     TestBed.configureTestingModule({
       declarations: [LayoutComponent, EthAddressShortPipe, CmcPricePipe, TimeAgoPipe],
       providers: [{ provide: Web3Service, useValue: web3ServiceMock }],
-      imports: [MatSidenavModule, MatIconModule, RouterModule, MatListModule],
+      imports: [
+        MatSidenavModule,
+        MatIconModule,
+        RouterTestingModule,
+        MatListModule,
+        BrowserAnimationsModule,
+      ],
       schemas: [NO_ERRORS_SCHEMA],
     }).compileComponents();
   });

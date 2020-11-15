@@ -93,13 +93,12 @@ export class ProxyAccountComponent implements OnInit {
 
   private getAccountDetails(address: string): Observable<Account> {
     const accounts = JSON.parse(localStorage.getItem('accounts')) as Account[];
-    const account = accounts.find((account) => account.address === address);
     return forkJoin({
       address: of(address),
       balance: this.getBalance(address),
       isExecutable: this.getIsExecutor(),
       isManagable: this.getIsManager(),
-      stage: of(account.stage),
+      stage: of(accounts.find((account) => account.address === address).stage),
     }) as Observable<Account>;
   }
 
