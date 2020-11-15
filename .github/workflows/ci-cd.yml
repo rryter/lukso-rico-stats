@@ -54,8 +54,8 @@ jobs:
       - run: npm run e2e
 
       - name: Archive Cypress Sceenshots
-      - uses: actions/upload-artifact@v2
         if: failure()
+        uses: actions/upload-artifact@v2
         with:
           name: cypress-screenshots
           path: dist/cypress/apps/rtm-e2e/screenshots
