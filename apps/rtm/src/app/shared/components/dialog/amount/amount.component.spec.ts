@@ -1,6 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ReactiveFormsModule } from '@angular/forms';
-import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatListModule } from '@angular/material/list';
@@ -10,7 +9,7 @@ import { AmountComponent } from './amount.component';
 import { CmcPricePipe } from '@shared/pipes/cmc-price.pipe';
 import { MatSliderModule } from '@angular/material/slider';
 import { MatDialogModule, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { web3ServiceMock } from '@lukso/web3-rx/mocks';
+import { web3ServiceMock } from '@shared/mocks/web3.service.mock';
 import { Web3Service } from '@shared/services/web3.service';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
 

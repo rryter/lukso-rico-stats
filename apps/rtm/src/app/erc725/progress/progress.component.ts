@@ -39,7 +39,6 @@ export class ProgressComponent implements OnInit, OnChanges {
       `Deploying ERC734 Key Manager and initialize it...`
     );
 
-    console.log(this.accounts[0].address, this.web3Service.selectedAddress);
     this.keyManagerService
       .deploy(this.accounts[0].address, this.web3Service.selectedAddress)
       .then((contract) => {
@@ -51,11 +50,8 @@ export class ProgressComponent implements OnInit, OnChanges {
       .then((transaction) => {
         return transaction.wait();
       })
-      .then(() => {
-        this.loadingIndicatorService.doneLoading();
-      })
       .finally(() => {
-        console.log('finally');
+        this.loadingIndicatorService.doneLoading();
       });
   }
 

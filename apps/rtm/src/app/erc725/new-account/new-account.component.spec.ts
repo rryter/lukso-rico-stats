@@ -5,7 +5,7 @@ import { MatMenuModule } from '@angular/material/menu';
 import { MatSelectModule } from '@angular/material/select';
 import { RouterTestingModule } from '@angular/router/testing';
 import { Web3Service } from '@shared/services/web3.service';
-import { web3ServiceMock } from '@lukso/web3-rx/mocks';
+import { web3ServiceMock } from '@shared/mocks/web3.service.mock';
 import { EthAddressShortPipe } from '@shared/pipes/eth-address-short.pipe';
 import { NewAccountComponent } from './new-account.component';
 

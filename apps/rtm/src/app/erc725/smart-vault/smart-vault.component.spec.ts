@@ -1,8 +1,7 @@
 import { NO_ERRORS_SCHEMA } from '@angular/core';
-import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { Web3Service } from '@shared/services/web3.service';
-import { web3ServiceMock } from '@lukso/web3-rx/mocks';
-
+import { web3ServiceMock } from '@shared/mocks/web3.service.mock';
 import { SmartVaultComponent } from './smart-vault.component';
 
 describe('SmarVaultComponent', () => {

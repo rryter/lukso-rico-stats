@@ -36,7 +36,6 @@ export class Web3Service {
   private initializeObservables() {
     this.web3.on('block', (block) => {
       this.ngZone.run(() => {
-        console.log('xxx: debug: block');
         this.blocks$.next(block);
       });
     });

@@ -35,9 +35,6 @@ export class KeyManagerComponent implements OnInit {
     private loadingIndicatorService: LoadingIndicatorService
   ) {
     this.keyManagerData$ = this.web3Service.reloadTrigger$.pipe(
-      tap(() => {
-        console.count('reloadTrigger$ KeyManagerComponent');
-      }),
       switchMap(() => this.getAllKeys()),
       switchMap((keys: any[]) => this.getKeymanagerData$(keys)),
       shareReplay(1)

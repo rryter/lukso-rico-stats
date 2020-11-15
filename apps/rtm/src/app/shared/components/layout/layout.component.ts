@@ -22,7 +22,6 @@ export class LayoutComponent implements OnInit {
     this.address$ = this.web3Service.address$;
     this.showWrongNetworkError$ = this.web3Service.networkId$.pipe(
       map((networkId) => {
-        console.log('showWrongNetworkError$');
         if (environment.production) {
           return networkId !== 22; // L14 LUKSO Testnet
         }
@@ -30,9 +29,6 @@ export class LayoutComponent implements OnInit {
       })
     );
     this.wallet$ = this.web3Service.reloadTrigger$.pipe(
-      tap(() => {
-        console.count('reloadTrigger$ LAYOUT COMPONENT');
-      }),
       switchMap(([, address]) => {
         return forkJoin({
           address: of(address),
