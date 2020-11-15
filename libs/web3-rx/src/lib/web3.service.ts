@@ -1,6 +1,6 @@
 import { Injectable, NgZone } from '@angular/core';
 import { Observable, ReplaySubject, combineLatest } from 'rxjs';
-import { shareReplay, throttleTime } from 'rxjs/operators';
+import { shareReplay } from 'rxjs/operators';
 import { ethers, Signer, utils } from 'ethers';
 import { JsonRpcProvider } from '@ethersproject/providers';
 @Injectable({
@@ -15,12 +15,14 @@ export class Web3Service {
   networkId$ = new ReplaySubject<number>(1);
   blocks$ = new ReplaySubject<number>(1);
 
-  reloadTrigger$: Observable<[number, string]>;
+  reloadTrigger$: Observable<any>;
 
   constructor(private ngZone: NgZone) {
     this.initializeProvider();
     this.initializeObservables();
-    window.ethereum.on('chainChanged', (_chainId) => window.location.reload());
+    if (window.ethereum) {
+      window.ethereum.on('chainChanged', (_chainId) => window.location.reload());
+    }
   }
 
   public getBalance(address: string): Promise<number> {
@@ -32,6 +34,7 @@ export class Web3Service {
   private initializeObservables() {
     this.web3.on('block', (block) => {
       this.ngZone.run(() => {
+        console.log('xxx: debug: block');
         this.blocks$.next(block);
       });
     });
@@ -42,14 +45,15 @@ export class Web3Service {
           this.address$.next(accounts[0]);
         });
       }
-      window.ethereum.on('accountsChanged', (addresses: string[]) => {
-        this.ngZone.run(() => {
-          this.signer.getAddress().then((address) => {
-            this.selectedAddress = address;
+
+      if (window.ethereum) {
+        window.ethereum.on('accountsChanged', (addresses: string[]) => {
+          this.ngZone.run(() => {
+            this.selectedAddress = addresses[0];
+            this.address$.next(addresses[0]);
           });
-          this.address$.next(addresses[0]);
         });
-      });
+      }
     });
 
     this.web3.getNetwork().then((network) => {
@@ -66,13 +70,17 @@ export class Web3Service {
     ]);
   }
 
-  private initializeProvider() {
+  private initializeProvider(url: string = 'http://localhost:8545') {
+    this.web3 = new ethers.providers.JsonRpcProvider(url);
+    this.signer = this.web3.getSigner();
+    this.web3.pollingInterval = 500;
     const ethEnabled = () => {
       if (window.ethereum) {
+        this.web3.pollingInterval = 2000;
         window.ethereum.autoRefreshOnNetworkChange = false;
+        // this.web3 = new ethers.providers.JsonRpcProvider('http://rpc.l14.lukso.network/:8545');
         this.signer = new ethers.providers.Web3Provider(window.ethereum).getSigner();
-        this.web3 = new ethers.providers.JsonRpcProvider('http://rpc.l14.lukso.network/:8545');
-        window.ethereum.enable();
+
         return true;
       }
       return false;

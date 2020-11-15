@@ -3,7 +3,7 @@
     <mat-form-field class="form-field" appearance="fill">
       <mat-label>Address</mat-label>
       <mat-icon matPrefix>vpn_key</mat-icon>
-      <input matInput formControlName="address" />
+      <input matInput formControlName="address" [attr.data-cy]="'add-key__address'" />
       <mat-error *ngIf="newKeyForm.controls['address'].hasError('isETHAddress')">
         ETH Address check failed
       </mat-error>
@@ -14,7 +14,11 @@
     <mat-form-field class="form-field" appearance="fill">
       <mat-label>Privilige</mat-label>
       <mat-icon matPrefix>security</mat-icon>
-      <mat-select formControlName="privileges" [multiple]="true">
+      <mat-select
+        formControlName="privileges"
+        [multiple]="true"
+        [attr.data-cy]="'add-key__privileges'"
+      >
         <mat-option [value]="2">Execution </mat-option>
         <mat-option [value]="1">Management</mat-option>
       </mat-select>
@@ -23,6 +27,8 @@
 
   <div style="text-align: right">
     <button mat-button style="margin-right: 10px" (click)="onNoClick()">Cancel</button>
-    <button mat-raised-button color="primary" type="submit">Add Key</button>
+    <button mat-raised-button color="primary" type="submit" [attr.data-cy]="'add-key__confirm'">
+      Add Key
+    </button>
   </div>
 </form>

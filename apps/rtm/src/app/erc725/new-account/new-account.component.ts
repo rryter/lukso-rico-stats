@@ -1,6 +1,5 @@
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { Router } from '@angular/router';
-import { Web3Service } from '@lukso/web3-rx';
 import { LoadingIndicatorService } from '@shared/services/loading-indicator.service';
 import { ProxyAccountService } from '@shared/services/proxy-account.service';
 
@@ -21,20 +20,22 @@ export class NewAccountComponent implements OnInit {
     this.accounts = JSON.parse(window.localStorage.getItem('accounts')) || [];
   }
 
-  async deployProxyAccount() {
+  deployProxyAccount() {
     this.loadingIndicatorService.showLoadingIndicator(
       `Creating Proxy Account`,
       'create-proxy-account'
     );
 
-    const contract = await this.proxyAccountService.deployProxyAccount();
-    await contract.deployed();
-
-    this.accounts.push({ address: contract.address, stage: 2 });
-    window.localStorage.setItem('accounts', JSON.stringify(this.accounts));
-    this.router.navigate(['accounts', contract.address]);
-
-    this.loadingIndicatorService.doneLoading();
+    this.proxyAccountService
+      .deployProxyAccount()
+      .then((contract) => {
+        this.accounts.push({ address: contract.address, stage: 2 });
+        window.localStorage.setItem('accounts', JSON.stringify(this.accounts));
+        this.router.navigate(['accounts', contract.address]);
+      })
+      .finally(() => {
+        this.loadingIndicatorService.doneLoading();
+      });
   }
 
   loadExistingAccount(index: number) {

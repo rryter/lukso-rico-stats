@@ -4,12 +4,11 @@ import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { HttpClientModule } from '@angular/common/http';
 import { SharedModule } from './shared/shared.module';
-import { SpinnerComponent } from './shared/components/spinner/spinner.component';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 @NgModule({
-  declarations: [SpinnerComponent, AppComponent],
+  declarations: [AppComponent],
   imports: [
     SharedModule,
     BrowserModule,

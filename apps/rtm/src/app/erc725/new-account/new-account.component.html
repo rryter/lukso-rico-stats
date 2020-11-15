@@ -7,7 +7,9 @@
   <br />
   <p>This will deploy an ERC-725 Account for you.</p>
   <br />
-  <button mat-raised-button color="primary">Let's go</button>
+  <button mat-raised-button color="primary" [attr.data-cy]="'new-account__create-account'">
+    Let's go
+  </button>
 </div>
 <div class="box box--existing" matRipple [matMenuTriggerFor]="menu">
   <div class="icon">
@@ -30,15 +32,3 @@
   </mat-menu>
 </div>
 <lukso-loading></lukso-loading>
-<!-- <button mat-stroked-button class="btn-success">Create Account</button>
-  <p>
-    <mat-form-field class="form-field" appearance="fill">
-      <mat-label>Address</mat-label>
-      <mat-icon matPrefix>vpn_key</mat-icon>
-      <input matInput formControlName="address" />
-      <mat-error *ngIf="newKeyForm.controls['address'].hasError('isETHAddress')">
-        ETH Address check failed
-      </mat-error>
-    </mat-form-field>
-  </p>
-  <button mat-raised-button color="primary">Load Existing Account</button> -->

@@ -1,7 +1,7 @@
 <mat-toolbar>
   <span> Access Control </span>
   <span class="spacer"></span>
-  <button mat-icon-button (click)="openDialog('Add', {})">
+  <button mat-icon-button (click)="openDialog('Add', {})" [attr.data-cy]="'keymanager__add-key'">
     <mat-icon>add_box</mat-icon>
   </button>
 </mat-toolbar>

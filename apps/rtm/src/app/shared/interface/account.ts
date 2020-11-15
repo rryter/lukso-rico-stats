@@ -5,4 +5,5 @@ export interface Account {
   isExecutable: boolean;
   isManagable: boolean;
   qrCode: string;
+  stage: number;
 }

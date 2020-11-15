@@ -11,7 +11,15 @@ import { LoadingIndicatorService } from '@shared/services/loading-indicator.serv
 import { ProxyAccountService } from '@shared/services/proxy-account.service';
 import { Stages } from '@shared/stages.enum';
 import { combineLatest, forkJoin, Observable, of, ReplaySubject, Subject } from 'rxjs';
-import { catchError, distinctUntilChanged, filter, pluck, switchMap, tap } from 'rxjs/operators';
+import {
+  catchError,
+  distinctUntilChanged,
+  filter,
+  pluck,
+  shareReplay,
+  switchMap,
+  tap,
+} from 'rxjs/operators';
 import { utils } from 'ethers';
 import { ConfirmDialogOutput } from '@shared/interface/dialog';
 import { ERC725Account, ERC734KeyManager } from '@twy-gmbh/erc725-playground';
@@ -40,8 +48,6 @@ export class ProxyAccountComponent implements OnInit {
     message: null,
   };
 
-  accountChanged = new ReplaySubject(1);
-
   constructor(
     private web3Service: Web3Service,
     private loadingIndicatorService: LoadingIndicatorService,
@@ -50,17 +56,21 @@ export class ProxyAccountComponent implements OnInit {
     private route: ActivatedRoute,
     public dialog: MatDialog
   ) {
-    this.accountChanged.next();
-    this.web3Service.web3.on('ValueReceived', () => {
-      this.accountChanged.next();
-    });
-    this.account$ = this.accountChanged.pipe(
-      tap(() => {
-        console.count('reloadTrigger$ ProxyAccountComponent');
+    this.account$ = combineLatest([
+      this.route.params.pipe(pluck('address'), distinctUntilChanged(), filter(Boolean)),
+      this.web3Service.reloadTrigger$,
+    ]).pipe(
+      switchMap(([address]: [string, boolean]) => {
+        this.proxyAccountContract = this.proxyAccountService.getContract(address);
+        return combineLatest([this.proxyAccountContract.owner(), of(address)]).pipe(shareReplay(1));
       }),
-      switchMap(() => this.loadAccount()),
+      switchMap(([owner, address]) => {
+        this.keyManagerContract = this.keyManagerService.getContract(owner);
+        return this.getAccountDetails(address);
+      }),
       switchMap((account: Account) => this.enrichAccountWithQrCode(account)),
-      catchError(() => {
+      catchError((error) => {
+        console.error(error);
         return of({} as Account);
       })
     );
@@ -81,27 +91,15 @@ export class ProxyAccountComponent implements OnInit {
     });
   }
 
-  private loadAccount(): Observable<Account> {
-    return this.route.params.pipe(
-      pluck('address'),
-      filter(Boolean),
-      switchMap((address: string) => {
-        this.proxyAccountContract = this.proxyAccountService.getContract(address);
-        return combineLatest([this.proxyAccountContract.owner(), of(address)]);
-      }),
-      switchMap(([owner, address]) => {
-        this.keyManagerContract = this.keyManagerService.getContract(owner);
-        return this.getAccountDetails(address);
-      })
-    );
-  }
-
   private getAccountDetails(address: string): Observable<Account> {
+    const accounts = JSON.parse(localStorage.getItem('accounts')) as Account[];
+    const account = accounts.find((account) => account.address === address);
     return forkJoin({
       address: of(address),
       balance: this.getBalance(address),
       isExecutable: this.getIsExecutor(),
       isManagable: this.getIsManager(),
+      stage: of(account.stage),
     }) as Observable<Account>;
   }
 

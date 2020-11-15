@@ -1,32 +1,4 @@
 <ng-container>
-  <mat-card class="message-body" *ngIf="process.currentStage === Stages.Minimal">
-    <mat-card-content>
-      <mat-toolbar>
-        Level 0 - Status Quo
-      </mat-toolbar>
-      <br />
-      <p>
-        This is a very basic demonstration of
-        <a href="https://github.com/ethereum/eips/issues/725" target="_blank">ERC 725 </a> in
-        combination with
-        <a href="https://github.com/ethereum/eips/issues/725" target="_blank">ERC 734 </a>.
-      </p>
-      <p>
-        Right now, all you have is your Wallet. Eg. a <code>private</code> and a
-        <code>public</code> key. <br />By clicking on "Create Account" an ERC 725 Account will be
-        created / deployed for you.
-      </p>
-      <button
-        mat-raised-button
-        color="primary"
-        class="button is-success"
-        (click)="deployProxyAccount(wallet)"
-      >
-        Create Account
-      </button>
-    </mat-card-content>
-  </mat-card>
-
   <mat-card *ngIf="process.currentStage === Stages.ProxyAccount">
     <h1>Level 1 - Proxy Account</h1>
     <p>
@@ -42,6 +14,7 @@
       color="primary"
       class="button is-warning"
       (click)="deployKeyManager()"
+      [attr.data-cy]="'progress__make-account-managable'"
     >
       Make Account Managable
     </button>

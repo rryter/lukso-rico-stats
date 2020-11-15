@@ -8,7 +8,6 @@ import { ConfirmDialogInput } from '@shared/interface/dialog';
 @Component({
   templateUrl: './amount.component.html',
   styleUrls: ['./amount.component.css'],
-  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AmountComponent implements OnInit {
   form: FormGroup;

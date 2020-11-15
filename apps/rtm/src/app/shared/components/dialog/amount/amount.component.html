@@ -21,6 +21,7 @@
         [min]="0"
         [max]="wallet"
         class="text-align-right"
+        [attr.data-cy]="'amount__value'"
       />
       <span matSuffix>&nbsp;LYX</span>
 
@@ -49,7 +50,12 @@
 </div>
 <div mat-dialog-actions align="end">
   <button mat-raised-button (click)="onNoClick()">Cancel</button>
-  <button mat-raised-button class="btn-success" [mat-dialog-close]="getReturnValues()">
+  <button
+    mat-raised-button
+    class="btn-success"
+    [mat-dialog-close]="getReturnValues()"
+    [attr.data-cy]="'amount__accept'"
+  >
     {{ confirmLabel }}
   </button>
 </div>

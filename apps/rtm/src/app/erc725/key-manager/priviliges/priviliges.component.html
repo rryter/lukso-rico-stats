@@ -1,4 +1,11 @@
-<table mat-table class="full-width-table" matSort aria-label="Elements" [dataSource]="keys">
+<table
+  mat-table
+  class="full-width-table"
+  matSort
+  aria-label="Elements"
+  [dataSource]="keys"
+  [attr.data-cy]="'privileges__keys'"
+>
   <!-- Id Column -->
   <ng-container matColumnDef="key">
     <th mat-header-cell *matHeaderCellDef mat-sort-header>Address</th>

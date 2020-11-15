@@ -11,5 +11,6 @@
   "screenshotsFolder": "../../dist/cypress/apps/rtm-e2e/screenshots",
   "chromeWebSecurity": false,
   "viewportHeight": 1000,
-  "viewportWidth": 1400
+  "viewportWidth": 1400,
+  "projectId": "28rxyz"
 }

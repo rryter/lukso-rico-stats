@@ -49,24 +49,6 @@ mat-toolbar {
   font-size: 20px;
 }
 
-.circle {
-  position: absolute;
-  right: -70px;
-  bottom: 100px;
-  width: 150px;
-  height: 150px;
-  border-radius: 150px;
-  background: rgba(#ffffff, 0.2);
-}
-
-.circle--2 {
-  width: 250px;
-  height: 250px;
-  border-radius: 250px;
-  right: -50px;
-  bottom: -70px;
-}
-
 .header {
   display: flex;
 }

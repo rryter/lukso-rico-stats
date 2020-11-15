@@ -1,30 +1,5 @@
 <div class="navbar-container" *ngIf="(showWrongNetworkError$ | async) === false">
-  <!-- Top navbar -->
-  <!-- <mat-toolbar class="navbar" color="primary" *ngIf="wallet$ | async as wallet">
-    
-    <a href="/" style="display: block; height: 30px;">
-      <img src="./../../assets/logo.png" style="height: 30px;" />
-    </a>
-    <span class="spacer"></span>
-    <span>Connected Wallet</span>&nbsp;
-    <a
-      href="{{ 'https://blockscout.com/lukso/l14/address/' + wallet.address + '/transactions' }}"
-      target="_blank"
-    >
-      <mat-chip-list aria-label="Current Wallet">
-        <mat-chip [color]="'primary'">
-          <mat-icon>vpn_key</mat-icon>&nbsp; {{ wallet.address }}
-        </mat-chip>
-      </mat-chip-list> </a
-    ><br />
-    <span class="spacer"></span>
-    <span>Balance&nbsp;</span>
-    <mat-icon color="secondary">payments</mat-icon>&nbsp;
-    <span> {{ wallet.balance | number: '0.0-4' }} LYX</span>
-  </mat-toolbar> -->
-
   <mat-sidenav-container class="navbar-sidenav-container">
-    <!-- Side nav -->
     <mat-sidenav #snav [opened]="true" [mode]="'side'" fixedTopGap="56" class="sidenav">
       <mat-nav-list>
         <a href="/" class="coaster-logo">
@@ -46,12 +21,10 @@
 
         <a id="push-bottom" mat-list-item [routerLink]="['/about']" routerLinkActive="active">
           <mat-icon mat-list-icon> info_outline </mat-icon>
-          <p mat-line>Current Block: {{ blocks$ | async }}</p>
         </a>
       </mat-nav-list>
     </mat-sidenav>
 
-    <!-- Main content -->
     <mat-sidenav-content class="sidenav-content">
       <router-outlet></router-outlet>
     </mat-sidenav-content>
