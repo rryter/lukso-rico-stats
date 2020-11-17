@@ -15,7 +15,7 @@ export class AppComponent implements OnInit {
     private loadingIndicatorService: LoadingIndicatorService,
     private web3Service: Web3Service
   ) {
-    this.web3Service.initialize(environment.web3Provider);
+    this.web3Service.initialize();
     this.loading$ = this.loadingIndicatorService.loading$;
   }
 

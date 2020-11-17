@@ -80,6 +80,6 @@ export class SmartVaultService {
   }
 
   private getBalance(): Promise<any> {
-    return this.web3Service.web3.getBalance(this.web3Service.selectedAddress);
+    return this.web3Service.provider.getBalance(this.web3Service.selectedAddress);
   }
 }

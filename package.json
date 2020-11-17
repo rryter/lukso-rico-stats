@@ -6,12 +6,15 @@
     "ng": "nx",
     "postinstall": "node ./decorate-angular-cli.js && ngcc --properties es2015 browser module main --first-only --create-ivy-entry-points",
     "nx": "nx",
-    "start": "ng serve --hmr",
+    "start": "start-server-and-test start-chain http://localhost:8545 'ng serve --hmr'",
+    "start:prod": "start-server-and-test start-chain http://localhost:8545 'ng serve --prod'",
     "start-chain": "hardhat node",
     "build": "ng build",
     "test": "ng test",
+    "test:ci": "ng test --coverage",
     "lint": "nx workspace-lint && ng lint",
-    "e2e": "start-server-and-test start-chain http://localhost:8545 'ng e2e --headless'",
+    "e2e": "cd apps/rtm-e2e && cypress open --browser chrome",
+    "e2e:ci": "start-server-and-test start-chain http://localhost:8545 'ng e2e --watch --configuration=ci'",
     "affected:apps": "nx affected:apps",
     "affected:libs": "nx affected:libs",
     "affected:build": "nx affected:build",
@@ -26,8 +29,7 @@
     "update": "ng update @nrwl/workspace",
     "workspace-schematic": "nx workspace-schematic",
     "dep-graph": "nx dep-graph",
-    "help": "nx help",
-    "e2e-test": "cd apps/rtm-e2e && cypress open --browser chrome"
+    "help": "nx help"
   },
   "private": true,
   "dependencies": {

@@ -1,13 +1,15 @@
 import { Injectable, NgZone } from '@angular/core';
 import { Observable, ReplaySubject, combineLatest } from 'rxjs';
-import { shareReplay } from 'rxjs/operators';
-import { ethers, Signer, utils } from 'ethers';
+import { Signer, utils } from 'ethers';
 import { JsonRpcProvider } from '@ethersproject/providers';
+
+import { getProviderAndSigner } from './web3/web3.provider';
+
 @Injectable({
   providedIn: 'root',
 })
 export class Web3Service {
-  web3: JsonRpcProvider;
+  provider: JsonRpcProvider;
   signer: Signer;
   selectedAddress: string;
 
@@ -19,8 +21,17 @@ export class Web3Service {
 
   constructor(private ngZone: NgZone) {}
 
-  initialize(url: string) {
-    this.initializeProvider(url);
+  initialize() {
+    const providerAndSigner = getProviderAndSigner();
+
+    if (providerAndSigner) {
+      const { provider, signer } = providerAndSigner;
+      this.provider = provider;
+      this.signer = signer;
+    } else {
+      window.alert('OMG');
+    }
+
     this.initializeObservables();
     if (window.ethereum) {
       window.ethereum.on('chainChanged', (_chainId) => window.location.reload());
@@ -28,19 +39,19 @@ export class Web3Service {
   }
 
   public getBalance(address: string): Promise<number> {
-    return this.web3.getBalance(address).then((balance) => {
+    return this.provider.getBalance(address).then((balance) => {
       return parseFloat(utils.formatEther(balance));
     });
   }
 
   private initializeObservables() {
-    this.web3.on('block', (block) => {
+    this.provider.on('block', (block) => {
       this.ngZone.run(() => {
         this.blocks$.next(block);
       });
     });
 
-    this.web3.listAccounts().then((accounts) => {
+    this.provider.listAccounts().then((accounts) => {
       if (accounts.length > 0) {
         this.ngZone.run(() => {
           this.address$.next(accounts[0]);
@@ -57,7 +68,7 @@ export class Web3Service {
       }
     });
 
-    this.web3.getNetwork().then((network) => {
+    this.provider.getNetwork().then((network) => {
       this.networkId$.next(network.chainId);
     });
 
@@ -69,28 +80,5 @@ export class Web3Service {
       this.blocks$.asObservable(),
       this.address$.asObservable(),
     ]);
-  }
-
-  private initializeProvider(url: string = 'http://localhost:8545') {
-    this.web3 = new ethers.providers.JsonRpcProvider(url);
-    this.signer = this.web3.getSigner();
-    this.web3.pollingInterval = 500;
-    const ethEnabled = () => {
-      if (window.ethereum) {
-        this.web3.pollingInterval = 2000;
-        window.ethereum.autoRefreshOnNetworkChange = false;
-        // this.web3 = new ethers.providers.JsonRpcProvider('http://rpc.l14.lukso.network/:8545');
-        this.signer = new ethers.providers.Web3Provider(window.ethereum).getSigner();
-
-        return true;
-      }
-      return false;
-    };
-
-    if (!ethEnabled()) {
-      window.alert(
-        'Please install an Ethereum-compatible browser or extension like MetaMask to use this dApp!'
-      );
-    }
   }
 }

@@ -52,6 +52,14 @@
                   "maximumError": "10kb"
                 }
               ]
+            },
+            "ci": {
+              "fileReplacements": [
+                {
+                  "replace": "apps/rtm/src/app/shared/services/web3/web3.provider.ts",
+                  "with": "apps/rtm/src/app/shared/services/web3/web3.provider.ci.ts"
+                }
+              ]
             }
           }
         },
@@ -64,6 +72,9 @@
           "configurations": {
             "production": {
               "browserTarget": "rtm:build:production"
+            },
+            "ci": {
+              "browserTarget": "rtm:build:ci"
             }
           }
         },
@@ -109,6 +120,9 @@
           "configurations": {
             "production": {
               "devServerTarget": "rtm:serve:production"
+            },
+            "ci": {
+              "devServerTarget": "rtm:serve:ci"
             }
           }
         },
