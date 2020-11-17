@@ -14,7 +14,7 @@
     "test:ci": "ng test --coverage",
     "lint": "nx workspace-lint && ng lint",
     "e2e": "cd apps/rtm-e2e && cypress open --browser chrome",
-    "e2e:ci": "start-server-and-test start-chain http://localhost:8545 'ng e2e --watch --configuration=ci'",
+    "e2e:ci": "start-server-and-test start-chain http://localhost:8545 'ng e2e --headless --configuration=ci'",
     "affected:apps": "nx affected:apps",
     "affected:libs": "nx affected:libs",
     "affected:build": "nx affected:build",

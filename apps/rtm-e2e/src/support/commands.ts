@@ -11,12 +11,17 @@
 declare namespace Cypress {
   interface Chainable<Subject> {
     login(email: string, password: string): void;
+    getByAttr(attr: string);
   }
 }
 //
 // -- This is a parent command --
 Cypress.Commands.add('login', (email, password) => {
   console.log('Custom command example: Login', email, password);
+});
+
+Cypress.Commands.add('getByAttr', (attr) => {
+  cy.get(`[data-cy="${attr}"]`, { timeout: 20000 });
 });
 //
 // -- This is a child command --
