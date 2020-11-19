@@ -1,0 +1,13 @@
+<section class="account">
+  <h1>Account</h1>
+  <div
+    [routerLink]="['./account']"
+    class="profile"
+    style="background-image: linear-gradient(transparent, #00000044), url('/assets/reto.jpg')"
+  >
+    <div *ngIf="!hideText && accountDetails$ | async as accountDetails" class="profile__details">
+      <h2>{{ accountDetails.firstName }} {{ accountDetails.lastName }}</h2>
+      <p>{{ accountDetails.bio }}</p>
+    </div>
+  </div>
+</section>

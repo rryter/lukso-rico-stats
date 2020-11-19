@@ -1,0 +1,8 @@
+<div class="loading error" *ngIf="errorMessage?.length > 0">
+  <div>
+    <h2><mat-icon>error</mat-icon>Could not load keys.</h2>
+  </div>
+  <br />
+  <strong>A problem occured:</strong>
+  {{ errorMessage }}
+</div>

@@ -6,7 +6,7 @@
     "ng": "nx",
     "postinstall": "node ./decorate-angular-cli.js && ngcc --properties es2015 browser module main --first-only --create-ivy-entry-points",
     "nx": "nx",
-    "start": "start-server-and-test start-chain http://localhost:8545 'ng serve --hmr'",
+    "start": "start-server-and-test start-chain http://localhost:8545 'ng serve --hmr -o'",
     "start:prod": "start-server-and-test start-chain http://localhost:8545 'ng serve --prod'",
     "start-chain": "hardhat node",
     "build": "ng build",

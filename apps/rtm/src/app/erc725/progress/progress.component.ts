@@ -4,6 +4,7 @@ import { KeyManagerService } from '../../shared/services/key-manager.service';
 import { LoadingIndicatorService } from '../../shared/services/loading-indicator.service';
 import { Stages } from '../../shared/stages.enum';
 import { Web3Service } from '@shared/services/web3.service';
+import { Account } from '@shared/interface/account';
 
 @Component({
   selector: 'lukso-progress',
@@ -12,12 +13,11 @@ import { Web3Service } from '@shared/services/web3.service';
 })
 export class ProgressComponent implements OnInit, OnChanges {
   Stages = Stages;
-  accounts: any[] = JSON.parse(window.localStorage.getItem('accounts')) || [];
-  process: {
-    currentStage: Stages;
-  };
+  accounts: Account[] = JSON.parse(window.localStorage.getItem('accounts')) || [];
+  accountStage: number;
+
   @Input() wallet: any;
-  @Input() stage = 2;
+  @Input() accountAddress: string;
 
   constructor(
     private proxyAccountService: ProxyAccountService,
@@ -29,9 +29,9 @@ export class ProgressComponent implements OnInit, OnChanges {
   ngOnInit(): void {}
 
   ngOnChanges(changes: SimpleChanges): void {
-    this.process = {
-      currentStage: changes.stage.currentValue,
-    };
+    this.accountStage = this.accounts.find((account) => {
+      return account.address === changes.accountAddress.currentValue;
+    }).stage;
   }
 
   deployKeyManager() {
@@ -58,10 +58,10 @@ export class ProgressComponent implements OnInit, OnChanges {
   private setStage(accounts, stage: Stages) {
     accounts[0].stage = stage;
     window.localStorage.setItem('accounts', JSON.stringify(accounts));
-    this.process.currentStage = stage;
+    this.accountStage = stage;
   }
 
   deployCustomContract() {
-    this.process.currentStage = Stages.CustomContract;
+    this.accountStage = Stages.CustomContract;
   }
 }

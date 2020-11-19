@@ -1,9 +1,11 @@
+<lukso-error-message [errorMessage]="keys.error"></lukso-error-message>
 <table
+  *ngIf="keys.keyManagerData?.length > 0"
   mat-table
   class="full-width-table"
   matSort
   aria-label="Elements"
-  [dataSource]="keys"
+  [dataSource]="keys.keyManagerData"
   [attr.data-cy]="'privileges__keys'"
 >
   <!-- Id Column -->

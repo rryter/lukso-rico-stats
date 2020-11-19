@@ -1,104 +1,72 @@
 :host {
-  display: block;
-  height: 100vh;
-}
-
-.navbar-spacer {
-  flex: 1 1 auto;
-}
-
-.navbar {
-  z-index: 2;
-  background: rgb(46, 68, 95);
-  box-shadow: 6px 0 6px rgba(0, 0, 0, 0.1);
-  /* background: linear-gradient(-144deg, rgba(46, 68, 95, 1) 0%, rgba(36, 37, 55, 1) 100%); */
-}
-
-.navbar span,
-.navbar a {
-  font-weight: 300;
-  font-size: 15px;
-  text-decoration: none;
-  color: white;
-}
-
-.navbar-brand {
-  text-decoration: none;
-  color: white;
-}
-
-.navbar-container {
   display: flex;
-  flex-direction: column;
-  height: 100vh;
 }
 
-.navbar-is-mobile .navbar {
-  position: fixed;
-  /* Make sure the toolbar will stay on top of the content as it scrolls past. */
-  z-index: 2;
+.wrapper {
+  display: grid;
+  margin: 0 auto;
+  flex-grow: 1;
+  max-width: 1400px;
+  max-height: 1000px;
 }
 
-.navbar-sidenav-container {
-  /* When the sidenav is not fixed, stretch the sidenav container to fill the available space. This
-             causes `<mat-sidenav-content>` to act as our scrolling element for desktop layouts. */
-  flex: 1;
+.content {
+  display: grid;
+  padding: 0 16px;
+  grid-template-columns: 150px 1fr 150px;
+
+  > div {
+    grid-column-start: 2;
+  }
 }
 
-.navbar-is-mobile .navbar-sidenav-container {
-  /* When the sidenav is fixed, don't constrain the height of the sidenav container. This allows the
-             `<body>` to be our scrolling element for mobile layouts. */
-  flex: 1 0 auto;
-}
-
-.mat-drawer-container {
+mat-toolbar {
+  display: grid;
+  grid-template-columns: 150px 1fr 150px;
+  grid-template-rows: 100px;
+  height: 100px;
   background: none;
+  margin-bottom: 30px;
+  a {
+    font-size: 18px;
+  }
 }
 
-.mat-drawer {
-  background: rgba(0, 0, 0, 0.3);
-}
-/*Set sidenav width*/
-mat-sidenav {
-  width: 280px;
-  min-width: 280px !important;
-  border-right: 1px solid transparent;
-  box-shadow: 6px 0 6px rgba(0, 0, 0, 0.1);
-  /* background-color:rgb(63, 81, 181); */
+.nav-link {
+  display: inline-block;
+  text-decoration: none;
+  color: white;
+  padding-right: 40px;
 }
 
-/* Set height of wrapper to stop content from moving up & down */
-
-.progress-bar-container {
-  height: 5px;
+.user {
+  display: flex;
+  height: 100px;
 }
+.user__notifications {
+  line-height: 100px;
+  width: 50px;
 
-a.mat-list-item {
-  background: rgba(0, 0, 0, 0.2);
+  mat-icon {
+    position: relative;
+    top: -3px;
+    font-size: 35px;
+    display: inline-block;
+  }
 }
-a.mat-list-item.active {
-  background: red;
-}
-
-#push-bottom {
-  position: absolute;
-  bottom: 0;
-}
-
-.mat-drawer-content {
-  min-height: 600px;
-}
-
-mat-chip:hover {
-  cursor: pointer;
+.user__selection {
+  width: 90px;
+  text-align: center;
+  img {
+    margin-top: 25px;
+    margin-bottom: 25;
+    height: 50px;
+    border-radius: 100%;
+  }
 }
 
 .coaster-logo {
   display: block;
-  padding: 20px;
-
-  img {
-    display: block;
-    width: 90%;
-  }
+  padding: 10px;
+  height: 60px;
 }

@@ -9,22 +9,22 @@
 
 // Fonts
 @import 'https://fonts.googleapis.com/css?family=Material+Icons';
-@import url('https://fonts.googleapis.com/css?family=Roboto:300,400,500');
+@import url('https://fonts.googleapis.com/css?family=Montserrat:300,400,500');
 
 $fontConfig: (
-  display-4: mat-typography-level(112px, 112px, 300, 'Roboto', -0.0134em),
-  display-3: mat-typography-level(56px, 56px, 400, 'Roboto', -0.0089em),
-  display-2: mat-typography-level(45px, 48px, 400, 'Roboto', 0em),
-  display-1: mat-typography-level(34px, 40px, 400, 'Roboto', 0.0074em),
-  headline: mat-typography-level(24px, 32px, 400, 'Roboto', 0em),
-  title: mat-typography-level(20px, 32px, 500, 'Roboto', 0.0075em),
-  subheading-2: mat-typography-level(16px, 28px, 400, 'Roboto', 0.0094em),
-  subheading-1: mat-typography-level(15px, 24px, 500, 'Roboto', 0.0067em),
-  body-2: mat-typography-level(14px, 24px, 500, 'Roboto', 0.0179em),
-  body-1: mat-typography-level(14px, 20px, 400, 'Roboto', 0.0179em),
-  button: mat-typography-level(14px, 14px, 500, 'Roboto', 0.0893em),
-  caption: mat-typography-level(12px, 20px, 400, 'Roboto', 0.0333em),
-  input: mat-typography-level(inherit, 1.125, 400, 'Roboto', 1.5px),
+  display-4: mat-typography-level(112px, 112px, 300, 'Montserrat', -0.0134em),
+  display-3: mat-typography-level(56px, 56px, 400, 'Montserrat', -0.0089em),
+  display-2: mat-typography-level(45px, 48px, 400, 'Montserrat', 0em),
+  display-1: mat-typography-level(34px, 40px, 400, 'Montserrat', 0.0074em),
+  headline: mat-typography-level(24px, 32px, 400, 'Montserrat', 0em),
+  title: mat-typography-level(20px, 32px, 500, 'Montserrat', 0.0075em),
+  subheading-2: mat-typography-level(16px, 28px, 400, 'Montserrat', 0.0094em),
+  subheading-1: mat-typography-level(15px, 24px, 500, 'Montserrat', 0.0067em),
+  body-2: mat-typography-level(14px, 24px, 500, 'Montserrat', 0.0179em),
+  body-1: mat-typography-level(14px, 20px, 400, 'Montserrat', 0.0179em),
+  button: mat-typography-level(14px, 14px, 500, 'Montserrat', 0.0893em),
+  caption: mat-typography-level(12px, 20px, 400, 'Montserrat', 0.0333em),
+  input: mat-typography-level(inherit, 1.125, 400, 'Montserrat', 1.5px),
 );
 
 // Foreground Elements
@@ -250,21 +250,17 @@ $altTheme: mat-light-theme($theme-primary, $theme-accent, $theme-warn);
   font-size: 24px;
   font-family: 'Material Icons', 'Material Icons';
   .mat-badge-content {
-    font-family: 'Roboto';
+    font-family: 'Montserrat';
   }
 }
 
 /* You can add global styles to this file, and also import other style files */
 
 html {
-  background: #2d3e57;
-  background: -webkit-linear-gradient(27deg, rgb(37, 37, 55) 0%, rgb(46, 66, 92) 100%);
-  background: -o-linear-gradient(27deg, rgb(37, 37, 55) 0%, rgb(46, 66, 92) 100%);
-  background: -ms-linear-gradient(27deg, rgb(37, 37, 55) 0%, rgb(46, 66, 92) 100%);
-  background: -moz-linear-gradient(27deg, rgb(37, 37, 55) 0%, rgb(46, 66, 92) 100%);
-  background: linear-gradient(63deg, rgb(37, 37, 55) 0%, rgb(46, 66, 92) 100%);
-
   height: 100%;
+  background: url(./assets/bg.jpg) center center no-repeat;
+  background-size: cover;
+  color: white;
 }
 
 .spacer {
@@ -289,4 +285,41 @@ mat-card {
 
 div.mat-dialog-content {
   overflow: visible;
+}
+
+.mat-progress-spinner circle,
+.mat-spinner circle {
+  stroke: white;
+}
+
+// OVERVIEW
+.overview-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 0.1fr));
+  gap: 20px;
+  margin: 0;
+  padding: 0;
+
+  li {
+    box-sizing: border-box;
+    display: block;
+    height: 200px;
+    background: rgba(255, 255, 255, 0.5);
+    border-radius: 10px;
+    padding: 20px 20px;
+    line-height: 1.3;
+  }
+}
+
+.loading {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  background: rgba(255, 255, 255, 0.2);
+  padding: 50px;
+  border-radius: 10px;
+}
+
+.error {
+  background: rgba(255, 0, 0, 0.3);
 }

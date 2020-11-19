@@ -1,29 +1,29 @@
+<div *ngIf="loading" class="loading" style="width: 360px">
+  <mat-spinner [diameter]="50"></mat-spinner>
+</div>
 <ng-container *ngIf="account$ | async as account">
   <ng-container *ngIf="errorMessage.message">
     <h1 class="mat-display-1">{{ errorMessage?.title }}</h1>
     <h2 class="mat-h2" [innerHTML]="errorMessage?.message"></h2>
   </ng-container>
 
-  <div class="wrapper" *ngIf="!errorMessage.message">
+  <div class="wrapper" *ngIf="!errorMessage.message && !loading">
     <mat-card class="wallet">
       <mat-card-content>
-        <img class="wordmark" src="assets/lukso-wordmark.png" />
-        <h1>{{ account.address }}</h1>
         <div class="balances">
           <div class="balance balance--lyx" [attr.data-cy]="'proxy-account__value'">
-            {{ account.balance | number: '0.4' }} LYX
+            {{ account.balance | number: '0.0-4' }} LYX
           </div>
           <div class="balance balance--dollar">
             $ {{ account.balance | cmcPrice | async | number: '0.0-2' }}
           </div>
         </div>
-        <div class="info">
+        <div class="qr-code">
           <img [src]="account.qrCode" (click)="navigateToBlockExplorer(account.address)" /><br />
         </div>
         <div class="actions" *ngIf="account.isExecutable || account.isManagable">
           <button
-            mat-raised-button
-            class="btn-success"
+            mat-stroked-button
             (click)="topUp(account)"
             [attr.data-cy]="'proxy-account__top-up'"
           >
@@ -31,8 +31,7 @@
           </button>
           &nbsp;
           <button
-            mat-raised-button
-            color="primary"
+            mat-stroked-button
             (click)="openWithdrawDialog(account)"
             [attr.data-cy]="'proxy-account__withdraw'"
           >
@@ -42,8 +41,8 @@
       </mat-card-content>
     </mat-card>
   </div>
-  <mat-card *ngIf="account.isManagable">
+  <!-- <mat-card *ngIf="account.isManagable">
     <lukso-key-manager [contractAddress]="account.owner"></lukso-key-manager>
   </mat-card>
-  <lukso-progress [stage]="account.stage"></lukso-progress>
+  <lukso-progress [stage]="account.stage"></lukso-progress> -->
 </ng-container>

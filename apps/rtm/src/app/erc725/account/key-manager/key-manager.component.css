@@ -1,0 +1,14 @@
+:host {
+  display: block;
+}
+
+.active {
+  color: rgba(0, 0, 0, 0.2);
+}
+
+.material-icons {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  vertical-align: middle;
+}

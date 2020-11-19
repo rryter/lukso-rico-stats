@@ -1,0 +1,17 @@
+<h1>Manage Access</h1>
+<section>
+  <div *ngIf="!keyManagerContract" class="loading">
+    <mat-spinner [diameter]="50"></mat-spinner>
+  </div>
+
+  <lukso-priviliges
+    *ngIf="keyManagerContract && keyManagerData$ | async as keyManagerData"
+    (removeKey)="removeKey($event)"
+    [keys]="keyManagerData"
+  ></lukso-priviliges>
+  <br />
+  <button mat-raised-button (click)="openDialog('Add', {})" [attr.data-cy]="'keymanager__add-key'">
+    <span>Add Key</span>&nbsp;
+    <mat-icon>add_box</mat-icon>
+  </button>
+</section>

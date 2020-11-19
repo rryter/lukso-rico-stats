@@ -1,0 +1,23 @@
+:host {
+  display: block;
+  margin-bottom: 30px;
+}
+
+th {
+  color: black;
+}
+
+.key {
+  color: rgba(0, 0, 0, 0.5);
+}
+.value {
+}
+.public-data {
+  background: rgba(255, 255, 255, 0.3);
+  border-radius: 10px;
+}
+table {
+  background: none;
+  width: 100%;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+}

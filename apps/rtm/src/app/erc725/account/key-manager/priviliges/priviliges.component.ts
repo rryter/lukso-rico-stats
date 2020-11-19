@@ -36,6 +36,7 @@ export class PriviligesComponent implements OnChanges {
   constructor(private cdRef: ChangeDetectorRef) {}
 
   ngOnChanges(changes: SimpleChanges): void {
+    console.log(changes);
     this.cdRef.detectChanges();
   }
 

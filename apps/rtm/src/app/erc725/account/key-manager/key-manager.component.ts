@@ -1,32 +1,40 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { Web3Service } from '@shared/services/web3.service';
-import { forkJoin, Observable, ReplaySubject, Subject } from 'rxjs';
-import { shareReplay, switchMap, tap } from 'rxjs/operators';
+import { forkJoin, NEVER, Observable, of, ReplaySubject } from 'rxjs';
+import { catchError, map, shareReplay, switchMap } from 'rxjs/operators';
 import { Capabilities, KEY_TYPE } from '@shared/capabilities.enum';
 import { KeyManagerService } from '@shared/services/key-manager.service';
-import { environment } from '../../../environments/environment';
+import { environment } from '../../../../environments/environment';
 import { MatDialog } from '@angular/material/dialog';
 import { AddKeyComponent } from './add-key/add-key.component';
 import { bigNumbertoIntArray } from '@shared/utils/bigNumber';
-import { Contract, ContractTransaction, Transaction, utils } from 'ethers';
+import { ContractTransaction, utils } from 'ethers';
 import { LoadingIndicatorService } from '@shared/services/loading-indicator.service';
+import { ERC734KeyManager } from '@twy-gmbh/erc725-playground';
+
+export interface KeyManagerData {
+  address: string;
+  keyType: any;
+  privileges: any[];
+}
 
 @Component({
   selector: 'lukso-key-manager',
   templateUrl: './key-manager.component.html',
   styleUrls: ['./key-manager.component.css'],
 })
-export class KeyManagerComponent implements OnInit {
+export class KeyManagerComponent implements OnInit, OnChanges {
   loadKeys = new ReplaySubject();
 
-  keyManagerData$: Observable<{ address: string; keyType: any; privileges: any[] }[]>;
+  keyManagerData$: Observable<{ keyManagerData: KeyManagerData[]; error: string }>;
   isKeyManager$: Observable<boolean>;
 
   isManageDropdownActive = false;
   Capabilities = Capabilities;
   environment = environment;
 
-  @Input() contractAddress: string;
+  // ERC734KeyManager
+  @Input() keyManagerContract: any;
 
   constructor(
     public dialog: MatDialog,
@@ -34,24 +42,39 @@ export class KeyManagerComponent implements OnInit {
     private keyManagerService: KeyManagerService,
     private loadingIndicatorService: LoadingIndicatorService
   ) {
-    this.keyManagerData$ = this.web3Service.reloadTrigger$.pipe(
-      switchMap(() => this.getAllKeys()),
-      switchMap((keys: any[]) => this.getKeymanagerData$(keys)),
-      shareReplay(1)
-    );
-
-    this.loadKeys.next();
-    this.keyManagerService.contract.on('KeyRemoved', () => {
-      this.loadKeys.next();
-    });
-    this.keyManagerService.contract.on('KeySet', () => {
-      this.loadKeys.next();
-    });
+    // this.loadKeys.next();
+    // this.keyManagerService.contract.on('KeyRemoved', () => {
+    //   this.loadKeys.next();
+    // });
+    // this.keyManagerService.contract.on('KeySet', () => {
+    //   this.loadKeys.next();
+    // });
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.keyManagerData$ = this.web3Service.reloadTrigger$.pipe(
+      switchMap(() => this.getAllKeys()),
+      switchMap((keys: string[]) => this.getKeymanagerData$(keys)),
+      map((keyManagerData: KeyManagerData[]) => {
+        return { keyManagerData, error: undefined };
+      }),
+      shareReplay(1),
+      catchError((error) => {
+        return of({
+          keyManagerData: [],
+          error: error.message,
+        });
+      })
+    );
+  }
+  ngOnChanges(changes: SimpleChanges): void {
+    console.log(changes);
+    console.log(this.keyManagerContract);
+    //Called before any other lifecycle hook. Use it to inject dependencies, but avoid any serious work here.
+    //Add '${implements OnChanges}' to the class.
+  }
 
-  openDialog(title: string, data: any): void {
+  openDialog(title: string, what: any): void {
     const dialogRef = this.dialog.open(AddKeyComponent, {
       data: {
         address: this.getSelectedAddress(),
@@ -93,7 +116,8 @@ export class KeyManagerComponent implements OnInit {
   }
 
   private getAllKeys(): Promise<any[]> {
-    return this.keyManagerService.contract.getAllKeys();
+    console.log(this);
+    return this.keyManagerContract.getAllKeys();
   }
 
   private getKey(

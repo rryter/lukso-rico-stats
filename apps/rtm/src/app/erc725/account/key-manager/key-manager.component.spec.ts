@@ -5,7 +5,7 @@ import { KeyManagerComponent } from './key-manager.component';
 import { MatIconModule } from '@angular/material/icon';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
-import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MatDialog } from '@angular/material/dialog';
 import { KeyManagerService } from '@shared/services/key-manager.service';
 
 describe('KeyManagerComponent', () => {
@@ -38,6 +38,7 @@ describe('KeyManagerComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(KeyManagerComponent);
     component = fixture.componentInstance;
+    component.keyManagerContract = null;
     fixture.detectChanges();
   });
 

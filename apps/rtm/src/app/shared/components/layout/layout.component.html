@@ -1,34 +1,34 @@
-<div class="navbar-container" *ngIf="(showWrongNetworkError$ | async) === false">
-  <mat-sidenav-container class="navbar-sidenav-container">
-    <mat-sidenav #snav [opened]="true" [mode]="'side'" fixedTopGap="56" class="sidenav">
-      <mat-nav-list>
-        <a href="/" class="coaster-logo">
-          <img src="/assets/coaster_logo.png" />
-        </a>
-        <h3 mat-subheader>Accounts</h3>
+<ng-container *ngIf="showWrongNetworkError$ | async as warn">
+  <div class="wrapper" *ngIf="warn.showWarning === false">
+    <mat-toolbar>
+      <img src="/assets/coaster-logo-white.png" class="coaster-logo" />
+      <div>
+        <nav>
+          <a class="nav-link" [routerLink]="'/'">All</a>
+          <a class="nav-link" [routerLink]="['accounts', [accountAddress], 'account']">Account</a>
+          <a class="nav-link" [routerLink]="['accounts', accountAddress, 'claims']">Claims</a>
+          <a class="nav-link" [routerLink]="['accounts', accountAddress, 'wallet']">Wallet</a>
+          <a class="nav-link" [routerLink]="['accounts', accountAddress, 'tokens']">Tokens</a>
+          <a class="nav-link" [routerLink]="['accounts', accountAddress, 'nfts']">NFTs</a>
+        </nav>
+      </div>
+      <div class="user">
+        <div class="user__notifications">
+          <button mat-icon-button aria-label="Notifications">
+            <mat-icon matBadge="8" matBadgeColor="primary">notifications_none</mat-icon>
+          </button>
+        </div>
 
-        <ng-container *ngIf="accounts?.length > 0; else noAccounts">
-          <a
-            mat-list-item
-            *ngFor="let account of accounts"
-            [routerLink]="['accounts', account.address]"
-          >
-            <mat-icon mat-list-icon> person </mat-icon>
-            <p mat-line>{{ account.address | ethAddressShort }}</p>
-          </a>
-        </ng-container>
-        <ng-template #noAccounts> <a mat-list-item>Create Account</a></ng-template>
-
-        <a id="push-bottom" mat-list-item [routerLink]="['/about']" routerLinkActive="active">
-          <mat-icon mat-list-icon> info_outline </mat-icon>
-        </a>
-      </mat-nav-list>
-    </mat-sidenav>
-
-    <mat-sidenav-content class="sidenav-content">
-      <router-outlet></router-outlet>
-    </mat-sidenav-content>
-  </mat-sidenav-container>
-</div>
-
-<lukso-wrong-network *ngIf="(showWrongNetworkError$ | async) === true"></lukso-wrong-network>
+        <div class="user__selection">
+          <img src="/assets/reto.jpg" />
+        </div>
+      </div>
+    </mat-toolbar>
+    <div class="content">
+      <div>
+        <router-outlet></router-outlet>
+      </div>
+    </div>
+  </div>
+  <lukso-wrong-network *ngIf="warn.showWarning === true"></lukso-wrong-network>
+</ng-container>

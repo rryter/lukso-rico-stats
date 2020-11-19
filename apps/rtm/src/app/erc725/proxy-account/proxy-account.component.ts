@@ -34,6 +34,7 @@ export class ProxyAccountComponent implements OnInit {
   nickName = new FormControl();
   account$: Observable<Account>;
   qrCode: any;
+  loading = true;
 
   proxyAccountContract: ERC725Account;
   keyManagerContract: ERC734KeyManager;
@@ -79,8 +80,10 @@ export class ProxyAccountComponent implements OnInit {
   ngOnInit(): void {}
 
   private enrichAccountWithQrCode(account: Account): Promise<Account> {
+    console.log('xxx loading = false');
+    this.loading = false;
     return QRCode.toDataURL(account.address, {
-      width: 100,
+      width: 120,
       color: {
         dark: '#2c2c2c',
         light: '#fff',

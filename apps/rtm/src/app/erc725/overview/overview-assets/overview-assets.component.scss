@@ -1,0 +1,26 @@
+:host {
+  display: block;
+}
+
+.overview-list {
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+
+  li {
+    position: relative;
+  }
+}
+
+h3 {
+  text-transform: uppercase;
+  font-weight: bold;
+  color: #968e8e;
+  margin-bottom: 5px;
+}
+
+img {
+  position: absolute;
+  right: 20px;
+  bottom: 20px;
+  width: 50%;
+  mix-blend-mode: multiply;
+}

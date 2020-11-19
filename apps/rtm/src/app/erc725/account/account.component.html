@@ -1,0 +1,17 @@
+<main class="grid-container" role="main">
+  <section>
+    <lukso-overview-account
+      [accountContract]="accountContract"
+      [hideText]="true"
+    ></lukso-overview-account>
+    <lukso-overview-claims></lukso-overview-claims>
+  </section>
+  <section>
+    <lukso-progress [accountAddress]="accountAddress"></lukso-progress>
+    <lukso-key-value-infos
+      [accountContract]="accountContract"
+      [keyManagerContract]="keyManagerContract"
+    ></lukso-key-value-infos>
+    <lukso-key-manager [keyManagerContract]="keyManagerContract"></lukso-key-manager>
+  </section>
+</main>

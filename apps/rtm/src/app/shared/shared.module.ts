@@ -19,6 +19,7 @@ import { MatGridListModule } from '@angular/material/grid-list';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSelectModule } from '@angular/material/select';
 import { MatInputModule } from '@angular/material/input';
+import { MatBadgeModule } from '@angular/material/badge';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort';
 import { LayoutModule } from '@angular/cdk/layout';
@@ -32,6 +33,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { WrongNetworkComponent } from '@shared/components/wrong-network/wrong-network.component';
 import { MatRippleModule } from '@angular/material/core';
 import { PrivilegePipe } from './pipes/privilege.pipe';
+import { ErrorMessageComponent } from './components/error-message/error-message.component';
 
 const materialModules = [
   MatTableModule,
@@ -56,6 +58,7 @@ const materialModules = [
   MatChipsModule,
   MatProgressSpinnerModule,
   MatRippleModule,
+  MatBadgeModule,
 ];
 @NgModule({
   declarations: [
@@ -67,6 +70,7 @@ const materialModules = [
     LayoutComponent,
     AmountComponent,
     WrongNetworkComponent,
+    ErrorMessageComponent,
   ],
   imports: [
     RouterModule,
@@ -88,6 +92,7 @@ const materialModules = [
     LayoutComponent,
     ConfirmComponent,
     AmountComponent,
+    ErrorMessageComponent,
     ...materialModules,
   ],
 })

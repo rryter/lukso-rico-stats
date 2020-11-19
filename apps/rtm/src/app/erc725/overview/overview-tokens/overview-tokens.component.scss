@@ -1,0 +1,21 @@
+:host {
+  display: block;
+  margin-bottom: 30px;
+}
+h3 {
+  text-transform: uppercase;
+  color: #968e8e;
+}
+
+.amount,
+.symbol {
+  color: black;
+}
+
+.amount {
+  font-weight: bold;
+  font-size: 30px;
+}
+.symbol {
+  opacity: 0.8;
+}
