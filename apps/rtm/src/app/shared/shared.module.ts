@@ -22,6 +22,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatBadgeModule } from '@angular/material/badge';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort';
+import { MatCheckboxModule } from '@angular/material/checkbox';
 import { LayoutModule } from '@angular/cdk/layout';
 import { LayoutComponent } from './components/layout/layout.component';
 import { RouterModule } from '@angular/router';
@@ -34,6 +35,7 @@ import { WrongNetworkComponent } from '@shared/components/wrong-network/wrong-ne
 import { MatRippleModule } from '@angular/material/core';
 import { PrivilegePipe } from './pipes/privilege.pipe';
 import { ErrorMessageComponent } from './components/error-message/error-message.component';
+import { ListCheckboxComponent } from './components/checkbox-list/list-checkbox.component';
 
 const materialModules = [
   MatTableModule,
@@ -59,6 +61,7 @@ const materialModules = [
   MatProgressSpinnerModule,
   MatRippleModule,
   MatBadgeModule,
+  MatCheckboxModule,
 ];
 @NgModule({
   declarations: [
@@ -71,6 +74,7 @@ const materialModules = [
     AmountComponent,
     WrongNetworkComponent,
     ErrorMessageComponent,
+    ListCheckboxComponent,
   ],
   imports: [
     RouterModule,
@@ -93,6 +97,7 @@ const materialModules = [
     ConfirmComponent,
     AmountComponent,
     ErrorMessageComponent,
+    ListCheckboxComponent,
     ...materialModules,
   ],
 })

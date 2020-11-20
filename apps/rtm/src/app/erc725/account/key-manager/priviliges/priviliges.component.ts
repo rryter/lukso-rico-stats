@@ -27,6 +27,8 @@ export class PriviligesComponent implements OnChanges {
   @ViewChild(MatTable) table: MatTable<PriviligesItem>;
 
   @Output() removeKey = new EventEmitter();
+  @Output() showEditDialog = new EventEmitter();
+
   @Input() wallet: string;
   @Input() keys: any;
 
@@ -41,5 +43,9 @@ export class PriviligesComponent implements OnChanges {
 
   removePrivilege(privilege: PriviligesItem) {
     this.removeKey.emit({ ...privilege });
+  }
+
+  editKey(key: any) {
+    this.showEditDialog.emit(key);
   }
 }

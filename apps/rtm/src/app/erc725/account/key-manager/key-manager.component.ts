@@ -69,11 +69,22 @@ export class KeyManagerComponent implements OnInit, OnChanges {
   }
   ngOnChanges(changes: SimpleChanges): void {}
 
-  openDialog(title: string, what: any): void {
+  openDialog(
+    label: string,
+    data: { buttonLabel: string; address: string; privileges: number[] }
+  ): void {
     const dialogRef = this.dialog.open(AddKeyComponent, {
       data: {
-        address: this.getSelectedAddress(),
+        buttonLabel: label,
+        address: data.address,
+        privileges: data.privileges,
       },
+      width: '50vw',
+      height: '100%',
+      position: {
+        right: '0',
+      },
+      direction: 'ltr',
     });
 
     dialogRef.afterClosed().subscribe((sendAddKey: Promise<ContractTransaction>) => {
@@ -108,6 +119,10 @@ export class KeyManagerComponent implements OnInit, OnChanges {
       .finally(() => {
         this.loadingIndicatorService.doneLoading();
       });
+  }
+
+  onShowEditDialog(key: any) {
+    this.openDialog('Update', { ...key });
   }
 
   private getAllKeys(): Promise<any[]> {

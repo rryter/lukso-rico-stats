@@ -1,5 +1,5 @@
 import { Component, Inject, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Capabilities, KEY_TYPE } from '@shared/capabilities.enum';
 import { KeyManagerService } from '@shared/services/key-manager.service';
@@ -15,21 +15,34 @@ import { isETHAddressValidator } from '@shared/validators/web3-address.validator
 export class AddKeyComponent implements OnInit {
   newKeyForm: FormGroup;
   address: string;
-
+  selectablePrivileges = [
+    {
+      value: 1,
+      label: 'Management',
+      selected: false,
+    },
+    { value: 2, label: 'Execution', selected: false },
+  ];
   constructor(
-    private fb: FormBuilder,
     public dialogRef: MatDialogRef<AddKeyComponent>,
+    private fb: FormBuilder,
     private keyManagerService: KeyManagerService,
     private loadingIndicatorService: LoadingIndicatorService,
-    @Inject(MAT_DIALOG_DATA) public data: { address: string }
+    @Inject(MAT_DIALOG_DATA)
+    public data: { buttonLabel: string; address: string; privileges: number[] }
   ) {
+    this.data.privileges = this.data.privileges || [Capabilities.EXECUTION];
     this.newKeyForm = this.fb.group(
       {
-        address: ['', [Validators.required, isETHAddressValidator()]],
-        privileges: [[Capabilities.EXECUTION], [Validators.required]],
+        address: [this.data.address, [Validators.required, isETHAddressValidator()]],
+        privileges: [this.data.privileges, [Validators.required]],
       },
       { updateOn: 'blur' }
     );
+  }
+
+  onPrivilegesChanged(privileges: number[]) {
+    this.newKeyForm.controls.privileges.setValue(privileges);
   }
 
   ngOnInit(): void {}

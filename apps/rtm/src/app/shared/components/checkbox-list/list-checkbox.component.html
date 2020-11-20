@@ -1,0 +1,34 @@
+<section #parentElement [formGroup]="form" *ngIf="items?.length !== 0; else noItems">
+  <ng-container *ngIf="!disabled && (filteredCheckboxes$ | async) as filteredCheckboxes">
+    <div *ngIf="filteredCheckboxes.length > 0; else noMatches">
+      <p>
+        <mat-checkbox
+          [attr.e2e-test-checkbox]="'all'"
+          formControlName="allSelected"
+          (change)="toggleAll(items, allSelected.value)"
+        >
+          All ({{ items?.length }})
+        </mat-checkbox>
+      </p>
+    </div>
+    <div e2e>
+      <ng-container *ngFor="let item of filteredCheckboxes" [formGroup]="item">
+        <div>
+          <mat-checkbox
+            [attr.e2e-test-checkbox]="item.value.label"
+            formControlName="selected"
+            (change)="selectedItemsChanged()"
+          >
+            {{ item.value.label }}
+          </mat-checkbox>
+        </div>
+      </ng-container>
+    </div>
+  </ng-container>
+</section>
+
+<ng-template #noMatches>
+  <div class="error-message">Loading...</div>
+</ng-template>
+
+<ng-template #noItems> </ng-template>

@@ -1,8 +1,11 @@
+<h1>Grant Access</h1>
+<p>You can grant certain privileges to any public LYX Address.</p>
+<br /><br /><br />
 <form [formGroup]="newKeyForm" (submit)="saveNewKey(newKeyForm)">
+  <h2>Address</h2>
   <p>
     <mat-form-field class="form-field" appearance="fill">
-      <mat-label>Address</mat-label>
-      <mat-icon matPrefix>vpn_key</mat-icon>
+      <mat-label>Public Key</mat-label>
       <input matInput formControlName="address" [attr.data-cy]="'add-key__address'" />
       <mat-error *ngIf="newKeyForm.controls['address'].hasError('isETHAddress')">
         ETH Address check failed
@@ -10,7 +13,7 @@
     </mat-form-field>
   </p>
 
-  <p>
+  <!-- <p>
     <mat-form-field class="form-field" appearance="fill">
       <mat-label>Privilige</mat-label>
       <mat-icon matPrefix>security</mat-icon>
@@ -23,12 +26,26 @@
         <mat-option [value]="1">Management</mat-option>
       </mat-select>
     </mat-form-field>
-  </p>
+  </p> -->
 
-  <div style="text-align: right">
-    <button mat-button style="margin-right: 10px" (click)="onNoClick()">Cancel</button>
+  <h2>Privileges</h2>
+  <lukso-checkbox-list
+    *ngIf="selectablePrivileges"
+    label=""
+    [items]="selectablePrivileges"
+    [selected]="data.privileges"
+    (selectionChanged)="onPrivilegesChanged($event)"
+  ></lukso-checkbox-list>
+  <br />
+  <mat-error *ngIf="newKeyForm.controls['privileges'].hasError('required')">
+    You have to select at least one privilege.
+  </mat-error>
+
+  <br /><br />
+  <div>
     <button mat-raised-button color="primary" type="submit" [attr.data-cy]="'add-key__confirm'">
-      Add Key
+      {{ data.buttonLabel }}
     </button>
+    <button mat-button style="margin-right: 10px" (click)="onNoClick()">Cancel</button>
   </div>
 </form>

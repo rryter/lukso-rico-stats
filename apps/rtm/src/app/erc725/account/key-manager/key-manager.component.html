@@ -7,11 +7,16 @@
   <lukso-priviliges
     *ngIf="keyManagerContract && keyManagerData$ | async as keyManagerData"
     (removeKey)="removeKey($event)"
+    (showEditDialog)="onShowEditDialog($event)"
     [keys]="keyManagerData"
   ></lukso-priviliges>
   <br />
-  <button mat-raised-button (click)="openDialog('Add', {})" [attr.data-cy]="'keymanager__add-key'">
-    <span>Add Key</span>&nbsp;
+  <button
+    mat-raised-button
+    (click)="openDialog('Grant Access', {})"
+    [attr.data-cy]="'keymanager__add-key'"
+  >
+    <span>Grant Access</span>&nbsp;
     <mat-icon>add_box</mat-icon>
   </button>
 </section>
