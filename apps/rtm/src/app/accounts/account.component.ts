@@ -2,8 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 @Component({
   selector: 'lukso-erc725',
-  templateUrl: './erc725.component.html',
-  styleUrls: ['./erc725.component.css'],
+  templateUrl: './account.component.html',
+  styleUrls: ['./account.component.css'],
 })
 export class Erc725Component implements OnInit {
   constructor(private route: ActivatedRoute, private router: Router) {}

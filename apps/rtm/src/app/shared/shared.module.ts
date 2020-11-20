@@ -36,6 +36,8 @@ import { MatRippleModule } from '@angular/material/core';
 import { PrivilegePipe } from './pipes/privilege.pipe';
 import { ErrorMessageComponent } from './components/error-message/error-message.component';
 import { ListCheckboxComponent } from './components/checkbox-list/list-checkbox.component';
+import { LayoutReducedComponent } from './components/layout/layout-reduced/layout-reduced.component';
+import { LoadingComponent } from './components/loading/loading.component';
 
 const materialModules = [
   MatTableModule,
@@ -75,6 +77,8 @@ const materialModules = [
     WrongNetworkComponent,
     ErrorMessageComponent,
     ListCheckboxComponent,
+    LayoutReducedComponent,
+    LoadingComponent,
   ],
   imports: [
     RouterModule,
@@ -98,6 +102,7 @@ const materialModules = [
     AmountComponent,
     ErrorMessageComponent,
     ListCheckboxComponent,
+    LoadingComponent,
     ...materialModules,
   ],
 })

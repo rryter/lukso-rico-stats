@@ -4,33 +4,30 @@
       <img src="/assets/coaster-logo-white.png" class="coaster-logo" />
       <div>
         <nav>
-          <a
-            class="nav-link"
-            [routerLink]="['accounts', accountAddress]"
-            [attr.data-cy]="'layout__nav__home'"
+          <a class="nav-link" [routerLink]="[accountAddress]" [attr.data-cy]="'layout__nav__home'"
             >All</a
           >
           <a
             class="nav-link"
-            [routerLink]="['accounts', accountAddress, 'account']"
+            [routerLink]="[accountAddress, 'account']"
             [attr.data-cy]="'layout__nav__account'"
             >Account</a
           >
           <a
             class="nav-link"
-            [routerLink]="['accounts', accountAddress, 'claims']"
+            [routerLink]="[accountAddress, 'claims']"
             [attr.data-cy]="'layout__nav__claims'"
             >Claims</a
           >
           <a
             class="nav-link"
-            [routerLink]="['accounts', accountAddress, 'wallet']"
+            [routerLink]="[accountAddress, 'wallet']"
             [attr.data-cy]="'layout__nav__wallet'"
             >Wallet</a
           >
           <a
             class="nav-link"
-            [routerLink]="['accounts', accountAddress, 'tokens']"
+            [routerLink]="[accountAddress, 'tokens']"
             [attr.data-cy]="'layout__nav__tokens'"
             >Tokens</a
           >

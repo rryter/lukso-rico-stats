@@ -1,16 +1,14 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Routes, RouterModule } from '@angular/router';
-import { Erc725Component } from './erc725.component';
+import { Erc725Component } from './account.component';
 import { SharedModule } from '../shared/shared.module';
 import { ReactiveFormsModule } from '@angular/forms';
 import { KeyManagerComponent } from './account/key-manager/key-manager.component';
 import { LockButtonComponent } from './smart-vault/lock-button/lock-button.component';
 import { WithdrawButtonComponent } from './smart-vault/withdraw-button/withdraw-button.component';
-import { ProxyAccountComponent } from './proxy-account/proxy-account.component';
+import { WalletComponent } from './wallet/wallet.component';
 import { ProgressComponent } from './progress/progress.component';
-import { NewAccountComponent } from './new-account/new-account.component';
-import { LoadingComponent } from './loading/loading.component';
 import { AddKeyComponent } from './account/key-manager/add-key/add-key.component';
 import { PriviligesComponent } from './account/key-manager/priviliges/priviliges.component';
 import { OverviewComponent } from './overview/overview.component';
@@ -23,19 +21,13 @@ import { AccountComponent } from './account/account.component';
 import { KeyValueInfosComponent } from './account/key-value-infos/key-value-infos.component';
 
 const routes: Routes = [
-  { path: '', component: NewAccountComponent },
-  { path: 'create-account', component: NewAccountComponent },
   {
-    path: 'accounts/:address',
+    path: ':address',
     component: OverviewComponent,
   },
   {
-    path: 'accounts/:address/account',
+    path: ':address/account',
     component: AccountComponent,
-  },
-  {
-    path: 'account/:address',
-    component: OverviewComponent,
   },
 ];
 
@@ -45,10 +37,8 @@ const routes: Routes = [
     KeyManagerComponent,
     LockButtonComponent,
     WithdrawButtonComponent,
-    ProxyAccountComponent,
+    WalletComponent,
     ProgressComponent,
-    NewAccountComponent,
-    LoadingComponent,
     AddKeyComponent,
     PriviligesComponent,
     OverviewComponent,
@@ -62,4 +52,4 @@ const routes: Routes = [
   ],
   imports: [CommonModule, ReactiveFormsModule, RouterModule.forChild(routes), SharedModule],
 })
-export class Erc725Module {}
+export class AccountModule {}

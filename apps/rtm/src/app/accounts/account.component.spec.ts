@@ -3,7 +3,7 @@ import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { Web3Service } from '@shared/services/web3.service';
 import { web3ServiceMock } from '@shared/mocks/web3.service.mock';
-import { Erc725Component } from './erc725.component';
+import { Erc725Component } from './account.component';
 
 describe('Erc725Component', () => {
   let component: Erc725Component;

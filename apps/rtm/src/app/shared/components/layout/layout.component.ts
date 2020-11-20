@@ -3,7 +3,6 @@ import { Web3Service } from '@shared/services/web3.service';
 import { environment } from './../../../../environments/environment';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { ActivatedRoute } from '@angular/router';
 import { ProxyAccountService } from '@shared/services/proxy-account.service';
 
 @Component({

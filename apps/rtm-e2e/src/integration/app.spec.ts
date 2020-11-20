@@ -4,7 +4,7 @@ describe('ERC 725 Home', () => {
   before(() => cy.visit('/'));
 
   it('should display call to action', () => {
-    cy.contains('Create Your On-Chain Wallet / Profile');
+    cy.contains('Welcome to the future!');
   });
 
   it('should create account and fund it with 100 LYX', () => {
@@ -12,20 +12,20 @@ describe('ERC 725 Home', () => {
     cy.getByAttr('overview-account__go-to-account-detail').click();
     cy.getByAttr('progress__make-account-managable').click();
     cy.getByAttr('layout__nav__home').click();
-    cy.getByAttr('proxy-account__top-up').click();
+    cy.getByAttr('wallet__top-up').click();
     cy.getByAttr('amount__value').type('100', { force: true });
     cy.getByAttr('amount__accept').click();
-    cy.getByAttr('proxy-account__value').contains(100);
+    cy.getByAttr('wallet__value').contains(100);
     cy.getByAttr('overview-account__go-to-account-detail').click();
     cy.getByAttr('privileges__keys')
       .contains('0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266')
       .parent()
       .contains('Management');
     cy.getByAttr('layout__nav__home').click();
-    cy.getByAttr('proxy-account__withdraw').click();
+    cy.getByAttr('wallet__withdraw').click();
     cy.getByAttr('amount__value').type('100', { force: true });
     cy.getByAttr('amount__accept').click();
-    cy.getByAttr('proxy-account__value').contains(0.0);
+    cy.getByAttr('wallet__value').contains(0.0);
     cy.getByAttr('overview-account__go-to-account-detail').click();
 
     cy.getByAttr('keymanager__add-key').click();

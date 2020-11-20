@@ -11,7 +11,7 @@
     <mat-card class="wallet">
       <mat-card-content>
         <div class="balances">
-          <div class="balance balance--lyx" [attr.data-cy]="'proxy-account__value'">
+          <div class="balance balance--lyx" [attr.data-cy]="'wallet__value'">
             {{ account.balance | number: '0.0-4' }} LYX
           </div>
           <div class="balance balance--dollar">
@@ -22,18 +22,14 @@
           <img [src]="account.qrCode" (click)="navigateToBlockExplorer(account.address)" /><br />
         </div>
         <div class="actions" *ngIf="account.isExecutable || account.isManagable">
-          <button
-            mat-stroked-button
-            (click)="topUp(account)"
-            [attr.data-cy]="'proxy-account__top-up'"
-          >
+          <button mat-stroked-button (click)="topUp(account)" [attr.data-cy]="'wallet__top-up'">
             <span>Top Up</span>
           </button>
           &nbsp;
           <button
             mat-stroked-button
             (click)="openWithdrawDialog(account)"
-            [attr.data-cy]="'proxy-account__withdraw'"
+            [attr.data-cy]="'wallet__withdraw'"
           >
             <span>Withdraw</span>
           </button>

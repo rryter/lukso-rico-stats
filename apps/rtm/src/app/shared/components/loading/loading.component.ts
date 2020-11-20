@@ -1,6 +1,6 @@
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { Observable, of } from 'rxjs';
-import { LoadingIndicatorService } from '../../shared/services/loading-indicator.service';
+import { LoadingIndicatorService } from '@shared/services/loading-indicator.service';
 
 @Component({
   selector: 'lukso-loading',

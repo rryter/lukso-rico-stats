@@ -1,0 +1,48 @@
+<div class="grid-container">
+  <div class="image"></div>
+  <div class="signup">
+    <div class="signup-container">
+      <div class="box--header">
+        <img src="/assets/coaster_white.png" class="coaster-logo" />
+        <h1 class="mat-display-1">Welcome to the future!</h1>
+        <h2 class="mat-h2 sub-title">Create your ERC-725 Account today.</h2>
+      </div>
+      <div
+        class="box box--new"
+        (click)="deployProxyAccount()"
+        matRipple
+        [attr.data-cy]="'new-account__create-account'"
+      >
+        <div class="icon">
+          <img src="assets/49.svg" alt="Account" />
+        </div>
+        <div class="call-to-action">
+          <h2>Create Your On-Chain Profile</h2>
+          <p>
+            This will deploy an ERC-725<br />
+            Account for you.
+          </p>
+        </div>
+      </div>
+      <div class="box box--existing" matRipple [matMenuTriggerFor]="menu">
+        <div class="icon">
+          <img src="assets/10.svg" alt="Account" />
+        </div>
+        <div class="call-to-action">
+          <h2>Load Existing Account</h2>
+          <p>You have already created your account, and just want to access it.</p>
+          <mat-menu #menu="matMenu" [overlapTrigger]="true">
+            <button
+              mat-menu-item
+              *ngFor="let account of accounts; let i = index"
+              (click)="loadExistingAccount(i)"
+            >
+              {{ account.address | ethAddressShort }}
+            </button>
+          </mat-menu>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<lukso-loading></lukso-loading>

@@ -6,6 +6,8 @@ import { HttpClientModule } from '@angular/common/http';
 import { SharedModule } from './shared/shared.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { LayoutComponent } from '@shared/components/layout/layout.component';
+import { LayoutReducedComponent } from '@shared/components/layout/layout-reduced/layout-reduced.component';
 
 @NgModule({
   declarations: [AppComponent],
@@ -17,7 +19,14 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
       [
         {
           path: '',
-          loadChildren: () => import('./erc725/erc725.module').then((m) => m.Erc725Module),
+          component: LayoutReducedComponent,
+          loadChildren: () =>
+            import('./new-account/new-account.module').then((m) => m.NewAccountModule),
+        },
+        {
+          path: 'accounts',
+          component: LayoutComponent,
+          loadChildren: () => import('./accounts/account.module').then((m) => m.AccountModule),
         },
       ],
       { initialNavigation: 'enabled', enableTracing: false, relativeLinkResolution: 'legacy' }

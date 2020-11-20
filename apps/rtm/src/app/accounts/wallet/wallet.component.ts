@@ -25,12 +25,12 @@ import { ConfirmDialogOutput } from '@shared/interface/dialog';
 import { ERC725Account, ERC734KeyManager } from '@twy-gmbh/erc725-playground';
 
 @Component({
-  selector: 'lukso-proxy-account',
-  templateUrl: './proxy-account.component.html',
-  styleUrls: ['./proxy-account.component.scss'],
+  selector: 'lukso-wallet',
+  templateUrl: './wallet.component.html',
+  styleUrls: ['./wallet.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class ProxyAccountComponent implements OnInit {
+export class WalletComponent implements OnInit {
   nickName = new FormControl();
   account$: Observable<Account>;
   qrCode: any;
