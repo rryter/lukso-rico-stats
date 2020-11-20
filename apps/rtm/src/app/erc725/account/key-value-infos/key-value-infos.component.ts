@@ -50,7 +50,6 @@ export class KeyValueInfosComponent implements OnInit, OnChanges {
   ngOnInit(): void {}
 
   ngOnChanges(changes: SimpleChanges): void {
-    console.log('xxx debug changes', changes);
     if (changes.accountContract?.currentValue) {
       this.accountContract$.next(changes.accountContract.currentValue);
     }

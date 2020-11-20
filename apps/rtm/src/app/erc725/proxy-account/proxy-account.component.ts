@@ -80,7 +80,6 @@ export class ProxyAccountComponent implements OnInit {
   ngOnInit(): void {}
 
   private enrichAccountWithQrCode(account: Account): Promise<Account> {
-    console.log('xxx loading = false');
     this.loading = false;
     return QRCode.toDataURL(account.address, {
       width: 120,

@@ -67,12 +67,7 @@ export class KeyManagerComponent implements OnInit, OnChanges {
       })
     );
   }
-  ngOnChanges(changes: SimpleChanges): void {
-    console.log(changes);
-    console.log(this.keyManagerContract);
-    //Called before any other lifecycle hook. Use it to inject dependencies, but avoid any serious work here.
-    //Add '${implements OnChanges}' to the class.
-  }
+  ngOnChanges(changes: SimpleChanges): void {}
 
   openDialog(title: string, what: any): void {
     const dialogRef = this.dialog.open(AddKeyComponent, {
@@ -116,7 +111,6 @@ export class KeyManagerComponent implements OnInit, OnChanges {
   }
 
   private getAllKeys(): Promise<any[]> {
-    console.log(this);
     return this.keyManagerContract.getAllKeys();
   }
 

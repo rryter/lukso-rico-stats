@@ -4,12 +4,42 @@
       <img src="/assets/coaster-logo-white.png" class="coaster-logo" />
       <div>
         <nav>
-          <a class="nav-link" [routerLink]="'/'">All</a>
-          <a class="nav-link" [routerLink]="['accounts', [accountAddress], 'account']">Account</a>
-          <a class="nav-link" [routerLink]="['accounts', accountAddress, 'claims']">Claims</a>
-          <a class="nav-link" [routerLink]="['accounts', accountAddress, 'wallet']">Wallet</a>
-          <a class="nav-link" [routerLink]="['accounts', accountAddress, 'tokens']">Tokens</a>
-          <a class="nav-link" [routerLink]="['accounts', accountAddress, 'nfts']">NFTs</a>
+          <a
+            class="nav-link"
+            [routerLink]="['accounts', accountAddress]"
+            [attr.data-cy]="'layout__nav__home'"
+            >All</a
+          >
+          <a
+            class="nav-link"
+            [routerLink]="['accounts', accountAddress, 'account']"
+            [attr.data-cy]="'layout__nav__account'"
+            >Account</a
+          >
+          <a
+            class="nav-link"
+            [routerLink]="['accounts', accountAddress, 'claims']"
+            [attr.data-cy]="'layout__nav__claims'"
+            >Claims</a
+          >
+          <a
+            class="nav-link"
+            [routerLink]="['accounts', accountAddress, 'wallet']"
+            [attr.data-cy]="'layout__nav__wallet'"
+            >Wallet</a
+          >
+          <a
+            class="nav-link"
+            [routerLink]="['accounts', accountAddress, 'tokens']"
+            [attr.data-cy]="'layout__nav__tokens'"
+            >Tokens</a
+          >
+          <a
+            class="nav-link"
+            [routerLink]="['accounts', accountAddress, 'nfts']"
+            [attr.data-cy]="'layout__nav__nfts'"
+            >NFTs</a
+          >
         </nav>
       </div>
       <div class="user">

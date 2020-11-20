@@ -44,9 +44,7 @@ export class OverviewAccountComponent implements OnInit, OnChanges {
 
   ngOnInit(): void {}
   ngOnChanges(changes: SimpleChanges) {
-    console.log(changes);
     if (changes.accountContract.currentValue) {
-      console.log('asdasdasdasdasd');
       this.contractChanged$.next();
     }
   }
