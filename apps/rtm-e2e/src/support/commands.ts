@@ -11,7 +11,7 @@
 declare namespace Cypress {
   interface Chainable<Subject> {
     login(email: string, password: string): void;
-    getByAttr(attr: string);
+    getByAttr(attr: string): any;
   }
 }
 //
