@@ -7,6 +7,7 @@ import { LoadingIndicatorService } from '@shared/services/loading-indicator.serv
 import { ProxyAccountService } from '@shared/services/proxy-account.service';
 import { isETHAddressValidator } from '@shared/validators/web3-address.validator';
 import { utils } from 'ethers';
+import { isContractDeployed } from '@shared/utils/contracts';
 @Component({
   templateUrl: './edit-public-data.component.html',
   styleUrls: ['./edit-public-data.component.scss'],
@@ -42,7 +43,7 @@ export class EditPublicDataComponent implements OnInit {
         return { key: utils.formatBytes32String(data[0]), value: utils.toUtf8Bytes(data[1]) };
       });
 
-      this.dialogRef.close(this.accountService.contract?.setDataWithArray(keyValuePairs));
+      this.dialogRef.close(keyValuePairs);
     }
   }
 

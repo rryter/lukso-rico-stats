@@ -14,6 +14,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { EditPublicDataComponent } from './edit-public-data/edit-public-data..component';
 import { LoadingIndicatorService } from '@shared/services/loading-indicator.service';
 import { Web3Service } from '@shared/services/web3.service';
+import { isContractDeployed } from '@shared/utils/contracts';
 
 @Component({
   selector: 'lukso-key-value-infos',
@@ -86,38 +87,21 @@ export class KeyValueInfosComponent implements OnInit, OnChanges {
       },
     });
 
-    dialogRef.afterClosed().subscribe((sendAddKey: Promise<ContractTransaction>) => {
-      sendAddKey
-        .then((transaction: ContractTransaction) => {
-          return transaction.wait();
+    dialogRef.afterClosed().subscribe((keyValuePairs: any) => {
+      return isContractDeployed(this.keyManagerContract as ERC734KeyManager)
+        .then((value: any) => {
+          if (value) {
+            const abi = this.accountContract.interface.encodeFunctionData('setDataWithArray', [
+              keyValuePairs,
+            ]);
+            return this.keyManagerContract.execute(abi);
+          } else {
+            return this.accountContract.setDataWithArray(keyValuePairs);
+          }
         })
         .finally(() => {
           this.loadingIndicatorService.doneLoading();
         });
     });
-    // combineLatest([this.accountContract$, this.keyManagerContract$]).subscribe(
-    //   async ([accountContract, keyManagerContract]) => {
-    //     const abi = accountContract.interface.encodeFunctionData('setData', [
-    //       utils.formatBytes32String('bio'),
-    //       utils.toUtf8Bytes(
-    //         'Frontend-Developer based in Switzerland. Father of two. Always learning new things.'
-    //       ),
-    //     ]);
-    //     const tx = await keyManagerContract.execute(abi);
-    //     await tx.wait();
-    //     const abi2 = accountContract.interface.encodeFunctionData('setData', [
-    //       utils.formatBytes32String('firstName'),
-    //       utils.toUtf8Bytes('Reto'),
-    //     ]);
-    //     const tx2 = await keyManagerContract.execute(abi2);
-    //     await tx2.wait();
-    //     const abi3 = accountContract.interface.encodeFunctionData('setData', [
-    //       utils.formatBytes32String('lastName'),
-    //       utils.toUtf8Bytes('Ryter'),
-    //     ]);
-    //     const tx3 = await keyManagerContract.execute(abi3);
-    //     await tx3.wait();
-    //   }
-    // );
   }
 }

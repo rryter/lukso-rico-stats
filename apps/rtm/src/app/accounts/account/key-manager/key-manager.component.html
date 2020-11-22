@@ -5,7 +5,6 @@
   </div>
 
   <lukso-progress *ngIf="showDeployButton" [accountAddress]="accountAddress"></lukso-progress>
-
   <ng-container *ngIf="!showDeployButton">
     <lukso-error-message [errorMessage]="error"></lukso-error-message>
     <lukso-priviliges
