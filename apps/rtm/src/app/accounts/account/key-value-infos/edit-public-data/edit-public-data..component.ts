@@ -4,8 +4,9 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Capabilities, KEY_TYPE } from '@shared/capabilities.enum';
 import { KeyManagerService } from '@shared/services/key-manager.service';
 import { LoadingIndicatorService } from '@shared/services/loading-indicator.service';
+import { ProxyAccountService } from '@shared/services/proxy-account.service';
 import { isETHAddressValidator } from '@shared/validators/web3-address.validator';
-
+import { utils } from 'ethers';
 @Component({
   templateUrl: './edit-public-data.component.html',
   styleUrls: ['./edit-public-data.component.scss'],
@@ -17,6 +18,7 @@ export class EditPublicDataComponent implements OnInit {
     public dialogRef: MatDialogRef<EditPublicDataComponent>,
     private fb: FormBuilder,
     private loadingIndicatorService: LoadingIndicatorService,
+    private accountService: ProxyAccountService,
     @Inject(MAT_DIALOG_DATA)
     public data: { firstName: string; lastName: string; bio: string }
   ) {
@@ -33,9 +35,14 @@ export class EditPublicDataComponent implements OnInit {
   ngOnInit(): void {}
 
   save(form: FormGroup) {
+    console.log(form.value);
     if (form.valid) {
       this.loadingIndicatorService.showLoadingIndicator('Saving...');
-      this.dialogRef.close();
+      const keyValuePairs = Object.entries(form.value).map((data: [string, any]) => {
+        return { key: utils.formatBytes32String(data[0]), value: utils.toUtf8Bytes(data[1]) };
+      });
+
+      this.dialogRef.close(this.accountService.contract?.setDataWithArray(keyValuePairs));
     }
   }
 

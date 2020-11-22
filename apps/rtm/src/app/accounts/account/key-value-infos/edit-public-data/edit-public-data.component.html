@@ -27,7 +27,15 @@
   <p>
     <mat-form-field class="form-field" appearance="fill">
       <mat-label>Bio</mat-label>
-      <textarea matInput formControlName="bio" [attr.data-cy]="'edit-public-data__bio'"></textarea>
+      <textarea
+        rows="3"
+        matInput
+        #bio
+        formControlName="bio"
+        maxlength="256"
+        [attr.data-cy]="'edit-public-data__bio'"
+      ></textarea>
+      <mat-hint align="end">{{ bio.value.length }} / 256</mat-hint>
       <mat-error *ngIf="form.controls['bio'].hasError('isRequired')">
         ETH Address check failed
       </mat-error>

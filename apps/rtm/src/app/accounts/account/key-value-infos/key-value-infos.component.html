@@ -6,9 +6,13 @@
   <p class="value">{{ data.lastName }}</p>
   <h2 class="key">Bio</h2>
   <p class="value">{{ data.bio }}</p>
+  <button
+    mat-raised-button
+    color="primary"
+    [attr.data-cy]="'keyValue__add-key'"
+    (click)="setData(data)"
+  >
+    <span>Update Profile</span>&nbsp;
+    <!-- <mat-icon>add_box</mat-icon> -->
+  </button>
 </div>
-<br />
-<button mat-raised-button [attr.data-cy]="'keyValue__add-key'" (click)="setData()">
-  <span>Add Property</span>&nbsp;
-  <mat-icon>add_box</mat-icon>
-</button>

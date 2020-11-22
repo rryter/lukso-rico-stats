@@ -7,12 +7,13 @@ import {
   Input,
 } from '@angular/core';
 import { ERC725Account, ERC734KeyManager } from '@twy-gmbh/erc725-playground';
-import { forkJoin, Observable, of, ReplaySubject } from 'rxjs';
+import { combineLatest, forkJoin, Observable, of, ReplaySubject } from 'rxjs';
 import { catchError, switchMap } from 'rxjs/operators';
 import { BytesLike, ContractTransaction, utils } from 'ethers';
 import { MatDialog } from '@angular/material/dialog';
 import { EditPublicDataComponent } from './edit-public-data/edit-public-data..component';
 import { LoadingIndicatorService } from '@shared/services/loading-indicator.service';
+import { Web3Service } from '@shared/services/web3.service';
 
 @Component({
   selector: 'lukso-key-value-infos',
@@ -32,9 +33,16 @@ export class KeyValueInfosComponent implements OnInit, OnChanges {
   accountKeyValueInfos$: Observable<{ [key: string]: string }>;
   displayedColumns: string[] = ['key', 'value'];
 
-  constructor(public dialog: MatDialog, private loadingIndicatorService: LoadingIndicatorService) {
-    this.accountKeyValueInfos$ = this.accountContract$.pipe(
-      switchMap((account) => {
+  constructor(
+    public dialog: MatDialog,
+    private loadingIndicatorService: LoadingIndicatorService,
+    private web3Service: Web3Service
+  ) {
+    this.accountKeyValueInfos$ = combineLatest([
+      this.accountContract$,
+      this.web3Service.blocks$,
+    ]).pipe(
+      switchMap(([account]) => {
         return forkJoin({
           firstName: account
             .getData(utils.formatBytes32String('firstName'))
@@ -66,9 +74,11 @@ export class KeyValueInfosComponent implements OnInit, OnChanges {
     }
   }
 
-  setData() {
+  setData(existingData: { firstName: string; lastName: string; bio: string }) {
     const dialogRef = this.dialog.open(EditPublicDataComponent, {
-      data: {},
+      data: {
+        ...existingData,
+      },
       width: '50vw',
       height: '100%',
       position: {
