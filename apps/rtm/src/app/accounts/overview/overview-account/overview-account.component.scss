@@ -15,6 +15,9 @@
   margin-bottom: 30px;
   &.clickable:hover {
     cursor: pointer;
+    .upload-instructions {
+      display: flex;
+    }
   }
 }
 
@@ -26,4 +29,16 @@
   bottom: 0;
   left: 0;
   color: white;
+}
+
+.upload-instructions {
+  display: none;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  flex-direction: column;
+  justify-content: center;
+  padding: 40px;
 }

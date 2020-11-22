@@ -11,6 +11,7 @@ import {
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTable } from '@angular/material/table';
+import { KeyManagerData } from '../key-manager.component';
 export interface PriviligesItem {
   address: string;
   purpose: string;
@@ -22,15 +23,14 @@ export interface PriviligesItem {
   styleUrls: ['./priviliges.component.css'],
 })
 export class PriviligesComponent implements OnChanges {
-  @ViewChild(MatPaginator) paginator: MatPaginator;
-  @ViewChild(MatSort) sort: MatSort;
-  @ViewChild(MatTable) table: MatTable<PriviligesItem>;
+  @ViewChild(MatPaginator) paginator: MatPaginator | undefined;
+  @ViewChild(MatSort) sort: MatSort | undefined;
+  @ViewChild(MatTable) table: MatTable<PriviligesItem> | undefined;
 
   @Output() removeKey = new EventEmitter();
   @Output() showEditDialog = new EventEmitter();
 
-  @Input() wallet: string;
-  @Input() keys: any;
+  @Input() keys!: KeyManagerData[];
 
   /** Columns displayed in the table. Columns IDs can be added, removed, or reordered. */
   displayedColumns = ['key', 'privilege', 'actions'];

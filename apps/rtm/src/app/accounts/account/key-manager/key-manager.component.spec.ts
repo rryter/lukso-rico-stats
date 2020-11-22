@@ -38,7 +38,7 @@ describe('KeyManagerComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(KeyManagerComponent);
     component = fixture.componentInstance;
-    component.keyManagerContract = null;
+    component.keyManagerContract = undefined;
     fixture.detectChanges();
   });
 

@@ -7,11 +7,13 @@
     <lukso-overview-claims></lukso-overview-claims>
   </section>
   <section>
-    <lukso-progress [accountAddress]="accountAddress"></lukso-progress>
     <lukso-key-value-infos
       [accountContract]="accountContract"
       [keyManagerContract]="keyManagerContract"
     ></lukso-key-value-infos>
-    <lukso-key-manager [keyManagerContract]="keyManagerContract"></lukso-key-manager>
+    <lukso-key-manager
+      [keyManagerContract]="keyManagerContract"
+      [accountAddress]="accountAddress"
+    ></lukso-key-manager>
   </section>
 </main>

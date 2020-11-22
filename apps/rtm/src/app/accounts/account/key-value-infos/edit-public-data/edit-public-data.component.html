@@ -1,0 +1,49 @@
+<h1>Public Profile</h1>
+<p>
+  These properties are publicly visible to anyone. WIP: Later on you will be able to add your own
+  properties.
+</p>
+<br /><br /><br />
+<form [formGroup]="form" (submit)="save(form)">
+  <h2>Profile</h2>
+  <p>
+    <mat-form-field class="form-field" appearance="fill">
+      <mat-label>First Name</mat-label>
+      <input matInput formControlName="firstName" [attr.data-cy]="'edit-public-data__firstName'" />
+      <mat-error *ngIf="form.controls['firstName'].hasError('isRequired')">
+        ETH Address check failed
+      </mat-error>
+    </mat-form-field>
+  </p>
+  <p>
+    <mat-form-field class="form-field" appearance="fill">
+      <mat-label>Last Name</mat-label>
+      <input matInput formControlName="lastName" [attr.data-cy]="'edit-public-data__lastName'" />
+      <mat-error *ngIf="form.controls['lastName'].hasError('isRequired')">
+        ETH Address check failed
+      </mat-error>
+    </mat-form-field>
+  </p>
+  <p>
+    <mat-form-field class="form-field" appearance="fill">
+      <mat-label>Bio</mat-label>
+      <textarea matInput formControlName="bio" [attr.data-cy]="'edit-public-data__bio'"></textarea>
+      <mat-error *ngIf="form.controls['bio'].hasError('isRequired')">
+        ETH Address check failed
+      </mat-error>
+    </mat-form-field>
+  </p>
+
+  <br /><br />
+  <div>
+    <button
+      mat-raised-button
+      color="primary"
+      type="submit"
+      [attr.data-cy]="'edit-public-data__confirm'"
+    >
+      Save
+    </button>
+    <button mat-button style="margin-right: 10px" (click)="onNoClick()">Cancel</button>
+  </div>
+</form>

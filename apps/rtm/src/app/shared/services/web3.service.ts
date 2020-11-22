@@ -9,15 +9,15 @@ import { getProviderAndSigner } from './web3/web3.provider';
   providedIn: 'root',
 })
 export class Web3Service {
-  provider: JsonRpcProvider;
-  signer: Signer;
-  selectedAddress: string;
+  provider!: JsonRpcProvider;
+  signer!: Signer;
+  selectedAddress!: string;
 
   address$ = new ReplaySubject<string>(1);
   networkId$ = new ReplaySubject<number>(1);
   blocks$ = new ReplaySubject<number>(1);
 
-  reloadTrigger$: Observable<any>;
+  reloadTrigger$!: Observable<any>;
 
   constructor(private ngZone: NgZone) {}
 
@@ -34,7 +34,7 @@ export class Web3Service {
 
     this.initializeObservables();
     if (window.ethereum) {
-      window.ethereum.on('chainChanged', (_chainId) => window.location.reload());
+      window.ethereum.on('chainChanged', (_chainId: any) => window.location.reload());
     }
   }
 

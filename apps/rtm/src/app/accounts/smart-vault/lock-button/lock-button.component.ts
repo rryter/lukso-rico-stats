@@ -5,6 +5,6 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
   templateUrl: './lock-button.component.html',
 })
 export class LockButtonComponent {
-  @Input() hasPendingTransaction: boolean;
+  @Input() hasPendingTransaction = false;
   @Output() lockFunds = new EventEmitter();
 }

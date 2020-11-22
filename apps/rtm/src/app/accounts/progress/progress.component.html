@@ -1,24 +1,34 @@
 <ng-container *ngIf="accountStage === Stages.ProxyAccount">
-  <mat-card>
-    <h1>Level 1 - Proxy Account</h1>
-    <p>
-      Right now all you have is a plain and simple
-      <a href="https://github.com/ethereum/eips/issues/725" target="_blank">ERC275 </a> proxy
-      account.<br />
-      The <a href="https://github.com/ethereum/eips/issues/734" target="_blank">ERC734</a> key
-      manager standard allows for more complex management of an ERC725 proxy account.
-    </p>
-    <br />
-    <button
-      mat-raised-button
-      color="primary"
-      class="button is-warning"
-      (click)="deployKeyManager()"
-      [attr.data-cy]="'progress__make-account-managable'"
-    >
-      Make Account Managable
-    </button>
-  </mat-card>
+  <h1>Keymanager - ERC734</h1>
+  <p>
+    To fully benefit from the
+    <a href="https://github.com/ethereum/eips/issues/725" target="_blank">ERC275 </a> standard you
+    need to deploy an
+    <a href="https://github.com/ethereum/eips/issues/734" target="_blank">ERC734</a> smart contract.
+    For starters this allows you to grant and/or revoke access to your account via one or many
+    wallets.<br /><br />
+  </p>
+  <h2>Upgradable Security</h2>
+  <p>
+    The ERC-734 standard allows you to upgrade your security measurements in the future. Should the
+    need for a more secure account arise, you can simply replace the implementation of your
+    Keymanager.<br /><br />
+  </p>
+  <!-- <h2>Access Recovery (TBD)</h2>
+  <p>
+    In case you lost access to the wallet that has Management priviliges, you can initiate the
+    predefined recovery process.<br />
+  </p> -->
+
+  <button
+    mat-raised-button
+    color="primary"
+    class="button is-warning"
+    (click)="deployKeyManager()"
+    [attr.data-cy]="'progress__make-account-managable'"
+  >
+    Enable Access Management
+  </button>
   <br />
 
   <!-- <article class="message is-success" *ngIf="process.currentStage === Stages.KeyManager">

@@ -8,13 +8,11 @@ import { isETHAddressValidator } from '@shared/validators/web3-address.validator
 
 @Component({
   // tslint:disable-next-line: component-selector
-  selector: '[lukso-add-key]',
   templateUrl: './add-key.component.html',
   styleUrls: ['./add-key.component.scss'],
 })
 export class AddKeyComponent implements OnInit {
   newKeyForm: FormGroup;
-  address: string;
   selectablePrivileges = [
     {
       value: 1,

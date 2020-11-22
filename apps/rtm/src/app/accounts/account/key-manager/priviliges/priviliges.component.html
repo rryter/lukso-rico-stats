@@ -1,11 +1,10 @@
-<lukso-error-message [errorMessage]="keys.error"></lukso-error-message>
 <table
-  *ngIf="keys.keyManagerData?.length > 0"
+  *ngIf="keys?.length > 0"
   mat-table
   class="full-width-table"
   matSort
   aria-label="Elements"
-  [dataSource]="keys.keyManagerData"
+  [dataSource]="keys"
   [attr.data-cy]="'privileges__keys'"
 >
   <!-- Id Column -->
@@ -13,10 +12,6 @@
     <th mat-header-cell *matHeaderCellDef mat-sort-header>Address</th>
     <td mat-cell *matCellDef="let row">
       {{ row.address }}
-      <!-- <mat-chip-list aria-label="Current Wallet" *ngIf="row.isCurrentWallet">
-        <mat-chip><mat-icon>vpn_key</mat-icon>&nbsp;{{ row.address }}</mat-chip>
-        <mat-chip selected>Current Wallet</mat-chip>
-      </mat-chip-list> -->
     </td>
   </ng-container>
 

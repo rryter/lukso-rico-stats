@@ -12,7 +12,7 @@ import { ConfirmDialogInput } from '@shared/interface/dialog';
 export class AmountComponent implements OnInit {
   form: FormGroup;
 
-  wallet: number;
+  wallet = 0;
   percentage = 0;
 
   confirmLabel: string;
@@ -64,12 +64,12 @@ export class AmountComponent implements OnInit {
   }
 
   sliderMoved(percentage: MatSliderChange) {
-    this.percentage = percentage.value;
-    const value = (this.wallet / 100) * percentage.value;
+    this.percentage = percentage.value ? percentage.value : 0;
+    const value = (this.wallet / 100) * this.percentage;
     this.form.controls.amount.setValue(Math.floor(value * 10000) / 10000);
   }
 
-  valueChanged(value) {
+  valueChanged(value: number) {
     this.percentage = Math.round((value / 100) * this.wallet);
     this.form.controls.amount.setValue(value);
   }

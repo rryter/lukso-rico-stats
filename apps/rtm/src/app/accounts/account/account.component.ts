@@ -10,9 +10,9 @@ import { merge } from 'rxjs';
   styleUrls: ['./account.component.scss'],
 })
 export class AccountComponent implements OnInit {
-  keyManagerContract: ERC734KeyManager;
-  accountContract: ERC725Account;
-  accountAddress: string;
+  keyManagerContract: ERC734KeyManager | undefined;
+  accountContract: ERC725Account | undefined;
+  accountAddress: string | undefined;
   accountDetails$: any;
 
   constructor(
@@ -23,11 +23,22 @@ export class AccountComponent implements OnInit {
     this.route.params.subscribe(async (params) => {
       this.accountAddress = params.address;
       this.accountContract = this.proxyAccountService.getContract(params.address);
-      this.keyManagerContract = this.keyManagerService.getContract(
-        await this.accountContract.owner()
-      );
+      const ownerAddress = await this.accountContract.owner().catch(() => {
+        return null;
+      });
+      if (ownerAddress) {
+        this.keyManagerContract = this.keyManagerService.getContract(ownerAddress);
+      }
+
+      this.onOwnershipTransfered();
     });
   }
 
   ngOnInit(): void {}
+
+  onOwnershipTransfered() {
+    this.accountContract?.on('OwnershipTransferred', (signer, ownerAddress) => {
+      this.keyManagerContract = this.keyManagerService.getContract(ownerAddress);
+    });
+  }
 }

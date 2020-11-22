@@ -10,14 +10,14 @@ import { ethers, utils } from 'ethers';
   providedIn: 'root',
 })
 export class SmartVaultService {
-  isContractDeployed: boolean;
+  isContractDeployed = false;
   vault$: Observable<Vault>;
   transactions: { locking: boolean; withdrawing: boolean } = {
     locking: false,
     withdrawing: false,
   };
 
-  private contract: SmartVault;
+  private contract: SmartVault | undefined;
 
   constructor(private web3Service: Web3Service) {
     this.vault$ = this.web3Service.reloadTrigger$.pipe(
@@ -42,11 +42,11 @@ export class SmartVaultService {
   }
 
   private getIsLocked(): boolean {
-    return this.contract.methods.isLocked().call();
+    return this.contract?.methods.isLocked().call();
   }
 
   private getVaultBalance(): Promise<number> {
-    return this.contract.methods
+    return this.contract?.methods
       .getBalance()
       .call()
       .then((balance: number) => {
@@ -56,7 +56,7 @@ export class SmartVaultService {
 
   lockFunds(value: number) {
     this.transactions.locking = true;
-    return this.contract.methods
+    return this.contract?.methods
       .lockFunds()
       .send({
         from: this.web3Service.selectedAddress,
@@ -69,7 +69,7 @@ export class SmartVaultService {
 
   withdraw() {
     this.transactions.withdrawing = true;
-    return this.contract.methods
+    return this.contract?.methods
       .withdraw(0)
       .send({
         from: this.web3Service.selectedAddress,

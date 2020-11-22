@@ -10,7 +10,7 @@ export class LoadingIndicatorService {
 
   showLoadingIndicator(text: string, idendtifier?: string) {
     if (idendtifier) {
-      const a = {};
+      const a: { [key: string]: boolean } = {};
       a[idendtifier] = true;
     }
     this.loading$.next({ isLoading: true, text });

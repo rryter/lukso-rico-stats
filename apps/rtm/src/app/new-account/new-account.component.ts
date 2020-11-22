@@ -14,11 +14,17 @@ export class NewAccountComponent implements OnInit {
     private proxyAccountService: ProxyAccountService,
     private loadingIndicatorService: LoadingIndicatorService,
     private router: Router
-  ) {}
+  ) {
+    const accountsAsString = localStorage.getItem('accounts');
 
-  ngOnInit(): void {
-    this.accounts = JSON.parse(window.localStorage.getItem('accounts')) || [];
+    if (!accountsAsString) {
+      this.accounts = [] as Account[];
+    } else {
+      this.accounts = JSON.parse(accountsAsString);
+    }
   }
+
+  ngOnInit(): void {}
 
   deployProxyAccount() {
     this.loadingIndicatorService.showLoadingIndicator(

@@ -9,9 +9,9 @@ import { LoadingIndicatorService } from '@shared/services/loading-indicator.serv
 })
 export class LoadingComponent implements OnInit {
   loading$: Observable<{ isLoading: boolean; text?: string }>;
-  constructor(private loadingIndicatorService: LoadingIndicatorService) {}
-
-  ngOnInit(): void {
+  constructor(private loadingIndicatorService: LoadingIndicatorService) {
     this.loading$ = this.loadingIndicatorService.loading$;
   }
+
+  ngOnInit(): void {}
 }

@@ -9,7 +9,7 @@ import { ERC725Account } from '@twy-gmbh/erc725-playground';
   styleUrls: ['./overview.component.scss'],
 })
 export class OverviewComponent implements OnInit {
-  accountContract: ERC725Account;
+  accountContract: ERC725Account | undefined;
   constructor(private route: ActivatedRoute, private proxyAccountService: ProxyAccountService) {
     this.route.params.subscribe(async (params) => {
       this.accountContract = this.proxyAccountService.getContract(params.address);

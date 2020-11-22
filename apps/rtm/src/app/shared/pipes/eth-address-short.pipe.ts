@@ -9,6 +9,10 @@ export class EthAddressShortPipe implements PipeTransform {
       return value;
     }
     const match = value.match(/^(.{6})\s*(.*)(.{4})\s*$/);
-    return `${match[1]}...${match[3]}`;
+    if (match) {
+      return `${match[1]}...${match[3]}`;
+    } else {
+      return value;
+    }
   }
 }

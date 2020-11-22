@@ -36,8 +36,8 @@ export class WalletComponent implements OnInit {
   qrCode: any;
   loading = true;
 
-  proxyAccountContract: ERC725Account;
-  keyManagerContract: ERC734KeyManager;
+  proxyAccountContract: ERC725Account | undefined;
+  keyManagerContract: ERC734KeyManager | undefined;
 
   Stages = Stages;
 
@@ -45,8 +45,8 @@ export class WalletComponent implements OnInit {
     title: string;
     message: string;
   } = {
-    title: null,
-    message: null,
+    title: '',
+    message: '',
   };
 
   constructor(
@@ -57,10 +57,13 @@ export class WalletComponent implements OnInit {
     private route: ActivatedRoute,
     public dialog: MatDialog
   ) {
-    this.account$ = combineLatest([
-      this.route.params.pipe(pluck('address'), distinctUntilChanged(), filter(Boolean)),
-      this.web3Service.reloadTrigger$,
-    ]).pipe(
+    const address$ = this.route.params.pipe(
+      pluck('address'),
+      distinctUntilChanged(),
+      filter(Boolean)
+    ) as Observable<string>;
+
+    this.account$ = combineLatest([address$, this.web3Service.reloadTrigger$]).pipe(
       switchMap(([address]: [string, boolean]) => {
         this.proxyAccountContract = this.proxyAccountService.getContract(address);
         return combineLatest([this.proxyAccountContract.owner(), of(address)]).pipe(shareReplay(1));
@@ -94,13 +97,22 @@ export class WalletComponent implements OnInit {
   }
 
   private getAccountDetails(address: string): Observable<Account> {
-    const accounts = JSON.parse(localStorage.getItem('accounts')) as Account[];
+    const accountsAsString = localStorage.getItem('accounts');
+    let accounts: Account[];
+
+    if (!accountsAsString) {
+      accounts = [] as Account[];
+    } else {
+      accounts = JSON.parse(accountsAsString);
+    }
+    const stage = accounts.find((account) => account.address === address)?.stage;
+
     return forkJoin({
       address: of(address),
       balance: this.getBalance(address),
       isExecutable: this.getIsExecutor(),
       isManagable: this.getIsManager(),
-      stage: of(accounts.find((account) => account.address === address).stage),
+      stage: of(stage),
     }) as Observable<Account>;
   }
 
@@ -158,7 +170,7 @@ export class WalletComponent implements OnInit {
     });
   }
 
-  openWithdrawDialog(account) {
+  openWithdrawDialog(account: any) {
     this.dialog
       .open(AmountComponent, {
         data: {
@@ -174,6 +186,12 @@ export class WalletComponent implements OnInit {
   }
 
   private withDraw(dialogOutput: ConfirmDialogOutput) {
+    if (!this.proxyAccountContract) {
+      throw Error('proxyAccountContract is not set');
+    }
+    if (!this.keyManagerContract) {
+      throw Error('keyManagerContract is not set');
+    }
     if (dialogOutput?.value) {
       this.loadingIndicatorService.showLoadingIndicator(`Withdrawing ${dialogOutput.value} LYX`);
 

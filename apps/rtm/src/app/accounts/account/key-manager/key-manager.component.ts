@@ -1,10 +1,16 @@
-import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  Input,
+  OnChanges,
+  OnInit,
+  SimpleChanges,
+} from '@angular/core';
 import { Web3Service } from '@shared/services/web3.service';
-import { forkJoin, NEVER, Observable, of, ReplaySubject } from 'rxjs';
-import { catchError, map, shareReplay, switchMap } from 'rxjs/operators';
+import { combineLatest, forkJoin, Observable, of, ReplaySubject } from 'rxjs';
+import { catchError, filter, shareReplay, switchMap, tap } from 'rxjs/operators';
 import { Capabilities, KEY_TYPE } from '@shared/capabilities.enum';
 import { KeyManagerService } from '@shared/services/key-manager.service';
-import { environment } from '../../../../environments/environment';
 import { MatDialog } from '@angular/material/dialog';
 import { AddKeyComponent } from './add-key/add-key.component';
 import { bigNumbertoIntArray } from '@shared/utils/bigNumber';
@@ -24,17 +30,16 @@ export interface KeyManagerData {
   styleUrls: ['./key-manager.component.css'],
 })
 export class KeyManagerComponent implements OnInit, OnChanges {
-  loadKeys = new ReplaySubject();
+  loading = false;
+  showDeployButton = false;
+  private keyManagerContract$ = new ReplaySubject<ERC734KeyManager>();
 
-  keyManagerData$: Observable<{ keyManagerData: KeyManagerData[]; error: string }>;
-  isKeyManager$: Observable<boolean>;
-
-  isManageDropdownActive = false;
-  Capabilities = Capabilities;
-  environment = environment;
+  error: any;
+  keyManagerData$: Observable<KeyManagerData[]>;
 
   // ERC734KeyManager
-  @Input() keyManagerContract: any;
+  @Input() keyManagerContract: ERC734KeyManager | undefined;
+  @Input() accountAddress: string | undefined;
 
   constructor(
     public dialog: MatDialog,
@@ -42,32 +47,46 @@ export class KeyManagerComponent implements OnInit, OnChanges {
     private keyManagerService: KeyManagerService,
     private loadingIndicatorService: LoadingIndicatorService
   ) {
-    // this.loadKeys.next();
-    // this.keyManagerService.contract.on('KeyRemoved', () => {
-    //   this.loadKeys.next();
-    // });
-    // this.keyManagerService.contract.on('KeySet', () => {
-    //   this.loadKeys.next();
-    // });
-  }
+    this.error = null;
 
-  ngOnInit(): void {
-    this.keyManagerData$ = this.web3Service.reloadTrigger$.pipe(
+    this.keyManagerData$ = combineLatest([
+      this.web3Service.reloadTrigger$,
+      this.keyManagerContract$,
+    ]).pipe(
+      switchMap(([, keyManagerContract]) => this.isContractDeployed(keyManagerContract)),
+      filter(Boolean),
       switchMap(() => this.getAllKeys()),
       switchMap((keys: string[]) => this.getKeymanagerData$(keys)),
-      map((keyManagerData: KeyManagerData[]) => {
-        return { keyManagerData, error: undefined };
+      tap(() => {
+        this.loading = false;
       }),
-      shareReplay(1),
-      catchError((error) => {
-        return of({
-          keyManagerData: [],
-          error: error.message,
-        });
-      })
+      shareReplay(1)
     );
   }
-  ngOnChanges(changes: SimpleChanges): void {}
+
+  private isContractDeployed(
+    keyManagerContract: ERC734KeyManager
+  ): Promise<boolean | ERC734KeyManager> {
+    return keyManagerContract
+      .deployed()
+      .then((deployedContract) => {
+        this.showDeployButton = false;
+        this.error = null;
+        return deployedContract;
+      })
+      .catch((error: any) => {
+        this.error = error;
+        this.showDeployButton = true;
+        return false;
+      });
+  }
+
+  ngOnInit(): void {}
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes.keyManagerContract.currentValue) {
+      this.keyManagerContract$.next(changes.keyManagerContract.currentValue);
+    }
+  }
 
   openDialog(
     label: string,
@@ -84,7 +103,6 @@ export class KeyManagerComponent implements OnInit, OnChanges {
       position: {
         right: '0',
       },
-      direction: 'ltr',
     });
 
     dialogRef.afterClosed().subscribe((sendAddKey: Promise<ContractTransaction>) => {
@@ -100,22 +118,27 @@ export class KeyManagerComponent implements OnInit, OnChanges {
 
   addKey(keyKuprose: Capabilities[]) {
     this.loadingIndicatorService.showLoadingIndicator('asd');
-    this.keyManagerService.contract.setKey(this.getSelectedAddress(), keyKuprose, KEY_TYPE.ECDSA);
+    this.keyManagerContract?.setKey(this.getSelectedAddress(), keyKuprose, KEY_TYPE.ECDSA);
   }
 
-  getKeymanagerData$(keys: any[]) {
+  getKeymanagerData$(keys: string[]) {
     return forkJoin(
       keys.map((key) => {
         return this.getKey(key, keys);
+      })
+    ).pipe(
+      catchError((error) => {
+        console.error(error);
+        return of([]);
       })
     );
   }
 
   removeKey(key: { address: string; index: number }) {
     this.loadingIndicatorService.showLoadingIndicator('Removing Key');
-    this.keyManagerService.contract
+    this.keyManagerContract?.contract
       .removeKey(utils.keccak256(key.address), key.index)
-      .then((tx) => tx.wait())
+      .then((tx: ContractTransaction) => tx.wait())
       .finally(() => {
         this.loadingIndicatorService.doneLoading();
       });
@@ -125,8 +148,16 @@ export class KeyManagerComponent implements OnInit, OnChanges {
     this.openDialog('Update', { ...key });
   }
 
-  private getAllKeys(): Promise<any[]> {
-    return this.keyManagerContract.getAllKeys();
+  private getAllKeys(): Promise<string[]> {
+    this.loading = true;
+    if (!this.keyManagerContract) {
+      throw Error('this.keyManagerContract is not set');
+    }
+    return this.keyManagerContract.getAllKeys().catch((error: Error) => {
+      this.error = error;
+      console.error('Could not load keys: ', error);
+      return [];
+    });
   }
 
   private getKey(

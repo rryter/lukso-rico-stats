@@ -9,7 +9,7 @@ export class Erc725Component implements OnInit {
   constructor(private route: ActivatedRoute, private router: Router) {}
 
   ngOnInit() {
-    this.route.params.subscribe((params: { address: string }) => {
+    this.route.params.subscribe((params) => {
       if (params.address) {
         this.router.navigate(['accounts', params.address]);
       }

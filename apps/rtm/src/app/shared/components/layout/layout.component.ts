@@ -12,7 +12,7 @@ import { ProxyAccountService } from '@shared/services/proxy-account.service';
 })
 export class LayoutComponent implements OnInit, DoCheck {
   showWrongNetworkError$: Observable<{ showWarning: boolean }>;
-  accountAddress: string;
+  accountAddress: string | undefined;
   constructor(private web3Service: Web3Service, private proxyAccountService: ProxyAccountService) {
     this.showWrongNetworkError$ = this.web3Service.networkId$.pipe(
       map((networkId) => {

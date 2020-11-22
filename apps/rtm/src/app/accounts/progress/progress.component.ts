@@ -13,11 +13,11 @@ import { Account } from '@shared/interface/account';
 })
 export class ProgressComponent implements OnInit, OnChanges {
   Stages = Stages;
-  accounts: Account[] = JSON.parse(window.localStorage.getItem('accounts')) || [];
-  accountStage: number;
+  accounts: Account[] = [];
+  accountStage: number | undefined;
 
   @Input() wallet: any;
-  @Input() accountAddress: string;
+  @Input() accountAddress: string | undefined;
 
   constructor(
     private proxyAccountService: ProxyAccountService,
@@ -29,9 +29,17 @@ export class ProgressComponent implements OnInit, OnChanges {
   ngOnInit(): void {}
 
   ngOnChanges(changes: SimpleChanges): void {
-    this.accountStage = this.accounts.find((account) => {
-      return account.address === changes.accountAddress.currentValue;
-    }).stage;
+    const accountsAsString = localStorage.getItem('accounts');
+
+    if (!accountsAsString) {
+      this.accounts = [] as Account[];
+    } else {
+      this.accounts = JSON.parse(accountsAsString);
+    }
+
+    this.accountStage = this.accounts.find(
+      (account) => account.address === changes.accountAddress.currentValue
+    )?.stage;
   }
 
   deployKeyManager() {
@@ -45,17 +53,17 @@ export class ProgressComponent implements OnInit, OnChanges {
         this.loadingIndicatorService.doneLoading();
         this.setStage(this.accounts, Stages.KeyManager);
         this.loadingIndicatorService.showLoadingIndicator(`Transfer Ownership of Proxy Account`);
-        return this.proxyAccountService.contract.transferOwnership(contract.address);
+        return this.proxyAccountService.contract?.transferOwnership(contract.address);
       })
       .then((transaction) => {
-        return transaction.wait();
+        return transaction?.wait();
       })
       .finally(() => {
         this.loadingIndicatorService.doneLoading();
       });
   }
 
-  private setStage(accounts, stage: Stages) {
+  private setStage(accounts: Account[], stage: Stages) {
     accounts[0].stage = stage;
     window.localStorage.setItem('accounts', JSON.stringify(accounts));
     this.accountStage = stage;

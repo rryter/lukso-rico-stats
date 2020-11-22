@@ -19,6 +19,7 @@ import { OverviewClaimsComponent } from './overview/overview-claims/overview-cla
 import { OverviewAccountComponent } from './overview/overview-account/overview-account.component';
 import { AccountComponent } from './account/account.component';
 import { KeyValueInfosComponent } from './account/key-value-infos/key-value-infos.component';
+import { EditPublicDataComponent } from './account/key-value-infos/edit-public-data/edit-public-data..component';
 
 const routes: Routes = [
   {
@@ -49,6 +50,7 @@ const routes: Routes = [
     OverviewAccountComponent,
     AccountComponent,
     KeyValueInfosComponent,
+    EditPublicDataComponent,
   ],
   imports: [CommonModule, ReactiveFormsModule, RouterModule.forChild(routes), SharedModule],
 })

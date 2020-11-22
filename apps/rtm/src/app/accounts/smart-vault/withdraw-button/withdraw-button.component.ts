@@ -7,11 +7,11 @@ import { setDay, setHours, setSeconds, setMinutes } from 'date-fns/fp';
   templateUrl: './withdraw-button.component.html',
 })
 export class WithdrawButtonComponent implements OnInit {
-  @Input() hasPendingTransaction: boolean;
-  @Input() vaultLocked: boolean;
+  @Input() hasPendingTransaction!: boolean;
+  @Input() vaultLocked!: boolean;
   @Output() withdrawFunds = new EventEmitter();
 
-  timeUntilUnlockInWords: string;
+  timeUntilUnlockInWords!: string;
 
   ngOnInit(): void {
     this.timeUntilUnlockInWords = this.getNextUnlockTimeRelative();

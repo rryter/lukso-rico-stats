@@ -1,4 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { MatDialog } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
 import { MatTableModule } from '@angular/material/table';
 
@@ -11,6 +12,12 @@ describe('KeyValueInfosComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [KeyValueInfosComponent],
+      providers: [
+        {
+          provide: MatDialog,
+          useValue: {},
+        },
+      ],
       imports: [MatTableModule, MatIconModule],
     }).compileComponents();
   });

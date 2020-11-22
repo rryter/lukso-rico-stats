@@ -7,12 +7,13 @@ import { ethers } from 'ethers';
   providedIn: 'root',
 })
 export class ProxyAccountService {
-  contract: ERC725Account;
+  contract: ERC725Account | undefined;
 
   constructor(private web3Service: Web3Service) {}
 
   getContract(address: string) {
-    return new ERC725AccountFactory(this.web3Service.signer).attach(address);
+    this.contract = new ERC725AccountFactory(this.web3Service.signer).attach(address);
+    return this.contract;
   }
 
   async deployProxyAccount() {

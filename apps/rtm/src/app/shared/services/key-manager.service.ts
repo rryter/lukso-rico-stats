@@ -8,7 +8,7 @@ import { LoadingIndicatorService } from './loading-indicator.service';
   providedIn: 'root',
 })
 export class KeyManagerService {
-  contract: ERC734KeyManager;
+  contract!: ERC734KeyManager;
   isContractDeployed = false;
 
   constructor(private web3Service: Web3Service) {}

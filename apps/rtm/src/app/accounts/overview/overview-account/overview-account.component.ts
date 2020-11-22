@@ -11,7 +11,7 @@ import { BytesLike, utils } from 'ethers';
 })
 export class OverviewAccountComponent implements OnInit, OnChanges {
   @Input() accountContract: any;
-  @Input() hideText: false;
+  @Input() hideText = false;
 
   contractChanged$ = new Subject();
   accountDetails$: Observable<{ firstName: string; lastName: string; bio: string }>;
