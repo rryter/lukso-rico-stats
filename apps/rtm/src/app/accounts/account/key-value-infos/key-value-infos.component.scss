@@ -21,6 +21,12 @@ th {
   background: rgba(255, 255, 255, 0.3);
   padding: 50px;
   border-radius: 10px;
+
+  p {
+    span {
+      color: black;
+    }
+  }
 }
 
 button {

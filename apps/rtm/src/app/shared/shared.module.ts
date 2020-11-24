@@ -38,6 +38,8 @@ import { ErrorMessageComponent } from './components/error-message/error-message.
 import { ListCheckboxComponent } from './components/checkbox-list/list-checkbox.component';
 import { LayoutReducedComponent } from './components/layout/layout-reduced/layout-reduced.component';
 import { LoadingComponent } from './components/loading/loading.component';
+import { LoadingInlineComponent } from './components/loading-inline/loading-inline.component';
+import { PendingTransactionComponent } from './components/pending-transaction/pending-transaction.component';
 
 const materialModules = [
   MatTableModule,
@@ -79,6 +81,8 @@ const materialModules = [
     ListCheckboxComponent,
     LayoutReducedComponent,
     LoadingComponent,
+    LoadingInlineComponent,
+    PendingTransactionComponent,
   ],
   imports: [
     RouterModule,
@@ -103,7 +107,9 @@ const materialModules = [
     ErrorMessageComponent,
     ListCheckboxComponent,
     LoadingComponent,
+    LoadingInlineComponent,
     ...materialModules,
+    PendingTransactionComponent,
   ],
 })
 export class SharedModule {}

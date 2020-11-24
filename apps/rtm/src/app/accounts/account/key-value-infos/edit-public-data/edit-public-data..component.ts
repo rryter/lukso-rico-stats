@@ -36,9 +36,8 @@ export class EditPublicDataComponent implements OnInit {
   ngOnInit(): void {}
 
   save(form: FormGroup) {
-    console.log(form.value);
     if (form.valid) {
-      this.loadingIndicatorService.showLoadingIndicator('Saving...');
+      this.loadingIndicatorService.showLoadingIndicator('Saving Profile Data...');
       const keyValuePairs = Object.entries(form.value).map((data: [string, any]) => {
         return { key: utils.formatBytes32String(data[0]), value: utils.toUtf8Bytes(data[1]) };
       });

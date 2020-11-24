@@ -10,7 +10,7 @@ import { KeyManagerService } from '@shared/services/key-manager.service';
 import { LoadingIndicatorService } from '@shared/services/loading-indicator.service';
 import { ProxyAccountService } from '@shared/services/proxy-account.service';
 import { Stages } from '@shared/stages.enum';
-import { combineLatest, forkJoin, Observable, of, ReplaySubject, Subject } from 'rxjs';
+import { combineLatest, forkJoin, NEVER, Observable, of } from 'rxjs';
 import {
   catchError,
   distinctUntilChanged,
@@ -18,7 +18,6 @@ import {
   pluck,
   shareReplay,
   switchMap,
-  tap,
 } from 'rxjs/operators';
 import { utils } from 'ethers';
 import { ConfirmDialogOutput } from '@shared/interface/dialog';
@@ -66,7 +65,13 @@ export class WalletComponent implements OnInit {
     this.account$ = combineLatest([address$, this.web3Service.reloadTrigger$]).pipe(
       switchMap(([address]: [string, boolean]) => {
         this.proxyAccountContract = this.proxyAccountService.getContract(address);
-        return combineLatest([this.proxyAccountContract.owner(), of(address)]).pipe(shareReplay(1));
+        return combineLatest([this.proxyAccountContract.owner(), of(address)]).pipe(
+          shareReplay(1),
+          catchError((error) => {
+            console.warn('error', error);
+            return NEVER;
+          })
+        );
       }),
       switchMap(([owner, address]) => {
         this.keyManagerContract = this.keyManagerService.getContract(owner);
@@ -152,20 +157,14 @@ export class WalletComponent implements OnInit {
     });
     dialogRef.afterClosed().subscribe((dialogOutput: ConfirmDialogOutput) => {
       if (dialogOutput?.value) {
-        this.loadingIndicatorService.showLoadingIndicator(
-          `Topping up Account with ${dialogOutput.value} LYX`
-        );
-        this.web3Service.signer
-          .sendTransaction({
+        this.loadingIndicatorService.addPendingTransaction(
+          this.web3Service.signer.sendTransaction({
             to: account.address,
             value: utils.parseEther(dialogOutput.value),
-          })
-          .catch((error) => {
-            console.error(error);
-          })
-          .finally(() => {
-            this.loadingIndicatorService.doneLoading();
-          });
+          }),
+          'Topping up',
+          `Topping up Account with ${dialogOutput.value} LYX`
+        );
       }
     });
   }
@@ -193,23 +192,22 @@ export class WalletComponent implements OnInit {
       throw Error('keyManagerContract is not set');
     }
     if (dialogOutput?.value) {
-      this.loadingIndicatorService.showLoadingIndicator(`Withdrawing ${dialogOutput.value} LYX`);
-
+      console.log(utils.parseEther(dialogOutput.value));
+      console.log(this.web3Service.selectedAddress);
+      console.log(this.keyManagerContract.address);
+      console.log(this.proxyAccountContract.address);
       const abi = this.proxyAccountContract.interface.encodeFunctionData('execute', [
         '0',
-        this.web3Service.selectedAddress as string,
+        this.web3Service.selectedAddress,
         utils.parseEther(dialogOutput.value),
         '0x00',
       ]);
 
-      this.keyManagerContract
-        .execute(abi)
-        .catch((error) => {
-          console.error(error);
-        })
-        .finally(() => {
-          this.loadingIndicatorService.doneLoading();
-        });
+      this.loadingIndicatorService.addPendingTransaction(
+        this.keyManagerContract.execute(abi),
+        'Withdrawing',
+        `Withdrawing ${dialogOutput.value} LYX`
+      );
     }
   }
 

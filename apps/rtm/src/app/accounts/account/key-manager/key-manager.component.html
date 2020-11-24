@@ -1,8 +1,6 @@
-<h1>Manage Access</h1>
+<h1>Access</h1>
 <section>
-  <div *ngIf="!keyManagerContract || loading" class="loading">
-    <mat-spinner [diameter]="50"></mat-spinner>
-  </div>
+  <lukso-loading-inline [loading]="loading"></lukso-loading-inline>
 
   <lukso-progress *ngIf="showDeployButton" [accountAddress]="accountAddress"></lukso-progress>
   <ng-container *ngIf="!showDeployButton">

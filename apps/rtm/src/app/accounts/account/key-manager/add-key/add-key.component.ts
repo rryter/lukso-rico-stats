@@ -23,11 +23,11 @@ export class AddKeyComponent implements OnInit {
   ];
   constructor(
     public dialogRef: MatDialogRef<AddKeyComponent>,
-    private fb: FormBuilder,
     private keyManagerService: KeyManagerService,
     private loadingIndicatorService: LoadingIndicatorService,
     @Inject(MAT_DIALOG_DATA)
-    public data: { buttonLabel: string; address: string; privileges: number[] }
+    public data: { buttonLabel: string; address: string; privileges: number[] },
+    private fb: FormBuilder
   ) {
     this.data.privileges = this.data.privileges || [Capabilities.EXECUTION];
     this.newKeyForm = this.fb.group(
@@ -47,7 +47,7 @@ export class AddKeyComponent implements OnInit {
 
   saveNewKey(addKeyForm: FormGroup) {
     if (addKeyForm.valid) {
-      this.loadingIndicatorService.showLoadingIndicator('yay');
+      this.loadingIndicatorService.showLoadingIndicator(`Assigning selected privileges`);
       this.dialogRef.close(this.addKey(addKeyForm.value.address, addKeyForm.value.privileges));
     }
   }

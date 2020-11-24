@@ -1,6 +1,4 @@
-<div *ngIf="loading" class="loading" style="width: 360px">
-  <mat-spinner [diameter]="50"></mat-spinner>
-</div>
+<lukso-loading-inline [loading]="loading"></lukso-loading-inline>
 <ng-container *ngIf="account$ | async as account">
   <ng-container *ngIf="errorMessage.message">
     <h1 class="mat-display-1">{{ errorMessage?.title }}</h1>

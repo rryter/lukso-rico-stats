@@ -312,12 +312,19 @@ div.mat-dialog-content {
 }
 
 .loading {
+  position: absolute;
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+
   display: flex;
   justify-content: center;
   flex-direction: column;
-  background: rgba(255, 255, 255, 0.2);
+  background: rgba(0, 0, 0, 0.3);
   padding: 50px;
   border-radius: 10px;
+  z-index: 1000;
 }
 
 .error {

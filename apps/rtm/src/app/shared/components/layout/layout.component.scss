@@ -57,6 +57,9 @@ mat-toolbar {
 .user__selection {
   width: 90px;
   text-align: center;
+  &:hover {
+    cursor: pointer;
+  }
   img {
     margin-top: 25px;
     margin-bottom: 25;

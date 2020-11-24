@@ -1,5 +1,10 @@
 :host {
   display: block;
+  margin-bottom: 100px;
+}
+
+section {
+  position: relative;
 }
 
 .active {

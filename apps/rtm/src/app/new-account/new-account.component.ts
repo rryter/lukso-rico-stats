@@ -37,7 +37,7 @@ export class NewAccountComponent implements OnInit {
       .then((contract) => {
         this.accounts.push({ address: contract.address, stage: 2 });
         window.localStorage.setItem('accounts', JSON.stringify(this.accounts));
-        this.router.navigate(['accounts', contract.address]);
+        this.router.navigate(['accounts', contract.address, 'account']);
       })
       .finally(() => {
         this.loadingIndicatorService.doneLoading();

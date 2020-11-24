@@ -1,7 +1,9 @@
 :host {
+  position: relative;
   display: flex;
   height: 202px;
-  padding-bottom: 30px;
+  margin-bottom: 30px;
+  width: 100%;
 }
 
 mat-chip {
@@ -11,12 +13,17 @@ mat-chip {
 }
 
 mat-card {
+  box-sizing: border-box;
+  display: flex;
+  flex: 0 0 100%;
+  align-self: stretch;
   margin: 0;
 }
 
 .wrapper {
   display: flex;
-  flex-grow: 1;
+  flex: 0 0 100%;
+  align-self: stretch;
 }
 
 .wallet {

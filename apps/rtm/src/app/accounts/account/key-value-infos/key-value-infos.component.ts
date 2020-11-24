@@ -19,7 +19,7 @@ import { isContractDeployed } from '@shared/utils/contracts';
 @Component({
   selector: 'lukso-key-value-infos',
   templateUrl: './key-value-infos.component.html',
-  styleUrls: ['./key-value-infos.component.css'],
+  styleUrls: ['./key-value-infos.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class KeyValueInfosComponent implements OnInit, OnChanges {
@@ -57,7 +57,7 @@ export class KeyValueInfosComponent implements OnInit, OnChanges {
         });
       }),
       catchError((error) => {
-        console.error(error);
+        console.warn(error);
         return of({ firsName: '', lastName: '', bio: '', error });
       })
     );

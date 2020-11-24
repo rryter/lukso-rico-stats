@@ -141,7 +141,6 @@ export class ListCheckboxComponent implements OnChanges {
   }
 
   toggleAll(items: Item[], bool: boolean) {
-    console.log('toggleAll', items);
     this.checkboxes.setValue(
       items.map((item: Item) => {
         return { ...item, selected: bool };

@@ -1,5 +1,6 @@
 <ng-container *ngIf="showWrongNetworkError$ | async as warn">
   <div class="wrapper" *ngIf="warn.showWarning === false">
+    <lukso-pending-transaction></lukso-pending-transaction>
     <mat-toolbar>
       <img src="/assets/coaster-logo-white.png" class="coaster-logo" />
       <div>
@@ -46,9 +47,18 @@
           </button>
         </div>
 
-        <div class="user__selection">
-          <img src="/assets/portrait-placeholder.png" />
+        <div class="user__selection" [matMenuTriggerFor]="menu">
+          <img src="/assets/portrait-placeholder.png" matRipple />
         </div>
+        <mat-menu #menu="matMenu" xPosition="before" yPosition="below">
+          <button
+            *ngFor="let account of accounts; let i = index"
+            mat-menu-item
+            (click)="loadExistingAccount(i)"
+          >
+            {{ account?.address | ethAddressShort }}
+          </button>
+        </mat-menu>
       </div>
     </mat-toolbar>
     <div class="content">

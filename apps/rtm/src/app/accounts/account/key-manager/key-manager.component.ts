@@ -117,7 +117,7 @@ export class KeyManagerComponent implements OnInit, OnChanges {
   }
 
   addKey(keyKuprose: Capabilities[]) {
-    this.loadingIndicatorService.showLoadingIndicator('asd');
+    this.loadingIndicatorService.showLoadingIndicator('Adding Key...');
     this.keyManagerContract?.setKey(this.getSelectedAddress(), keyKuprose, KEY_TYPE.ECDSA);
   }
 
@@ -128,14 +128,14 @@ export class KeyManagerComponent implements OnInit, OnChanges {
       })
     ).pipe(
       catchError((error) => {
-        console.error(error);
+        console.warn(error);
         return of([]);
       })
     );
   }
 
   removeKey(key: { address: string; index: number }) {
-    this.loadingIndicatorService.showLoadingIndicator('Removing Key');
+    this.loadingIndicatorService.showLoadingIndicator('Removing Key...');
     this.keyManagerContract?.contract
       .removeKey(utils.keccak256(key.address), key.index)
       .then((tx: ContractTransaction) => tx.wait())

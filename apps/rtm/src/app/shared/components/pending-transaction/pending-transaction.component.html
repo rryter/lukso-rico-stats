@@ -1,0 +1,16 @@
+<!-- <button mat-button (click)="show = true" *ngIf="!show">Show</button>
+<button mat-button (click)="show = false" *ngIf="show">Hide</button> -->
+<div @slideInOut *ngIf="pendingTransactions.length > 0 || show">
+  <h2>Pending Transactions</h2>
+  <ul>
+    <li *ngFor="let pendingTransaction of pendingTransactions">
+      <mat-icon>receipt</mat-icon>
+      <span
+        ><strong>{{ pendingTransaction.type }}</strong>
+        {{ pendingTransaction.transaction.hash }}</span
+      >
+      <mat-spinner class="inline-spinner" [diameter]="20"></mat-spinner>
+    </li>
+    <li></li>
+  </ul>
+</div>
