@@ -22,7 +22,7 @@ import { Transaction } from 'ethers';
 })
 export class PendingTransactionComponent implements OnInit, DoCheck {
   pendingTransactions: PendingTransaction[] = [];
-  show: boolean = false;
+  show = false;
   constructor(private loadingIndicatorService: LoadingIndicatorService) {}
 
   ngOnInit(): void {}

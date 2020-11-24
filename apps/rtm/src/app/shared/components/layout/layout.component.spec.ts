@@ -11,6 +11,7 @@ import { CmcPricePipe } from '@shared/pipes/cmc-price.pipe';
 import { EthAddressShortPipe } from '@shared/pipes/eth-address-short.pipe';
 import { TimeAgoPipe } from '@shared/pipes/time-ago.pipe';
 import { LayoutComponent } from './layout.component';
+import { MatMenuModule } from '@angular/material/menu';
 
 describe('LayoutComponent', () => {
   let component: LayoutComponent;
@@ -25,6 +26,7 @@ describe('LayoutComponent', () => {
         MatIconModule,
         RouterTestingModule,
         MatListModule,
+        MatMenuModule,
         BrowserAnimationsModule,
       ],
       schemas: [NO_ERRORS_SCHEMA],

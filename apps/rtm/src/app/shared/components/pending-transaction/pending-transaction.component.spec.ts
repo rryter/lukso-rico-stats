@@ -1,4 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { MatIconModule } from '@angular/material/icon';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { LoadingIndicatorService } from '@shared/services/loading-indicator.service';
 
 import { PendingTransactionComponent } from './pending-transaction.component';
 
@@ -8,9 +11,17 @@ describe('PendingTransactionComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ PendingTransactionComponent ]
-    })
-    .compileComponents();
+      declarations: [PendingTransactionComponent],
+      providers: [
+        {
+          provide: LoadingIndicatorService,
+          useValue: {
+            pendingTransactions: [],
+          },
+        },
+      ],
+      imports: [MatIconModule, MatProgressSpinnerModule],
+    }).compileComponents();
   });
 
   beforeEach(() => {

@@ -1,4 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 import { LoadingInlineComponent } from './loading-inline.component';
 
@@ -8,9 +9,9 @@ describe('LoadingInlineComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ LoadingInlineComponent ]
-    })
-    .compileComponents();
+      declarations: [LoadingInlineComponent],
+      imports: [MatProgressSpinnerModule],
+    }).compileComponents();
   });
 
   beforeEach(() => {
