@@ -1,4 +1,6 @@
 ![CI](https://github.com/rryter/smart-vault/workflows/CI/badge.svg)
+[![ERC725 Demo](https://img.shields.io/endpoint?url=https://dashboard.cypress.io/badge/simple/28rxyz/master&style=flat&logo=cypress)](https://dashboard.cypress.io/projects/28rxyz/runs)
+[![codecov](https://codecov.io/gh/rryter/smart-vault/branch/master/graph/badge.svg?token=1ACJDKNX99)](https://codecov.io/gh/rryter/smart-vault)
 
 # ERC 725 and ERC 734 Demo
 

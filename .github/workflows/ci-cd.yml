@@ -2,7 +2,6 @@
 # For more information see: https://help.github.com/actions/language-and-framework-guides/using-nodejs-with-github-actions
 
 name: CI
-
 on:
   push:
     branches: [master]
@@ -38,6 +37,10 @@ jobs:
       - run: npm ci
       - run: npm run lint
       - run: npm run test:ci
+      - name: Upload Coverage ⛱️
+        uses: codecov/codecov-action@v1.0.15
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
   e2e:
     needs: [test]
     runs-on: ubuntu-latest
@@ -51,16 +54,20 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
       - run: npm ci
-      - run: npm run e2e:ci
-
-      - name: Archive Cypress Sceenshots
+      - name: Cypress E2E Tests 🛂
+        uses: cypress-io/github-action@v2.6.1
+        with:
+          command: npm run e2e:ci
+        env:
+          CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
+      - name: Archive Cypress Sceenshots 🖼️
         if: failure()
         uses: actions/upload-artifact@v2
         with:
           name: cypress-screenshots
           path: dist/cypress/apps/rtm-e2e/screenshots
 
-      - name: Archive Cypress Video
+      - name: Archive Cypress Video 🎥
         if: always()
         uses: actions/upload-artifact@v2
         with:
@@ -81,7 +88,7 @@ jobs:
           node-version: ${{ matrix.node-version }}
       - run: npm ci
       - run: npm run build -- --prod
-      - name: Deploy to Server
+      - name: Deploy to Server 🗄️
         uses: easingthemes/ssh-deploy@v2.1.5
         env:
           SSH_PRIVATE_KEY: ${{ secrets.SERVER_SSH_KEY }}
