@@ -15,6 +15,7 @@ import { EditPublicDataComponent } from './edit-public-data/edit-public-data..co
 import { LoadingIndicatorService } from '@shared/services/loading-indicator.service';
 import { Web3Service } from '@shared/services/web3.service';
 import { isContractDeployed } from '@shared/utils/contracts';
+import { PendingTransactionType } from '@shared/interface/transactions';
 
 @Component({
   selector: 'lukso-key-value-infos',
@@ -87,21 +88,22 @@ export class KeyValueInfosComponent implements OnInit, OnChanges {
       },
     });
 
-    dialogRef.afterClosed().subscribe((keyValuePairs: any) => {
-      return isContractDeployed(this.keyManagerContract as ERC734KeyManager)
-        .then((value: any) => {
-          if (value) {
-            const abi = this.accountContract.interface.encodeFunctionData('setDataWithArray', [
-              keyValuePairs,
-            ]);
-            return this.keyManagerContract.execute(abi);
-          } else {
-            return this.accountContract.setDataWithArray(keyValuePairs);
-          }
-        })
-        .finally(() => {
-          this.loadingIndicatorService.doneLoading();
-        });
+    dialogRef.afterClosed().subscribe((keyValuePairs: { key: string; value: string }[]) => {
+      const tx = isContractDeployed(this.keyManagerContract).then((deployedContract) => {
+        if (deployedContract) {
+          const abi = this.accountContract.interface.encodeFunctionData('setDataWithArray', [
+            keyValuePairs,
+          ]);
+          return this.keyManagerContract.execute(abi);
+        } else {
+          return this.accountContract.setDataWithArray(keyValuePairs);
+        }
+      });
+      this.loadingIndicatorService.addPendingTransaction(
+        tx,
+        PendingTransactionType.Profile,
+        'Update Profile: Please confirm the transaction...'
+      );
     });
   }
 }

@@ -1,13 +1,10 @@
-<h1>Public Profile</h1>
-<p>
-  These properties are publicly visible to anyone. WIP: Later on you will be able to add your own
-  properties.
-</p>
-<br /><br /><br />
+<h1>Profile</h1>
 <form [formGroup]="form" (submit)="save(form)">
-  <h2>Profile</h2>
   <p>
-    <mat-form-field class="form-field" appearance="fill">
+    <img src="/assets/portrait-placeholder.png" width="200" class="image-placeholder" />
+  </p>
+  <p>
+    <mat-form-field class="form-field" [floatLabel]="'always'">
       <mat-label>First Name</mat-label>
       <input matInput formControlName="firstName" [attr.data-cy]="'edit-public-data__firstName'" />
       <mat-error *ngIf="form.controls['firstName'].hasError('isRequired')">
@@ -16,7 +13,7 @@
     </mat-form-field>
   </p>
   <p>
-    <mat-form-field class="form-field" appearance="fill">
+    <mat-form-field class="form-field" [floatLabel]="'always'">
       <mat-label>Last Name</mat-label>
       <input matInput formControlName="lastName" [attr.data-cy]="'edit-public-data__lastName'" />
       <mat-error *ngIf="form.controls['lastName'].hasError('isRequired')">
@@ -25,7 +22,7 @@
     </mat-form-field>
   </p>
   <p>
-    <mat-form-field class="form-field" appearance="fill">
+    <mat-form-field class="form-field" [floatLabel]="'always'">
       <mat-label>Bio</mat-label>
       <textarea
         rows="3"

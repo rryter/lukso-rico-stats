@@ -9,7 +9,7 @@ import { Account } from '@shared/interface/account';
 @Component({
   selector: 'lukso-progress',
   templateUrl: './progress.component.html',
-  styleUrls: ['./progress.component.css'],
+  styleUrls: ['./progress.component.scss'],
 })
 export class ProgressComponent implements OnInit, OnChanges {
   Stages = Stages;
@@ -50,7 +50,7 @@ export class ProgressComponent implements OnInit, OnChanges {
     this.keyManagerService
       .deploy(this.accounts[0].address, this.web3Service.selectedAddress)
       .then((contract) => {
-        this.loadingIndicatorService.doneLoading();
+        this.loadingIndicatorService.hideBlockerBackdrop();
         this.setStage(this.accounts, Stages.KeyManager);
         this.loadingIndicatorService.showLoadingIndicator(`Transfer Ownership of Proxy Account`);
         return this.proxyAccountService.contract?.transferOwnership(contract.address);
@@ -59,7 +59,7 @@ export class ProgressComponent implements OnInit, OnChanges {
         return transaction?.wait();
       })
       .finally(() => {
-        this.loadingIndicatorService.doneLoading();
+        this.loadingIndicatorService.hideBlockerBackdrop();
       });
   }
 

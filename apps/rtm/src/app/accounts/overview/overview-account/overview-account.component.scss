@@ -1,3 +1,5 @@
+@import '/apps/rtm/src/style-mixins.scss';
+
 :host {
   display: block;
 }
@@ -10,7 +12,7 @@
   background-repeat: no-repeat;
   background-position: center center;
   background-size: cover;
-  border-radius: 10px;
+  @include corners;
   box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.2);
   margin-bottom: 30px;
   &.clickable:hover {
@@ -41,4 +43,8 @@
   flex-direction: column;
   justify-content: center;
   padding: 40px;
+
+  button {
+    height: 50px;
+  }
 }

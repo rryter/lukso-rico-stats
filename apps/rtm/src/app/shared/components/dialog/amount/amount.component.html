@@ -2,7 +2,7 @@
 
 <div mat-dialog-content [formGroup]="form">
   <p *ngIf="viewType === 'send'">
-    <mat-form-field class="form-field" appearance="fill">
+    <mat-form-field class="form-field" appearance="outline">
       <mat-label>Address</mat-label>
       <mat-icon matPrefix>vpn_key</mat-icon>
       <input matInput formControlName="address" />
@@ -10,7 +10,7 @@
   </p>
 
   <p>
-    <mat-form-field class="form-field" appearance="fill">
+    <mat-form-field class="form-field" appearance="outline">
       <mat-icon matPrefix>payments</mat-icon>
       <input
         matInput

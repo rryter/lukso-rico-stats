@@ -20,9 +20,9 @@ $fontConfig: (
   title: mat-typography-level(20px, 32px, 500, 'Montserrat', 0.0075em),
   subheading-2: mat-typography-level(16px, 28px, 400, 'Montserrat', 0.0094em),
   subheading-1: mat-typography-level(15px, 24px, 500, 'Montserrat', 0.0067em),
-  body-2: mat-typography-level(14px, 24px, 500, 'Montserrat', 0.0179em),
-  body-1: mat-typography-level(14px, 20px, 400, 'Montserrat', 0.0179em),
-  button: mat-typography-level(14px, 14px, 500, 'Montserrat', 0.0893em),
+  body-2: mat-typography-level(18px, 24px, 500, 'Montserrat', 0.0179em),
+  body-1: mat-typography-level(18px, 20px, 400, 'Montserrat', 0.0179em),
+  button: mat-typography-level(18px, 18px, 500, 'Montserrat', 0.0893em),
   caption: mat-typography-level(12px, 20px, 400, 'Montserrat', 0.0333em),
   input: mat-typography-level(inherit, 1.125, 400, 'Montserrat', 1.5px),
 );
@@ -231,16 +231,6 @@ $altTheme: mat-light-theme($theme-primary, $theme-accent, $theme-warn);
 
 // Specific component overrides, pieces that are not in line with the general theming
 
-// Handle buttons appropriately, with respect to line-height
-.mat-raised-button,
-.mat-stroked-button,
-.mat-flat-button {
-  padding: 0 1.15em;
-  margin: 0 0.65em;
-  min-width: 3em;
-  line-height: 36.4px;
-}
-
 .mat-standard-chip {
   padding: 0.5em 0.85em;
   min-height: 2.5em;
@@ -329,4 +319,10 @@ div.mat-dialog-content {
 
 .error {
   background: rgba(255, 0, 0, 0.3);
+}
+
+.mat-stroked-button,
+.mat-raised-button {
+  padding: 10px 20px !important;
+  margin-top: 30px;
 }

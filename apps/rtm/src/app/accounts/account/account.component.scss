@@ -1,3 +1,5 @@
+@import '/apps/rtm/src/style-mixins.scss';
+
 .grid-container {
   position: relative;
   display: grid;
@@ -6,8 +8,7 @@
 }
 
 .public-data {
-  border-radius: 10px;
-  padding: 20px;
-  background: rgba(255, 255, 255, 0.3);
+  @include corners;
+  @include paddedContent;
   margin-bottom: 40px;
 }

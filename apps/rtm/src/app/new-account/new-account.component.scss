@@ -13,6 +13,10 @@
 
 .image {
   grid-area: image;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0, 0, 0, 0.8);
 }
 
 .signup {
@@ -27,10 +31,9 @@
   height: 100vh;
 
   display: grid;
-  grid-template-columns: 1fr min-content 1fr;
+  grid-template-columns: minmax(50px, 1fr) min-content minmax(50px, 1fr);
   grid-template-rows: 100px 1fr min-content min-content min-content 1fr 100px;
   grid-template-areas:
-    '. . .'
     '. . .'
     '. . .'
     '. . .'
@@ -50,8 +53,9 @@
 }
 
 .coaster-logo {
-  position: relative;
-  top: -50px;
+  position: absolute;
+  top: 50px;
+  left: 50px;
   width: 200px;
   margin-bottom: 50px;
 }
@@ -104,4 +108,11 @@
   p {
     color: rgba(0, 0, 0, 0.5);
   }
+}
+
+footer {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  padding: 20px;
 }

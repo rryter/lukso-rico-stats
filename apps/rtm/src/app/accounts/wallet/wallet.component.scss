@@ -1,3 +1,5 @@
+@import '/apps/rtm/src/style-mixins.scss';
+
 :host {
   position: relative;
   display: flex;
@@ -44,14 +46,14 @@ mat-card {
     #89619e,
     #795397
   );
-  border-radius: 10px;
-  padding: 30px;
+  @include corners;
+  padding: 20px 30px;
   width: 70%;
   color: white !important;
 
-  span {
-    opacity: 0.5;
-  }
+  //   span {
+  //     opacity: 0.5;
+  //   }
   h2 {
     font-size: 14px;
   }
@@ -90,16 +92,24 @@ mat-card {
   right: 30px;
   bottom: 25px;
   text-align: center;
+  opacity: 0.4;
   &:hover {
+    opacity: 1;
     img {
       cursor: pointer;
     }
   }
 }
 
-// .actions {
-//   button {
-//     background: white;
-//     color: black;
-//   }
-// }
+.actions {
+  button {
+    background: rgba(255, 255, 255, 0.3);
+    border: none;
+    color: #342441;
+
+    &:hover {
+      color: black;
+      background: rgba(255, 255, 255, 0.9);
+    }
+  }
+}

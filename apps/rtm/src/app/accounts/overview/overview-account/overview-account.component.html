@@ -1,4 +1,4 @@
-<section class="account">
+<section class="account" *ngIf="accountDetails$ | async as accountDetails">
   <h1>Account</h1>
   <div
     [attr.data-cy]="'overview-account__go-to-account-detail'"
@@ -10,13 +10,13 @@
         url('/assets/portrait-placeholder.png');
     "
   >
-    <div *ngIf="!hideText && accountDetails$ | async as accountDetails" class="profile__details">
+    <div *ngIf="!hideText && accountDetails" class="profile__details">
       <h2>{{ accountDetails.firstName }} {{ accountDetails.lastName }}</h2>
       <p>{{ accountDetails.bio }}</p>
     </div>
 
-    <div *ngIf="!hideText" class="upload-instructions">
-      <button mat-raised-button color="primary">Edit Account Details</button>
-    </div>
+    <!-- <div *ngIf="!hideText" class="upload-instructions">
+      <button mat-raised-button color="primary">Edit Account <mat-icon>edit</mat-icon></button>
+    </div> -->
   </div>
 </section>

@@ -1,12 +1,11 @@
 <ng-container *ngIf="showWrongNetworkError$ | async as warn">
   <div class="wrapper" *ngIf="warn.showWarning === false">
-    <lukso-pending-transaction></lukso-pending-transaction>
     <mat-toolbar>
-      <img src="/assets/coaster-logo-white.png" class="coaster-logo" />
+      <img src="/assets/coaster-logo-white.png" class="coaster-logo" [routerLink]="'/'" />
       <div>
         <nav>
           <a class="nav-link" [routerLink]="[accountAddress]" [attr.data-cy]="'layout__nav__home'"
-            >All</a
+            >Overview</a
           >
           <a
             class="nav-link"
@@ -15,31 +14,15 @@
             >Account</a
           >
           <a
-            class="nav-link"
-            [routerLink]="[accountAddress, 'claims']"
-            [attr.data-cy]="'layout__nav__claims'"
-            >Claims</a
-          >
-          <a
-            class="nav-link"
+            class="nav-link nav-link--deactivated"
             [routerLink]="[accountAddress, 'wallet']"
             [attr.data-cy]="'layout__nav__wallet'"
             >Wallet</a
           >
-          <a
-            class="nav-link"
-            [routerLink]="[accountAddress, 'tokens']"
-            [attr.data-cy]="'layout__nav__tokens'"
-            >Tokens</a
-          >
-          <a
-            class="nav-link"
-            [routerLink]="['accounts', accountAddress, 'nfts']"
-            [attr.data-cy]="'layout__nav__nfts'"
-            >NFTs</a
-          >
         </nav>
       </div>
+      <div></div>
+      <!-- <lukso-pending-transaction></lukso-pending-transaction> -->
       <div class="user">
         <div class="user__notifications">
           <button mat-icon-button aria-label="Notifications">
@@ -48,7 +31,7 @@
         </div>
 
         <div class="user__selection" [matMenuTriggerFor]="menu">
-          <img src="/assets/portrait-placeholder.png" matRipple />
+          <img src="/assets/portrait-placeholder-small.jpg" matRipple />
         </div>
         <mat-menu #menu="matMenu" xPosition="before" yPosition="below">
           <button

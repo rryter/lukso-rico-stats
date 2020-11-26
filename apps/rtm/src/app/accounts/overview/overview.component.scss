@@ -1,3 +1,5 @@
+@import '/apps/rtm/src/style-mixins.scss';
+
 :host {
   display: block;
 }
@@ -25,7 +27,7 @@ h1 {
     display: block;
     height: 200px;
     background: white;
-    border-radius: 10px;
+    @include corners;
     padding: 20px 20px;
     line-height: 1.3;
   }

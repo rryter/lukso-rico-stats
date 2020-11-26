@@ -1,12 +1,8 @@
 <lukso-loading-inline [loading]="loading"></lukso-loading-inline>
 <ng-container *ngIf="account$ | async as account">
-  <ng-container *ngIf="errorMessage.message">
-    <h1 class="mat-display-1">{{ errorMessage?.title }}</h1>
-    <h2 class="mat-h2" [innerHTML]="errorMessage?.message"></h2>
-  </ng-container>
-
-  <div class="wrapper" *ngIf="!errorMessage.message && !loading">
+  <div class="wrapper" *ngIf="!loading">
     <mat-card class="wallet">
+      <lukso-pending-transaction [filter]="pendingTransactionsFilter"></lukso-pending-transaction>
       <mat-card-content>
         <div class="balances">
           <div class="balance balance--lyx" [attr.data-cy]="'wallet__value'">

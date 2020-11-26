@@ -22,6 +22,7 @@ import {
 import { utils } from 'ethers';
 import { ConfirmDialogOutput } from '@shared/interface/dialog';
 import { ERC725Account, ERC734KeyManager } from '@twy-gmbh/erc725-playground';
+import { PendingTransaction, PendingTransactionType } from '@shared/interface/transactions';
 
 @Component({
   selector: 'lukso-wallet',
@@ -37,16 +38,8 @@ export class WalletComponent implements OnInit {
 
   proxyAccountContract: ERC725Account | undefined;
   keyManagerContract: ERC734KeyManager | undefined;
-
+  pendingTransactionsFilter = PendingTransactionType.Wallet;
   Stages = Stages;
-
-  errorMessage: {
-    title: string;
-    message: string;
-  } = {
-    title: '',
-    message: '',
-  };
 
   constructor(
     private web3Service: Web3Service,
@@ -62,8 +55,12 @@ export class WalletComponent implements OnInit {
       filter(Boolean)
     ) as Observable<string>;
 
-    this.account$ = combineLatest([address$, this.web3Service.reloadTrigger$]).pipe(
-      switchMap(([address]: [string, boolean]) => {
+    this.account$ = combineLatest([
+      address$,
+      this.web3Service.reloadTrigger$,
+      this.loadingIndicatorService.pendingTransactions$,
+    ]).pipe(
+      switchMap(([address]: [string, boolean, PendingTransaction[]]) => {
         this.proxyAccountContract = this.proxyAccountService.getContract(address);
         return combineLatest([this.proxyAccountContract.owner(), of(address)]).pipe(
           shareReplay(1),
@@ -162,7 +159,7 @@ export class WalletComponent implements OnInit {
             to: account.address,
             value: utils.parseEther(dialogOutput.value),
           }),
-          'Topping up',
+          PendingTransactionType.Wallet,
           `Topping up Account with ${dialogOutput.value} LYX`
         );
       }
@@ -205,7 +202,7 @@ export class WalletComponent implements OnInit {
 
       this.loadingIndicatorService.addPendingTransaction(
         this.keyManagerContract.execute(abi),
-        'Withdrawing',
+        PendingTransactionType.Wallet,
         `Withdrawing ${dialogOutput.value} LYX`
       );
     }

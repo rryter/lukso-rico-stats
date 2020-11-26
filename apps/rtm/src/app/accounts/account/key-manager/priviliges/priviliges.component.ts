@@ -20,7 +20,7 @@ export interface PriviligesItem {
 @Component({
   selector: 'lukso-priviliges',
   templateUrl: './priviliges.component.html',
-  styleUrls: ['./priviliges.component.css'],
+  styleUrls: ['./priviliges.component.scss'],
 })
 export class PriviligesComponent implements OnChanges {
   @ViewChild(MatPaginator) paginator: MatPaginator | undefined;

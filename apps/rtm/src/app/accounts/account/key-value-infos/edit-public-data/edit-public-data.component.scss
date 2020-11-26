@@ -1,3 +1,5 @@
+@import '/apps/rtm/src/style-mixins.scss';
+
 :host {
   display: block;
   padding: 50px;
@@ -5,4 +7,21 @@
 
 .form-field {
   display: block;
+}
+
+img {
+  margin-bottom: 50px;
+}
+
+form {
+  width: 70%;
+}
+
+.image-placeholder {
+  @include corners;
+  box-shadow: 0 0 2px rgba(0, 0, 0, 0.1);
+}
+
+.mat-raised-button {
+  padding: 20px !important;
 }

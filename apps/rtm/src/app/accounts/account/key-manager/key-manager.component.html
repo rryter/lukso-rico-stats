@@ -11,14 +11,15 @@
       (showEditDialog)="onShowEditDialog($event)"
       [keys]="keyManagerData"
     ></lukso-priviliges>
-    <br />
-    <button
-      mat-raised-button
-      (click)="openDialog('Grant Access', {})"
-      [attr.data-cy]="'keymanager__add-key'"
-    >
-      <span>Grant Access</span>&nbsp;
-      <mat-icon>add_box</mat-icon>
-    </button>
+    <div class="button-container">
+      <button
+        mat-raised-button
+        (click)="openDialog('Grant Access', {})"
+        [attr.data-cy]="'keymanager__add-key'"
+      >
+        <span>Grant Access</span>&nbsp;
+        <mat-icon>add_box</mat-icon>
+      </button>
+    </div>
   </ng-container>
 </section>

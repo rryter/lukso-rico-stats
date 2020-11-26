@@ -1,15 +1,8 @@
-import {
-  ChangeDetectionStrategy,
-  Component,
-  Input,
-  OnChanges,
-  OnInit,
-  SimpleChanges,
-} from '@angular/core';
+import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { Web3Service } from '@shared/services/web3.service';
 import { combineLatest, forkJoin, Observable, of, ReplaySubject } from 'rxjs';
 import { catchError, filter, shareReplay, switchMap, tap } from 'rxjs/operators';
-import { Capabilities, KEY_TYPE } from '@shared/capabilities.enum';
+import { KEY_TYPE } from '@shared/capabilities.enum';
 import { KeyManagerService } from '@shared/services/key-manager.service';
 import { MatDialog } from '@angular/material/dialog';
 import { AddKeyComponent } from './add-key/add-key.component';
@@ -17,6 +10,7 @@ import { bigNumbertoIntArray } from '@shared/utils/bigNumber';
 import { ContractTransaction, utils } from 'ethers';
 import { LoadingIndicatorService } from '@shared/services/loading-indicator.service';
 import { ERC734KeyManager } from '@twy-gmbh/erc725-playground';
+import { PendingTransactionType } from '@shared/interface/transactions';
 
 export interface KeyManagerData {
   address: string;
@@ -27,7 +21,7 @@ export interface KeyManagerData {
 @Component({
   selector: 'lukso-key-manager',
   templateUrl: './key-manager.component.html',
-  styleUrls: ['./key-manager.component.css'],
+  styleUrls: ['./key-manager.component.scss'],
 })
 export class KeyManagerComponent implements OnInit, OnChanges {
   loading = false;
@@ -105,20 +99,14 @@ export class KeyManagerComponent implements OnInit, OnChanges {
       },
     });
 
-    dialogRef.afterClosed().subscribe((sendAddKey: Promise<ContractTransaction>) => {
-      sendAddKey
-        .then((transaction: ContractTransaction) => {
-          return transaction.wait();
-        })
-        .finally(() => {
-          this.loadingIndicatorService.doneLoading();
-        });
+    dialogRef.afterClosed().subscribe(({ address, privileges }) => {
+      console.log(address, privileges);
+      this.loadingIndicatorService.addPendingTransaction(
+        this.keyManagerService.contract.setKey(address, privileges, KEY_TYPE.ECDSA),
+        PendingTransactionType.KeyManager,
+        'Adding / Updating Key'
+      );
     });
-  }
-
-  addKey(keyKuprose: Capabilities[]) {
-    this.loadingIndicatorService.showLoadingIndicator('Adding Key...');
-    this.keyManagerContract?.setKey(this.getSelectedAddress(), keyKuprose, KEY_TYPE.ECDSA);
   }
 
   getKeymanagerData$(keys: string[]) {
@@ -140,7 +128,7 @@ export class KeyManagerComponent implements OnInit, OnChanges {
       .removeKey(utils.keccak256(key.address), key.index)
       .then((tx: ContractTransaction) => tx.wait())
       .finally(() => {
-        this.loadingIndicatorService.doneLoading();
+        this.loadingIndicatorService.hideBlockerBackdrop();
       });
   }
 
@@ -175,9 +163,5 @@ export class KeyManagerComponent implements OnInit, OnChanges {
         index: keys.indexOf(key),
       };
     });
-  }
-
-  private getSelectedAddress() {
-    return this.web3Service.selectedAddress;
   }
 }

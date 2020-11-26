@@ -1,0 +1,8 @@
+@mixin corners {
+  border-radius: 15px;
+}
+
+@mixin paddedContent {
+  background: rgba(255, 255, 255, 0.3);
+  padding: 40px;
+}

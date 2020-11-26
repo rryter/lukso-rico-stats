@@ -48,15 +48,11 @@ export class AddKeyComponent implements OnInit {
   saveNewKey(addKeyForm: FormGroup) {
     if (addKeyForm.valid) {
       this.loadingIndicatorService.showLoadingIndicator(`Assigning selected privileges`);
-      this.dialogRef.close(this.addKey(addKeyForm.value.address, addKeyForm.value.privileges));
+      this.dialogRef.close(addKeyForm.value);
     }
   }
 
   onNoClick(): void {
-    this.dialogRef.close();
-  }
-
-  private addKey(address: string, purpose: Capabilities[]) {
-    return this.keyManagerService.contract.setKey(address, purpose, KEY_TYPE.ECDSA);
+    this.dialogRef.close(null);
   }
 }

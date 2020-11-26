@@ -4,7 +4,7 @@
 <form [formGroup]="newKeyForm" (submit)="saveNewKey(newKeyForm)">
   <h2>Address</h2>
   <p>
-    <mat-form-field class="form-field" appearance="fill">
+    <mat-form-field class="form-field" appearance="outline">
       <mat-label>Public Key</mat-label>
       <input matInput formControlName="address" [attr.data-cy]="'add-key__address'" />
       <mat-error *ngIf="newKeyForm.controls['address'].hasError('isETHAddress')">
@@ -14,7 +14,7 @@
   </p>
 
   <!-- <p>
-    <mat-form-field class="form-field" appearance="fill">
+    <mat-form-field class="form-field" appearance="outline">
       <mat-label>Privilige</mat-label>
       <mat-icon matPrefix>security</mat-icon>
       <mat-select

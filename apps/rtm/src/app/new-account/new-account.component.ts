@@ -40,7 +40,7 @@ export class NewAccountComponent implements OnInit {
         this.router.navigate(['accounts', contract.address, 'account']);
       })
       .finally(() => {
-        this.loadingIndicatorService.doneLoading();
+        this.loadingIndicatorService.hideBlockerBackdrop();
       });
   }
 

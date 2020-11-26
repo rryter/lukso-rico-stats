@@ -40,6 +40,9 @@ import { LayoutReducedComponent } from './components/layout/layout-reduced/layou
 import { LoadingComponent } from './components/loading/loading.component';
 import { LoadingInlineComponent } from './components/loading-inline/loading-inline.component';
 import { PendingTransactionComponent } from './components/pending-transaction/pending-transaction.component';
+import { ImageCropperModule } from 'ngx-image-cropper';
+import { ImageCropperComponent } from './components/image-cropper/image-cropper.component';
+import { ImageCropperDialogComponent } from './components/dialog/image-cropper-dialog/image-cropper-dialog.component';
 
 const materialModules = [
   MatTableModule,
@@ -83,6 +86,8 @@ const materialModules = [
     LoadingComponent,
     LoadingInlineComponent,
     PendingTransactionComponent,
+    ImageCropperComponent,
+    ImageCropperDialogComponent,
   ],
   imports: [
     RouterModule,
@@ -94,6 +99,7 @@ const materialModules = [
     MatButtonModule,
     LayoutModule,
     ReactiveFormsModule,
+    ImageCropperModule,
     ...materialModules,
   ],
   exports: [
@@ -110,6 +116,7 @@ const materialModules = [
     LoadingInlineComponent,
     ...materialModules,
     PendingTransactionComponent,
+    ImageCropperComponent,
   ],
 })
 export class SharedModule {}

@@ -1,9 +1,15 @@
+@import '/apps/rtm/src/style-mixins.scss';
+
 :host {
   display: block;
 }
 
 .message {
   padding: 50px;
+}
+
+.content {
+  @include paddedContent;
 }
 
 .mat-card-header-text {

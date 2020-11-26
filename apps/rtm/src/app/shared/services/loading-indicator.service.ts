@@ -1,19 +1,14 @@
 import { Injectable } from '@angular/core';
 import { ContractTransaction, Transaction } from 'ethers';
-import { Subject } from 'rxjs';
-
-export interface PendingTransaction {
-  transaction: Transaction;
-  type: string;
-  text: string;
-}
+import { BehaviorSubject, ReplaySubject, Subject } from 'rxjs';
+import { PendingTransaction, PendingTransactionType } from '@shared/interface/transactions';
 
 @Injectable({
   providedIn: 'root',
 })
 export class LoadingIndicatorService {
   loading$ = new Subject<{ isLoading: boolean; text?: string }>();
-  pendingTransactions: PendingTransaction[] = [];
+  pendingTransactions$ = new BehaviorSubject<PendingTransaction[]>([]);
   constructor() {}
 
   showLoadingIndicator(text: string, idendtifier?: string) {
@@ -24,24 +19,25 @@ export class LoadingIndicatorService {
     this.loading$.next({ isLoading: true, text });
   }
 
-  doneLoading() {
+  hideBlockerBackdrop() {
     this.loading$.next({ isLoading: false });
   }
 
-  addPendingTransaction(transaction: Promise<ContractTransaction>, type: string, text: string) {
-    this.showLoadingIndicator(text);
+  addPendingTransaction(
+    transaction: Promise<ContractTransaction>,
+    type: PendingTransactionType,
+    action: string
+  ) {
+    this.showLoadingIndicator(action);
     transaction
       .then((tx) => {
-        this.pendingTransactions.push({ transaction: tx, type, text });
-        this.doneLoading();
+        this.pendingTransactions$.next([{ transaction: tx, type, action }]);
+        this.hideBlockerBackdrop();
         return tx.wait();
       })
-      .then((result) => {
-        this.pendingTransactions = this.pendingTransactions.filter(
-          (pendingTx: PendingTransaction) => {
-            return pendingTx.transaction.hash !== result.transactionHash;
-          }
-        );
+      .finally(() => {
+        this.pendingTransactions$.next([]);
+        this.hideBlockerBackdrop();
       });
   }
 }
