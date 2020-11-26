@@ -10,13 +10,13 @@ import { LoadingIndicatorService } from './shared/services/loading-indicator.ser
   styleUrls: ['./app.component.scss'],
 })
 export class AppComponent implements OnInit {
-  loading$: Observable<any> = of(true);
+  transactionInfo$: Observable<any> = of(true);
   constructor(
     private loadingIndicatorService: LoadingIndicatorService,
     private web3Service: Web3Service
   ) {
     this.web3Service.initialize();
-    this.loading$ = this.loadingIndicatorService.loading$;
+    this.transactionInfo$ = this.loadingIndicatorService.transactionInfo$;
   }
 
   ngOnInit(): void {}

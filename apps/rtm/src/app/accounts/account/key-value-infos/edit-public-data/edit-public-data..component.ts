@@ -37,7 +37,6 @@ export class EditPublicDataComponent implements OnInit {
 
   save(form: FormGroup) {
     if (form.valid) {
-      this.loadingIndicatorService.showLoadingIndicator('Saving Profile Data...');
       const keyValuePairs = Object.entries(form.value).map((data: [string, any]) => {
         return { key: utils.formatBytes32String(data[0]), value: utils.toUtf8Bytes(data[1]) };
       });

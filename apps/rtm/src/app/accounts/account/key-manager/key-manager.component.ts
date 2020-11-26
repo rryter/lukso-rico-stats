@@ -123,7 +123,18 @@ export class KeyManagerComponent implements OnInit, OnChanges {
   }
 
   removeKey(key: { address: string; index: number }) {
-    this.loadingIndicatorService.showLoadingIndicator('Removing Key...');
+    this.loadingIndicatorService.showTransactionInfo({
+      title: 'Remove Key',
+      to: {
+        type: 'keymanager',
+        address: this.keyManagerContract?.contract.address,
+      },
+      from: {
+        type: 'wallet',
+        address: this.web3Service.selectedAddress,
+      },
+      value: '0',
+    });
     this.keyManagerContract?.contract
       .removeKey(utils.keccak256(key.address), key.index)
       .then((tx: ContractTransaction) => tx.wait())

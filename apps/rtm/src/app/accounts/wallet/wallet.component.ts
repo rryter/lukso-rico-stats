@@ -152,15 +152,28 @@ export class WalletComponent implements OnInit {
         type: 'topup',
       },
     });
+
     dialogRef.afterClosed().subscribe((dialogOutput: ConfirmDialogOutput) => {
       if (dialogOutput?.value) {
+        this.loadingIndicatorService.showTransactionInfo({
+          title: 'Top Up',
+          to: {
+            type: 'account',
+            address: account.address,
+          },
+          from: {
+            type: 'wallet',
+            address: this.web3Service.selectedAddress,
+          },
+          value: dialogOutput?.value,
+        });
         this.loadingIndicatorService.addPendingTransaction(
           this.web3Service.signer.sendTransaction({
             to: account.address,
             value: utils.parseEther(dialogOutput.value),
           }),
           PendingTransactionType.Wallet,
-          `Topping up Account with ${dialogOutput.value} LYX`
+          `Topping up: ${dialogOutput.value} LYX`
         );
       }
     });
@@ -189,10 +202,19 @@ export class WalletComponent implements OnInit {
       throw Error('keyManagerContract is not set');
     }
     if (dialogOutput?.value) {
-      console.log(utils.parseEther(dialogOutput.value));
-      console.log(this.web3Service.selectedAddress);
-      console.log(this.keyManagerContract.address);
-      console.log(this.proxyAccountContract.address);
+      this.loadingIndicatorService.showTransactionInfo({
+        title: 'Withdraw',
+        to: {
+          type: 'wallet',
+          address: this.web3Service.selectedAddress + '2',
+        },
+        from: {
+          type: 'account',
+          address: this.proxyAccountContract.address,
+        },
+        value: dialogOutput?.value,
+      });
+
       const abi = this.proxyAccountContract.interface.encodeFunctionData('execute', [
         '0',
         this.web3Service.selectedAddress,

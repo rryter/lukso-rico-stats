@@ -27,10 +27,10 @@ export class NewAccountComponent implements OnInit {
   ngOnInit(): void {}
 
   deployProxyAccount() {
-    this.loadingIndicatorService.showLoadingIndicator(
-      `Creating Proxy Account`,
-      'create-proxy-account'
-    );
+    this.loadingIndicatorService.showTransactionInfo({
+      title: `Creating Proxy Account`,
+      value: '',
+    });
 
     this.proxyAccountService
       .deployProxyAccount()

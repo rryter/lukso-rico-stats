@@ -6,6 +6,19 @@ export interface PendingTransaction {
   action: string;
 }
 
+export interface TransactionInfo {
+  title: string;
+  from?: {
+    type: 'wallet' | 'account';
+    address: string;
+  };
+  to?: {
+    type: 'wallet' | 'account' | 'keymanager';
+    address: string;
+  };
+  value: string;
+}
+
 export const enum PendingTransactionType {
   'All',
   'Wallet',

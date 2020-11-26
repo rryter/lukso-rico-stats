@@ -1,0 +1,65 @@
+@import '/apps/rtm/src/style-mixins.scss';
+
+:host {
+  display: block;
+  color: black;
+}
+
+.loading-overlay {
+  position: absolute;
+  display: flex;
+  top: 0;
+  right: 0;
+  left: 0;
+  bottom: 0;
+  background: rgba(44, 44, 44, 0.8);
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+
+  > div {
+    @include paddedContent;
+    background: rgba(255, 255, 255, 0.8);
+    @include corners;
+  }
+}
+
+.card {
+  background: rgba(44, 44, 44, 0.6);
+  @include paddedContent(20px);
+  @include corners;
+  margin-bottom: 10px;
+}
+
+.label {
+  margin-bottom: 10px;
+  display: inline-block;
+  line-height: 30px;
+  span {
+    font-weight: bold;
+  }
+
+  mat-chip {
+    font-size: 14px;
+  }
+}
+.value {
+  padding: 10px 0;
+  margin: 0;
+  font-size: 30px;
+}
+.address {
+  color: rgba(44, 44, 44, 0.9);
+  font-size: 20px;
+}
+
+.account {
+  text-transform: capitalize;
+  color: rgb(19, 56, 19);
+  background-color: rgba(37, 133, 37, 0.555);
+}
+.wallet {
+  text-transform: capitalize;
+  color: rgb(0, 86, 247);
+  background-color: rgba(162, 189, 240, 0.7);
+}

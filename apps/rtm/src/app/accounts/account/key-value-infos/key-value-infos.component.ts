@@ -89,11 +89,23 @@ export class KeyValueInfosComponent implements OnInit, OnChanges {
     });
 
     dialogRef.afterClosed().subscribe((keyValuePairs: { key: string; value: string }[]) => {
+      if (!keyValuePairs) {
+        return '';
+      }
+      this.loadingIndicatorService.showTransactionInfo({
+        title: 'Save Profile',
+        to: {
+          type: 'account',
+          address: this.accountContract.address,
+        },
+        value: '',
+      });
       const tx = isContractDeployed(this.keyManagerContract).then((deployedContract) => {
         if (deployedContract) {
           const abi = this.accountContract.interface.encodeFunctionData('setDataWithArray', [
             keyValuePairs,
           ]);
+
           return this.keyManagerContract.execute(abi);
         } else {
           return this.accountContract.setDataWithArray(keyValuePairs);

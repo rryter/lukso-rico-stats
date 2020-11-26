@@ -47,7 +47,7 @@ export class AddKeyComponent implements OnInit {
 
   saveNewKey(addKeyForm: FormGroup) {
     if (addKeyForm.valid) {
-      this.loadingIndicatorService.showLoadingIndicator(`Assigning selected privileges`);
+      //   this.loadingIndicatorService.showTransactionInfo(`Assigning selected privileges`);
       this.dialogRef.close(addKeyForm.value);
     }
   }
