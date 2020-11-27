@@ -2,7 +2,7 @@
   border-radius: 15px;
 }
 
-@mixin paddedContent($radius: 40px) {
-  background: rgba(255, 255, 255, 0.3);
+@mixin paddedContent($radius: 40px, $bg: rgba(255, 255, 255, 0.3)) {
+  background: $bg;
   padding: $radius;
 }

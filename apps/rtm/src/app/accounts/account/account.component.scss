@@ -1,14 +1,41 @@
 @import '/apps/rtm/src/style-mixins.scss';
 
+:host {
+  display: block;
+}
+
 .grid-container {
   position: relative;
   display: grid;
-  grid-template-columns: minmax(200px, 200px) minmax(350px, 1fr);
+  grid-template-columns: minmax(200px, 1fr) minmax(350px, 1fr);
   gap: 40px;
+  height: 100vh;
 }
 
 .public-data {
   @include corners;
   @include paddedContent;
   margin-bottom: 40px;
+}
+
+$keymanager-padding: 100px;
+.keymanager {
+  display: grid;
+  padding-top: $keymanager-padding;
+  padding-bottom: $keymanager-padding;
+  grid-template-columns: $keymanager-padding 1fr $keymanager-padding;
+  > div {
+    grid-column: 2;
+  }
+}
+
+.account {
+  color: black;
+  background: white;
+  display: grid;
+  grid-template-columns: 20px 1fr 20px;
+  justify-content: center;
+}
+lukso-edit-public-data {
+  grid-column: 2;
 }

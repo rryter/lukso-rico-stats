@@ -42,7 +42,6 @@ export class LayoutComponent implements OnInit, DoCheck {
   }
 
   loadExistingAccount(index: number) {
-    console.log(index);
     this.router.navigate(['accounts', this.accounts[index]?.address]);
   }
 }

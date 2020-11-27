@@ -1,28 +1,17 @@
-import { Component, Inject, OnInit } from '@angular/core';
-import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { Capabilities, KEY_TYPE } from '@shared/capabilities.enum';
-import { KeyManagerService } from '@shared/services/key-manager.service';
-import { LoadingIndicatorService } from '@shared/services/loading-indicator.service';
-import { ProxyAccountService } from '@shared/services/proxy-account.service';
-import { isETHAddressValidator } from '@shared/validators/web3-address.validator';
-import { utils } from 'ethers';
-import { isContractDeployed } from '@shared/utils/contracts';
+import { EventEmitter } from '@angular/core';
+import { Component, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 @Component({
+  selector: 'lukso-edit-public-data',
   templateUrl: './edit-public-data.component.html',
   styleUrls: ['./edit-public-data.component.scss'],
 })
-export class EditPublicDataComponent implements OnInit {
+export class EditPublicDataComponent implements OnInit, OnChanges {
+  @Input() data: any;
+  @Output() saveing = new EventEmitter();
   form: FormGroup;
 
-  constructor(
-    public dialogRef: MatDialogRef<EditPublicDataComponent>,
-    private fb: FormBuilder,
-    private loadingIndicatorService: LoadingIndicatorService,
-    private accountService: ProxyAccountService,
-    @Inject(MAT_DIALOG_DATA)
-    public data: { firstName: string; lastName: string; bio: string }
-  ) {
+  constructor(private fb: FormBuilder) {
     this.form = this.fb.group(
       {
         firstName: [this.data?.firstName, [Validators.required]],
@@ -34,18 +23,17 @@ export class EditPublicDataComponent implements OnInit {
   }
 
   ngOnInit(): void {}
-
-  save(form: FormGroup) {
-    if (form.valid) {
-      const keyValuePairs = Object.entries(form.value).map((data: [string, any]) => {
-        return { key: utils.formatBytes32String(data[0]), value: utils.toUtf8Bytes(data[1]) };
-      });
-
-      this.dialogRef.close(keyValuePairs);
+  ngOnChanges(changes: SimpleChanges) {
+    if (changes.data.currentValue) {
+      this.form.setValue(changes.data.currentValue);
     }
   }
 
-  onNoClick(): void {
-    this.dialogRef.close();
+  submit(form: FormGroup) {
+    if (form.valid) {
+      this.saveing.emit(form);
+    }
   }
+
+  onNoClick(): void {}
 }

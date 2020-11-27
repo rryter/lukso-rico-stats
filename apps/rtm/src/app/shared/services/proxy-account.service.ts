@@ -16,6 +16,8 @@ export class ProxyAccountService {
     return this.contract;
   }
 
+  getDataStore() {}
+
   async deployProxyAccount() {
     const signer = this.web3Service.signer;
     this.contract = await new ERC725AccountFactory(signer).deploy(this.web3Service.selectedAddress);

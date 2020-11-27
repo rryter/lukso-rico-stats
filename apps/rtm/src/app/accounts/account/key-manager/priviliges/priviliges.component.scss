@@ -1,7 +1,10 @@
 @import '/apps/rtm/src/style-mixins.scss';
 
 :host {
-  display: block;
+  display: grid;
+  grid-template-columns: repeat(3, 300px);
+  grid-template-rows: 300px;
+  gap: 30px;
 }
 
 .full-width-table {
@@ -21,4 +24,52 @@
 
 mat-chip-list {
   display: inline-block;
+}
+
+mat-chip.mat-standard-chip {
+  background-color: #ec54a1;
+  color: white;
+  padding: 20px;
+  font-size: 16px;
+}
+
+.card {
+  box-sizing: border-box;
+  position: relative;
+  display: block;
+  overflow: hidden;
+  height: 300px;
+  @include paddedContent(20px);
+  @include corners;
+  background: white;
+}
+
+.card--add-key {
+  border: 2px dashed rgba(255, 255, 255, 0.4);
+  @include paddedContent(20px, transparent);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+  line-height: 1.6;
+
+  &:hover {
+    cursor: pointer;
+    background: rgba(255, 255, 255, 0.1);
+  }
+}
+
+h2 {
+  color: black;
+}
+
+mat-icon.background-icon {
+  position: absolute;
+  left: -100px;
+  top: -180px;
+  width: 300px;
+  height: 200px;
+  font-size: 500px;
+  color: rgba(128, 128, 128, 0.1);
 }

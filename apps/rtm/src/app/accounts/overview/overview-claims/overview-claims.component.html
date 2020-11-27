@@ -1,7 +1,16 @@
 <section class="claims">
   <h1>Claims</h1>
-  <mat-chip-list>
-    <mat-chip class="not-verified"><mat-icon>facebook</mat-icon>&nbsp;Has Facebook</mat-chip>
-    <mat-chip class="verified"><mat-icon>explicit</mat-icon>&nbsp;Is 18+ years old</mat-chip>
-  </mat-chip-list>
+  <ul>
+    <li class="card issuer issuer--facebook">
+      <span>Has Facebook</span>
+    </li>
+    <li class="card">
+      <mat-icon>explicit</mat-icon>
+      Is 18+ years old
+    </li>
+    <li class="card card--add-claim">
+      <mat-icon>add_circle_outline</mat-icon>
+      <span>Add New Claim</span>
+    </li>
+  </ul>
 </section>

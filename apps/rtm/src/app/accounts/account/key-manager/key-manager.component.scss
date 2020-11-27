@@ -19,8 +19,3 @@ section {
   justify-content: center;
   vertical-align: middle;
 }
-
-.button-container {
-  @include paddedContent;
-  @include corners;
-}

@@ -9,14 +9,14 @@ export interface PendingTransaction {
 export interface TransactionInfo {
   title: string;
   from?: {
-    type: 'wallet' | 'account';
+    type: 'wallet' | 'account' | 'keymanager' | 'owner';
     address: string;
   };
   to?: {
-    type: 'wallet' | 'account' | 'keymanager';
+    type: 'wallet' | 'account' | 'keymanager' | 'owner';
     address: string;
   };
-  value: string;
+  value?: string;
 }
 
 export const enum PendingTransactionType {

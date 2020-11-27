@@ -8,6 +8,7 @@ import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { LayoutComponent } from '@shared/components/layout/layout.component';
 import { LayoutReducedComponent } from '@shared/components/layout/layout-reduced/layout-reduced.component';
+import { ManagementGuard } from '@shared/guards/management.guard';
 
 @NgModule({
   declarations: [AppComponent],
@@ -19,13 +20,11 @@ import { LayoutReducedComponent } from '@shared/components/layout/layout-reduced
       [
         {
           path: '',
-          component: LayoutReducedComponent,
           loadChildren: () =>
             import('./new-account/new-account.module').then((m) => m.NewAccountModule),
         },
         {
           path: 'accounts',
-          component: LayoutComponent,
           loadChildren: () => import('./accounts/account.module').then((m) => m.AccountModule),
         },
       ],

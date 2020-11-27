@@ -15,6 +15,7 @@ export class AppComponent implements OnInit {
     private loadingIndicatorService: LoadingIndicatorService,
     private web3Service: Web3Service
   ) {
+    console.log('init app what not');
     this.web3Service.initialize();
     this.transactionInfo$ = this.loadingIndicatorService.transactionInfo$;
   }

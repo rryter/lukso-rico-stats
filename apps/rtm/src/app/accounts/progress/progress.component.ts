@@ -44,16 +44,11 @@ export class ProgressComponent implements OnInit, OnChanges {
 
   deployKeyManager() {
     this.loadingIndicatorService.showTransactionInfo({
-      title: 'Deploying ERC734 Key Manager',
-      to: {
-        type: 'wallet',
-        address: '???',
-      },
+      title: 'Deploy ERC-734 Keymanager',
       from: {
         type: 'wallet',
         address: this.web3Service.selectedAddress,
       },
-      value: '0',
     });
 
     this.keyManagerService
@@ -64,11 +59,11 @@ export class ProgressComponent implements OnInit, OnChanges {
         this.loadingIndicatorService.showTransactionInfo({
           title: 'Transfer Ownership of Proxy Account',
           to: {
-            type: 'wallet',
-            address: '???',
+            type: 'owner',
+            address: contract.address,
           },
           from: {
-            type: 'wallet',
+            type: 'owner',
             address: this.web3Service.selectedAddress,
           },
           value: '0',

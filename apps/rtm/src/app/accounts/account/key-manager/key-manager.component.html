@@ -1,25 +1,14 @@
 <h1>Access</h1>
 <section>
-  <lukso-loading-inline [loading]="loading"></lukso-loading-inline>
-
-  <lukso-progress *ngIf="showDeployButton" [accountAddress]="accountAddress"></lukso-progress>
-  <ng-container *ngIf="!showDeployButton">
+  <lukso-progress *ngIf="!keyManagerContract" [accountAddress]="accountAddress"></lukso-progress>
+  <ng-container *ngIf="keyManagerContract">
     <lukso-error-message [errorMessage]="error"></lukso-error-message>
-    <lukso-priviliges
-      *ngIf="keyManagerContract && keyManagerData$ | async as keyManagerData"
-      (removeKey)="removeKey($event)"
-      (showEditDialog)="onShowEditDialog($event)"
-      [keys]="keyManagerData"
-    ></lukso-priviliges>
-    <div class="button-container">
-      <button
-        mat-raised-button
-        (click)="openDialog('Grant Access', {})"
-        [attr.data-cy]="'keymanager__add-key'"
-      >
-        <span>Grant Access</span>&nbsp;
-        <mat-icon>add_box</mat-icon>
-      </button>
-    </div>
+    <ng-container *ngIf="keyManagerData$ | async as keyManagerData">
+      <lukso-priviliges
+        (removeKey)="removeKey($event)"
+        (showEditDialog)="onShowEditDialog($event)"
+        [keys]="keyManagerData"
+      ></lukso-priviliges>
+    </ng-container>
   </ng-container>
 </section>

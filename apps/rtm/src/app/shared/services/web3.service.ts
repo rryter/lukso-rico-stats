@@ -18,10 +18,16 @@ export class Web3Service {
   blocks$ = new ReplaySubject<number>(1);
 
   reloadTrigger$!: Observable<any>;
-
-  constructor(private ngZone: NgZone) {}
+  initialized = false;
+  constructor(private ngZone: NgZone) {
+    this.initialize();
+  }
 
   initialize() {
+    if (this.initialized) {
+      return;
+    }
+
     const providerAndSigner = getProviderAndSigner();
 
     if (providerAndSigner) {
@@ -29,13 +35,15 @@ export class Web3Service {
       this.provider = provider;
       this.signer = signer;
     } else {
-      window.alert('OMG');
+      window.alert('Please use Metamask.');
     }
 
     this.initializeObservables();
     if (window.ethereum) {
       window.ethereum.on('chainChanged', (_chainId: any) => window.location.reload());
     }
+
+    this.initialized = true;
   }
 
   public getBalance(address: string): Promise<number> {
@@ -57,16 +65,19 @@ export class Web3Service {
           this.address$.next(accounts[0]);
         });
       }
-
-      if (window.ethereum) {
-        window.ethereum.on('accountsChanged', (addresses: string[]) => {
-          this.ngZone.run(() => {
-            this.selectedAddress = addresses[0];
-            this.address$.next(addresses[0]);
-          });
-        });
-      }
     });
+
+    if (window.ethereum) {
+      console.log('whoooooooo');
+      window.ethereum.on('accountsChanged', (addresses: string[]) => {
+        console.log('whoooooooo1');
+        this.ngZone.run(() => {
+          console.log('whoooooooo2');
+          this.selectedAddress = addresses[0];
+          this.address$.next(addresses[0]);
+        });
+      });
+    }
 
     this.provider.getNetwork().then((network) => {
       this.networkId$.next(network.chainId);

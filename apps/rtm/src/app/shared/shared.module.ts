@@ -43,6 +43,7 @@ import { PendingTransactionComponent } from './components/pending-transaction/pe
 import { ImageCropperModule } from 'ngx-image-cropper';
 import { ImageCropperComponent } from './components/image-cropper/image-cropper.component';
 import { ImageCropperDialogComponent } from './components/dialog/image-cropper-dialog/image-cropper-dialog.component';
+import { ManagementGuard } from '@shared/guards/management.guard';
 
 const materialModules = [
   MatTableModule,
@@ -108,6 +109,7 @@ const materialModules = [
     CmcPricePipe,
     PrivilegePipe,
     LayoutComponent,
+    LayoutReducedComponent,
     ConfirmComponent,
     AmountComponent,
     ErrorMessageComponent,

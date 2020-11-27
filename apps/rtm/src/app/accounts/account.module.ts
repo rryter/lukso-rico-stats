@@ -20,6 +20,7 @@ import { OverviewAccountComponent } from './overview/overview-account/overview-a
 import { AccountComponent } from './account/account.component';
 import { KeyValueInfosComponent } from './account/key-value-infos/key-value-infos.component';
 import { EditPublicDataComponent } from './account/key-value-infos/edit-public-data/edit-public-data..component';
+import { ManagementGuard } from '@shared/guards/management.guard';
 
 const routes: Routes = [
   {
@@ -29,6 +30,7 @@ const routes: Routes = [
   {
     path: ':address/account',
     component: AccountComponent,
+    canActivate: [ManagementGuard],
   },
 ];
 

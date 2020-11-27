@@ -11,6 +11,7 @@ import { ContractTransaction, utils } from 'ethers';
 import { LoadingIndicatorService } from '@shared/services/loading-indicator.service';
 import { ERC734KeyManager } from '@twy-gmbh/erc725-playground';
 import { PendingTransactionType } from '@shared/interface/transactions';
+import { isContractDeployed } from '@shared/utils/contracts';
 
 export interface KeyManagerData {
   address: string;
@@ -42,13 +43,10 @@ export class KeyManagerComponent implements OnInit, OnChanges {
     private loadingIndicatorService: LoadingIndicatorService
   ) {
     this.error = null;
-
     this.keyManagerData$ = combineLatest([
       this.web3Service.reloadTrigger$,
       this.keyManagerContract$,
     ]).pipe(
-      switchMap(([, keyManagerContract]) => this.isContractDeployed(keyManagerContract)),
-      filter(Boolean),
       switchMap(() => this.getAllKeys()),
       switchMap((keys: string[]) => this.getKeymanagerData$(keys)),
       tap(() => {
@@ -56,23 +54,6 @@ export class KeyManagerComponent implements OnInit, OnChanges {
       }),
       shareReplay(1)
     );
-  }
-
-  private isContractDeployed(
-    keyManagerContract: ERC734KeyManager
-  ): Promise<boolean | ERC734KeyManager> {
-    return keyManagerContract
-      .deployed()
-      .then((deployedContract) => {
-        this.showDeployButton = false;
-        this.error = null;
-        return deployedContract;
-      })
-      .catch((error: any) => {
-        this.error = error;
-        this.showDeployButton = true;
-        return false;
-      });
   }
 
   ngOnInit(): void {}
@@ -100,7 +81,6 @@ export class KeyManagerComponent implements OnInit, OnChanges {
     });
 
     dialogRef.afterClosed().subscribe(({ address, privileges }) => {
-      console.log(address, privileges);
       this.loadingIndicatorService.addPendingTransaction(
         this.keyManagerService.contract.setKey(address, privileges, KEY_TYPE.ECDSA),
         PendingTransactionType.KeyManager,

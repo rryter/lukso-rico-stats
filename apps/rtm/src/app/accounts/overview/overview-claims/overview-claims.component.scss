@@ -1,4 +1,67 @@
+@import '/apps/rtm/src/style-mixins.scss';
+
 :host {
   display: block;
-  opacity: 0.1;
+}
+
+ul {
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(3, 200px);
+  grid-template-rows: 300px;
+  gap: 30px;
+}
+
+li {
+  display: block;
+  list-style: none;
+}
+
+.card {
+  color: black;
+  box-sizing: border-box;
+  @include corners;
+  @include paddedContent(20px);
+  background: white;
+}
+
+mat-chip {
+  padding: 20px;
+}
+
+.card--add-claim {
+  border: 2px dashed rgba(255, 255, 255, 0.4);
+  @include paddedContent(20px, transparent);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+  line-height: 1.6;
+  color: white;
+  &:hover {
+    cursor: pointer;
+    background: rgba(255, 255, 255, 0.1);
+  }
+}
+
+.issuer {
+}
+.issuer--facebook {
+  position: relative;
+  &::before {
+    content: '';
+    background-size: 150%;
+    background-position: -40px 40px;
+    background-repeat: no-repeat;
+    background-image: url('/assets/claims/facebook.png');
+    position: absolute;
+    top: 0px;
+    right: 0px;
+    bottom: 0px;
+    left: 0px;
+    opacity: 0.2;
+    @include corners;
+  }
 }

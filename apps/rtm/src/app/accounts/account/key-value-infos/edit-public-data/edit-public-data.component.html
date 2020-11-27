@@ -1,5 +1,5 @@
 <h1>Profile</h1>
-<form [formGroup]="form" (submit)="save(form)">
+<form [formGroup]="form" (submit)="submit(form)">
   <p>
     <img src="/assets/portrait-placeholder.png" width="200" class="image-placeholder" />
   </p>
@@ -49,6 +49,7 @@
     >
       Save
     </button>
-    <button mat-button style="margin-right: 10px" (click)="onNoClick()">Cancel</button>
+    &nbsp;
+    <button mat-raised-button style="margin-right: 10px" (click)="onNoClick()">Cancel</button>
   </div>
 </form>

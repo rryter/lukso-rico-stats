@@ -1,44 +1,87 @@
 import { Component, OnInit } from '@angular/core';
+import { FormGroup } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
-import { KeyManagerService } from '@shared/services/key-manager.service';
-import { ProxyAccountService } from '@shared/services/proxy-account.service';
+import { PendingTransactionType } from '@shared/interface/transactions';
+import { ContractService } from '@shared/services/contract.service';
+import { LoadingIndicatorService } from '@shared/services/loading-indicator.service';
 import { ERC725Account, ERC734KeyManager } from '@twy-gmbh/erc725-playground';
-import { merge } from 'rxjs';
+import { utils } from 'ethers';
+import { Observable, Subject } from 'rxjs';
+import { switchMap, map, shareReplay, withLatestFrom } from 'rxjs/operators';
 
 @Component({
   templateUrl: './account.component.html',
   styleUrls: ['./account.component.scss'],
 })
 export class AccountComponent implements OnInit {
-  keyManagerContract: ERC734KeyManager | undefined;
-  accountContract: ERC725Account | undefined;
-  accountAddress: string | undefined;
-  accountDetails$: any;
-
+  accountContract$: Observable<ERC725Account>;
+  keyManagerContract$: Observable<ERC734KeyManager | null>;
+  accountData$: Observable<any>;
+  saveTrigger$ = new Subject<
+    {
+      key: string;
+      value: Uint8Array;
+    }[]
+  >();
   constructor(
     private route: ActivatedRoute,
-    private keyManagerService: KeyManagerService,
-    private proxyAccountService: ProxyAccountService
+    private loadingIndicatorService: LoadingIndicatorService,
+    private contractService: ContractService
   ) {
-    this.route.params.subscribe(async (params) => {
-      this.accountAddress = params.address;
-      this.accountContract = this.proxyAccountService.getContract(params.address);
-      const ownerAddress = await this.accountContract.owner().catch(() => {
-        return null;
-      });
-      if (ownerAddress) {
-        this.keyManagerContract = this.keyManagerService.getContract(ownerAddress);
-      }
+    this.accountContract$ = this.route.params.pipe(
+      map((params) => this.contractService.getAccountContract(params.address)),
+      shareReplay(1)
+    );
 
-      this.onOwnershipTransfered();
-    });
+    this.keyManagerContract$ = this.accountContract$.pipe(
+      switchMap((accountContract) => this.contractService.getKeyManagerContract(accountContract))
+    );
+
+    this.accountData$ = this.accountContract$.pipe(
+      switchMap((accountContract) => this.contractService.getAccountDataStore(accountContract))
+    );
   }
 
-  ngOnInit(): void {}
-
-  onOwnershipTransfered() {
-    this.accountContract?.on('OwnershipTransferred', (signer, ownerAddress) => {
-      this.keyManagerContract = this.keyManagerService.getContract(ownerAddress);
-    });
+  ngOnInit() {
+    this.saveTrigger$
+      .pipe(withLatestFrom(this.accountContract$, this.keyManagerContract$))
+      .subscribe(this.updateProfile);
   }
+
+  onSave(form: FormGroup) {
+    const keyValuePairs = Object.entries(form.value).map((data: [string, any]) => {
+      return { key: utils.formatBytes32String(data[0]), value: utils.toUtf8Bytes(data[1]) };
+    });
+
+    this.saveTrigger$.next(keyValuePairs);
+  }
+
+  private updateProfile = ([keyValuePairs, accountContract, keyManagerContract]: [
+    any,
+    ERC725Account,
+    ERC734KeyManager | null
+  ]) => {
+    this.loadingIndicatorService.showTransactionInfo({
+      title: 'Save Profile',
+      to: {
+        type: 'account',
+        address: accountContract.address,
+      },
+      value: '',
+    });
+
+    let tx;
+    if (keyManagerContract) {
+      tx = keyManagerContract.execute(
+        accountContract.interface.encodeFunctionData('setDataWithArray', [keyValuePairs])
+      );
+    } else {
+      tx = accountContract.setDataWithArray(keyValuePairs);
+    }
+    this.loadingIndicatorService.addPendingTransaction(
+      tx,
+      PendingTransactionType.Profile,
+      'Update Profile: Please confirm the transaction...'
+    );
+  };
 }
