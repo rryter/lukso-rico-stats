@@ -13,25 +13,9 @@
     </mat-form-field>
   </p>
 
-  <!-- <p>
-    <mat-form-field class="form-field" appearance="outline">
-      <mat-label>Privilige</mat-label>
-      <mat-icon matPrefix>security</mat-icon>
-      <mat-select
-        formControlName="privileges"
-        [multiple]="true"
-        [attr.data-cy]="'add-key__privileges'"
-      >
-        <mat-option [value]="2">Execution </mat-option>
-        <mat-option [value]="1">Management</mat-option>
-      </mat-select>
-    </mat-form-field>
-  </p> -->
-
   <h2>Privileges</h2>
   <lukso-checkbox-list
     *ngIf="selectablePrivileges"
-    label=""
     [items]="selectablePrivileges"
     [selected]="data.privileges"
     (selectionChanged)="onPrivilegesChanged($event)"
@@ -46,6 +30,8 @@
     <button mat-raised-button color="primary" type="submit" [attr.data-cy]="'add-key__confirm'">
       {{ data.buttonLabel }}
     </button>
-    <button mat-button style="margin-right: 10px" (click)="onNoClick()">Cancel</button>
+    <button mat-raised-button style="margin-right: 10px" type="button" (click)="onNoClick()">
+      Cancel
+    </button>
   </div>
 </form>

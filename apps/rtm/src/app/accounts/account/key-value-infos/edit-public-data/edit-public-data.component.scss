@@ -4,9 +4,12 @@
   display: block;
   padding: 50px;
 }
-
 .form-field {
   display: block;
+}
+
+h1 {
+  font-weight: bold;
 }
 
 img {
@@ -18,10 +21,20 @@ form {
 }
 
 .image-placeholder {
+  width: 300px;
+  height: 400px;
+  overflow: hidden;
+  max-width: 400px;
+  max-height: 600px;
   @include corners;
   box-shadow: 0 0 2px rgba(0, 0, 0, 0.1);
+  margin-bottom: 40px;
 }
 
 .mat-raised-button {
-  padding: 20px !important;
+  padding: 10px 30px !important;
+}
+
+img {
+  max-width: 100%;
 }

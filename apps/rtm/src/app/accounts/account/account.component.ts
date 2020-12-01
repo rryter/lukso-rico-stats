@@ -7,7 +7,7 @@ import { LoadingIndicatorService } from '@shared/services/loading-indicator.serv
 import { ERC725Account, ERC734KeyManager } from '@twy-gmbh/erc725-playground';
 import { utils } from 'ethers';
 import { Observable, Subject } from 'rxjs';
-import { switchMap, map, shareReplay, withLatestFrom } from 'rxjs/operators';
+import { switchMap, map, shareReplay, withLatestFrom, tap } from 'rxjs/operators';
 
 @Component({
   templateUrl: './account.component.html',
@@ -15,7 +15,7 @@ import { switchMap, map, shareReplay, withLatestFrom } from 'rxjs/operators';
 })
 export class AccountComponent implements OnInit {
   accountContract$: Observable<ERC725Account>;
-  keyManagerContract$: Observable<ERC734KeyManager | null>;
+  keyManagerContract$: Observable<ERC734KeyManager>;
   accountData$: Observable<any>;
   saveTrigger$ = new Subject<
     {
@@ -34,7 +34,10 @@ export class AccountComponent implements OnInit {
     );
 
     this.keyManagerContract$ = this.accountContract$.pipe(
-      switchMap((accountContract) => this.contractService.getKeyManagerContract(accountContract))
+      switchMap((accountContract) => this.contractService.getKeyManagerContract(accountContract)),
+      tap((asd) => {
+        console.log(asd);
+      })
     );
 
     this.accountData$ = this.accountContract$.pipe(
@@ -59,7 +62,7 @@ export class AccountComponent implements OnInit {
   private updateProfile = ([keyValuePairs, accountContract, keyManagerContract]: [
     any,
     ERC725Account,
-    ERC734KeyManager | null
+    ERC734KeyManager | undefined
   ]) => {
     this.loadingIndicatorService.showTransactionInfo({
       title: 'Save Profile',

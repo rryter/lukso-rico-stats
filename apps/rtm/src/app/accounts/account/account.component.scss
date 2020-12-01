@@ -7,7 +7,7 @@
 .grid-container {
   position: relative;
   display: grid;
-  grid-template-columns: minmax(200px, 1fr) minmax(350px, 1fr);
+  grid-template-columns: minmax(200px, 1fr) minmax(350px, 1.5fr);
   gap: 40px;
   height: 100vh;
 }
@@ -18,12 +18,12 @@
   margin-bottom: 40px;
 }
 
-$keymanager-padding: 100px;
+$keymanager-padding: 50px;
 .keymanager {
   display: grid;
   padding-top: $keymanager-padding;
   padding-bottom: $keymanager-padding;
-  grid-template-columns: $keymanager-padding 1fr $keymanager-padding;
+  grid-template-columns: minmax(20px, $keymanager-padding) 1fr minmax(20px, $keymanager-padding);
   > div {
     grid-column: 2;
   }

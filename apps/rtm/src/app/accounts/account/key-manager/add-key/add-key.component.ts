@@ -53,6 +53,7 @@ export class AddKeyComponent implements OnInit {
   }
 
   onNoClick(): void {
+    console.log('ASDSDASDASDASD');
     this.dialogRef.close(null);
   }
 }

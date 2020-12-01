@@ -37,7 +37,7 @@ export class ContractService {
     return accountContract.owner().then((owner) => {
       return (isContractDeployed(
         this.keyManagerService.getContract(owner)
-      ) as unknown) as ERC734KeyManager | null;
+      ) as unknown) as ERC734KeyManager;
     });
   }
 }

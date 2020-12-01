@@ -12,6 +12,7 @@ import { LoadingIndicatorService } from '@shared/services/loading-indicator.serv
 import { ERC734KeyManager } from '@twy-gmbh/erc725-playground';
 import { PendingTransactionType } from '@shared/interface/transactions';
 import { isContractDeployed } from '@shared/utils/contracts';
+import { PriviligesItem } from './priviliges/priviliges.component';
 
 export interface KeyManagerData {
   address: string;
@@ -65,13 +66,13 @@ export class KeyManagerComponent implements OnInit, OnChanges {
 
   openDialog(
     label: string,
-    data: { buttonLabel: string; address: string; privileges: number[] }
+    data?: { buttonLabel: string; address: string; privileges: number[] }
   ): void {
     const dialogRef = this.dialog.open(AddKeyComponent, {
       data: {
         buttonLabel: label,
-        address: data.address,
-        privileges: data.privileges,
+        address: data?.address,
+        privileges: data?.privileges,
       },
       width: '50vw',
       height: '100%',
@@ -80,12 +81,17 @@ export class KeyManagerComponent implements OnInit, OnChanges {
       },
     });
 
-    dialogRef.afterClosed().subscribe(({ address, privileges }) => {
-      this.loadingIndicatorService.addPendingTransaction(
-        this.keyManagerService.contract.setKey(address, privileges, KEY_TYPE.ECDSA),
-        PendingTransactionType.KeyManager,
-        'Adding / Updating Key'
-      );
+    dialogRef.afterClosed().subscribe((priviligesItem: PriviligesItem) => {
+      if (priviligesItem) {
+        const { address, privileges } = priviligesItem;
+        this.loadingIndicatorService.addPendingTransaction(
+          this.keyManagerService.contract.setKey(address, privileges, KEY_TYPE.ECDSA),
+          PendingTransactionType.KeyManager,
+          'Adding / Updating Key'
+        );
+      } else {
+        console.log('Abort Abort Abort');
+      }
     });
   }
 
@@ -103,11 +109,14 @@ export class KeyManagerComponent implements OnInit, OnChanges {
   }
 
   removeKey(key: { address: string; index: number }) {
+    if (!this.keyManagerContract) {
+      throw Error('keyManager not set');
+    }
     this.loadingIndicatorService.showTransactionInfo({
       title: 'Remove Key',
       to: {
         type: 'keymanager',
-        address: this.keyManagerContract?.contract.address,
+        address: this.keyManagerContract.address,
       },
       from: {
         type: 'wallet',
@@ -115,7 +124,7 @@ export class KeyManagerComponent implements OnInit, OnChanges {
       },
       value: '0',
     });
-    this.keyManagerContract?.contract
+    this.keyManagerContract
       .removeKey(utils.keccak256(key.address), key.index)
       .then((tx: ContractTransaction) => tx.wait())
       .finally(() => {
@@ -127,9 +136,13 @@ export class KeyManagerComponent implements OnInit, OnChanges {
     this.openDialog('Update', { ...key });
   }
 
+  onAddNewKey() {
+    this.openDialog('Add Key');
+  }
+
   private getAllKeys(): Promise<string[]> {
     this.loading = true;
-    if (!this.keyManagerContract) {
+    if (this.keyManagerContract === undefined) {
       throw Error('this.keyManagerContract is not set');
     }
     return this.keyManagerContract.getAllKeys().catch((error: Error) => {

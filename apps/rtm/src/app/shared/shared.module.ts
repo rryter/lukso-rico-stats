@@ -44,6 +44,7 @@ import { ImageCropperModule } from 'ngx-image-cropper';
 import { ImageCropperComponent } from './components/image-cropper/image-cropper.component';
 import { ImageCropperDialogComponent } from './components/dialog/image-cropper-dialog/image-cropper-dialog.component';
 import { ManagementGuard } from '@shared/guards/management.guard';
+import { NavigationComponent } from './components/layout/navigation/navigation.component';
 
 const materialModules = [
   MatTableModule,
@@ -89,6 +90,7 @@ const materialModules = [
     PendingTransactionComponent,
     ImageCropperComponent,
     ImageCropperDialogComponent,
+    NavigationComponent,
   ],
   imports: [
     RouterModule,

@@ -1,3 +1,5 @@
+@import '/apps/rtm/src/style-mixins.scss';
+
 :host {
   display: block;
   width: 500px;
@@ -6,8 +8,10 @@
 }
 
 .warning {
-  background: #ff3d3d;
-
+  @include corners;
+  @include paddedContent;
+  background: #ff5757d7;
+  color: rgb(77, 0, 0);
   a {
     color: black;
   }

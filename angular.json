@@ -21,14 +21,8 @@
             "polyfills": "apps/rtm/src/polyfills.ts",
             "tsConfig": "apps/rtm/tsconfig.app.json",
             "aot": true,
-            "assets": [
-              "apps/rtm/src/favicon.ico",
-              "apps/rtm/src/assets",
-              "apps/rtm/src/.htaccess"
-            ],
-            "styles": [
-              "apps/rtm/src/styles.scss"
-            ],
+            "assets": ["apps/rtm/src/favicon.ico", "apps/rtm/src/assets", "apps/rtm/src/.htaccess"],
+            "styles": ["apps/rtm/src/styles.scss", "node_modules/cropperjs/dist/cropper.css"],
             "scripts": []
           },
           "configurations": {
@@ -93,14 +87,8 @@
         "lint": {
           "builder": "@angular-devkit/build-angular:tslint",
           "options": {
-            "tsConfig": [
-              "apps/rtm/tsconfig.app.json",
-              "apps/rtm/tsconfig.spec.json"
-            ],
-            "exclude": [
-              "**/node_modules/**",
-              "!apps/rtm/**/*"
-            ]
+            "tsConfig": ["apps/rtm/tsconfig.app.json", "apps/rtm/tsconfig.spec.json"],
+            "exclude": ["**/node_modules/**", "!apps/rtm/**/*"]
           }
         },
         "test": {
@@ -141,13 +129,8 @@
         "lint": {
           "builder": "@angular-devkit/build-angular:tslint",
           "options": {
-            "tsConfig": [
-              "apps/rtm-e2e/tsconfig.e2e.json"
-            ],
-            "exclude": [
-              "**/node_modules/**",
-              "!apps/rtm-e2e/**/*"
-            ]
+            "tsConfig": ["apps/rtm-e2e/tsconfig.e2e.json"],
+            "exclude": ["**/node_modules/**", "!apps/rtm-e2e/**/*"]
           }
         }
       }

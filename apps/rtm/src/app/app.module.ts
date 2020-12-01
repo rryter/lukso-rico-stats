@@ -28,7 +28,7 @@ import { ManagementGuard } from '@shared/guards/management.guard';
           loadChildren: () => import('./accounts/account.module').then((m) => m.AccountModule),
         },
       ],
-      { initialNavigation: 'enabled', enableTracing: false, relativeLinkResolution: 'legacy' }
+      { initialNavigation: 'enabled', enableTracing: true }
     ),
     BrowserAnimationsModule,
   ],

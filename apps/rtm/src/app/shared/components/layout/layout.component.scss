@@ -1,5 +1,5 @@
 :host {
-  display: flex;
+  display: block;
 }
 
 .wrapper {
@@ -18,63 +18,4 @@
   > div {
     grid-column-start: 2;
   }
-}
-
-mat-toolbar {
-  display: grid;
-  grid-template-columns: 150px min-content 1fr 150px;
-  grid-template-rows: 100px;
-  height: 100px;
-  background: none;
-  margin-bottom: 30px;
-  a {
-    font-size: 18px;
-  }
-}
-
-.nav-link {
-  display: inline-block;
-  text-decoration: none;
-  color: white;
-  padding-right: 40px;
-}
-
-.nav-link--deactivated {
-  opacity: 0.2;
-}
-
-.user {
-  display: flex;
-  height: 100px;
-}
-.user__notifications {
-  position: relative;
-  line-height: 100px;
-  width: 50px;
-
-  mat-icon {
-    position: relative;
-    top: -3px;
-    font-size: 35px;
-    display: inline-block;
-  }
-}
-.user__selection {
-  width: 90px;
-  text-align: center;
-  &:hover {
-    cursor: pointer;
-  }
-  img {
-    margin-top: 25px;
-    margin-bottom: 25px;
-    height: 50px;
-    border-radius: 100%;
-  }
-}
-
-.coaster-logo {
-  display: block;
-  padding: 10px;
-  height: 60px;
 }

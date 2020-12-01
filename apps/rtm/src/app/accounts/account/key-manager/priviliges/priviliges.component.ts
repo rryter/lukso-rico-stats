@@ -11,7 +11,7 @@ import { KeyManagerData } from '../key-manager.component';
 
 export interface PriviligesItem {
   address: string;
-  purpose: string;
+  privileges: number[];
   keyType: string;
 }
 @Component({
@@ -22,6 +22,7 @@ export interface PriviligesItem {
 export class PriviligesComponent implements OnChanges {
   @Output() removeKey = new EventEmitter();
   @Output() showEditDialog = new EventEmitter();
+  @Output() addNewKey = new EventEmitter();
 
   @Input() keys!: KeyManagerData[];
 
@@ -34,11 +35,15 @@ export class PriviligesComponent implements OnChanges {
     this.cdRef.detectChanges();
   }
 
-  removePrivilege(privilege: PriviligesItem) {
+  onRemoveKey(privilege: PriviligesItem) {
     this.removeKey.emit({ ...privilege });
   }
 
-  editKey(key: any) {
-    this.showEditDialog.emit(key);
+  onEditKey(privilege: PriviligesItem) {
+    this.showEditDialog.emit({ ...privilege });
+  }
+
+  addKey() {
+    this.addNewKey.emit();
   }
 }

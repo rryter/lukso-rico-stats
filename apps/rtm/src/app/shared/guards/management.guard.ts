@@ -1,13 +1,5 @@
 import { Injectable } from '@angular/core';
-import {
-  CanActivate,
-  ActivatedRouteSnapshot,
-  RouterStateSnapshot,
-  UrlTree,
-  CanLoad,
-  Route,
-  UrlSegment,
-} from '@angular/router';
+import { CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot, UrlTree } from '@angular/router';
 import { Capabilities } from '@shared/capabilities.enum';
 import { KeyManagerService } from '@shared/services/key-manager.service';
 import { ProxyAccountService } from '@shared/services/proxy-account.service';
@@ -35,8 +27,6 @@ export class ManagementGuard implements CanActivate {
   private hasManagementAccess(route: ActivatedRouteSnapshot) {
     return this.web3Service.address$.pipe(
       switchMap((currentAddress: string) => {
-        console.log('currentAddress');
-        console.log(currentAddress);
         return this.isManager(route, currentAddress);
       })
     );
@@ -46,7 +36,7 @@ export class ManagementGuard implements CanActivate {
     const contract = this.proxyAccountService.getContract(route.params.address);
     return contract.owner().then((owner) => {
       if (owner.toLowerCase() === currentAddress.toLocaleLowerCase()) {
-        return false;
+        return true;
       } else {
         return this.keyManagerService
           .getContract(owner)

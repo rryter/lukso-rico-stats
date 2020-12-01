@@ -1,19 +1,20 @@
 <lukso-layout-reduced>
   <main class="grid-container" role="main">
-    <section class="keymanager">
-      <div *ngIf="keyManagerContract$ | async as keyManagerContract">
-        <lukso-key-manager
-          [keyManagerContract]="keyManagerContract"
-          [accountAddress]="(accountContract$ | async)?.address"
-        ></lukso-key-manager>
-        <lukso-overview-claims></lukso-overview-claims>
-      </div>
-    </section>
     <section class="account">
       <lukso-edit-public-data
         [data]="accountData$ | async"
         (saveing)="onSave($event)"
       ></lukso-edit-public-data>
+    </section>
+    <section class="keymanager">
+      <div>
+        <lukso-key-manager
+          [keyManagerContract]="keyManagerContract$ | async"
+          [accountAddress]="(accountContract$ | async)?.address"
+        ></lukso-key-manager>
+
+        <lukso-overview-claims></lukso-overview-claims>
+      </div>
     </section>
   </main>
 </lukso-layout-reduced>

@@ -1,0 +1,44 @@
+<mat-toolbar>
+  <img src="/assets/coaster-logo-white.png" class="coaster-logo" [routerLink]="'/'" />
+  <div>
+    <nav>
+      <a class="nav-link" [routerLink]="[accountAddress]" [attr.data-cy]="'layout__nav__home'"
+        >Overview</a
+      >
+      <a
+        class="nav-link"
+        [routerLink]="[accountAddress, 'account']"
+        [attr.data-cy]="'layout__nav__account'"
+        >Account</a
+      >
+      <a
+        class="nav-link nav-link--deactivated"
+        [routerLink]="[accountAddress, 'wallet']"
+        [attr.data-cy]="'layout__nav__wallet'"
+        >Wallet</a
+      >
+    </nav>
+  </div>
+  <div></div>
+  <!-- <lukso-pending-transaction></lukso-pending-transaction> -->
+  <div class="user">
+    <div class="user__notifications">
+      <button mat-icon-button aria-label="Notifications">
+        <mat-icon matBadge="8" matBadgeColor="primary">notifications_none</mat-icon>
+      </button>
+    </div>
+
+    <div class="user__selection" [matMenuTriggerFor]="menu">
+      <img src="/assets/portrait-placeholder-small.jpg" matRipple />
+    </div>
+    <mat-menu #menu="matMenu" xPosition="before" yPosition="below">
+      <button
+        *ngFor="let account of accounts; let i = index"
+        mat-menu-item
+        (click)="loadExistingAccount(i)"
+      >
+        {{ account?.address | ethAddressShort }}
+      </button>
+    </mat-menu>
+  </div>
+</mat-toolbar>

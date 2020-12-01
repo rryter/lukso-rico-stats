@@ -68,11 +68,8 @@ export class Web3Service {
     });
 
     if (window.ethereum) {
-      console.log('whoooooooo');
       window.ethereum.on('accountsChanged', (addresses: string[]) => {
-        console.log('whoooooooo1');
         this.ngZone.run(() => {
-          console.log('whoooooooo2');
           this.selectedAddress = addresses[0];
           this.address$.next(addresses[0]);
         });

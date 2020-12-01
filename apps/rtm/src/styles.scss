@@ -10,6 +10,7 @@
 // Fonts
 @import 'https://fonts.googleapis.com/css?family=Material+Icons';
 @import url('https://fonts.googleapis.com/css?family=Montserrat:300,400,500');
+@import '/apps/rtm/src/style-mixins.scss';
 
 $fontConfig: (
   display-4: mat-typography-level(112px, 112px, 300, 'Montserrat', -0.0134em),
@@ -248,9 +249,14 @@ $altTheme: mat-light-theme($theme-primary, $theme-accent, $theme-warn);
 
 html {
   height: 100%;
-  background: url(./assets/bg.jpg) center center no-repeat;
+  background: url(./assets/background.png) center center no-repeat;
   background-size: cover;
+  background-attachment: fixed;
   color: white;
+}
+
+body {
+  overflow-y: scroll;
 }
 
 .spacer {
@@ -325,4 +331,11 @@ div.mat-dialog-content {
 .mat-raised-button {
   padding: 10px 20px !important;
   margin-top: 30px;
+}
+
+.mat-dialog-container {
+  border-top-left-radius: 20px !important;
+  border-bottom-left-radius: 20px !important;
+  border-top-right-radius: 0 !important;
+  border-bottom-right-radius: 0 !important;
 }
