@@ -18,6 +18,10 @@ mat-toolbar {
   padding-right: 40px;
 }
 
+.nav-link--active {
+  text-decoration: underline;
+}
+
 .nav-link--deactivated {
   opacity: 0.2;
 }

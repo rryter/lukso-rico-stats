@@ -1,5 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
-
+import { Router } from '@angular/router';
+import { Account } from '@shared/interface/account';
 @Component({
   selector: 'lukso-navigation',
   templateUrl: './navigation.component.html',
@@ -8,7 +9,7 @@ import { Component, Input, OnInit } from '@angular/core';
 export class NavigationComponent implements OnInit {
   @Input() accountAddress: string | undefined;
   accounts: Account[] = [];
-  constructor() {}
+  constructor(private router: Router) {}
 
   ngOnInit(): void {
     const accountsAsString = localStorage.getItem('accounts');
@@ -17,5 +18,9 @@ export class NavigationComponent implements OnInit {
     } else {
       this.accounts = JSON.parse(localStorage.getItem('accounts') || '[]');
     }
+  }
+
+  loadExistingAccount(index: number) {
+    this.router.navigate(['accounts', this.accounts[index]?.address]);
   }
 }

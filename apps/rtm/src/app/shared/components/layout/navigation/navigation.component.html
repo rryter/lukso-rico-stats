@@ -2,12 +2,19 @@
   <img src="/assets/coaster-logo-white.png" class="coaster-logo" [routerLink]="'/'" />
   <div>
     <nav>
-      <a class="nav-link" [routerLink]="[accountAddress]" [attr.data-cy]="'layout__nav__home'"
+      <a
+        class="nav-link"
+        [routerLink]="['/accounts', accountAddress]"
+        [routerLinkActive]="'nav-link--active'"
+        [routerLinkActiveOptions]="{ exact: true }"
+        [attr.data-cy]="'layout__nav__home'"
         >Overview</a
       >
       <a
         class="nav-link"
-        [routerLink]="[accountAddress, 'account']"
+        [routerLinkActive]="'nav-link--active'"
+        [routerLink]="['/accounts', accountAddress, 'account']"
+        [routerLinkActiveOptions]="{ exact: true }"
         [attr.data-cy]="'layout__nav__account'"
         >Account</a
       >

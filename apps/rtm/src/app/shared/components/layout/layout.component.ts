@@ -40,8 +40,4 @@ export class LayoutComponent implements OnInit, DoCheck {
       this.accounts = JSON.parse(localStorage.getItem('accounts') || '[]');
     }
   }
-
-  loadExistingAccount(index: number) {
-    this.router.navigate(['accounts', this.accounts[index]?.address]);
-  }
 }

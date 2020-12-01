@@ -1,4 +1,5 @@
-import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy, DoCheck } from '@angular/core';
+import { ProxyAccountService } from '@shared/services/proxy-account.service';
 
 @Component({
   selector: 'lukso-layout-reduced',
@@ -6,12 +7,15 @@ import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
   styleUrls: ['./layout-reduced.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class LayoutReducedComponent implements OnInit {
+export class LayoutReducedComponent implements DoCheck {
   accounts: Account[] = [];
-  constructor() {}
+  accountAddress: string | undefined = undefined;
+  constructor(private proxyAccountService: ProxyAccountService) {}
 
-  ngOnInit(): void {
+  ngDoCheck() {
+    this.accountAddress = this.proxyAccountService.contract?.address;
     const accountsAsString = localStorage.getItem('accounts');
+
     if (!accountsAsString) {
       this.accounts = [] as Account[];
     } else {
