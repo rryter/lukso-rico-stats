@@ -8,6 +8,7 @@ import { Account } from '@shared/interface/account';
 })
 export class NavigationComponent implements OnInit {
   @Input() accountAddress: string | undefined;
+  @Input() colouredIcon = false;
   accounts: Account[] = [];
   constructor(private router: Router) {}
 

@@ -1,35 +1,63 @@
 @import '/apps/rtm/src/style-mixins.scss';
 
+:host {
+  display: block;
+}
+
 mat-toolbar {
   display: grid;
-  grid-template-columns: 150px min-content 1fr 150px;
-  grid-template-rows: 100px;
-  height: 100px;
+  grid-template-columns: 60px 140px min-content 1fr 140px 60px;
+  grid-template-rows: 150px;
+  grid-template-areas: '. logo nav . user .';
   background: none;
+  padding: 0;
+  height: 150px;
   a {
     font-size: 18px;
   }
+
+  &.blue {
+    .nav-link {
+      color: black;
+    }
+  }
+}
+
+.coaster-logo {
+  display: block;
+  grid-area: logo;
+  padding: 10px;
+  height: 45px;
+}
+
+.nav {
+  grid-area: nav;
 }
 
 .nav-link {
   display: inline-block;
   text-decoration: none;
-  color: white;
   padding-right: 40px;
+  opacity: 0.6;
+  color: white;
 }
 
 .nav-link--active {
-  text-decoration: underline;
+  position: relative;
+  opacity: 1;
+  font-weight: bold;
 }
 
 .nav-link--deactivated {
-  opacity: 0.2;
+  opacity: 0.1;
 }
 
 .user {
   display: flex;
+  grid-area: user;
   height: 100px;
 }
+
 .user__notifications {
   position: relative;
   line-height: 100px;
@@ -55,10 +83,4 @@ mat-toolbar {
     height: 50px;
     border-radius: 100%;
   }
-}
-
-.coaster-logo {
-  display: block;
-  padding: 10px;
-  height: 60px;
 }

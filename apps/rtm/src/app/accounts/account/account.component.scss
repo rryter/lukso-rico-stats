@@ -21,7 +21,7 @@
 $keymanager-padding: 50px;
 .keymanager {
   display: grid;
-  padding-top: $keymanager-padding;
+  padding-top: 140px;
   padding-bottom: $keymanager-padding;
   grid-template-columns: minmax(20px, $keymanager-padding) 1fr minmax(20px, $keymanager-padding);
   > div {
@@ -35,6 +35,7 @@ $keymanager-padding: 50px;
   display: grid;
   grid-template-columns: 20px 1fr 20px;
   justify-content: center;
+  padding-top: 140px;
 }
 lukso-edit-public-data {
   grid-column: 2;

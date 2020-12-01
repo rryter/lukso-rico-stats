@@ -1,31 +1,40 @@
-<mat-toolbar>
-  <img src="/assets/coaster-logo-white.png" class="coaster-logo" [routerLink]="'/'" />
-  <div>
-    <nav>
-      <a
-        class="nav-link"
-        [routerLink]="['/accounts', accountAddress]"
-        [routerLinkActive]="'nav-link--active'"
-        [routerLinkActiveOptions]="{ exact: true }"
-        [attr.data-cy]="'layout__nav__home'"
-        >Overview</a
-      >
-      <a
-        class="nav-link"
-        [routerLinkActive]="'nav-link--active'"
-        [routerLink]="['/accounts', accountAddress, 'account']"
-        [routerLinkActiveOptions]="{ exact: true }"
-        [attr.data-cy]="'layout__nav__account'"
-        >Account</a
-      >
-      <a
-        class="nav-link nav-link--deactivated"
-        [routerLink]="[accountAddress, 'wallet']"
-        [attr.data-cy]="'layout__nav__wallet'"
-        >Wallet</a
-      >
-    </nav>
-  </div>
+<mat-toolbar [ngClass]="{ blue: colouredIcon }">
+  <img
+    *ngIf="colouredIcon"
+    src="/assets/coaster-logo-blue.png"
+    class="coaster-logo"
+    [routerLink]="'/'"
+  />
+  <img
+    *ngIf="!colouredIcon"
+    src="/assets/coaster-logo-white.png"
+    class="coaster-logo"
+    [routerLink]="'/'"
+  />
+  <nav class="nav" role="navigation">
+    <a
+      class="nav-link"
+      [routerLink]="['/accounts', accountAddress]"
+      [routerLinkActive]="'nav-link--active'"
+      [routerLinkActiveOptions]="{ exact: true }"
+      [attr.data-cy]="'layout__nav__home'"
+      >Overview</a
+    >
+    <a
+      class="nav-link"
+      [routerLinkActive]="'nav-link--active'"
+      [routerLink]="['/accounts', accountAddress, 'account']"
+      [routerLinkActiveOptions]="{ exact: true }"
+      [attr.data-cy]="'layout__nav__account'"
+      >Account</a
+    >
+    <a
+      class="nav-link nav-link--deactivated"
+      [routerLink]="[accountAddress, 'wallet']"
+      [attr.data-cy]="'layout__nav__wallet'"
+      >Wallet</a
+    >
+  </nav>
   <div></div>
   <!-- <lukso-pending-transaction></lukso-pending-transaction> -->
   <div class="user">
