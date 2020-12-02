@@ -8,6 +8,7 @@
     <lukso-error-message [errorMessage]="error"></lukso-error-message>
     <ng-container *ngIf="keyManagerData$ | async as keyManagerData">
       <lukso-priviliges
+        [attr.data-cy]="'privileges__keys'"
         (removeKey)="removeKey($event)"
         (addNewKey)="onAddNewKey($event)"
         (showEditDialog)="onShowEditDialog($event)"

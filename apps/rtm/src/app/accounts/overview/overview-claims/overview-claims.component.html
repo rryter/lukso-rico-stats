@@ -1,11 +1,10 @@
 <section class="claims">
   <h1>Claims</h1>
-  <p>Work in progress.</p>
-  <!-- <ul>
+  <ul>
     <li class="card">
-      <div class="claim__title">Has Facebook</div>
+      <div class="claim__title">Can Vote</div>
       <div class="claim__icon">
-        <mat-icon>facebook</mat-icon>
+        <mat-icon>vote</mat-icon>
       </div>
       <div class="claim__details">
         <div>Passport</div>
@@ -19,9 +18,9 @@
       <mat-icon>explicit</mat-icon>
       Is 18+ years old
     </li>
-    <li class="card card--add-claim">
+    <li *ngIf="showAddButton" class="card card--add-claim">
       <mat-icon>add_circle_outline</mat-icon>
       <span>Add New Claim</span>
     </li>
-  </ul> -->
+  </ul>
 </section>
