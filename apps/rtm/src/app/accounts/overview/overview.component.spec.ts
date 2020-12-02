@@ -1,6 +1,7 @@
 import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
+import { HumanReadableNumberPipe } from '@shared/pipes/human-readable-number.pipe';
 import { ProxyAccountService } from '@shared/services/proxy-account.service';
 
 import { OverviewComponent } from './overview.component';
