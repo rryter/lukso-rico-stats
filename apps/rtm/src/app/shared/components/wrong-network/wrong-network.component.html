@@ -3,24 +3,29 @@
     <mat-card-header>
       <div mat-card-avatar><mat-icon>error</mat-icon></div>
       <mat-card-title>Wrong Network</mat-card-title>
-      <mat-card-subtitle>Please connect to the LUKSO Testnet.</mat-card-subtitle>
+      <mat-card-subtitle>Connect to the LUKSO Testnet</mat-card-subtitle>
     </mat-card-header>
     <mat-card-content>
-      <p>
-        Please connect to the
-        <a href="https://medium.com/lukso/announcing-the-l14-test-network-38d7c622c6cb"
-          >L14 Testnet</a
-        >
-        of LUKSO. The easiest way to do so is to add a new Network (<a
-          href="http://rpc.l14.lukso.network"
-          >http://rpc.l14.lukso.network</a
-        >) to Metamask.
-      </p>
+      <p>To use the test-network you can simply connect your dapp, or wallet extension to</p>
+      <pre>http://rpc.l14.lukso.network:8545.</pre>
+
+      <a
+        mat-raised-button
+        color="primary"
+        href="https://medium.com/lukso/announcing-the-l14-test-network-38d7c622c6cb"
+        target="_blank"
+      >
+        L14 What?
+      </a>
+      <br />
       <br />
       <p>
-        To get started you need some Testnet “LYX” to pay for the transactions. You can get some
-        using the <a href="http://faucet.l14.lukso.network/" target="_blank">L14 Faucet.</a>
+        To get started you need some testnet LYX to pay for the transactions. You can get some using
+        the faucet.
       </p>
+      <a mat-raised-button href="http://faucet.l14.lukso.network/" target="_blank">
+        Get some LYX
+      </a>
     </mat-card-content>
   </mat-card>
 </div>

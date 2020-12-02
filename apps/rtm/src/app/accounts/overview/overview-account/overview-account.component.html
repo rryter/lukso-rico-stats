@@ -5,10 +5,7 @@
     [routerLink]="!hideText ? ['./account'] : null"
     [ngClass]="{ clickable: !hideText }"
     class="profile"
-    style="
-      background-image: linear-gradient(transparent, #00000044),
-        url('/assets/portrait-placeholder.png');
-    "
+    style="background-image: linear-gradient(transparent, #00000044), url('/assets/reto.jpg')"
   >
     <div *ngIf="!hideText && accountDetails" class="profile__details">
       <h2>{{ accountDetails.firstName }} {{ accountDetails.lastName }}</h2>
