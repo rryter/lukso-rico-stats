@@ -1,12 +1,16 @@
 :host {
   display: block;
   margin-bottom: 30px;
-  opacity: 0.2;
+}
+.overview-list {
+  grid-template-columns: repeat(none, minmax(150px, 1fr));
 }
 
 h3 {
+  display: inline;
   text-transform: uppercase;
   color: #968e8e;
+  font-size: 12px;
 }
 
 .amount,
@@ -20,4 +24,9 @@ h3 {
 }
 .symbol {
   opacity: 0.8;
+}
+
+img {
+  border-radius: 20px;
+  background: white;
 }

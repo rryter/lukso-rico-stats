@@ -74,11 +74,6 @@ export class KeyManagerComponent implements OnInit, OnChanges {
         address: data?.address,
         privileges: data?.privileges,
       },
-      width: '50vw',
-      height: '100%',
-      position: {
-        right: '0',
-      },
     });
 
     dialogRef.afterClosed().subscribe((priviligesItem: PriviligesItem) => {

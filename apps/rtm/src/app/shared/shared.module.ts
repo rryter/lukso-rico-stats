@@ -45,6 +45,7 @@ import { ImageCropperComponent } from './components/image-cropper/image-cropper.
 import { ImageCropperDialogComponent } from './components/dialog/image-cropper-dialog/image-cropper-dialog.component';
 import { ManagementGuard } from '@shared/guards/management.guard';
 import { NavigationComponent } from './components/layout/navigation/navigation.component';
+import { HumanReadableNumberPipe } from './pipes/human-readable-number.pipe';
 
 const materialModules = [
   MatTableModule,
@@ -91,6 +92,7 @@ const materialModules = [
     ImageCropperComponent,
     ImageCropperDialogComponent,
     NavigationComponent,
+    HumanReadableNumberPipe,
   ],
   imports: [
     RouterModule,
@@ -110,6 +112,7 @@ const materialModules = [
     EthAddressShortPipe,
     CmcPricePipe,
     PrivilegePipe,
+    HumanReadableNumberPipe,
     LayoutComponent,
     LayoutReducedComponent,
     ConfirmComponent,

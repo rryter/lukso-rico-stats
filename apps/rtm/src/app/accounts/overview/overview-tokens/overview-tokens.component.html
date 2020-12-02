@@ -1,12 +1,12 @@
 <section class="tokens">
-  <h1>Tokens</h1>
+  <h1>Tokens (WIP)</h1>
   <ul class="overview-list">
-    <li>
-      <h3>Lukso</h3>
-      <div class="amount">5.428</div>
-      <div class="symbol">LYX</div>
+    <li *ngFor="let token of tokens">
+      <h3>{{ token.name }}</h3>
+      <div class="amount">{{ token.amount | humanReadableNumber }}</div>
+      <div class="symbol">{{ token.symbol }}</div>
       <br />
-      <img src="/assets/tokens/lukso.png" width="40px" />
+      <img src="{{ token.logo }}" width="40px" />
     </li>
     <li>
       <h3>Ethereum</h3>

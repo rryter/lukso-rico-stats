@@ -74,11 +74,6 @@ export class KeyValueInfosComponent implements OnInit, OnChanges {
       data: {
         ...existingData,
       },
-      width: '50vw',
-      height: '100%',
-      position: {
-        right: '0',
-      },
     });
 
     dialogRef.afterClosed().subscribe((keyValuePairs: { key: string; value: string }[]) => {
