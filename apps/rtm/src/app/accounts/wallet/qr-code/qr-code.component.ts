@@ -26,7 +26,7 @@ import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/cor
   ],
 })
 export class QrCodeComponent implements OnInit, OnChanges {
-  @Input() address: string | undefined;
+  @Input() address!: string;
   @Input() size = 120;
   qrCode: Promise<string> | undefined;
 

@@ -1,7 +1,6 @@
 :host {
   display: block;
-  height: 200px;
-  width: 300px;
+  padding: 50px;
 }
 h1 {
   padding-bottom: 20px;
@@ -17,10 +16,7 @@ p {
 .slider {
   margin-top: 16px;
   height: 60px;
-  position: absolute;
-  top: -39px;
-  right: -8px;
-  left: -8px;
+  width: 100%;
 }
 
 mat-icon {
@@ -32,16 +28,9 @@ mat-hint {
 }
 
 .mat-form-field-suffix {
-  padding-left: 10px !important;
-}
-
-mat-form-field.mat-form-field {
+  top: 0;
 }
 
 input.text-align-right {
   text-align: right;
-}
-
-button {
-  height: 40px;
 }

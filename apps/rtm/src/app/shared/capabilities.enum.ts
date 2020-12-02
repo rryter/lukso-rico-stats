@@ -1,4 +1,4 @@
-export enum Capabilities {
+export enum Privileges {
   MANAGEMENT = 1,
   EXECUTION,
 }

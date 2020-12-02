@@ -1,7 +1,7 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { Capabilities, KEY_TYPE } from '@shared/capabilities.enum';
+import { Privileges, KEY_TYPE } from '@shared/capabilities.enum';
 import { KeyManagerService } from '@shared/services/key-manager.service';
 import { LoadingIndicatorService } from '@shared/services/loading-indicator.service';
 import { isETHAddressValidator } from '@shared/validators/web3-address.validator';
@@ -29,7 +29,7 @@ export class AddKeyComponent implements OnInit {
     public data: { buttonLabel: string; address: string; privileges: number[] },
     private fb: FormBuilder
   ) {
-    this.data.privileges = this.data.privileges || [Capabilities.EXECUTION];
+    this.data.privileges = this.data.privileges || [Privileges.EXECUTION];
     this.newKeyForm = this.fb.group(
       {
         address: [this.data.address, [Validators.required, isETHAddressValidator()]],

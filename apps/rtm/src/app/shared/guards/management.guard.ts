@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot, UrlTree } from '@angular/router';
-import { Capabilities } from '@shared/capabilities.enum';
+import { Privileges } from '@shared/capabilities.enum';
 import { KeyManagerService } from '@shared/services/key-manager.service';
 import { ProxyAccountService } from '@shared/services/proxy-account.service';
 import { Web3Service } from '@shared/services/web3.service';
@@ -40,7 +40,7 @@ export class ManagementGuard implements CanActivate {
       } else {
         return this.keyManagerService
           .getContract(owner)
-          .hasPrivilege(currentAddress, Capabilities.MANAGEMENT);
+          .hasPrivilege(currentAddress, Privileges.MANAGEMENT);
       }
     });
   }

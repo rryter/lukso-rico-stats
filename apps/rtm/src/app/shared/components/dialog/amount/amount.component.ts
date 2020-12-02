@@ -7,7 +7,7 @@ import { ConfirmDialogInput } from '@shared/interface/dialog';
 
 @Component({
   templateUrl: './amount.component.html',
-  styleUrls: ['./amount.component.css'],
+  styleUrls: ['./amount.component.scss'],
 })
 export class AmountComponent implements OnInit {
   form: FormGroup;
@@ -52,7 +52,7 @@ export class AmountComponent implements OnInit {
 
   ngOnInit(): void {}
 
-  onNoClick() {
+  onCancel() {
     this.dialogRef.close();
   }
 
@@ -70,7 +70,7 @@ export class AmountComponent implements OnInit {
   }
 
   valueChanged(value: number) {
-    this.percentage = Math.round((value / 100) * this.wallet);
+    this.percentage = Math.round((value / this.wallet) * 100);
     this.form.controls.amount.setValue(value);
   }
 }

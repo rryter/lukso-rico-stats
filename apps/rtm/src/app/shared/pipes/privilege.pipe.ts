@@ -1,5 +1,5 @@
 import { Pipe, PipeTransform } from '@angular/core';
-import { Capabilities } from '@shared/capabilities.enum';
+import { Privileges } from '@shared/capabilities.enum';
 
 @Pipe({
   name: 'privilege',
@@ -7,9 +7,9 @@ import { Capabilities } from '@shared/capabilities.enum';
 export class PrivilegePipe implements PipeTransform {
   transform(value: unknown, ...args: unknown[]): unknown {
     switch (value) {
-      case Capabilities.MANAGEMENT:
+      case Privileges.MANAGEMENT:
         return 'Management';
-      case Capabilities.EXECUTION:
+      case Privileges.EXECUTION:
         return 'Execution';
       default:
         return 'ERROR: Does not Match any existing Privilege.';

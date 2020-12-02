@@ -10,13 +10,12 @@
   </p>
 
   <p>
-    <mat-form-field class="form-field" appearance="outline">
+    <mat-form-field class="form-field">
       <mat-icon matPrefix>payments</mat-icon>
       <input
         matInput
         type="text"
         [formControl]="form.controls.amount"
-        placeholder="2"
         (input)="valueChanged(form.controls.amount.value)"
         [min]="0"
         [max]="wallet"
@@ -34,24 +33,24 @@
       </mat-hint>
       <mat-hint align="end">{{ percentage }} %</mat-hint>
     </mat-form-field>
-    <mat-slider
-      class="slider"
-      [max]="100"
-      [min]="0"
-      [step]="5"
-      [tickInterval]="1"
-      [thumbLabel]="true"
-      color="primary"
-      [value]="percentage"
-      (input)="sliderMoved($event)"
-    >
-    </mat-slider>
   </p>
+  <mat-slider
+    class="slider"
+    [max]="100"
+    [min]="0"
+    [step]="5"
+    [tickInterval]="1"
+    color="primary"
+    [value]="percentage"
+    (input)="sliderMoved($event)"
+  >
+  </mat-slider>
 </div>
 <div mat-dialog-actions align="end">
-  <button mat-raised-button (click)="onNoClick()">Cancel</button>
+  <button mat-raised-button (click)="onCancel()">Cancel</button>
   <button
     mat-raised-button
+    color="primary"
     [mat-dialog-close]="getReturnValues()"
     [attr.data-cy]="'amount__accept'"
   >
