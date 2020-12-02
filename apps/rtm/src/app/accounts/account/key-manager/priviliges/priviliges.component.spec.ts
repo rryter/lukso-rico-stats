@@ -9,6 +9,8 @@ import { PriviligesComponent } from './priviliges.component';
 import { MatIconModule } from '@angular/material/icon';
 import { PrivilegePipe } from '@shared/pipes/privilege.pipe';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
+import { EthAddressShortPipe } from '@shared/pipes/eth-address-short.pipe';
+import { MatMenuModule } from '@angular/material/menu';
 
 describe('PriviligesComponent', () => {
   let component: PriviligesComponent;
@@ -16,7 +18,7 @@ describe('PriviligesComponent', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      declarations: [PriviligesComponent, PrivilegePipe],
+      declarations: [PriviligesComponent, PrivilegePipe, EthAddressShortPipe],
       imports: [
         NoopAnimationsModule,
         MatPaginatorModule,
@@ -24,6 +26,7 @@ describe('PriviligesComponent', () => {
         MatTableModule,
         MatIconModule,
         MatChipsModule,
+        MatMenuModule,
       ],
       schemas: [NO_ERRORS_SCHEMA],
     }).compileComponents();

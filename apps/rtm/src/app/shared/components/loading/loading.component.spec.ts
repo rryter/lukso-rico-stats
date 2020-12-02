@@ -1,4 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { MatChipsModule } from '@angular/material/chips';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { LoadingComponent } from './loading.component';
 
@@ -9,7 +10,7 @@ describe('LoadingComponent', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       declarations: [LoadingComponent],
-      imports: [MatProgressSpinnerModule],
+      imports: [MatProgressSpinnerModule, MatChipsModule],
     }).compileComponents();
   });
 

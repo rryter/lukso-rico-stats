@@ -1,4 +1,3 @@
-import QRCode from 'qrcode';
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
@@ -6,23 +5,16 @@ import { ActivatedRoute } from '@angular/router';
 import { Web3Service } from '@shared/services/web3.service';
 import { AmountComponent } from '@shared/components/dialog/amount/amount.component';
 import { Account } from '@shared/interface/account';
-import { KeyManagerService } from '@shared/services/key-manager.service';
 import { LoadingIndicatorService } from '@shared/services/loading-indicator.service';
 import { ProxyAccountService } from '@shared/services/proxy-account.service';
 import { Stages } from '@shared/stages.enum';
-import { combineLatest, forkJoin, NEVER, Observable, of } from 'rxjs';
-import {
-  catchError,
-  distinctUntilChanged,
-  filter,
-  pluck,
-  shareReplay,
-  switchMap,
-} from 'rxjs/operators';
+import { Observable, of } from 'rxjs';
+import { catchError, distinctUntilChanged, filter, pluck, switchMap, tap } from 'rxjs/operators';
 import { utils } from 'ethers';
 import { ConfirmDialogOutput } from '@shared/interface/dialog';
 import { ERC725Account, ERC734KeyManager } from '@twy-gmbh/erc725-playground';
-import { PendingTransaction, PendingTransactionType } from '@shared/interface/transactions';
+import { PendingTransactionType } from '@shared/interface/transactions';
+import { KeyManagerService } from '@shared/services/key-manager.service';
 
 @Component({
   selector: 'lukso-wallet',
@@ -55,26 +47,10 @@ export class WalletComponent implements OnInit {
       filter(Boolean)
     ) as Observable<string>;
 
-    this.account$ = combineLatest([
-      address$,
-      this.web3Service.reloadTrigger$,
-      this.loadingIndicatorService.pendingTransactions$,
-    ]).pipe(
-      switchMap(([address]: [string, boolean, PendingTransaction[]]) => {
-        this.proxyAccountContract = this.proxyAccountService.getContract(address);
-        return combineLatest([this.proxyAccountContract.owner(), of(address)]).pipe(
-          shareReplay(1),
-          catchError((error) => {
-            console.warn('error', error);
-            return NEVER;
-          })
-        );
+    this.account$ = this.proxyAccountService.getAccount(address$).pipe(
+      tap(() => {
+        this.loading = false;
       }),
-      switchMap(([owner, address]) => {
-        this.keyManagerContract = this.keyManagerService.getContract(owner);
-        return this.getAccountDetails(address);
-      }),
-      switchMap((account: Account) => this.enrichAccountWithQrCode(account)),
       catchError((error) => {
         console.error(error);
         return of({} as Account);
@@ -83,66 +59,6 @@ export class WalletComponent implements OnInit {
   }
 
   ngOnInit(): void {}
-
-  private enrichAccountWithQrCode(account: Account): Promise<Account> {
-    this.loading = false;
-    return QRCode.toDataURL(account.address, {
-      width: 120,
-      color: {
-        dark: '#2c2c2c',
-        light: '#fff',
-      },
-    }).then((base64QRCode: string) => {
-      account.qrCode = base64QRCode;
-      return account;
-    });
-  }
-
-  private getAccountDetails(address: string): Observable<Account> {
-    const accountsAsString = localStorage.getItem('accounts');
-    let accounts: Account[];
-
-    if (!accountsAsString) {
-      accounts = [] as Account[];
-    } else {
-      accounts = JSON.parse(accountsAsString);
-    }
-    const stage = accounts.find((account) => account.address === address)?.stage;
-
-    return forkJoin({
-      address: of(address),
-      balance: this.getBalance(address),
-      isExecutable: this.getIsExecutor(),
-      isManagable: this.getIsManager(),
-      stage: of(stage),
-    }) as Observable<Account>;
-  }
-
-  private getIsExecutor(): Promise<boolean> {
-    return this.keyManagerService.contract
-      .deployed()
-      .then(() => {
-        return this.keyManagerService.contract.hasPrivilege(this.web3Service.selectedAddress, 2);
-      })
-      .catch(() => {
-        return false;
-      });
-  }
-
-  private getIsManager(): Promise<boolean> {
-    return this.keyManagerService.contract
-      .deployed()
-      .then(() => {
-        return this.keyManagerService.contract.hasPrivilege(this.web3Service.selectedAddress, 1);
-      })
-      .catch(() => {
-        return false;
-      });
-  }
-
-  getBalance(address: string): Promise<number> {
-    return this.web3Service.getBalance(address);
-  }
 
   topUp(account: Account) {
     const dialogRef = this.dialog.open(AmountComponent, {
@@ -195,10 +111,10 @@ export class WalletComponent implements OnInit {
   }
 
   private withDraw(dialogOutput: ConfirmDialogOutput) {
-    if (!this.proxyAccountContract) {
+    if (!this.proxyAccountService.contract) {
       throw Error('proxyAccountContract is not set');
     }
-    if (!this.keyManagerContract) {
+    if (!this.keyManagerService.contract) {
       throw Error('keyManagerContract is not set');
     }
     if (dialogOutput?.value) {
@@ -210,12 +126,12 @@ export class WalletComponent implements OnInit {
         },
         from: {
           type: 'account',
-          address: this.proxyAccountContract.address,
+          address: this.proxyAccountService.contract.address,
         },
         value: dialogOutput?.value,
       });
 
-      const abi = this.proxyAccountContract.interface.encodeFunctionData('execute', [
+      const abi = this.proxyAccountService.contract.interface.encodeFunctionData('execute', [
         '0',
         this.web3Service.selectedAddress,
         utils.parseEther(dialogOutput.value),
@@ -223,14 +139,10 @@ export class WalletComponent implements OnInit {
       ]);
 
       this.loadingIndicatorService.addPendingTransaction(
-        this.keyManagerContract.execute(abi),
+        this.keyManagerService.contract.execute(abi),
         PendingTransactionType.Wallet,
         `Withdrawing ${dialogOutput.value} LYX`
       );
     }
-  }
-
-  navigateToBlockExplorer(address: string) {
-    window.open('https://blockscout.com/lukso/l14/address/' + address + '/transactions', '_blank');
   }
 }

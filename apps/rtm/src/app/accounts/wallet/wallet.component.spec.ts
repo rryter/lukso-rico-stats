@@ -15,7 +15,7 @@ import { Web3Service } from '@shared/services/web3.service';
 import { of } from 'rxjs';
 import { WalletComponent } from './wallet.component';
 
-describe('ProxyAccountComponent', () => {
+describe('WalletComponent', () => {
   let component: WalletComponent;
   let fixture: ComponentFixture<WalletComponent>;
 
@@ -25,7 +25,12 @@ describe('ProxyAccountComponent', () => {
       providers: [
         { provide: Web3Service, useValue: web3ServiceMock },
         { provide: LoadingIndicatorService, useValue: {} },
-        { provide: ProxyAccountService, useValue: {} },
+        {
+          provide: ProxyAccountService,
+          useValue: {
+            getAccount: jest.fn().mockReturnValue(of({})),
+          },
+        },
         { provide: KeyManagerService, useValue: {} },
         { provide: ActivatedRoute, useValue: { params: of({}) } },
         { provide: MatDialog, useValue: {} },

@@ -1,4 +1,9 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { MatIconModule } from '@angular/material/icon';
+import { MatMenuModule } from '@angular/material/menu';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { RouterTestingModule } from '@angular/router/testing';
+import { EthAddressShortPipe } from '@shared/pipes/eth-address-short.pipe';
 
 import { NavigationComponent } from './navigation.component';
 
@@ -8,9 +13,9 @@ describe('NavigationComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ NavigationComponent ]
-    })
-    .compileComponents();
+      declarations: [NavigationComponent, EthAddressShortPipe],
+      imports: [RouterTestingModule, MatIconModule, MatToolbarModule, MatMenuModule],
+    }).compileComponents();
   });
 
   beforeEach(() => {

@@ -9,13 +9,10 @@ import {
 import { ERC725Account, ERC734KeyManager } from '@twy-gmbh/erc725-playground';
 import { combineLatest, forkJoin, Observable, of, ReplaySubject } from 'rxjs';
 import { catchError, switchMap } from 'rxjs/operators';
-import { BytesLike, ContractTransaction, utils } from 'ethers';
+import { BytesLike, utils } from 'ethers';
 import { MatDialog } from '@angular/material/dialog';
 import { EditPublicDataComponent } from './edit-public-data/edit-public-data..component';
-import { LoadingIndicatorService } from '@shared/services/loading-indicator.service';
 import { Web3Service } from '@shared/services/web3.service';
-import { isContractDeployed } from '@shared/utils/contracts';
-import { PendingTransactionType } from '@shared/interface/transactions';
 
 @Component({
   selector: 'lukso-key-value-infos',
@@ -35,11 +32,7 @@ export class KeyValueInfosComponent implements OnInit, OnChanges {
   accountKeyValueInfos$: Observable<{ [key: string]: string }>;
   displayedColumns: string[] = ['key', 'value'];
 
-  constructor(
-    public dialog: MatDialog,
-    private loadingIndicatorService: LoadingIndicatorService,
-    private web3Service: Web3Service
-  ) {
+  constructor(public dialog: MatDialog, private web3Service: Web3Service) {
     this.accountKeyValueInfos$ = combineLatest([
       this.accountContract$,
       this.web3Service.blocks$,

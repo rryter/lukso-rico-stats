@@ -29,4 +29,26 @@ export class KeyManagerService {
     this.contract = keyManagerContract;
     return keyManagerContract;
   }
+
+  getIsExecutor(address: string): Promise<boolean> {
+    return this.contract
+      .deployed()
+      .then(() => {
+        return this.contract.hasPrivilege(address, 2);
+      })
+      .catch(() => {
+        return false;
+      });
+  }
+
+  getIsManager(address: string): Promise<boolean> {
+    return this.contract
+      .deployed()
+      .then(() => {
+        return this.contract.hasPrivilege(address, 1);
+      })
+      .catch(() => {
+        return false;
+      });
+  }
 }

@@ -40,4 +40,12 @@ export class ContractService {
       ) as unknown) as ERC734KeyManager;
     });
   }
+
+  getIsExecutor(address: string): Promise<boolean> {
+    return this.keyManagerService.getIsExecutor(address);
+  }
+
+  getIsManager(address: string): Promise<boolean> {
+    return this.keyManagerService.getIsManager(address);
+  }
 }

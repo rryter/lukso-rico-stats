@@ -6,6 +6,7 @@ describe('Web3Service', () => {
   let service: Web3Service;
 
   beforeEach(() => {
+    window.alert = jest.fn();
     TestBed.configureTestingModule({});
     service = TestBed.inject(Web3Service);
   });

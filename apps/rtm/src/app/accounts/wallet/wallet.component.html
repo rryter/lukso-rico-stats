@@ -1,4 +1,5 @@
 <lukso-loading-inline [loading]="loading"></lukso-loading-inline>
+
 <ng-container *ngIf="account$ | async as account">
   <div class="wrapper" *ngIf="!loading">
     <mat-card class="wallet">
@@ -12,9 +13,9 @@
             $ {{ account.balance | cmcPrice | async | number: '0.0-2' }}
           </div>
         </div>
-        <div class="qr-code">
-          <img [src]="account.qrCode" (click)="navigateToBlockExplorer(account.address)" /><br />
-        </div>
+
+        <lukso-qr-code [address]="account.address"></lukso-qr-code>
+
         <div class="actions" *ngIf="account.isExecutable || account.isManagable">
           <button mat-stroked-button (click)="topUp(account)" [attr.data-cy]="'wallet__top-up'">
             <span>Top Up</span>
@@ -31,8 +32,4 @@
       </mat-card-content>
     </mat-card>
   </div>
-  <!-- <mat-card *ngIf="account.isManagable">
-    <lukso-key-manager [contractAddress]="account.owner"></lukso-key-manager>
-  </mat-card>
-  <lukso-progress [stage]="account.stage"></lukso-progress> -->
 </ng-container>

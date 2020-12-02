@@ -53,6 +53,9 @@ export class Web3Service {
   }
 
   private initializeObservables() {
+    if (!this.provider) {
+      return '';
+    }
     this.provider.on('block', (block) => {
       this.ngZone.run(() => {
         this.blocks$.next(block);

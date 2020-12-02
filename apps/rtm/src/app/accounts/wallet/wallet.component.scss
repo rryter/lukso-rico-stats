@@ -86,18 +86,10 @@ mat-card {
   height: 100px;
 }
 
-.qr-code {
+lukso-qr-code {
   position: absolute;
   right: 30px;
   bottom: 25px;
-  text-align: center;
-  opacity: 0.4;
-  &:hover {
-    opacity: 1;
-    img {
-      cursor: pointer;
-    }
-  }
 }
 
 .actions {

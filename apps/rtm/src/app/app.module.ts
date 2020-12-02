@@ -6,9 +6,6 @@ import { HttpClientModule } from '@angular/common/http';
 import { SharedModule } from './shared/shared.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { LayoutComponent } from '@shared/components/layout/layout.component';
-import { LayoutReducedComponent } from '@shared/components/layout/layout-reduced/layout-reduced.component';
-import { ManagementGuard } from '@shared/guards/management.guard';
 
 @NgModule({
   declarations: [AppComponent],
@@ -28,7 +25,7 @@ import { ManagementGuard } from '@shared/guards/management.guard';
           loadChildren: () => import('./accounts/account.module').then((m) => m.AccountModule),
         },
       ],
-      { initialNavigation: 'enabled', enableTracing: true }
+      { initialNavigation: 'enabled', enableTracing: false }
     ),
     BrowserAnimationsModule,
   ],

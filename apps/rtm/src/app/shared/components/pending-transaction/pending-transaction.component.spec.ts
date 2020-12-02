@@ -2,6 +2,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { MatIconModule } from '@angular/material/icon';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { LoadingIndicatorService } from '@shared/services/loading-indicator.service';
+import { of } from 'rxjs';
 
 import { PendingTransactionComponent } from './pending-transaction.component';
 
@@ -16,7 +17,7 @@ describe('PendingTransactionComponent', () => {
         {
           provide: LoadingIndicatorService,
           useValue: {
-            pendingTransactions: [],
+            pendingTransactions$: of([]),
           },
         },
       ],
