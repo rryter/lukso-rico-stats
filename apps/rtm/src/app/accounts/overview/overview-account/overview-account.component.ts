@@ -1,6 +1,5 @@
-import { Component, Input, OnChanges, OnInit, SimpleChange, SimpleChanges } from '@angular/core';
+import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { Web3Service } from '@shared/services/web3.service';
-import { ERC725Account } from '@twy-gmbh/erc725-playground';
 import { forkJoin, merge, Observable, of, Subject } from 'rxjs';
 import { switchMap, catchError } from 'rxjs/operators';
 import { BytesLike, utils } from 'ethers';

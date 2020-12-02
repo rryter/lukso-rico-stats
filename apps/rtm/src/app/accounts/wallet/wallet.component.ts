@@ -9,7 +9,7 @@ import { LoadingIndicatorService } from '@shared/services/loading-indicator.serv
 import { ProxyAccountService } from '@shared/services/proxy-account.service';
 import { Stages } from '@shared/stages.enum';
 import { Observable, of } from 'rxjs';
-import { catchError, distinctUntilChanged, filter, pluck, switchMap, tap } from 'rxjs/operators';
+import { catchError, distinctUntilChanged, filter, pluck, tap } from 'rxjs/operators';
 import { utils } from 'ethers';
 import { ConfirmDialogOutput } from '@shared/interface/dialog';
 import { ERC725Account, ERC734KeyManager } from '@twy-gmbh/erc725-playground';

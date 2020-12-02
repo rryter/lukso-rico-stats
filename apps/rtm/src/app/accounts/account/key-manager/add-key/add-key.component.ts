@@ -1,9 +1,7 @@
 import { Component, Inject, OnInit } from '@angular/core';
-import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { Privileges, KEY_TYPE } from '@shared/capabilities.enum';
-import { KeyManagerService } from '@shared/services/key-manager.service';
-import { LoadingIndicatorService } from '@shared/services/loading-indicator.service';
+import { Privileges } from '@shared/capabilities.enum';
 import { isETHAddressValidator } from '@shared/validators/web3-address.validator';
 
 @Component({
@@ -23,8 +21,6 @@ export class AddKeyComponent implements OnInit {
   ];
   constructor(
     public dialogRef: MatDialogRef<AddKeyComponent>,
-    private keyManagerService: KeyManagerService,
-    private loadingIndicatorService: LoadingIndicatorService,
     @Inject(MAT_DIALOG_DATA)
     public data: { buttonLabel: string; address: string; privileges: number[] },
     private fb: FormBuilder
@@ -47,7 +43,6 @@ export class AddKeyComponent implements OnInit {
 
   saveNewKey(addKeyForm: FormGroup) {
     if (addKeyForm.valid) {
-      //   this.loadingIndicatorService.showTransactionInfo(`Assigning selected privileges`);
       this.dialogRef.close(addKeyForm.value);
     }
   }

@@ -1,7 +1,7 @@
 import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { Web3Service } from '@shared/services/web3.service';
 import { combineLatest, forkJoin, Observable, of, ReplaySubject } from 'rxjs';
-import { catchError, filter, shareReplay, switchMap, tap } from 'rxjs/operators';
+import { catchError, shareReplay, switchMap, tap } from 'rxjs/operators';
 import { KEY_TYPE } from '@shared/capabilities.enum';
 import { KeyManagerService } from '@shared/services/key-manager.service';
 import { MatDialog } from '@angular/material/dialog';
@@ -11,7 +11,6 @@ import { ContractTransaction, utils } from 'ethers';
 import { LoadingIndicatorService } from '@shared/services/loading-indicator.service';
 import { ERC734KeyManager } from '@twy-gmbh/erc725-playground';
 import { PendingTransactionType } from '@shared/interface/transactions';
-import { isContractDeployed } from '@shared/utils/contracts';
 import { PriviligesItem } from './priviliges/priviliges.component';
 
 export interface KeyManagerData {
