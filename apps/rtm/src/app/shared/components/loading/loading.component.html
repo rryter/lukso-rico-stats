@@ -5,10 +5,8 @@
       <ng-container *ngIf="transactionInfo.from">
         <span class="mat-small">From</span>
         <div class="card">
-          <div class="label mat-small">
-            <mat-chip class="{{ transactionInfo.from.type }}">{{
-              transactionInfo.from.type
-            }}</mat-chip>
+          <div class="label mat-small" [ngClass]="transactionInfo.from.type">
+            {{ transactionInfo.from.type }}
           </div>
           <div class="value address">
             {{ transactionInfo.from.address }}
@@ -19,9 +17,9 @@
       <ng-container *ngIf="transactionInfo.to">
         <span class="mat-small">To</span>
         <div class="card">
-          <span class="label"
-            ><mat-chip>{{ transactionInfo.to.type }}</mat-chip></span
-          >
+          <div class="label mat-small" [ngClass]="transactionInfo.from.type">
+            {{ transactionInfo.from.type }}
+          </div>
           <div class="value address">
             {{ transactionInfo.to.address }}
           </div>

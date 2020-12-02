@@ -9,7 +9,6 @@ describe('ERC 725 Home', () => {
 
   it('should create account and fund it with 100 LYX', () => {
     getCreateAccountButton().click();
-    cy.getByAttr('overview-account__go-to-account-detail').click();
     cy.getByAttr('progress__make-account-managable').click();
     cy.getByAttr('layout__nav__home').click();
     cy.getByAttr('wallet__top-up').click();

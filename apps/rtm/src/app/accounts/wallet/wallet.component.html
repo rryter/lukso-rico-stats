@@ -7,7 +7,7 @@
       <mat-card-content>
         <div class="balances">
           <div class="balance balance--lyx" [attr.data-cy]="'wallet__value'">
-            {{ account.balance | number: '0.0-4' }} LYX
+            {{ account.balance | number: '0.0-3' }} LYX
           </div>
           <div class="balance balance--dollar">
             $ {{ account.balance | cmcPrice | async | number: '0.0-2' }}
