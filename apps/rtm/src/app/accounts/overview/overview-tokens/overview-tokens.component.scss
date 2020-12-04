@@ -1,9 +1,17 @@
+@import '/apps/rtm/src/style-mixins.scss';
+
 :host {
   display: block;
   margin-bottom: 30px;
 }
+
 .overview-list {
   grid-template-columns: repeat(none, minmax(150px, 1fr));
+
+  li {
+    overflow: hidden;
+    @include ambientShadow;
+  }
 }
 
 h3 {

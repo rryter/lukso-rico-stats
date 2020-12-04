@@ -22,7 +22,7 @@ export class AddKeyComponent implements OnInit {
   constructor(
     public dialogRef: MatDialogRef<AddKeyComponent>,
     @Inject(MAT_DIALOG_DATA)
-    public data: { buttonLabel: string; address: string; privileges: number[] },
+    public data: { title: string; buttonText: string; address: string; privileges: number[] },
     private fb: FormBuilder
   ) {
     this.data.privileges = this.data.privileges || [Privileges.EXECUTION];

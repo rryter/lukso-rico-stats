@@ -20,14 +20,7 @@
       [attr.data-cy]="'layout__nav__home'"
       >Overview</a
     >
-    <a
-      class="nav-link"
-      [routerLinkActive]="'nav-link--active'"
-      [routerLink]="['/accounts', accountAddress, 'account']"
-      [routerLinkActiveOptions]="{ exact: true }"
-      [attr.data-cy]="'layout__nav__account'"
-      >Account</a
-    >
+
     <a
       class="nav-link nav-link--deactivated"
       [routerLink]="[accountAddress, 'wallet']"
@@ -45,16 +38,22 @@
       </button>
     </div>
 
-    <div class="user__selection" [matMenuTriggerFor]="menu">
-      <img src="/assets/portrait-placeholder-small.jpg" matRipple />
+    <div class="user__selection">
+      <img src="/assets/portrait-placeholder-small.jpg" matRipple [matMenuTriggerFor]="menu" />
     </div>
-    <mat-menu #menu="matMenu" xPosition="before" yPosition="below">
-      <button
-        *ngFor="let account of accounts; let i = index"
-        mat-menu-item
-        (click)="loadExistingAccount(i)"
-      >
-        {{ account?.address | ethAddressShort }}
+    <mat-menu #menu="matMenu">
+      <button mat-menu-item>
+        <mat-icon>person</mat-icon>
+        <span>Switch Account</span>
+      </button>
+      <button mat-menu-item>
+        <mat-icon>settings</mat-icon>
+        <span>Account Settings</span>
+      </button>
+      <mat-divider></mat-divider>
+      <button mat-menu-item>
+        <mat-icon>exit_to_app</mat-icon>
+        <span>Logout</span>
       </button>
     </mat-menu>
   </div>

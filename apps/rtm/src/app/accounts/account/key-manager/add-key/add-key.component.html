@@ -1,19 +1,19 @@
-<h1>Grant Access</h1>
-<p>You can grant certain privileges to any public LYX Address.</p>
-<br /><br /><br />
+<h1 class="mat-headline">{{ data.title }}</h1>
+<p>Explanation text here.</p>
+<br />
 <form [formGroup]="newKeyForm" (submit)="saveNewKey(newKeyForm)">
-  <h2>Address</h2>
-  <p>
-    <mat-form-field class="form-field" appearance="outline">
-      <mat-label>Public Key</mat-label>
-      <input matInput formControlName="address" [attr.data-cy]="'add-key__address'" />
-      <mat-error *ngIf="newKeyForm.controls['address'].hasError('isETHAddress')">
-        ETH Address check failed
-      </mat-error>
-    </mat-form-field>
-  </p>
+  <ng-container *ngIf="!data.address">
+    <p>
+      <mat-form-field class="form-field">
+        <mat-label>Public Key</mat-label>
+        <input matInput formControlName="address" [attr.data-cy]="'add-key__address'" />
+        <mat-error *ngIf="newKeyForm.controls['address'].hasError('isETHAddress')">
+          ETH Address check failed
+        </mat-error>
+      </mat-form-field>
+    </p>
+  </ng-container>
 
-  <h2>Privileges</h2>
   <lukso-checkbox-list
     *ngIf="selectablePrivileges"
     [items]="selectablePrivileges"
@@ -26,12 +26,12 @@
   </mat-error>
 
   <br /><br />
-  <div>
-    <button mat-raised-button color="primary" type="submit" [attr.data-cy]="'add-key__confirm'">
-      {{ data.buttonLabel }}
-    </button>
-    <button mat-raised-button style="margin-right: 10px" type="button" (click)="onNoClick()">
+  <div mat-dialog-actions align="end">
+    <button mat-button style="margin-right: 10px" type="button" (click)="onNoClick()">
       Cancel
+    </button>
+    <button mat-raised-button color="primary" type="submit" [attr.data-cy]="'add-key__confirm'">
+      {{ data.buttonText }}
     </button>
   </div>
 </form>

@@ -1,12 +1,13 @@
 :host {
   display: block;
-  padding: 50px;
+  width: 400px;
+}
+
+.mat-headline {
+  font-size: 30px;
+  font-weight: bold;
 }
 
 .form-field {
   display: block;
-}
-
-button {
-  margin-right: 8px;
 }

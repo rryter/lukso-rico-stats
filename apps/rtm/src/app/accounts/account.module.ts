@@ -22,6 +22,7 @@ import { KeyValueInfosComponent } from './account/key-value-infos/key-value-info
 import { EditPublicDataComponent } from './account/key-value-infos/edit-public-data/edit-public-data..component';
 import { ManagementGuard } from '@shared/guards/management.guard';
 import { QrCodeComponent } from './wallet/qr-code/qr-code.component';
+import { AssetListItemComponent } from './overview/overview-assets/asset-list-item/asset-list-item.component';
 
 const routes: Routes = [
   {
@@ -55,6 +56,7 @@ const routes: Routes = [
     KeyValueInfosComponent,
     EditPublicDataComponent,
     QrCodeComponent,
+    AssetListItemComponent,
   ],
   imports: [CommonModule, ReactiveFormsModule, RouterModule.forChild(routes), SharedModule],
 })

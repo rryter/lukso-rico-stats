@@ -1,8 +1,8 @@
-<lukso-loading-inline [loading]="loading"></lukso-loading-inline>
+<!-- <lukso-loading-inline [loading]="loading"></lukso-loading-inline> -->
 
 <ng-container *ngIf="account$ | async as account">
   <div class="wrapper" *ngIf="!loading">
-    <mat-card class="wallet">
+    <mat-card class="wallet shadow">
       <lukso-pending-transaction [filter]="pendingTransactionsFilter"></lukso-pending-transaction>
       <mat-card-content>
         <div class="balances">

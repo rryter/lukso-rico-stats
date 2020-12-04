@@ -64,14 +64,16 @@ export class KeyManagerComponent implements OnInit, OnChanges {
   }
 
   openDialog(
-    label: string,
-    data?: { buttonLabel: string; address: string; privileges: number[] }
+    title: string,
+    buttonText: string,
+    key?: { address: string; privileges: number[] }
   ): void {
     const dialogRef = this.dialog.open(AddKeyComponent, {
       data: {
-        buttonLabel: label,
-        address: data?.address,
-        privileges: data?.privileges,
+        title,
+        buttonText,
+        address: key?.address,
+        privileges: key?.privileges,
       },
     });
 
@@ -127,11 +129,11 @@ export class KeyManagerComponent implements OnInit, OnChanges {
   }
 
   onShowEditDialog(key: any) {
-    this.openDialog('Update', { ...key });
+    this.openDialog('Update Priviliges', 'Update', { ...key });
   }
 
   onAddNewKey() {
-    this.openDialog('Add Key');
+    this.openDialog('Add Key', 'Save');
   }
 
   private getAllKeys(): Promise<string[]> {

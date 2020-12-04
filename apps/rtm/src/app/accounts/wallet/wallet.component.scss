@@ -47,6 +47,7 @@ mat-card {
     #795397
   );
   @include corners;
+  @include ambientShadow;
   padding: 20px 30px;
   width: 70%;
   color: white !important;

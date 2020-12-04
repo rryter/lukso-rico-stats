@@ -82,5 +82,6 @@ mat-toolbar {
     margin-bottom: 25px;
     height: 50px;
     border-radius: 100%;
+    @include ambientShadow;
   }
 }

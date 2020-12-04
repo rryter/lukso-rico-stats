@@ -21,8 +21,8 @@ $fontConfig: (
   title: mat-typography-level(20px, 32px, 500, 'Montserrat', 0.0075em),
   subheading-2: mat-typography-level(16px, 28px, 400, 'Montserrat', 0.0094em),
   subheading-1: mat-typography-level(15px, 24px, 500, 'Montserrat', 0.0067em),
-  body-2: mat-typography-level(18px, 24px, 500, 'Montserrat', 0.0179em),
-  body-1: mat-typography-level(18px, 20px, 400, 'Montserrat', 0.0179em),
+  body-2: mat-typography-level(18px, 1.4, 500, 'Montserrat', 0.0179em),
+  body-1: mat-typography-level(18px, 1.6, 400, 'Montserrat', 0.0179em),
   button: mat-typography-level(18px, 18px, 500, 'Montserrat', 0.0893em),
   caption: mat-typography-level(12px, 20px, 400, 'Montserrat', 0.0333em),
   input: mat-typography-level(inherit, 1.125, 400, 'Montserrat', 1.5px),
@@ -255,6 +255,10 @@ html {
   color: white;
 }
 
+body {
+  border-top: 5px solid var(--primary-color);
+}
+
 .spacer {
   flex: 1 1 auto;
 }
@@ -273,10 +277,6 @@ mat-dialog-container ng-component {
 
 mat-card {
   margin: 10px;
-}
-
-div.mat-dialog-content {
-  overflow: visible;
 }
 
 .mat-progress-spinner circle,
@@ -323,16 +323,18 @@ div.mat-dialog-content {
   background: rgba(255, 0, 0, 0.3);
 }
 
+.mat-button,
 .mat-stroked-button,
 .mat-raised-button {
   padding: 10px 20px !important;
   margin-top: 30px;
 }
 
-.mat-dialog-container {
-  border-radius: 20px !important;
-}
-
 .cdk-overlay-dark-backdrop {
   background: rgba(0, 0, 0, 0.7);
+}
+
+.mat-dialog-container {
+  padding: 0 !important;
+  border-top: 10px solid var(--primary-color);
 }

@@ -1,0 +1,31 @@
+@import '/apps/rtm/src/style-mixins.scss';
+
+:host {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255, 255, 255, 0.644);
+  position: relative;
+  text-align: center;
+  @include ambientShadow;
+  @include corners;
+}
+
+h3 {
+  text-transform: uppercase;
+  font-weight: bold;
+  color: #968e8e;
+  margin-bottom: 5px;
+  width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+img {
+  mix-blend-mode: multiply;
+  padding: 20px;
+  max-width: 200px;
+  max-height: 90px;
+}
