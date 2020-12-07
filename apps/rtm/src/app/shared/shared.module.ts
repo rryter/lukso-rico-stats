@@ -43,9 +43,10 @@ import { PendingTransactionComponent } from './components/pending-transaction/pe
 import { ImageCropperModule } from 'ngx-image-cropper';
 import { ImageCropperComponent } from './components/image-cropper/image-cropper.component';
 import { ImageCropperDialogComponent } from './components/dialog/image-cropper-dialog/image-cropper-dialog.component';
-import { ManagementGuard } from '@shared/guards/management.guard';
 import { NavigationComponent } from './components/layout/navigation/navigation.component';
 import { HumanReadableNumberPipe } from './pipes/human-readable-number.pipe';
+import { ButtonComponent } from './components/button/button.component';
+import { MatTooltipModule } from '@angular/material/tooltip';
 
 const materialModules = [
   MatTableModule,
@@ -72,6 +73,7 @@ const materialModules = [
   MatRippleModule,
   MatBadgeModule,
   MatCheckboxModule,
+  MatTooltipModule,
 ];
 @NgModule({
   declarations: [
@@ -93,6 +95,7 @@ const materialModules = [
     ImageCropperDialogComponent,
     NavigationComponent,
     HumanReadableNumberPipe,
+    ButtonComponent,
   ],
   imports: [
     RouterModule,
@@ -124,6 +127,7 @@ const materialModules = [
     ...materialModules,
     PendingTransactionComponent,
     ImageCropperComponent,
+    ButtonComponent,
   ],
 })
 export class SharedModule {}

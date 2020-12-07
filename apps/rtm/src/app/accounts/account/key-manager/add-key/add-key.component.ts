@@ -20,9 +20,9 @@ export class AddKeyComponent implements OnInit {
     { value: 2, label: 'Execution', selected: false },
   ];
   constructor(
-    public dialogRef: MatDialogRef<AddKeyComponent>,
     @Inject(MAT_DIALOG_DATA)
     public data: { title: string; buttonText: string; address: string; privileges: number[] },
+    public dialogRef: MatDialogRef<AddKeyComponent>,
     private fb: FormBuilder
   ) {
     this.data.privileges = this.data.privileges || [Privileges.EXECUTION];

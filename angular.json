@@ -21,15 +21,8 @@
             "polyfills": "apps/rtm/src/polyfills.ts",
             "tsConfig": "apps/rtm/tsconfig.app.json",
             "aot": true,
-            "assets": [
-              "apps/rtm/src/favicon.ico",
-              "apps/rtm/src/assets",
-              "apps/rtm/src/.htaccess"
-            ],
-            "styles": [
-              "apps/rtm/src/styles.scss",
-              "node_modules/cropperjs/dist/cropper.css"
-            ],
+            "assets": ["apps/rtm/src/favicon.ico", "apps/rtm/src/assets", "apps/rtm/src/.htaccess"],
+            "styles": ["apps/rtm/src/styles.scss", "node_modules/cropperjs/dist/cropper.css"],
             "scripts": []
           },
           "configurations": {
@@ -99,10 +92,7 @@
               "apps/rtm/tsconfig.spec.json",
               "apps/rtm/.storybook/tsconfig.json"
             ],
-            "exclude": [
-              "**/node_modules/**",
-              "!apps/rtm/**/*"
-            ]
+            "exclude": ["**/node_modules/**", "!apps/rtm/**/*"]
           }
         },
         "test": {
@@ -146,6 +136,16 @@
               "quiet": true
             }
           }
+        },
+        "compodoc": {
+          "builder": "@nrwl/workspace:run-commands",
+          "options": {
+            "commands": [
+              {
+                "command": "npx compodoc -p apps/rtm/tsconfig.app.json"
+              }
+            ]
+          }
         }
       }
     },
@@ -173,13 +173,8 @@
         "lint": {
           "builder": "@angular-devkit/build-angular:tslint",
           "options": {
-            "tsConfig": [
-              "apps/rtm-e2e/tsconfig.e2e.json"
-            ],
-            "exclude": [
-              "**/node_modules/**",
-              "!apps/rtm-e2e/**/*"
-            ]
+            "tsConfig": ["apps/rtm-e2e/tsconfig.e2e.json"],
+            "exclude": ["**/node_modules/**", "!apps/rtm-e2e/**/*"]
           }
         }
       }

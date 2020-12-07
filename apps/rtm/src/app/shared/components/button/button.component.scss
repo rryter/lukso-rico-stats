@@ -1,0 +1,17 @@
+:host {
+  display: flex;
+}
+
+.mat-button-wrapper {
+  display: flex;
+  flex-direction: column;
+}
+
+.loading:disabled {
+  color: white;
+  background: #3f2688;
+}
+
+mat-icon {
+  margin-left: 2px;
+}

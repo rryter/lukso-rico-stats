@@ -30,7 +30,8 @@
     <button mat-button style="margin-right: 10px" type="button" (click)="onNoClick()">
       Cancel
     </button>
-    <button mat-raised-button color="primary" type="submit" [attr.data-cy]="'add-key__confirm'">
+    <lukso-button [text]="data.buttonText"></lukso-button>
+    <button>
       {{ data.buttonText }}
     </button>
   </div>

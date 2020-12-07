@@ -1,0 +1,17 @@
+<button
+  mat-raised-button
+  color="primary"
+  type="submit"
+  [attr.data-cy]="'add-key__confirm'"
+  (click)="onAction()"
+  [ngClass]="{ loading: loading }"
+  [disabled]="loading.status || disabled"
+>
+  <ng-container *ngIf="loading.status">
+    {{ loading.text }}
+    <mat-icon>
+      <mat-spinner [diameter]="20"></mat-spinner>
+    </mat-icon>
+  </ng-container>
+  <ng-container *ngIf="!loading.status"> {{ text }} </ng-container>
+</button>

@@ -23,7 +23,7 @@ $fontConfig: (
   subheading-1: mat-typography-level(15px, 24px, 500, 'Montserrat', 0.0067em),
   body-2: mat-typography-level(18px, 1.4, 500, 'Montserrat', 0.0179em),
   body-1: mat-typography-level(18px, 1.6, 400, 'Montserrat', 0.0179em),
-  button: mat-typography-level(18px, 18px, 500, 'Montserrat', 0.0893em),
+  button: mat-typography-level(14px, 1.5px, 500, 'Montserrat', 0.0893em),
   caption: mat-typography-level(12px, 20px, 400, 'Montserrat', 0.0333em),
   input: mat-typography-level(inherit, 1.125, 400, 'Montserrat', 1.5px),
 );
@@ -148,9 +148,9 @@ $mat-dark-theme-background: (
 // Theme Config
 
 body {
-  --primary-color: #0077bd;
-  --primary-lighter-color: #b3d6eb;
-  --primary-darker-color: #005aa6;
+  --primary-color: #221155;
+  --primary-lighter-color: #3f2688;
+  --primary-darker-color: #1b0f3f;
   --text-primary-color: #{$light-primary-text};
   --text-primary-lighter-color: #{$dark-primary-text};
   --text-primary-darker-color: #{$light-primary-text};
@@ -158,9 +158,9 @@ body {
 }
 
 $mat-primary: (
-  main: #0077bd,
-  lighter: #b3d6eb,
-  darker: #005aa6,
+  main: #221155,
+  lighter: #3f2688,
+  darker: #1b0f3f,
   200: #0077bd,
   // For slide toggle,
   contrast:
@@ -326,7 +326,7 @@ mat-card {
 .mat-button,
 .mat-stroked-button,
 .mat-raised-button {
-  padding: 10px 20px !important;
+  padding: 10px 30px !important;
   margin-top: 30px;
 }
 
