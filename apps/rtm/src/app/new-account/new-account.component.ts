@@ -1,5 +1,6 @@
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { Router } from '@angular/router';
+import { PendingTransactionType } from '@shared/interface/transactions';
 import { LoadingIndicatorService } from '@shared/services/loading-indicator.service';
 import { ProxyAccountService } from '@shared/services/proxy-account.service';
 
@@ -27,21 +28,19 @@ export class NewAccountComponent implements OnInit {
   ngOnInit(): void {}
 
   deployProxyAccount() {
-    this.loadingIndicatorService.showTransactionInfo({
-      title: `Creating Proxy Account`,
-      value: '',
+    this.router.navigate(['/sign-up/account']);
+    const action = this.proxyAccountService.deployProxyAccount().then((contract) => {
+      this.accounts.push({ address: contract?.address, stage: 2 });
+      window.localStorage.setItem('accounts', JSON.stringify(this.accounts));
+      this.router.navigate(['/sign-up', contract?.address, 'image']);
+      return contract;
     });
 
-    this.proxyAccountService
-      .deployProxyAccount()
-      .then((contract) => {
-        this.accounts.push({ address: contract.address, stage: 2 });
-        window.localStorage.setItem('accounts', JSON.stringify(this.accounts));
-        this.router.navigate(['accounts', contract.address, 'account']);
-      })
-      .finally(() => {
-        this.loadingIndicatorService.hideBlockerBackdrop();
-      });
+    this.loadingIndicatorService.addPromise({
+      promise: action,
+      type: PendingTransactionType.All,
+      action: 'Deploying ERC-725 Account',
+    });
   }
 
   loadExistingAccount(index: number) {

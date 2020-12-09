@@ -13,29 +13,26 @@ export class OverviewAccountComponent implements OnInit, OnChanges {
   @Input() hideText = false;
 
   contractChanged$ = new Subject();
-  accountDetails$: Observable<{ firstName: string; lastName: string; bio: string }>;
+  accountDetails$: Observable<{ nickName: string; bio: string }>;
 
   constructor(private web3Service: Web3Service) {
     this.accountDetails$ = merge(this.web3Service.reloadTrigger$, this.contractChanged$).pipe(
       switchMap(() => {
         if (this.accountContract) {
           return forkJoin({
-            firstName: this.accountContract
-              .getData(utils.formatBytes32String('firstName'))
-              .then((result: BytesLike) => utils.toUtf8String(result)),
-            lastName: this.accountContract
-              .getData(utils.formatBytes32String('lastName'))
+            nickName: this.accountContract
+              .getData(utils.formatBytes32String('nickName'))
               .then((result: BytesLike) => utils.toUtf8String(result)),
             bio: this.accountContract
               .getData(utils.formatBytes32String('bio'))
               .then((result: BytesLike) => utils.toUtf8String(result)),
           }).pipe(
             catchError(() => {
-              return of({ firstName: 'Error', lastName: 'WHen', bio: 'Loading' });
+              return of({ nickName: 'WHen', bio: 'Loading' });
             })
           );
         } else {
-          return of({ firstName: '', lastName: '', bio: '' });
+          return of({ nickName: '', bio: '' });
         }
       })
     ) as any;

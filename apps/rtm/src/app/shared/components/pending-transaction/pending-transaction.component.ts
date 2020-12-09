@@ -1,9 +1,19 @@
 import { trigger, transition, style, animate } from '@angular/animations';
-import { Component, OnInit, DoCheck, Input } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  DoCheck,
+  Input,
+  HostBinding,
+  SimpleChanges,
+  OnChanges,
+  Output,
+  EventEmitter,
+} from '@angular/core';
 import { PendingTransaction, PendingTransactionType } from '@shared/interface/transactions';
 import { LoadingIndicatorService } from '@shared/services/loading-indicator.service';
 import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { map, tap } from 'rxjs/operators';
 
 @Component({
   selector: 'lukso-pending-transaction',
@@ -19,10 +29,14 @@ import { map } from 'rxjs/operators';
     ]),
   ],
 })
-export class PendingTransactionComponent implements OnInit, DoCheck {
+export class PendingTransactionComponent implements OnInit, OnChanges {
   @Input() filter: PendingTransactionType = PendingTransactionType.All;
+  @Input() darkMode = false;
+  @Output() finished = new EventEmitter();
+  @HostBinding('class.darkMode') darkModeClass: boolean = false;
+
   pendingTransactions$: Observable<PendingTransaction[]>;
-  show = false;
+
   constructor(private loadingIndicatorService: LoadingIndicatorService) {
     this.pendingTransactions$ = this.loadingIndicatorService.pendingTransactions$.pipe(
       map((pendingTransactions) => {
@@ -32,11 +46,20 @@ export class PendingTransactionComponent implements OnInit, DoCheck {
           }
           return true;
         });
+      }),
+      tap((pendingTransactions) => {
+        if (pendingTransactions.length === 0) {
+          this.finished.emit();
+        }
       })
     );
   }
 
   ngOnInit(): void {}
-
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes.darkMode) {
+      this.darkModeClass = changes.darkMode.currentValue;
+    }
+  }
   ngDoCheck() {}
 }

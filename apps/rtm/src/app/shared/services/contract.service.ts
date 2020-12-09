@@ -21,11 +21,8 @@ export class ContractService {
 
   getAccountDataStore(accountContract: ERC725Account) {
     return forkJoin({
-      firstName: accountContract
-        ?.getData(utils.formatBytes32String('firstName'))
-        .then((result: BytesLike) => utils.toUtf8String(result)),
-      lastName: accountContract
-        ?.getData(utils.formatBytes32String('lastName'))
+      nickName: accountContract
+        ?.getData(utils.formatBytes32String('nickName'))
         .then((result: BytesLike) => utils.toUtf8String(result)),
       bio: accountContract
         ?.getData(utils.formatBytes32String('bio'))

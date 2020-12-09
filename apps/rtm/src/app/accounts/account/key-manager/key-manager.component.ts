@@ -80,11 +80,11 @@ export class KeyManagerComponent implements OnInit, OnChanges {
     dialogRef.afterClosed().subscribe((priviligesItem: PriviligesItem) => {
       if (priviligesItem) {
         const { address, privileges } = priviligesItem;
-        this.loadingIndicatorService.addPendingTransaction(
-          this.keyManagerService.contract.setKey(address, privileges, KEY_TYPE.ECDSA),
-          PendingTransactionType.KeyManager,
-          'Adding / Updating Key'
-        );
+        this.loadingIndicatorService.addPromise({
+          promise: this.keyManagerService.contract.setKey(address, privileges, KEY_TYPE.ECDSA),
+          type: PendingTransactionType.KeyManager,
+          action: 'Adding / Updating Key',
+        });
       } else {
         console.log('Abort Abort Abort');
       }

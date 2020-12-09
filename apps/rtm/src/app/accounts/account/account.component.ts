@@ -81,10 +81,10 @@ export class AccountComponent implements OnInit {
     } else {
       tx = accountContract.setDataWithArray(keyValuePairs);
     }
-    this.loadingIndicatorService.addPendingTransaction(
-      tx,
-      PendingTransactionType.Profile,
-      'Update Profile: Please confirm the transaction...'
-    );
+    this.loadingIndicatorService.addPromise({
+      promise: tx,
+      type: PendingTransactionType.Profile,
+      action: 'Saving Profile...',
+    });
   };
 }

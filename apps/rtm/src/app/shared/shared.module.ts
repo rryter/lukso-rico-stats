@@ -47,6 +47,8 @@ import { NavigationComponent } from './components/layout/navigation/navigation.c
 import { HumanReadableNumberPipe } from './pipes/human-readable-number.pipe';
 import { ButtonComponent } from './components/button/button.component';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { DragAndDropDirective } from './directives/drag-and-drop.directive';
+import { FileSizePipe } from './pipes/file-size.pipe';
 
 const materialModules = [
   MatTableModule,
@@ -81,6 +83,7 @@ const materialModules = [
     EthAddressShortPipe,
     CmcPricePipe,
     PrivilegePipe,
+    FileSizePipe,
     ConfirmComponent,
     LayoutComponent,
     AmountComponent,
@@ -96,6 +99,7 @@ const materialModules = [
     NavigationComponent,
     HumanReadableNumberPipe,
     ButtonComponent,
+    DragAndDropDirective,
   ],
   imports: [
     RouterModule,
@@ -115,6 +119,7 @@ const materialModules = [
     EthAddressShortPipe,
     CmcPricePipe,
     PrivilegePipe,
+    FileSizePipe,
     HumanReadableNumberPipe,
     LayoutComponent,
     LayoutReducedComponent,
@@ -128,6 +133,7 @@ const materialModules = [
     PendingTransactionComponent,
     ImageCropperComponent,
     ButtonComponent,
+    DragAndDropDirective,
   ],
 })
 export class SharedModule {}

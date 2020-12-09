@@ -1,6 +1,7 @@
 :host {
   display: block;
-  height: 100vh;
+  height: calc(100vh - 5px);
+  box-sizing: border-box;
 }
 
 lukso-navigation {
@@ -8,6 +9,13 @@ lukso-navigation {
   left: 0;
   top: 0;
   z-index: 100;
-  width: 100vw;
+  width: 100%;
   overflow: hidden;
+}
+
+footer {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
 }

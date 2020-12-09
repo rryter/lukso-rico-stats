@@ -83,14 +83,14 @@ export class WalletComponent implements OnInit {
           },
           value: dialogOutput?.value,
         });
-        this.loadingIndicatorService.addPendingTransaction(
-          this.web3Service.signer.sendTransaction({
+        this.loadingIndicatorService.addPromise({
+          promise: this.web3Service.signer.sendTransaction({
             to: account.address,
             value: utils.parseEther(dialogOutput.value),
           }),
-          PendingTransactionType.Wallet,
-          `Topping up: ${dialogOutput.value} LYX`
-        );
+          type: PendingTransactionType.Wallet,
+          action: `Topping up: ${dialogOutput.value} LYX`,
+        });
       }
     });
   }
@@ -138,11 +138,11 @@ export class WalletComponent implements OnInit {
         '0x00',
       ]);
 
-      this.loadingIndicatorService.addPendingTransaction(
-        this.keyManagerService.contract.execute(abi),
-        PendingTransactionType.Wallet,
-        `Withdrawing ${dialogOutput.value} LYX`
-      );
+      this.loadingIndicatorService.addPromise({
+        promise: this.keyManagerService.contract.execute(abi),
+        type: PendingTransactionType.Wallet,
+        action: `Withdrawing ${dialogOutput.value} LYX`,
+      });
     }
   }
 }

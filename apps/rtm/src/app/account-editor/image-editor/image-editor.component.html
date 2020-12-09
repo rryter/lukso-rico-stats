@@ -1,0 +1,19 @@
+<h1>Upload an Image</h1>
+<h2>Step 1 of 3</h2>
+<div class="image-placeholder" appDnd (fileDropped)="onFileDropped($event)">
+  <img [src]="imageSource" id="cropper" />
+  <div class="droppable"></div>
+</div>
+<input
+  type="file"
+  #fileDropRef
+  id="fileDropRef"
+  multiple
+  (change)="fileBrowseHandler($event.target.files)"
+/>
+<div class="page-actions">
+  <div>
+    <button mat-button (click)="cancel()">Cancel</button>
+    <button mat-raised-button color="primary" (click)="next()">Next</button>
+  </div>
+</div>

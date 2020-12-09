@@ -39,11 +39,8 @@ export class KeyValueInfosComponent implements OnInit, OnChanges {
     ]).pipe(
       switchMap(([account]) => {
         return forkJoin({
-          firstName: account
-            .getData(utils.formatBytes32String('firstName'))
-            .then((result: BytesLike) => utils.toUtf8String(result)),
-          lastName: account
-            .getData(utils.formatBytes32String('lastName'))
+          nickName: account
+            .getData(utils.formatBytes32String('nickName'))
             .then((result: BytesLike) => utils.toUtf8String(result)),
           bio: account
             .getData(utils.formatBytes32String('bio'))
@@ -52,7 +49,7 @@ export class KeyValueInfosComponent implements OnInit, OnChanges {
       }),
       catchError((error) => {
         console.warn(error);
-        return of({ firsName: '', lastName: '', bio: '', error });
+        return of({ nickName: '', bio: '', error });
       })
     );
   }

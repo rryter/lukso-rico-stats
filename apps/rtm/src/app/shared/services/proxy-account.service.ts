@@ -7,6 +7,8 @@ import { combineLatest, of, NEVER, forkJoin, Observable } from 'rxjs';
 import { switchMap, shareReplay, catchError } from 'rxjs/operators';
 import { KeyManagerService } from './key-manager.service';
 import { LoadingIndicatorService } from './loading-indicator.service';
+import { ContractTransaction, Transaction } from 'ethers';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root',
@@ -16,6 +18,7 @@ export class ProxyAccountService {
 
   constructor(
     private web3Service: Web3Service,
+    private router: Router,
     private loadingIndicatorService: LoadingIndicatorService,
     private keyManagerService: KeyManagerService
   ) {}
@@ -78,8 +81,12 @@ export class ProxyAccountService {
 
   async deployProxyAccount() {
     const signer = this.web3Service.signer;
-    this.contract = await new ERC725AccountFactory(signer).deploy(this.web3Service.selectedAddress);
-    await this.contract.deployed();
+    this.contract = await new ERC725AccountFactory(signer)
+      .deploy(this.web3Service.selectedAddress)
+      .catch(() => {
+        this.router.navigate(['/']);
+        return undefined;
+      });
 
     return this.contract;
   }

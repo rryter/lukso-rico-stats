@@ -24,6 +24,11 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
           path: 'accounts',
           loadChildren: () => import('./accounts/account.module').then((m) => m.AccountModule),
         },
+        {
+          path: 'sign-up',
+          loadChildren: () =>
+            import('./account-editor/account-editor.module').then((m) => m.AccountEditorModule),
+        },
       ],
       { initialNavigation: 'enabled', enableTracing: false }
     ),

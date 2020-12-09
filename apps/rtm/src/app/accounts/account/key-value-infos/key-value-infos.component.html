@@ -1,6 +1,6 @@
 <h1>Public Data</h1>
 <div class="public-data" *ngIf="accountKeyValueInfos$ | async as data">
-  <ng-container *ngIf="!data.firstName && !data.lastName && !data.bio">
+  <ng-container *ngIf="!data.nickName && !data.bio">
     <h2>Account - ERC725</h2>
     <p>
       Here you are going to be able to edit the key -> value pairs of data on your account. For now
@@ -8,14 +8,11 @@
     </p></ng-container
   >
 
-  <ng-container *ngIf="data.firstName">
-    <h2 class="key">First Name</h2>
-    <p class="value">{{ data.firstName }}</p>
+  <ng-container *ngIf="data.nickName">
+    <h2 class="key">Nick Name</h2>
+    <p class="value">{{ data.nickName }}</p>
   </ng-container>
-  <ng-container *ngIf="data.lastName">
-    <h2 class="key">Last Name</h2>
-    <p class="value">{{ data.lastName }}</p>
-  </ng-container>
+
   <ng-container *ngIf="data.bio">
     <h2 class="key">Bio</h2>
     <p class="value">{{ data.bio }}</p>

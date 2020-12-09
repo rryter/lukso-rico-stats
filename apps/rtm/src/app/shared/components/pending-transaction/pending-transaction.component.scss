@@ -4,10 +4,14 @@
   box-sizing: border-box;
   display: block;
   position: absolute;
-  right: 0;
-  top: 0;
-  color: white;
+  top: 50px;
+  right: 50px;
+  color: black;
   font-size: 12px;
+}
+
+:host(.darkMode) {
+  color: white;
 }
 
 div {
@@ -31,9 +35,4 @@ li {
 .inline-spinner {
   display: inline-block;
   margin-left: 3px;
-}
-
-.mat-icon {
-  display: block;
-  margin-right: 3px;
 }

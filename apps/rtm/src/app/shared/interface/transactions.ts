@@ -1,7 +1,7 @@
-import { Transaction } from '@ethersproject/transactions';
+import { Contract, ContractTransaction } from 'ethers';
 
 export interface PendingTransaction {
-  transaction: Transaction;
+  promise: Contract | ContractTransaction | undefined;
   type: PendingTransactionType;
   action: string;
 }

@@ -256,7 +256,31 @@ html {
 }
 
 body {
+  box-sizing: border-box;
   border-top: 5px solid var(--primary-color);
+}
+
+h1,
+h2 {
+  color: var(--primary-color);
+}
+
+h1 {
+  font-size: 30px;
+  font-weight: bold !important;
+  line-height: 37px;
+  padding: 0;
+  margin: 0 !important;
+}
+
+h2 {
+  font-size: 16px;
+  font-weight: 500;
+  opacity: 0.3;
+}
+
+.form-field {
+  display: block;
 }
 
 .spacer {
@@ -277,11 +301,6 @@ mat-dialog-container ng-component {
 
 mat-card {
   margin: 10px;
-}
-
-.mat-progress-spinner circle,
-.mat-spinner circle {
-  stroke: white;
 }
 
 // OVERVIEW
@@ -338,3 +357,15 @@ mat-card {
   padding: 0 !important;
   border-top: 10px solid var(--primary-color);
 }
+
+// .page-actions {
+//   flex-grow: 1;
+//   display: flex;
+//   align-items: flex-end;
+
+//   > div {
+//     width: 100%;
+//     display: flex;
+//     justify-content: space-between;
+//   }
+// }

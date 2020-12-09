@@ -4,6 +4,7 @@ export function getProviderAndSigner():
   | { provider: ethers.providers.Web3Provider; signer: ethers.Signer }
   | undefined {
   if (window.ethereum) {
+    window.ethereum.enable();
     window.ethereum.autoRefreshOnNetworkChange = false;
     const provider = new ethers.providers.Web3Provider(window.ethereum);
     provider.pollingInterval = 2000;

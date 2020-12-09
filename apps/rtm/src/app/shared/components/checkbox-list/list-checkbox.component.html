@@ -3,6 +3,7 @@
     <div *ngIf="filteredCheckboxes.length > 0; else noMatches">
       <p>
         <mat-checkbox
+          color="primary"
           [attr.e2e-test-checkbox]="'all'"
           formControlName="allSelected"
           (change)="toggleAll(items, allSelected.value)"
@@ -15,6 +16,7 @@
       <ng-container *ngFor="let item of filteredCheckboxes" [formGroup]="item">
         <div>
           <mat-checkbox
+            color="primary"
             [attr.e2e-test-checkbox]="item.value.label"
             formControlName="selected"
             (change)="selectedItemsChanged()"
