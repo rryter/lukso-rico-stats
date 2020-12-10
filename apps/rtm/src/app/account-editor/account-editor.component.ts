@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+import { ActivatedRoute, RouterOutlet } from '@angular/router';
 import { fader } from '@shared/animaitons/route.animation';
+import { Contracts } from '@shared/interface/contracts';
+import { Observable } from 'rxjs';
+import { pluck } from 'rxjs/operators';
 
 @Component({
   selector: 'lukso-account-editor',
@@ -9,7 +12,10 @@ import { fader } from '@shared/animaitons/route.animation';
   animations: [fader],
 })
 export class AccountEditorComponent implements OnInit {
-  constructor() {}
+  contracts$: Observable<Contracts>;
+  constructor(private activatedRoute: ActivatedRoute) {
+    this.contracts$ = this.activatedRoute.data.pipe(pluck('contracts'));
+  }
 
   ngOnInit(): void {}
 

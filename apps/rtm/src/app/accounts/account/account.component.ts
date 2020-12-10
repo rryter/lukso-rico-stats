@@ -15,7 +15,7 @@ import { switchMap, map, shareReplay, withLatestFrom, tap } from 'rxjs/operators
 })
 export class AccountComponent implements OnInit {
   accountContract$: Observable<ERC725Account>;
-  keyManagerContract$: Observable<ERC734KeyManager>;
+  keyManagerContract$: Observable<ERC734KeyManager | undefined>;
   accountData$: Observable<any>;
   saveTrigger$ = new Subject<
     {
@@ -34,10 +34,7 @@ export class AccountComponent implements OnInit {
     );
 
     this.keyManagerContract$ = this.accountContract$.pipe(
-      switchMap((accountContract) => this.contractService.getKeyManagerContract(accountContract)),
-      tap((asd) => {
-        console.log(asd);
-      })
+      switchMap((accountContract) => this.contractService.getKeyManagerContract(accountContract))
     );
 
     this.accountData$ = this.accountContract$.pipe(

@@ -23,25 +23,7 @@ export class EditPublicDataComponent implements OnInit, OnChanges {
     );
   }
 
-  ngOnInit(): void {
-    // const image = document.querySelector('#cropper') as HTMLImageElement;
-    // const cropper = new Cropper(image, {
-    //   viewMode: 3,
-    //   dragMode: 'move',
-    //   aspectRatio: 300 / 400,
-    //   autoCropArea: 1,
-    //   restore: false,
-    //   modal: false,
-    //   guides: true,
-    //   highlight: false,
-    //   cropBoxMovable: false,
-    //   cropBoxResizable: false,
-    //   toggleDragModeOnDblclick: false,
-    //   crop(event) {
-    //     console.log(event);
-    //   },
-    // });
-  }
+  ngOnInit(): void {}
   ngOnChanges(changes: SimpleChanges) {
     if (changes.data.currentValue) {
       this.form.setValue(changes.data.currentValue);

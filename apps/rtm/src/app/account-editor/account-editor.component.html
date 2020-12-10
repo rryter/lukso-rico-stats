@@ -5,6 +5,14 @@
     <section class="account" [@routeAnimations]="prepareRoute(outlet)">
       <router-outlet #outlet="outlet"></router-outlet>
     </section>
-    <section class="infos"></section>
+    <section class="infos">
+      <ng-container *ngIf="contracts$ | async as contracts">
+        <lukso-key-manager
+          *ngIf="contracts.keyManagerContract"
+          [keyManagerContract]="contracts.keyManagerContract"
+          [accountAddress]="contracts.accountContract.address"
+        ></lukso-key-manager>
+      </ng-container>
+    </section>
   </main>
 </lukso-layout-reduced>

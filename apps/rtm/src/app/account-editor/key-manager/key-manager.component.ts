@@ -81,12 +81,10 @@ export class KeyManagerComponent implements OnInit, OnChanges {
       if (priviligesItem) {
         const { address, privileges } = priviligesItem;
         this.loadingIndicatorService.addPromise({
-          promise: this.keyManagerService.contract.setKey(address, privileges, KEY_TYPE.ECDSA),
+          promise: this.keyManagerService.contract!.setKey(address, privileges, KEY_TYPE.ECDSA),
           type: PendingTransactionType.KeyManager,
           action: 'Adding / Updating Key',
         });
-      } else {
-        console.log('Abort Abort Abort');
       }
     });
   }
@@ -152,7 +150,7 @@ export class KeyManagerComponent implements OnInit, OnChanges {
     key: string,
     keys: string[]
   ): Promise<{ address: string; keyType: number; privileges: number[] }> {
-    return this.keyManagerService.contract.getKey(key).then((result) => {
+    return this.keyManagerService.contract!.getKey(key).then((result) => {
       const { _keyAddress, _privilegesLUT, _keyType } = result;
       return {
         isCurrentWallet:

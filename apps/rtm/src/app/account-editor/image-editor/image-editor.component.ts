@@ -95,13 +95,17 @@ export class ImageEditorComponent implements OnInit {
   }
 
   next() {
-    this.handleImageUpload(this.cropper?.getCroppedCanvas() as HTMLCanvasElement).then(
-      (compressedFile) => {
-        console.warn('IPFS upload not yet implemented');
-        console.log(compressedFile);
-        this.router.navigate(['../profile'], { relativeTo: this.activatedRoute });
-      }
-    );
+    if (this.cropper) {
+      this.handleImageUpload(this.cropper?.getCroppedCanvas() as HTMLCanvasElement).then(
+        (compressedFile) => {
+          console.warn('IPFS upload not yet implemented');
+          console.log(compressedFile);
+          this.router.navigate(['../profile'], { relativeTo: this.activatedRoute });
+        }
+      );
+    } else {
+      this.router.navigate(['../profile'], { relativeTo: this.activatedRoute });
+    }
   }
 
   cancel() {

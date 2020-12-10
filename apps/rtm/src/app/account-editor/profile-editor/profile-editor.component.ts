@@ -9,13 +9,15 @@ import {
 } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
+import { AccountData } from '@shared/interface/account';
+import { Contracts } from '@shared/interface/contracts';
 import { PendingTransactionType } from '@shared/interface/transactions';
 import { ContractService } from '@shared/services/contract.service';
 import { LoadingIndicatorService } from '@shared/services/loading-indicator.service';
 import { ERC725Account, ERC734KeyManager } from '@twy-gmbh/erc725-playground';
 import { utils } from 'ethers';
 import { Observable, Subject } from 'rxjs';
-import { map, shareReplay, switchMap, tap, withLatestFrom } from 'rxjs/operators';
+import { map, pluck, shareReplay, switchMap, tap, withLatestFrom } from 'rxjs/operators';
 
 export interface Profile {
   nickName: string;
@@ -29,9 +31,7 @@ export interface Profile {
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ProfileEditorComponent implements OnInit {
-  accountContract$: Observable<ERC725Account>;
-  keyManagerContract$: Observable<ERC734KeyManager>;
-  accountData$: Observable<any>;
+  contracts$: Observable<Contracts>;
   form: FormGroup;
   saveTrigger$ = new Subject<
     {
@@ -46,7 +46,6 @@ export class ProfileEditorComponent implements OnInit {
     private router: Router,
     private fb: FormBuilder,
     private route: ActivatedRoute,
-    private contractService: ContractService,
     private loadingIndicatorService: LoadingIndicatorService
   ) {
     this.form = this.fb.group(
@@ -57,24 +56,14 @@ export class ProfileEditorComponent implements OnInit {
       { updateOn: 'change' }
     );
 
-    this.accountContract$ = this.route.parent!.params.pipe(
-      map((params) => this.contractService.getAccountContract(params.address)),
-      shareReplay(1)
-    );
-
-    this.keyManagerContract$ = this.accountContract$.pipe(
-      switchMap((accountContract) => this.contractService.getKeyManagerContract(accountContract))
-    );
-
-    this.accountData$ = this.accountContract$.pipe(
-      switchMap((accountContract) => this.contractService.getAccountDataStore(accountContract))
-    );
+    this.contracts$ = this.route.parent!.data.pipe(pluck('contracts'));
   }
 
   ngOnInit() {
-    this.saveTrigger$
-      .pipe(withLatestFrom(this.accountContract$, this.keyManagerContract$))
-      .subscribe(this.updateProfile);
+    this.contracts$.subscribe(({ accountData }) => {
+      this.form.setValue(accountData);
+    });
+    this.saveTrigger$.pipe(withLatestFrom(this.contracts$)).subscribe(this.updateProfile);
   }
 
   ngOnChanges(changes: SimpleChanges) {
@@ -84,25 +73,24 @@ export class ProfileEditorComponent implements OnInit {
   }
 
   submit(form: FormGroup) {
-    if (form.valid) {
+    if (form.valid && form.dirty) {
       const keyValuePairs = Object.entries(form.value).map((data: [string, any]) => {
         return { key: utils.formatBytes32String(data[0]), value: utils.toUtf8Bytes(data[1]) };
       });
 
       this.saveTrigger$.next(keyValuePairs);
+    } else {
+      this.router.navigate(['../keys'], { relativeTo: this.route });
     }
   }
-
-  onSave(form: FormGroup) {}
 
   back() {
     this.router.navigate(['../image'], { relativeTo: this.route });
   }
 
-  private updateProfile = ([keyValuePairs, accountContract, keyManagerContract]: [
+  private updateProfile = ([keyValuePairs, { accountContract, keyManagerContract }]: [
     any,
-    ERC725Account,
-    ERC734KeyManager | undefined
+    Contracts
   ]) => {
     let action;
     if (keyManagerContract) {

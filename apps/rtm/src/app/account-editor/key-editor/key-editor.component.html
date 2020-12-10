@@ -8,17 +8,18 @@
 <form [formGroup]="newKeyForm">
   <ng-container *ngIf="!data.address">
     <p>
-      <mat-form-field class="form-field">
+      <mat-form-field class="form-field" [@error]="animateError">
         <mat-label>Public Key</mat-label>
         <input matInput formControlName="address" [attr.data-cy]="'add-key__address'" />
         <mat-error *ngIf="newKeyForm.controls['address'].hasError('isETHAddress')">
-          ETH Address check failed
+          Must be a valid ETH Public Key
         </mat-error>
+        <mat-hint>This is the address of the wallet you are currently connected with.</mat-hint>
       </mat-form-field>
     </p>
   </ng-container>
 
-  <h2>Privileges</h2>
+  <!-- <h2>Privileges</h2>
   <lukso-checkbox-list
     *ngIf="selectablePrivileges"
     [items]="selectablePrivileges"
@@ -28,9 +29,9 @@
   <br />
   <mat-error *ngIf="newKeyForm.controls['privileges'].hasError('required')">
     You have to select at least one privilege.
-  </mat-error>
+  </mat-error> -->
 
-  <div>
+  <div class="page-actions">
     <button mat-button type="button" (click)="back()">Previous</button>&nbsp;
     <button mat-raised-button color="primary" (click)="next()">Add Key</button>
   </div>

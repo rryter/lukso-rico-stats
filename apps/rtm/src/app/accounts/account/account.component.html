@@ -8,11 +8,6 @@
     </section>
     <section class="keymanager">
       <div>
-        <lukso-key-manager
-          [keyManagerContract]="keyManagerContract$ | async"
-          [accountAddress]="(accountContract$ | async)?.address"
-        ></lukso-key-manager>
-
         <lukso-overview-claims></lukso-overview-claims>
       </div>
     </section>

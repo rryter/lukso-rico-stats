@@ -61,7 +61,7 @@ export const fader = trigger('routeAnimations', [
         [
           // animate('200ms ease', style({ opacity: 0, transform: 'translateX(105%)' })),
           animate(
-            '400ms 0ms',
+            '300ms 0ms',
             keyframes([
               style({ opacity: 1, transform: 'translate3d(0, 0, 0)', easing: 'ease', offset: 0 }),
               style({

@@ -6,7 +6,7 @@ import { ERC734KeyManager, ERC734KeyManagerFactory } from '@twy-gmbh/erc725-play
   providedIn: 'root',
 })
 export class KeyManagerService {
-  contract!: ERC734KeyManager;
+  contract!: ERC734KeyManager | undefined;
   isContractDeployed = false;
 
   constructor(private web3Service: Web3Service) {}
@@ -22,17 +22,14 @@ export class KeyManagerService {
       managementAddress
     );
 
-    await keyManagerContract.deployed();
-
     this.contract = keyManagerContract;
     return keyManagerContract;
   }
 
   getIsExecutor(address: string): Promise<boolean> {
-    return this.contract
-      .deployed()
+    return this.contract!.deployed()
       .then(() => {
-        return this.contract.hasPrivilege(address, 2);
+        return this.contract!.hasPrivilege(address, 2);
       })
       .catch(() => {
         return false;
@@ -40,10 +37,9 @@ export class KeyManagerService {
   }
 
   getIsManager(address: string): Promise<boolean> {
-    return this.contract
-      .deployed()
+    return this.contract!.deployed()
       .then(() => {
-        return this.contract.hasPrivilege(address, 1);
+        return this.contract!.hasPrivilege(address, 1);
       })
       .catch(() => {
         return false;

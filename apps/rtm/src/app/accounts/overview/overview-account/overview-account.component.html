@@ -2,7 +2,7 @@
   <h1>Account</h1>
   <div
     [attr.data-cy]="'overview-account__go-to-account-detail'"
-    [routerLink]="!hideText ? ['./account'] : null"
+    [routerLink]="!hideText ? ['/sign-up', accountContract.address, 'profile'] : null"
     [ngClass]="{ clickable: !hideText }"
     class="profile"
     style="background-image: linear-gradient(transparent, #00000044), url('/assets/reto.jpg')"

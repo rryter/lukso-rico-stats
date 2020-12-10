@@ -7,3 +7,8 @@ export interface Account {
   qrCode: string;
   stage: number;
 }
+
+export interface AccountData {
+  nickName: string;
+  bio: string;
+}

@@ -4,13 +4,10 @@ import { Routes, RouterModule } from '@angular/router';
 import { Erc725Component } from './account.component';
 import { SharedModule } from '../shared/shared.module';
 import { ReactiveFormsModule } from '@angular/forms';
-import { KeyManagerComponent } from './account/key-manager/key-manager.component';
 import { LockButtonComponent } from './smart-vault/lock-button/lock-button.component';
 import { WithdrawButtonComponent } from './smart-vault/withdraw-button/withdraw-button.component';
 import { WalletComponent } from './wallet/wallet.component';
 import { ProgressComponent } from './progress/progress.component';
-import { AddKeyComponent } from './account/key-manager/add-key/add-key.component';
-import { PriviligesComponent } from './account/key-manager/priviliges/priviliges.component';
 import { OverviewComponent } from './overview/overview.component';
 import { OverviewTokensComponent } from './overview/overview-tokens/overview-tokens.component';
 import { OverviewAssetsComponent } from './overview/overview-assets/overview-assets.component';
@@ -39,13 +36,10 @@ const routes: Routes = [
 @NgModule({
   declarations: [
     Erc725Component,
-    KeyManagerComponent,
     LockButtonComponent,
     WithdrawButtonComponent,
     WalletComponent,
     ProgressComponent,
-    AddKeyComponent,
-    PriviligesComponent,
     OverviewComponent,
     OverviewTokensComponent,
     OverviewAssetsComponent,

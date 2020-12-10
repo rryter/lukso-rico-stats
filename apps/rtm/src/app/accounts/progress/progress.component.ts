@@ -43,32 +43,12 @@ export class ProgressComponent implements OnInit, OnChanges {
   }
 
   deployKeyManager() {
-    this.loadingIndicatorService.showTransactionInfo({
-      title: 'Deploy ERC-734 Keymanager',
-      from: {
-        type: 'wallet',
-        address: this.web3Service.selectedAddress,
-      },
-    });
-
     this.keyManagerService
       .deploy(this.accounts[0].address, this.web3Service.selectedAddress)
       .then((contract) => {
         this.loadingIndicatorService.hideBlockerBackdrop();
-        this.setStage(this.accounts, Stages.KeyManager);
-        this.loadingIndicatorService.showTransactionInfo({
-          title: 'Transfer Ownership of Proxy Account',
-          to: {
-            type: 'owner',
-            address: contract.address,
-          },
-          from: {
-            type: 'owner',
-            address: this.web3Service.selectedAddress,
-          },
-          value: '0',
-        });
-        return this.proxyAccountService.contract?.transferOwnership(contract.address);
+
+        return this.proxyAccountService.contract?.transferOwnership(contract!.address);
       })
       .then((transaction) => {
         return transaction?.wait();
@@ -76,12 +56,6 @@ export class ProgressComponent implements OnInit, OnChanges {
       .finally(() => {
         this.loadingIndicatorService.hideBlockerBackdrop();
       });
-  }
-
-  private setStage(accounts: Account[], stage: Stages) {
-    accounts[0].stage = stage;
-    window.localStorage.setItem('accounts', JSON.stringify(accounts));
-    this.accountStage = stage;
   }
 
   deployCustomContract() {

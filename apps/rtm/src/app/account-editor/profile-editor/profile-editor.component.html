@@ -7,9 +7,7 @@
     <mat-form-field class="form-field" [floatLabel]="'always'">
       <mat-label>Nickname</mat-label>
       <input matInput formControlName="nickName" [attr.data-cy]="'edit-public-data__nickName'" />
-      <mat-error *ngIf="form.controls['nickName'].hasError('isRequired')">
-        ETH Address check failed
-      </mat-error>
+      <mat-error>Nickname is required.</mat-error>
     </mat-form-field>
   </p>
   <p>
@@ -24,11 +22,9 @@
         [attr.data-cy]="'edit-public-data__bio'"
       ></textarea>
       <mat-hint align="end">{{ bio.value.length }} / 256</mat-hint>
-      <mat-error *ngIf="form.controls['bio'].hasError('isRequired')"> Bio is required. </mat-error>
+      <mat-error> Bio is required. </mat-error>
     </mat-form-field>
   </p>
-
-  {{ this.accountData$ | async | json }}
 
   <br /><br />
   <div class="page-actions">
