@@ -123,7 +123,6 @@ export class ImageEditorComponent implements OnInit {
           });
         })
         .then((file: any) => {
-          window.localStorage.setItem('image', file.path);
           this.router.navigate(['../profile'], {
             relativeTo: this.activatedRoute,
             state: { imagePath: file.path },

@@ -1,38 +1,45 @@
-<h1>Management Key</h1>
-<span class="subtitle">Step 3 of 3</span>
-<p>
-  Make sure you actually own the <strong>private</strong> key of the address you specify here. We
-  strongly advise to use a hardware wallet.
-</p>
-<br />
-<form [formGroup]="newKeyForm">
-  <ng-container *ngIf="!data.address">
-    <p>
-      <mat-form-field class="form-field" [@error]="animateError">
-        <mat-label>Public Key</mat-label>
-        <input matInput formControlName="address" [attr.data-cy]="'add-key__address'" />
-        <mat-error *ngIf="newKeyForm.controls['address'].hasError('isETHAddress')">
-          Must be a valid ETH Public Key
-        </mat-error>
-        <!-- <mat-hint>This is the address of the wallet you are currently connected with.</mat-hint> -->
-      </mat-form-field>
-    </p>
-  </ng-container>
-
-  <!-- <h2>Privileges</h2>
-  <lukso-checkbox-list
-    *ngIf="selectablePrivileges"
-    [items]="selectablePrivileges"
-    [selected]="data.privileges"
-    (selectionChanged)="onPrivilegesChanged($event)"
-  ></lukso-checkbox-list>
-  <br />
-  <mat-error *ngIf="newKeyForm.controls['privileges'].hasError('required')">
-    You have to select at least one privilege.
-  </mat-error> -->
-
-  <div class="page-actions">
-    <button mat-stroked-button type="button" (click)="back()">Previous</button>&nbsp;
-    <button mat-raised-button color="primary" (click)="next()">Add Key</button>
+<ng-container *ngIf="contracts$ | async as contracts">
+  <div *ngIf="contracts.keyManagerContract">
+    <h1>Manage Keys</h1>
+    <span class="subtitle">Step 3 of 3</span>
+    <p>Use the Keymanager on the righthand side.</p>
+    <div class="page-actions">
+      <button mat-stroked-button type="button" (click)="back()">Previous</button>&nbsp;
+      <button
+        mat-raised-button
+        color="primary"
+        (click)="backToProfile(contracts.accountContract.address)"
+      >
+        Go to Profile
+      </button>
+    </div>
   </div>
-</form>
+  <div *ngIf="!contracts.keyManagerContract">
+    <h1>Management Key</h1>
+    <span class="subtitle">Step 3 of 3</span>
+    <p>
+      Make sure you actually own the <strong>private</strong> key of the address you specify here.
+      We strongly advise to use a hardware wallet.
+    </p>
+    <br />
+    <form [formGroup]="newKeyForm">
+      <ng-container *ngIf="!data.address">
+        <p>
+          <mat-form-field class="form-field" [@error]="animateError">
+            <mat-label>Public Key</mat-label>
+            <input matInput formControlName="address" [attr.data-cy]="'add-key__address'" />
+            <mat-error *ngIf="newKeyForm.controls['address'].hasError('isETHAddress')">
+              Must be a valid ETH Public Key
+            </mat-error>
+            <!-- <mat-hint>This is the address of the wallet you are currently connected with.</mat-hint> -->
+          </mat-form-field>
+        </p>
+      </ng-container>
+
+      <div class="page-actions">
+        <button mat-stroked-button type="button" (click)="back()">Previous</button>&nbsp;
+        <button mat-raised-button color="primary" (click)="next()">Add Key</button>
+      </div>
+    </form>
+  </div>
+</ng-container>

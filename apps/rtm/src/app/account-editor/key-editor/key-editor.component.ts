@@ -4,13 +4,15 @@ import { Component, OnInit, ChangeDetectionStrategy, Input, EventEmitter } from 
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Privileges } from '@shared/capabilities.enum';
+import { Contracts } from '@shared/interface/contracts';
 import { PendingTransactionType } from '@shared/interface/transactions';
 import { KeyManagerService } from '@shared/services/key-manager.service';
 import { LoadingIndicatorService } from '@shared/services/loading-indicator.service';
 import { Web3Service } from '@shared/services/web3.service';
 import { isETHAddressValidator } from '@shared/validators/web3-address.validator';
 import { flash } from 'ngx-animate/lib/attention-seekers';
-import { switchMap } from 'rxjs/operators';
+import { Observable } from 'rxjs';
+import { pluck, switchMap } from 'rxjs/operators';
 
 @Component({
   selector: 'lukso-key-editor',
@@ -43,6 +45,7 @@ export class KeyEditorComponent implements OnInit {
 
   saveTrigger$ = new EventEmitter<string>();
   animateError = false;
+  contracts$: Observable<Contracts>;
 
   constructor(
     private router: Router,
@@ -63,6 +66,7 @@ export class KeyEditorComponent implements OnInit {
       },
       { updateOn: 'blur' }
     );
+    this.contracts$ = this.activatedRoute.parent!.data.pipe(pluck('contracts'));
   }
 
   ngOnInit(): void {
@@ -118,5 +122,9 @@ export class KeyEditorComponent implements OnInit {
 
   back() {
     this.router.navigate(['../profile'], { relativeTo: this.activatedRoute });
+  }
+
+  backToProfile(accountAddress: string) {
+    this.router.navigate(['/accounts', accountAddress]);
   }
 }
