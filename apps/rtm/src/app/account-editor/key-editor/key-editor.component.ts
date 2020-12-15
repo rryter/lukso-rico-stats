@@ -66,36 +66,35 @@ export class KeyEditorComponent implements OnInit {
       },
       { updateOn: 'blur' }
     );
-    this.contracts$ = this.activatedRoute.parent.data.pipe(pluck('contracts'));
+    this.contracts$ = this.activatedRoute.parent?.data.pipe(
+      pluck('contracts')
+    ) as Observable<Contracts>;
   }
 
   ngOnInit(): void {
     this.saveTrigger$
       .pipe(
         switchMap((address: string) => {
+          if (!this.activatedRoute.parent) {
+            throw Error('Parent not available');
+          }
+          const accountContract = this.activatedRoute.parent.snapshot.data.contracts
+            .accountContract;
           return this.loadingIndicatorService
             .addPromise({
-              promise: this.keyManagerService.deploy(
-                this.activatedRoute.parent.snapshot.data.contracts.accountContract.address,
-                address
-              ),
+              promise: this.keyManagerService.deploy(accountContract.address, address),
               type: PendingTransactionType.All,
               action: 'Deploying Keymanager...',
             })
             .then((contract) => {
               return this.loadingIndicatorService
                 .addPromise({
-                  promise: this.activatedRoute.parent.snapshot.data.contracts.accountContract.transferOwnership(
-                    contract.address
-                  ),
+                  promise: accountContract.transferOwnership(contract.address),
                   type: PendingTransactionType.All,
                   action: 'Transfering Ownership...',
                 })
                 .then(() => {
-                  this.router.navigate([
-                    '/accounts',
-                    this.activatedRoute.parent.snapshot.data.contracts.accountContract.address,
-                  ]);
+                  this.router.navigate(['/accounts', accountContract.address]);
                 });
             });
         })
