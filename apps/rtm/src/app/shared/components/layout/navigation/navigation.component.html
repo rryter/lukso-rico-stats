@@ -42,11 +42,11 @@
       <img src="/assets/portrait-placeholder-small.jpg" matRipple [matMenuTriggerFor]="menu" />
     </div>
     <mat-menu #menu="matMenu">
-      <button mat-menu-item>
+      <!-- <button mat-menu-item>
         <mat-icon>person</mat-icon>
         <span>Switch Account</span>
-      </button>
-      <button mat-menu-item [routerLink]="['/sign-up', accountAddress, 'image']">
+      </button> -->
+      <button mat-menu-item [routerLink]="['/accounts', accountAddress, 'profile']">
         <mat-icon>settings</mat-icon>
         <span>Account Settings</span>
       </button>

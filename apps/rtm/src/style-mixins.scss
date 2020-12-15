@@ -1,5 +1,5 @@
 @mixin corners {
-  border-radius: 15px;
+  border-radius: 10px;
 }
 
 @mixin paddedContent($radius: 40px, $bg: rgba(255, 255, 255, 0.3)) {
@@ -9,4 +9,14 @@
 
 @mixin ambientShadow() {
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1), 0 5px 15px rgba(0, 0, 0, 0.05);
+}
+
+@mixin subtitle() {
+  .subtitle {
+    display: block;
+    margin-top: 5px;
+    margin-bottom: 60px;
+    color: rgba(0, 0, 0, 0.3);
+    font-size: 16px;
+  }
 }

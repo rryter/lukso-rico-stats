@@ -28,11 +28,10 @@ export class NewAccountComponent implements OnInit {
   ngOnInit(): void {}
 
   deployProxyAccount() {
-    this.router.navigate(['/sign-up/account']);
     const action = this.proxyAccountService.deployProxyAccount().then((contract) => {
       this.accounts.push({ address: contract?.address, stage: 2 });
       window.localStorage.setItem('accounts', JSON.stringify(this.accounts));
-      this.router.navigate(['/sign-up', contract?.address, 'image']);
+      this.router.navigate(['/accounts', contract?.address, 'image']);
       return contract;
     });
 

@@ -27,9 +27,9 @@ const routes: Routes = [
     component: OverviewComponent,
   },
   {
-    path: ':address/account',
-    component: AccountComponent,
-    canActivate: [ManagementGuard],
+    path: ':address',
+    loadChildren: () =>
+      import('../account-editor/account-editor.module').then((m) => m.AccountEditorModule),
   },
 ];
 

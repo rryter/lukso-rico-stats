@@ -1,8 +1,7 @@
 <h1>Who are you?</h1>
-<h2>Step 2 of 3</h2>
+<span class="subtitle">Step 2 of 3</span>
 <form [formGroup]="form" (submit)="submit(form)">
-  <h3>Enter personal info</h3>
-
+  <p>Enter personal info</p>
   <p>
     <mat-form-field class="form-field" [floatLabel]="'always'">
       <mat-label>Nickname</mat-label>
@@ -26,10 +25,17 @@
     </mat-form-field>
   </p>
 
+  <input
+    matInput
+    formControlName="image"
+    [attr.data-cy]="'edit-public-data__nickName'"
+    style="display: none"
+  />
+
   <br /><br />
   <div class="page-actions">
     <div>
-      <button mat-button type="button" (click)="back()">Previous</button>&nbsp;
+      <button mat-stroked-button type="button" (click)="back()">Previous</button>&nbsp;
       <button
         mat-raised-button
         color="primary"

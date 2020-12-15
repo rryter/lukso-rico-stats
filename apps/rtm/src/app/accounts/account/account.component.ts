@@ -61,15 +61,6 @@ export class AccountComponent implements OnInit {
     ERC725Account,
     ERC734KeyManager | undefined
   ]) => {
-    this.loadingIndicatorService.showTransactionInfo({
-      title: 'Save Profile',
-      to: {
-        type: 'account',
-        address: accountContract.address,
-      },
-      value: '',
-    });
-
     let tx;
     if (keyManagerContract) {
       tx = keyManagerContract.execute(

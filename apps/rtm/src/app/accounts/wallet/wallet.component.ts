@@ -71,18 +71,6 @@ export class WalletComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe((dialogOutput: ConfirmDialogOutput) => {
       if (dialogOutput?.value) {
-        this.loadingIndicatorService.showTransactionInfo({
-          title: 'Top Up',
-          to: {
-            type: 'account',
-            address: account.address,
-          },
-          from: {
-            type: 'wallet',
-            address: this.web3Service.selectedAddress,
-          },
-          value: dialogOutput?.value,
-        });
         this.loadingIndicatorService.addPromise({
           promise: this.web3Service.signer.sendTransaction({
             to: account.address,
@@ -118,19 +106,6 @@ export class WalletComponent implements OnInit {
       throw Error('keyManagerContract is not set');
     }
     if (dialogOutput?.value) {
-      this.loadingIndicatorService.showTransactionInfo({
-        title: 'Withdraw',
-        to: {
-          type: 'wallet',
-          address: this.web3Service.selectedAddress + '2',
-        },
-        from: {
-          type: 'account',
-          address: this.proxyAccountService.contract.address,
-        },
-        value: dialogOutput?.value,
-      });
-
       const abi = this.proxyAccountService.contract.interface.encodeFunctionData('execute', [
         '0',
         this.web3Service.selectedAddress,

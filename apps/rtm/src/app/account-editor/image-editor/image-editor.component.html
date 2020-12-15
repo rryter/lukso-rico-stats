@@ -1,5 +1,6 @@
 <h1>Upload an Image</h1>
-<h2>Step 1 of 3</h2>
+<span class="subtitle">Step 1 of 3</span>
+<p>Add Profile Picture</p>
 <div class="image-placeholder" appDnd (fileDropped)="onFileDropped($event)">
   <img [src]="imageSource" id="cropper" />
   <div class="droppable"></div>
@@ -13,7 +14,7 @@
 />
 <div class="page-actions">
   <div>
-    <button mat-button (click)="cancel()">Cancel</button>
+    <button mat-stroked-button (click)="cancel()">Cancel</button>&nbsp;
     <button mat-raised-button color="primary" (click)="next()">Next</button>
   </div>
 </div>

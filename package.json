@@ -5,7 +5,8 @@
   "browser": {
     "http": false,
     "https": false,
-    "zlib": false
+    "zlib": false,
+    "stream": false
   },
   "scripts": {
     "ng": "nx",
@@ -57,7 +58,9 @@
     "browser-image-compression": "^1.0.13",
     "cropperjs": "^1.5.9",
     "date-fns": "2.16.1",
+    "erc725.js": "^0.3.3",
     "ipfs-core": "^0.3.0",
+    "ipfs-http-client": "^48.1.2",
     "ngx-animate": "^1.0.1",
     "ngx-image-cropper": "^3.3.1",
     "nx": "^10.4.4",

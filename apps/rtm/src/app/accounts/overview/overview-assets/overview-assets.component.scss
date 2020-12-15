@@ -2,8 +2,11 @@
 
 :host {
   display: block;
+  opacity: 0.1;
 }
-
+h1 {
+  color: white;
+}
 .overview-list {
   grid-template-columns: repeat(auto-fit, minmax(340px, 33%));
 }

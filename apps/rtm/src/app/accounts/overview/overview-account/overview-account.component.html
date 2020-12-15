@@ -2,10 +2,12 @@
   <h1>Account</h1>
   <div
     [attr.data-cy]="'overview-account__go-to-account-detail'"
-    [routerLink]="!hideText ? ['/sign-up', accountContract.address, 'profile'] : null"
+    [routerLink]="!hideText ? ['/accounts', accountContract.address, 'profile'] : null"
     [ngClass]="{ clickable: !hideText }"
     class="profile"
-    style="background-image: linear-gradient(transparent, #00000044), url('/assets/reto.jpg')"
+    style="background-image: linear-gradient(transparent, #00000099), url({{
+      accountDetails.image
+    }})"
   >
     <div *ngIf="!hideText && accountDetails" class="profile__details">
       <h2>{{ accountDetails.nickName }}</h2>

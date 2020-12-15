@@ -9,19 +9,17 @@ import {
 } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { AccountData } from '@shared/interface/account';
 import { Contracts } from '@shared/interface/contracts';
 import { PendingTransactionType } from '@shared/interface/transactions';
-import { ContractService } from '@shared/services/contract.service';
 import { LoadingIndicatorService } from '@shared/services/loading-indicator.service';
-import { ERC725Account, ERC734KeyManager } from '@twy-gmbh/erc725-playground';
 import { utils } from 'ethers';
 import { Observable, Subject } from 'rxjs';
-import { map, pluck, shareReplay, switchMap, tap, withLatestFrom } from 'rxjs/operators';
+import { pluck, withLatestFrom } from 'rxjs/operators';
 
 export interface Profile {
   nickName: string;
   bio: string;
+  image: string;
 }
 
 @Component({
@@ -31,6 +29,7 @@ export interface Profile {
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ProfileEditorComponent implements OnInit {
+  uploadedImage: string;
   contracts$: Observable<Contracts>;
   form: FormGroup;
   saveTrigger$ = new Subject<
@@ -40,8 +39,7 @@ export class ProfileEditorComponent implements OnInit {
     }[]
   >();
   @Output() saveing = new EventEmitter();
-  @Input() profile: Profile = { nickName: '', bio: '' };
-
+  @Input() profile: Profile = { nickName: '', bio: '', image: '' };
   constructor(
     private router: Router,
     private fb: FormBuilder,
@@ -50,6 +48,7 @@ export class ProfileEditorComponent implements OnInit {
   ) {
     this.form = this.fb.group(
       {
+        image: [this.profile.image],
         nickName: [this.profile.nickName, [Validators.required]],
         bio: [this.profile.bio, [Validators.required]],
       },
@@ -57,6 +56,7 @@ export class ProfileEditorComponent implements OnInit {
     );
 
     this.contracts$ = this.route.parent!.data.pipe(pluck('contracts'));
+    this.uploadedImage = this.router.getCurrentNavigation()?.extras.state?.imagePath;
   }
 
   ngOnInit() {
@@ -74,6 +74,9 @@ export class ProfileEditorComponent implements OnInit {
 
   submit(form: FormGroup) {
     if (form.valid && form.dirty) {
+      if (this.uploadedImage) {
+        form.controls['image'].setValue(this.uploadedImage);
+      }
       const keyValuePairs = Object.entries(form.value).map((data: [string, any]) => {
         return { key: utils.formatBytes32String(data[0]), value: utils.toUtf8Bytes(data[1]) };
       });

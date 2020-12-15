@@ -104,7 +104,9 @@ export class KeyEditorComponent implements OnInit {
   }
 
   next() {
-    this.animateError = true;
+    if (this.newKeyForm.invalid) {
+      this.animateError = true;
+    }
     setTimeout(() => {
       this.animateError = false;
     }, 500);

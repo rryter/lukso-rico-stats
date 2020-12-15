@@ -106,18 +106,7 @@ export class KeyManagerComponent implements OnInit, OnChanges {
     if (!this.keyManagerContract) {
       throw Error('keyManager not set');
     }
-    this.loadingIndicatorService.showTransactionInfo({
-      title: 'Remove Key',
-      to: {
-        type: 'keymanager',
-        address: this.keyManagerContract.address,
-      },
-      from: {
-        type: 'wallet',
-        address: this.web3Service.selectedAddress,
-      },
-      value: '0',
-    });
+
     this.keyManagerContract
       .removeKey(utils.keccak256(key.address), key.index)
       .then((tx: ContractTransaction) => tx.wait())

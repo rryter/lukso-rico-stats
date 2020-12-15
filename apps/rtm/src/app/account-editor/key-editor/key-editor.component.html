@@ -1,9 +1,9 @@
 <h1>Management Key</h1>
-<h2>Step 3 of 3</h2>
-<h3>
+<span class="subtitle">Step 3 of 3</span>
+<p>
   Make sure you actually own the <strong>private</strong> key of the address you specify here. We
   strongly advise to use a hardware wallet.
-</h3>
+</p>
 <br />
 <form [formGroup]="newKeyForm">
   <ng-container *ngIf="!data.address">
@@ -14,7 +14,7 @@
         <mat-error *ngIf="newKeyForm.controls['address'].hasError('isETHAddress')">
           Must be a valid ETH Public Key
         </mat-error>
-        <mat-hint>This is the address of the wallet you are currently connected with.</mat-hint>
+        <!-- <mat-hint>This is the address of the wallet you are currently connected with.</mat-hint> -->
       </mat-form-field>
     </p>
   </ng-container>
@@ -32,7 +32,7 @@
   </mat-error> -->
 
   <div class="page-actions">
-    <button mat-button type="button" (click)="back()">Previous</button>&nbsp;
+    <button mat-stroked-button type="button" (click)="back()">Previous</button>&nbsp;
     <button mat-raised-button color="primary" (click)="next()">Add Key</button>
   </div>
 </form>

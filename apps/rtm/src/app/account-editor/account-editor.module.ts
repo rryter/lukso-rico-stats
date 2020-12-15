@@ -14,18 +14,13 @@ import { PriviligesComponent } from './key-manager/priviliges/priviliges.compone
 import { AddKeyComponent } from './key-manager/add-key/add-key.component';
 const routes: Routes = [
   {
-    path: ':address',
+    path: '',
     component: AccountEditorComponent,
     runGuardsAndResolvers: 'always',
     resolve: {
       contracts: ContractsResolver,
     },
     children: [
-      {
-        path: '',
-        pathMatch: 'full',
-        redirectTo: 'account',
-      },
       { path: 'account', component: Erc725ExplainerComponent },
       { path: 'image', component: ImageEditorComponent },
       { path: 'profile', component: ProfileEditorComponent },
