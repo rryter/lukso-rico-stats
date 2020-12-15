@@ -1,10 +1,10 @@
 import { Directive, EventEmitter, HostBinding, HostListener, Output } from '@angular/core';
 
 @Directive({
-  selector: '[appDnd]',
+  selector: '[luksoAppDnd]',
 })
 export class DragAndDropDirective {
-  @HostBinding('class.fileover') fileOver: boolean = false;
+  @HostBinding('class.fileover') fileOver = false;
   @Output() fileDropped = new EventEmitter<any>();
 
   // Dragover listener
@@ -26,7 +26,7 @@ export class DragAndDropDirective {
     evt.preventDefault();
     evt.stopPropagation();
     this.fileOver = false;
-    let files = evt.dataTransfer.files;
+    const files = evt.dataTransfer.files;
     if (files.length > 0) {
       this.fileDropped.emit(files);
     }

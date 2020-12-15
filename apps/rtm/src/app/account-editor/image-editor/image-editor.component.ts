@@ -42,8 +42,8 @@ export class ImageEditorComponent implements OnInit {
   @ViewChild('fileDropRef', { static: false }) fileDropEl: any;
 
   ipfs: any;
-  imageSource: string = '/assets/portrait-placeholder.png';
-  compressedSize: number = 0;
+  imageSource = '/assets/portrait-placeholder.png';
+  compressedSize = 0;
   files: any[] = [];
   cropper: Cropper | undefined;
   contracts$: Observable<Contracts>;
@@ -58,7 +58,7 @@ export class ImageEditorComponent implements OnInit {
       url: '/ip4/127.0.0.1/tcp/5001',
     };
     this.ipfs = ipfsClient(options);
-    this.contracts$ = this.activatedRoute.parent!.data.pipe(pluck('contracts'));
+    this.contracts$ = this.activatedRoute.parent.data.pipe(pluck('contracts'));
   }
 
   ngOnInit(): void {
@@ -84,16 +84,17 @@ export class ImageEditorComponent implements OnInit {
    * @param files (Files List)
    */
   prepareFilesList(files: Array<File>) {
-    var inputImage = document.getElementById('fileDropRef') as any;
-
+    const inputImage = document.getElementById('fileDropRef') as any;
     const file = files[0];
 
     if (/^image\/\w+/.test(file.type)) {
       const image = document.querySelector('#cropper') as HTMLImageElement;
       image.src = URL.createObjectURL(file);
+
       if (this.cropper) {
         this.cropper.destroy();
       }
+
       this.cropper = new Cropper(image, cropperOptions as any);
       inputImage.value = null;
     } else {

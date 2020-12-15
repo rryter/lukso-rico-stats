@@ -6,6 +6,7 @@ import {
   SimpleChanges,
   Output,
   EventEmitter,
+  OnChanges,
 } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -28,7 +29,7 @@ export interface Profile {
   styleUrls: ['./profile-editor.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class ProfileEditorComponent implements OnInit {
+export class ProfileEditorComponent implements OnInit, OnChanges {
   uploadedImage: string;
   contracts$: Observable<Contracts>;
   form: FormGroup;
@@ -55,7 +56,10 @@ export class ProfileEditorComponent implements OnInit {
       { updateOn: 'change' }
     );
 
-    this.contracts$ = this.route.parent!.data.pipe(pluck('contracts'));
+    if (!this.route.parent) {
+      throw Error('Parent not available');
+    }
+    this.contracts$ = this.route.parent.data.pipe(pluck('contracts'));
     this.uploadedImage = this.router.getCurrentNavigation()?.extras.state?.imagePath;
   }
 

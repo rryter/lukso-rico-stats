@@ -33,7 +33,7 @@ export class PendingTransactionComponent implements OnInit, OnChanges {
   @Input() filter: PendingTransactionType = PendingTransactionType.All;
   @Input() darkMode = false;
   @Output() finished = new EventEmitter();
-  @HostBinding('class.darkMode') darkModeClass: boolean = false;
+  @HostBinding('class.darkMode') darkModeClass = false;
 
   pendingTransactions$: Observable<PendingTransaction[]>;
 
@@ -61,5 +61,4 @@ export class PendingTransactionComponent implements OnInit, OnChanges {
       this.darkModeClass = changes.darkMode.currentValue;
     }
   }
-  ngDoCheck() {}
 }

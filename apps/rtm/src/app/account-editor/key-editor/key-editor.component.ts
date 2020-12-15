@@ -66,7 +66,7 @@ export class KeyEditorComponent implements OnInit {
       },
       { updateOn: 'blur' }
     );
-    this.contracts$ = this.activatedRoute.parent!.data.pipe(pluck('contracts'));
+    this.contracts$ = this.activatedRoute.parent.data.pipe(pluck('contracts'));
   }
 
   ngOnInit(): void {
@@ -76,7 +76,7 @@ export class KeyEditorComponent implements OnInit {
           return this.loadingIndicatorService
             .addPromise({
               promise: this.keyManagerService.deploy(
-                this.activatedRoute.parent!.snapshot.data.contracts.accountContract.address,
+                this.activatedRoute.parent.snapshot.data.contracts.accountContract.address,
                 address
               ),
               type: PendingTransactionType.All,
@@ -85,7 +85,7 @@ export class KeyEditorComponent implements OnInit {
             .then((contract) => {
               return this.loadingIndicatorService
                 .addPromise({
-                  promise: this.activatedRoute.parent!.snapshot.data.contracts.accountContract.transferOwnership(
+                  promise: this.activatedRoute.parent.snapshot.data.contracts.accountContract.transferOwnership(
                     contract.address
                   ),
                   type: PendingTransactionType.All,
@@ -94,7 +94,7 @@ export class KeyEditorComponent implements OnInit {
                 .then(() => {
                   this.router.navigate([
                     '/accounts',
-                    this.activatedRoute.parent!.snapshot.data.contracts.accountContract.address,
+                    this.activatedRoute.parent.snapshot.data.contracts.accountContract.address,
                   ]);
                 });
             });

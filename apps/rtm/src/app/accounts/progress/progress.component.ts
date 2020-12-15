@@ -45,17 +45,8 @@ export class ProgressComponent implements OnInit, OnChanges {
   deployKeyManager() {
     this.keyManagerService
       .deploy(this.accounts[0].address, this.web3Service.selectedAddress)
-      .then((contract) => {
-        this.loadingIndicatorService.hideBlockerBackdrop();
-
-        return this.proxyAccountService.contract?.transferOwnership(contract!.address);
-      })
-      .then((transaction) => {
-        return transaction?.wait();
-      })
-      .finally(() => {
-        this.loadingIndicatorService.hideBlockerBackdrop();
-      });
+      .then((contract) => this.proxyAccountService.contract?.transferOwnership(contract.address))
+      .then((transaction) => transaction?.wait());
   }
 
   deployCustomContract() {

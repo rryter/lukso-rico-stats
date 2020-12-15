@@ -64,7 +64,7 @@ export class ContractService {
   deployKeyManager(proxyAccount: ERC725Account, ownerAddress: string) {
     return this.keyManagerService
       .deploy(proxyAccount.address, ownerAddress)
-      .then((contract) => proxyAccount.transferOwnership(contract!.address))
+      .then((contract) => proxyAccount.transferOwnership(contract.address))
       .then((transaction) => transaction.wait())
       .finally(() => {
         this.loadingIndicatorService.hideBlockerBackdrop();

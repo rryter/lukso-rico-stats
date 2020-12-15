@@ -65,11 +65,11 @@ export class FileSizePipe implements PipeTransform {
       unitIndex++;
     }
 
-    const unit = this.units[unitIndex];
+    const fileSizeUnit = this.units[unitIndex];
 
     if (typeof precision === 'number') {
-      return `${bytes.toFixed(+precision)} ${unit}`;
+      return `${bytes.toFixed(+precision)} ${fileSizeUnit}`;
     }
-    return `${bytes.toFixed(precision[unit])} ${unit}`;
+    return `${bytes.toFixed(precision[fileSizeUnit])} ${fileSizeUnit}`;
   }
 }

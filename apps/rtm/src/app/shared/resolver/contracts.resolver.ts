@@ -27,15 +27,15 @@ export class ContractsResolver
     keyManagerContract: ERC734KeyManager | undefined;
     accountData: Profile;
   }> {
-    const accountContract: ERC725Account = this.contractService.getAccountContract(
+    const _accountContract: ERC725Account = this.contractService.getAccountContract(
       route.params.address
     );
-    const keyManagerContract = this.contractService.getKeyManagerContract(accountContract);
-    const erc725 = new ERC725(schema, accountContract.address, window.ethereum);
+    const _keyManagerContract = this.contractService.getKeyManagerContract(_accountContract);
+    const erc725 = new ERC725(schema, _accountContract.address, window.ethereum);
 
     return combineLatest([
-      of(accountContract),
-      keyManagerContract,
+      of(_accountContract),
+      _keyManagerContract,
       erc725.getAllData() as Promise<Profile>,
     ]).pipe(
       map(([accountContract, keyManagerContract, accountData]) => {
