@@ -5,7 +5,7 @@
   <p>
     <mat-form-field class="form-field" [floatLabel]="'always'">
       <mat-label>Nickname</mat-label>
-      <input matInput formControlName="nickName" [attr.data-cy]="'edit-public-data__nickName'" />
+      <input matInput formControlName="nickName" [attr.data-cy]="'profile-editor__nickName'" />
       <mat-error>Nickname is required.</mat-error>
     </mat-form-field>
   </p>
@@ -18,7 +18,7 @@
         #bio
         formControlName="bio"
         maxlength="256"
-        [attr.data-cy]="'edit-public-data__bio'"
+        [attr.data-cy]="'profile-editor__bio'"
       ></textarea>
       <mat-hint align="end">{{ bio.value.length }} / 256</mat-hint>
       <mat-error> Bio is required. </mat-error>
@@ -28,19 +28,26 @@
   <input
     matInput
     formControlName="image"
-    [attr.data-cy]="'edit-public-data__nickName'"
+    [attr.data-cy]="'profile-editor__nickName'"
     style="display: none"
   />
 
   <br /><br />
   <div class="page-actions">
     <div>
-      <button mat-stroked-button type="button" (click)="back()">Previous</button>&nbsp;
+      <button
+        mat-stroked-button
+        type="button"
+        (click)="back()"
+        [attr.data-cy]="'profile-editor__previous'"
+      >
+        Previous</button
+      >&nbsp;
       <button
         mat-raised-button
         color="primary"
         type="submit"
-        [attr.data-cy]="'edit-public-data__confirm'"
+        [attr.data-cy]="'profile-editor__next'"
       >
         <!-- [disabled]="form.pristine" -->
         Next

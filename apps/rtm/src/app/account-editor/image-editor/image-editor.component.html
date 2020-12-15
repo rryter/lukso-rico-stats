@@ -14,7 +14,16 @@
 />
 <div class="page-actions">
   <div>
-    <button mat-stroked-button (click)="cancel()">Cancel</button>&nbsp;
-    <button mat-raised-button color="primary" (click)="next()">Next</button>
+    <button mat-stroked-button (click)="cancel()" [attr.data-cy]="'image-editor__cancel-key'">
+      Cancel</button
+    >&nbsp;
+    <button
+      mat-raised-button
+      color="primary"
+      (click)="next()"
+      [attr.data-cy]="'image-editor__next-key'"
+    >
+      Next
+    </button>
   </div>
 </div>

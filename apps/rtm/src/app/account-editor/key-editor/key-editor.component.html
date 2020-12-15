@@ -4,11 +4,19 @@
     <span class="subtitle">Step 3 of 3</span>
     <p>Use the Keymanager on the righthand side.</p>
     <div class="page-actions">
-      <button mat-stroked-button type="button" (click)="back()">Previous</button>&nbsp;
+      <button
+        mat-stroked-button
+        type="button"
+        (click)="back()"
+        [attr.data-cy]="'key-editor__previous'"
+      >
+        Previous</button
+      >&nbsp;
       <button
         mat-raised-button
         color="primary"
         (click)="backToProfile(contracts.accountContract.address)"
+        [attr.data-cy]="'key-editor__go-to-profile'"
       >
         Go to Profile
       </button>
@@ -37,8 +45,22 @@
       </ng-container>
 
       <div class="page-actions">
-        <button mat-stroked-button type="button" (click)="back()">Previous</button>&nbsp;
-        <button mat-raised-button color="primary" (click)="next()">Add Key</button>
+        <button
+          mat-stroked-button
+          type="button"
+          (click)="back()"
+          [attr.data-cy]="'key-editor__previous'"
+        >
+          Previous</button
+        >&nbsp;
+        <button
+          mat-raised-button
+          color="primary"
+          (click)="next()"
+          [attr.data-cy]="'key-editor__add-key'"
+        >
+          Add Key
+        </button>
       </div>
     </form>
   </div>

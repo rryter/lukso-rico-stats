@@ -5,6 +5,7 @@ import { ERC725Account, ERC734KeyManager } from '@twy-gmbh/erc725-playground';
 import { combineLatest, Observable, of } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { Profile } from '../../account-editor/profile-editor/profile-editor.component';
+// @ts-ignore
 import ERC725 from 'erc725.js';
 import schema from './schema.json';
 

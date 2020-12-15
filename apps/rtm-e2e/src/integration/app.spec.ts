@@ -9,8 +9,14 @@ describe('ERC 725 Home', () => {
 
   it('should create account and fund it with 100 LYX', () => {
     getCreateAccountButton().click();
-    cy.getByAttr('progress__make-account-managable').click();
-    cy.getByAttr('layout__nav__home').click();
+    cy.getByAttr('image-editor__next-key').click();
+
+    cy.getByAttr('profile-editor__nickName').type('Coaster');
+    cy.getByAttr('profile-editor__bio').type('Web Developer located in Switzerland.');
+    cy.getByAttr('profile-editor__next').click();
+
+    cy.getByAttr('key-editor__add-key').click();
+
     cy.getByAttr('wallet__top-up').click();
     cy.getByAttr('amount__value').type('100', { force: true });
     cy.getByAttr('amount__accept').click();
