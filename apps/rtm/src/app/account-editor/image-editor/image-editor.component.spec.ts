@@ -1,16 +1,14 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
 import { ImageEditorComponent } from './image-editor.component';
 
-describe('ImageEditorComponent', () => {
+describe.only('ImageEditorComponent', () => {
   let component: ImageEditorComponent;
   let fixture: ComponentFixture<ImageEditorComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ ImageEditorComponent ]
-    })
-    .compileComponents();
+      declarations: [ImageEditorComponent],
+    }).compileComponents();
   });
 
   beforeEach(() => {
