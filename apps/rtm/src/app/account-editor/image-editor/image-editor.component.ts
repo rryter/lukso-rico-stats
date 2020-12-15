@@ -51,14 +51,15 @@ export class ImageEditorComponent implements OnInit {
   constructor(
     private router: Router,
     private activatedRoute: ActivatedRoute,
-    private cdref: ChangeDetectorRef,
-    private loadingIndicatorService: LoadingIndicatorService
+    private cdref: ChangeDetectorRef
   ) {
     const options: ClientOptions = {
       url: '/ip4/127.0.0.1/tcp/5001',
     };
     this.ipfs = ipfsClient(options);
-    this.contracts$ = this.activatedRoute.parent.data.pipe(pluck('contracts'));
+    this.contracts$ = this.activatedRoute.parent?.data.pipe(
+      pluck('contracts')
+    ) as Observable<Contracts>;
   }
 
   ngOnInit(): void {

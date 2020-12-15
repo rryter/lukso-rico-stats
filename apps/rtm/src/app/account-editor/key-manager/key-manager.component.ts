@@ -80,6 +80,9 @@ export class KeyManagerComponent implements OnInit, OnChanges {
     dialogRef.afterClosed().subscribe((priviligesItem: PriviligesItem) => {
       if (priviligesItem) {
         const { address, privileges } = priviligesItem;
+        if (!this.keyManagerService.contract) {
+          throw Error('Keymanager Contract not available');
+        }
         this.loadingIndicatorService.addPromise({
           promise: this.keyManagerService.contract.setKey(address, privileges, KEY_TYPE.ECDSA),
           type: PendingTransactionType.KeyManager,
@@ -139,6 +142,9 @@ export class KeyManagerComponent implements OnInit, OnChanges {
     key: string,
     keys: string[]
   ): Promise<{ address: string; keyType: number; privileges: number[] }> {
+    if (!this.keyManagerService.contract) {
+      throw Error('contract not available');
+    }
     return this.keyManagerService.contract.getKey(key).then((result) => {
       const { _keyAddress, _privilegesLUT, _keyType } = result;
       return {
