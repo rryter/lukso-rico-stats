@@ -7,15 +7,14 @@ import {
   ChangeDetectorRef,
 } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { PendingTransaction, PendingTransactionType } from '@shared/interface/transactions';
+import { PendingTransaction } from '@shared/interface/transactions';
 import Cropper from 'cropperjs';
 import imageCompression from 'browser-image-compression';
-import ipfsClient from 'ipfs-http-client';
+// import ipfsClient from 'ipfs-http-client';
 import { ClientOptions } from 'ipfs-http-client/src/lib/core';
 import { pluck } from 'rxjs/operators';
 import { Contracts } from '@shared/interface/contracts';
 import { Observable } from 'rxjs';
-import { LoadingIndicatorService } from '@shared/services/loading-indicator.service';
 
 const cropperOptions = {
   viewMode: 3,
@@ -56,7 +55,7 @@ export class ImageEditorComponent implements OnInit {
     const options: ClientOptions = {
       url: '/ip4/127.0.0.1/tcp/5001',
     };
-    this.ipfs = ipfsClient(options);
+    // this.ipfs = ipfsClient(options);
     this.contracts$ = this.activatedRoute.parent?.data.pipe(
       pluck('contracts')
     ) as Observable<Contracts>;
