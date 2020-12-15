@@ -19,7 +19,7 @@
     "test": "ng test",
     "test:ci": "ng test --codeCoverage",
     "lint": "nx workspace-lint && ng lint",
-    "e2e": "start-server-and-test start-chain http://127.0.0.1:8545 'ng e2e --watch --configuration=ci --browser=chrome'",
+    "e2e": "start-server-and-test start-chain http://127.0.0.1:8545 'ng e2e --watch --configuration=ci --browser=firefox'",
     "e2e:ci": "start-server-and-test start-chain http://127.0.0.1:8545 'ng e2e --record --headless --configuration=ci --browser=chrome'",
     "affected:apps": "nx affected:apps",
     "affected:libs": "nx affected:libs",

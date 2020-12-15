@@ -29,6 +29,9 @@ export class ContractService {
       bio: accountContract
         ?.getData(utils.formatBytes32String('bio'))
         .then((result: BytesLike) => utils.toUtf8String(result)),
+      image: accountContract
+        ?.getData(utils.formatBytes32String('image'))
+        .then((result: BytesLike) => utils.toUtf8String(result)),
     });
   }
 

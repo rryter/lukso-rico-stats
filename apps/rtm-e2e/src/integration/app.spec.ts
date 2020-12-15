@@ -22,8 +22,11 @@ describe('ERC 725 Home', () => {
     cy.getByAttr('amount__accept').click();
     cy.getByAttr('wallet__value').contains(100);
     cy.getByAttr('overview-account__go-to-account-detail').click();
+
     cy.getByAttr('privileges__keys').contains('b92266').parent().contains('Management');
-    cy.getByAttr('layout__nav__home').click();
+    cy.getByAttr('profile-editor__next').click();
+    cy.getByAttr('key-editor__go-to-profile').click();
+
     cy.getByAttr('wallet__withdraw').click();
     cy.getByAttr('amount__value').type('100', { force: true });
     cy.getByAttr('amount__accept').click();

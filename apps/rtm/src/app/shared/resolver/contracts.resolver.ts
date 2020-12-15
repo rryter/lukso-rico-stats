@@ -8,6 +8,7 @@ import { Profile } from '../../account-editor/profile-editor/profile-editor.comp
 // @ts-ignore
 import ERC725 from 'erc725.js';
 import schema from './schema.json';
+import { Web3Service } from '@shared/services/web3.service';
 
 @Injectable({
   providedIn: 'root',
@@ -19,7 +20,7 @@ export class ContractsResolver
       keyManagerContract: ERC734KeyManager | undefined;
       accountData: Profile;
     }> {
-  constructor(private contractService: ContractService) {}
+  constructor(private contractService: ContractService, private web3Service: Web3Service) {}
   resolve(
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot
@@ -32,12 +33,13 @@ export class ContractsResolver
       route.params.address
     );
     const _keyManagerContract = this.contractService.getKeyManagerContract(_accountContract);
-    const erc725 = new ERC725(schema, _accountContract.address, window.ethereum);
+    // const erc725 = new ERC725(schema, _accountContract.address, this.web3Service.provider);
 
     return combineLatest([
       of(_accountContract),
       _keyManagerContract,
-      erc725.getAllData() as Promise<Profile>,
+      this.contractService.getAccountDataStore(_accountContract),
+      //   erc725.getAllData() as Promise<Profile>,
     ]).pipe(
       map(([accountContract, keyManagerContract, accountData]) => {
         return {
