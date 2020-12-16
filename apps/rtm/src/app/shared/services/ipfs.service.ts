@@ -9,7 +9,8 @@ export class IpfsService {
   ipfs: any; // TODO figure out proper type
   constructor() {
     const options: ClientOptions = {
-      url: '/ip4/127.0.0.1/tcp/5001',
+      protocol: 'https',
+      host: 'ipfs.infura.io',
     };
     this.ipfs = ipfsClient(options);
   }

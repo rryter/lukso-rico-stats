@@ -31,10 +31,6 @@ const cropperOptions = {
   toggleDragModeOnDblclick: false,
 };
 
-const options: ClientOptions = {
-  url: '/ip4/127.0.0.1/tcp/5001',
-};
-
 @Component({
   selector: 'lukso-image-editor',
   templateUrl: './image-editor.component.html',
@@ -57,7 +53,7 @@ export class ImageEditorComponent {
     private activatedRoute: ActivatedRoute,
     private cdref: ChangeDetectorRef
   ) {
-    this.ipfs = ipfsClient(options);
+    this.ipfs = ipfsClient({ protocol: 'https', host: 'ipfs.infura.io', port: 5001 });
     this.contracts$ = this.activatedRoute.parent?.data.pipe(
       pluck('contracts')
     ) as Observable<Contracts>;
