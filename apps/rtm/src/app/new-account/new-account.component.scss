@@ -1,10 +1,12 @@
+@import '/apps/rtm/src/style-mixins.scss';
+
 :host {
   display: block;
 }
 
 .grid-container {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 650px 1fr;
   grid-template-rows: 1fr;
   gap: 0px 0px;
   grid-template-areas: 'signup image';
@@ -17,6 +19,11 @@
   align-items: center;
   justify-content: center;
   background: rgba(0, 0, 0, 0.8);
+  padding: 100px;
+
+  img {
+    max-width: 100%;
+  }
 }
 
 .signup {
@@ -31,7 +38,7 @@
   height: 100vh;
 
   display: grid;
-  grid-template-columns: minmax(50px, 1fr) min-content minmax(50px, 1fr);
+  grid-template-columns: 80px 1fr 80px;
   grid-template-rows: 100px 1fr min-content min-content min-content 1fr 100px;
   grid-template-areas:
     '. . .'
@@ -41,14 +48,17 @@
     '. . .'
     '. . .';
   gap: 20px 20px;
+  overflow: hidden;
 }
 
 .mat-display-1 {
   margin-bottom: 10px;
+  font-size: 30px;
 }
 
 .sub-title {
-  color: rgba(0, 0, 0, 0.3);
+  color: #000000;
+  font-size: 16px;
   margin-bottom: 30px;
 }
 
@@ -70,8 +80,7 @@
   flex-direction: row;
   padding: 40px 60px 40px 40px;
   color: black;
-  width: 550px;
-  box-shadow: 0 0 5px rgba(128, 128, 128, 0.521);
+  @include ambientShadow;
 
   &:hover {
     cursor: pointer;
@@ -95,7 +104,7 @@
 .icon {
   margin-right: 20px;
   img {
-    $icon-size: 90px;
+    $icon-size: 60px;
     width: $icon-size;
     height: $icon-size;
   }
@@ -103,16 +112,25 @@
 
 .call-to-action {
   h2 {
+    color: #1f263e;
+    font-size: 16px;
+    font-weight: 600;
     padding-bottom: 5px;
+    margin: 0;
+    opacity: 1;
   }
   p {
-    color: rgba(0, 0, 0, 0.5);
+    color: #b2b2b2;
+    font-size: 14px;
   }
 }
 
 footer {
   position: absolute;
   bottom: 0;
-  left: 0;
+  left: 80px;
   padding: 20px;
+  opacity: 0.3;
+  color: #000000;
+  font-size: 14px;
 }

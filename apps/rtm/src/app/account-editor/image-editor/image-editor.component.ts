@@ -11,7 +11,7 @@ import { PendingTransaction } from '@shared/interface/transactions';
 import Cropper from 'cropperjs';
 import imageCompression from 'browser-image-compression';
 import { ClientOptions } from 'ipfs-http-client/src/lib/core';
-import { pluck } from 'rxjs/operators';
+import { map, pluck } from 'rxjs/operators';
 import { Contracts } from '@shared/interface/contracts';
 import { Observable } from 'rxjs';
 
@@ -31,45 +31,45 @@ const cropperOptions = {
   toggleDragModeOnDblclick: false,
 };
 
+const options: ClientOptions = {
+  url: '/ip4/127.0.0.1/tcp/5001',
+};
+
 @Component({
   selector: 'lukso-image-editor',
   templateUrl: './image-editor.component.html',
   styleUrls: ['./image-editor.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class ImageEditorComponent implements OnInit {
+export class ImageEditorComponent {
   @Input() pendingActions: PendingTransaction[] = [];
   @ViewChild('fileDropRef', { static: false }) fileDropEl: any;
 
   ipfs: any;
-  imageSource = '/assets/portrait-placeholder.png';
-  compressedSize = 0;
-  files: any[] = [];
+  file: File | undefined;
   cropper: Cropper | undefined;
+
   contracts$: Observable<Contracts>;
+  imageSource$: Observable<string>;
 
   constructor(
     private router: Router,
     private activatedRoute: ActivatedRoute,
     private cdref: ChangeDetectorRef
   ) {
-    const options: ClientOptions = {
-      url: '/ip4/127.0.0.1/tcp/5001',
-    };
     this.ipfs = ipfsClient(options);
     this.contracts$ = this.activatedRoute.parent?.data.pipe(
       pluck('contracts')
     ) as Observable<Contracts>;
-  }
-
-  ngOnInit(): void {
-    this.contracts$.subscribe(({ accountData }) => {
-      if (accountData.image) {
-        this.imageSource = 'https://ipfs.io/ipfs/' + accountData.image;
-      } else {
-        this.imageSource = '/assets/portrait-placeholder.png';
-      }
-    });
+    this.imageSource$ = this.contracts$.pipe(
+      map(({ accountData }) => {
+        if (accountData.image) {
+          return 'https://ipfs.io/ipfs/' + accountData.image;
+        } else {
+          return '/assets/portrait-placeholder.png';
+        }
+      })
+    );
   }
 
   onFileDropped($event: any) {
@@ -86,11 +86,11 @@ export class ImageEditorComponent implements OnInit {
    */
   prepareFilesList(files: Array<File>) {
     const inputImage = document.getElementById('fileDropRef') as any;
-    const file = files[0];
+    this.file = files[0];
 
-    if (/^image\/\w+/.test(file.type)) {
+    if (/^image\/\w+/.test(this.file.type)) {
       const image = document.querySelector('#cropper') as HTMLImageElement;
-      image.src = URL.createObjectURL(file);
+      image.src = URL.createObjectURL(this.file);
 
       if (this.cropper) {
         this.cropper.destroy();

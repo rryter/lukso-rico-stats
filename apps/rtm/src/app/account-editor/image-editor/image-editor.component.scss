@@ -16,7 +16,7 @@
 p {
   font-size: 16px;
   font-weight: bold;
-  padding-bottom: 20px;
+  padding-bottom: 0px;
 }
 
 .image-placeholder {
@@ -26,7 +26,7 @@ p {
   height: 300px;
   @include corners;
   box-shadow: 0 0 2px rgba(0, 0, 0, 0.3);
-  margin-bottom: 40px;
+  margin-bottom: 15px;
 
   input {
     opacity: 0;
@@ -48,8 +48,59 @@ img {
   animation-iteration-count: infinite;
 }
 
-#fileDropRef {
+.image-file {
+  width: 0.1px;
+  height: 0.1px;
+  opacity: 0;
+  overflow: hidden;
+  position: absolute;
+  z-index: -1;
+}
+
+.image-file + label {
+  font-weight: 700;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  cursor: pointer;
+  display: inline-block;
+  overflow: hidden;
+  padding: 0.625rem 1.25rem;
+  width: 250px;
+}
+
+.no-js .image-file + label {
   display: none;
+}
+
+.image-file:focus + label,
+.image-file.has-focus + label {
+  outline: 1px dotted #000;
+  outline: -webkit-focus-ring-color auto 5px;
+}
+
+.image-file + label * {
+  /* pointer-events: none; */
+  /* in case of FastClick lib use */
+}
+
+.image-file + label svg {
+  width: 1em;
+  height: 1em;
+  vertical-align: middle;
+  fill: currentColor;
+  margin-top: -0.25em;
+  margin-right: 0.25em;
+}
+
+.image-file + label {
+  color: #f1e5e6;
+  background-color: var(--primary-color);
+}
+
+.image-file:focus + label,
+.image-file.has-focus + label,
+.image-file + label:hover {
+  background-color: var(--primary-color);
 }
 
 /* Shake animation */
