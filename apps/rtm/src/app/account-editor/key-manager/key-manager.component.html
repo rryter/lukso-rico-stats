@@ -1,9 +1,5 @@
 <h1>Access</h1>
 <section>
-  <lukso-progress
-    *ngIf="keyManagerContract === undefined"
-    [accountAddress]="accountAddress"
-  ></lukso-progress>
   <ng-container *ngIf="keyManagerContract">
     <lukso-error-message [errorMessage]="error"></lukso-error-message>
     <ng-container *ngIf="keyManagerData$ | async as keyManagerData">

@@ -1,17 +1,17 @@
-import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { Routes, RouterModule } from '@angular/router';
-import { AccountEditorComponent } from './account-editor.component';
+import { NgModule } from '@angular/core';
+import { ReactiveFormsModule } from '@angular/forms';
+import { RouterModule, Routes } from '@angular/router';
+import { ContractsResolver } from '@shared/resolver/contracts.resolver';
 import { SharedModule } from '@shared/shared.module';
+import { AccountEditorComponent } from './account-editor.component';
+import { Erc725ExplainerComponent } from './erc725-explainer/erc725-explainer.component';
 import { ImageEditorComponent } from './image-editor/image-editor.component';
 import { KeyEditorComponent } from './key-editor/key-editor.component';
-import { ProfileEditorComponent } from './profile-editor/profile-editor.component';
-import { ReactiveFormsModule } from '@angular/forms';
-import { Erc725ExplainerComponent } from './erc725-explainer/erc725-explainer.component';
-import { ContractsResolver } from '@shared/resolver/contracts.resolver';
+import { AddKeyComponent } from './key-manager/add-key/add-key.component';
 import { KeyManagerComponent } from './key-manager/key-manager.component';
 import { PriviligesComponent } from './key-manager/priviliges/priviliges.component';
-import { AddKeyComponent } from './key-manager/add-key/add-key.component';
+import { ProfileEditorComponent } from './profile-editor/profile-editor.component';
 const routes: Routes = [
   {
     path: '',
