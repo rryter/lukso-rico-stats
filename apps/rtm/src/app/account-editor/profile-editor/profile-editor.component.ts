@@ -91,9 +91,8 @@ export class ProfileEditorComponent implements OnInit, OnChanges {
       });
 
       this.saveTrigger$.next(keyValuePairs);
-    } else {
-      this.router.navigate(['../keys'], { relativeTo: this.route });
     }
+    this.router.navigate(['../keys'], { relativeTo: this.route });
   }
 
   back() {
