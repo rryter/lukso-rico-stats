@@ -1,19 +1,17 @@
 import {
-  Component,
-  OnInit,
   ChangeDetectionStrategy,
-  Input,
-  SimpleChanges,
-  Output,
+  Component,
   EventEmitter,
+  Input,
   OnChanges,
+  OnInit,
+  Output,
+  SimpleChanges,
 } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Contracts } from '@shared/interface/contracts';
-import { PendingTransactionType } from '@shared/interface/transactions';
 import { ContractService } from '@shared/services/contract.service';
-import { LoadingIndicatorService } from '@shared/services/loading-indicator.service';
 import { utils } from 'ethers';
 import { Observable, Subject } from 'rxjs';
 import { pluck, withLatestFrom } from 'rxjs/operators';
@@ -42,6 +40,7 @@ export class ProfileEditorComponent implements OnInit, OnChanges {
   >();
   @Output() saveing = new EventEmitter();
   @Input() profile: Profile = { nickName: '', bio: '', image: '' };
+
   constructor(
     private router: Router,
     private fb: FormBuilder,
@@ -68,6 +67,7 @@ export class ProfileEditorComponent implements OnInit, OnChanges {
     this.contracts$.subscribe(({ accountData }) => {
       this.form.setValue(accountData);
     });
+
     this.saveTrigger$
       .pipe(withLatestFrom(this.contracts$))
       .subscribe(this.contractService.updateProfile);
