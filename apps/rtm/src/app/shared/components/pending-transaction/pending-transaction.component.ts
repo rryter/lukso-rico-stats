@@ -1,4 +1,4 @@
-import { trigger, transition, style, animate } from '@angular/animations';
+import { trigger, transition, style, animate, group, useAnimation } from '@angular/animations';
 import {
   Component,
   OnInit,
@@ -12,6 +12,7 @@ import {
 } from '@angular/core';
 import { PendingTransaction, PendingTransactionType } from '@shared/interface/transactions';
 import { LoadingIndicatorService } from '@shared/services/loading-indicator.service';
+import { flash } from 'ngx-animate/lib/attention-seekers';
 import { Observable } from 'rxjs';
 import { map, tap } from 'rxjs/operators';
 
@@ -25,7 +26,11 @@ import { map, tap } from 'rxjs/operators';
         style({ opacity: 0 }),
         animate('300ms ease-in', style({ opacity: 1 })),
       ]),
-      transition(':leave', [animate('200ms ease-in', style({ opacity: 0 }))]),
+      transition(':leave', [
+        style({ color: 'green' }),
+        useAnimation(flash, { params: { duration: 500 } }),
+        animate('200ms ease-in', style({ opacity: 0 })),
+      ]),
     ]),
   ],
 })

@@ -1,8 +1,8 @@
 <lukso-layout-reduced>
   <img class="coaster-logo" src="/assets/coaster_white.png" />
   <main class="grid-container" role="main">
-    <lukso-pending-transaction></lukso-pending-transaction>
     <section class="account" [@routeAnimations]="prepareRoute(outlet)">
+      <lukso-pending-transaction></lukso-pending-transaction>
       <router-outlet #outlet="outlet"></router-outlet>
     </section>
     <section class="infos">

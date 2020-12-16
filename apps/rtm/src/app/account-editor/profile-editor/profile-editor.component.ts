@@ -12,6 +12,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Contracts } from '@shared/interface/contracts';
 import { PendingTransactionType } from '@shared/interface/transactions';
+import { ContractService } from '@shared/services/contract.service';
 import { LoadingIndicatorService } from '@shared/services/loading-indicator.service';
 import { utils } from 'ethers';
 import { Observable, Subject } from 'rxjs';
@@ -45,7 +46,7 @@ export class ProfileEditorComponent implements OnInit, OnChanges {
     private router: Router,
     private fb: FormBuilder,
     private route: ActivatedRoute,
-    private loadingIndicatorService: LoadingIndicatorService
+    private contractService: ContractService
   ) {
     this.form = this.fb.group(
       {
@@ -67,7 +68,9 @@ export class ProfileEditorComponent implements OnInit, OnChanges {
     this.contracts$.subscribe(({ accountData }) => {
       this.form.setValue(accountData);
     });
-    this.saveTrigger$.pipe(withLatestFrom(this.contracts$)).subscribe(this.updateProfile);
+    this.saveTrigger$
+      .pipe(withLatestFrom(this.contracts$))
+      .subscribe(this.contractService.updateProfile);
   }
 
   ngOnChanges(changes: SimpleChanges) {
@@ -77,10 +80,12 @@ export class ProfileEditorComponent implements OnInit, OnChanges {
   }
 
   submit(form: FormGroup) {
+    if (this.uploadedImage) {
+      form.controls['image'].setValue(this.uploadedImage);
+      form.markAsDirty();
+    }
+
     if (form.valid && form.dirty) {
-      if (this.uploadedImage) {
-        form.controls['image'].setValue(this.uploadedImage);
-      }
       const keyValuePairs = Object.entries(form.value).map((data: [string, any]) => {
         return { key: utils.formatBytes32String(data[0]), value: utils.toUtf8Bytes(data[1]) };
       });
@@ -94,27 +99,4 @@ export class ProfileEditorComponent implements OnInit, OnChanges {
   back() {
     this.router.navigate(['../image'], { relativeTo: this.route });
   }
-
-  private updateProfile = ([keyValuePairs, { accountContract, keyManagerContract }]: [
-    any,
-    Contracts
-  ]) => {
-    let action;
-    if (keyManagerContract) {
-      action = keyManagerContract.execute(
-        accountContract.interface.encodeFunctionData('setDataWithArray', [keyValuePairs])
-      );
-    } else {
-      action = accountContract.setDataWithArray(keyValuePairs);
-    }
-
-    this.loadingIndicatorService.addPromise({
-      promise: action,
-      type: PendingTransactionType.Profile,
-      action: 'Saving Profile',
-      callBack: () => {
-        this.router.navigate(['../keys'], { relativeTo: this.route });
-      },
-    });
-  };
 }

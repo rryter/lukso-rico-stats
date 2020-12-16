@@ -1,4 +1,6 @@
 import { Injectable } from '@angular/core';
+import { Contracts } from '@shared/interface/contracts';
+import { PendingTransactionType } from '@shared/interface/transactions';
 import { isContractDeployed } from '@shared/utils/contracts';
 import { ERC725Account, ERC734KeyManager } from '@twy-gmbh/erc725-playground';
 import { BytesLike, utils } from 'ethers';
@@ -73,4 +75,18 @@ export class ContractService {
         this.loadingIndicatorService.hideBlockerBackdrop();
       });
   }
+
+  updateProfile = ([keyValuePairs, { accountContract, keyManagerContract }]: [any, Contracts]) => {
+    const action = !keyManagerContract
+      ? accountContract.setDataWithArray(keyValuePairs)
+      : keyManagerContract.execute(
+          accountContract.interface.encodeFunctionData('setDataWithArray', [keyValuePairs])
+        );
+
+    this.loadingIndicatorService.addPromise({
+      promise: action,
+      type: PendingTransactionType.Profile,
+      action: 'Saving Profile',
+    });
+  };
 }
