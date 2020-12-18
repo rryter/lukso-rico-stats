@@ -5,7 +5,10 @@
 
 <div class="image-placeholder" luksoAppDnd (fileDropped)="onFileDropped($event)">
   <img [src]="imageSource$ | async" id="cropper" />
-  <div class="droppable"></div>
+  <div class="uploading" *ngIf="uploading">
+    Uploading to IPFS<br />
+    <mat-spinner [diameter]="30"></mat-spinner>
+  </div>
 </div>
 
 <input

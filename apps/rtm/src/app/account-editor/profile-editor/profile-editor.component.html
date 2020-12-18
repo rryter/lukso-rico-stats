@@ -45,7 +45,8 @@
         [attr.data-cy]="'profile-editor__next'"
       >
         <!-- [disabled]="form.pristine" -->
-        Save
+        <span *ngIf="form.dirty">Save</span>
+        <span *ngIf="!form.dirty">Next</span>
       </button>
     </div>
   </div>

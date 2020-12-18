@@ -30,7 +30,7 @@ export class LoadingIndicatorService {
     action,
     callBack,
   }: {
-    promise: Promise<ContractTransaction | Contract | undefined>;
+    promise: Promise<ContractTransaction | Contract | unknown>;
     type: PendingTransactionType;
     action: string;
     callBack?: Function;

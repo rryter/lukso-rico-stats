@@ -1,7 +1,7 @@
 import { Contract, ContractTransaction } from 'ethers';
 
 export interface PendingTransaction {
-  promise: Contract | ContractTransaction | undefined;
+  promise: Contract | ContractTransaction | unknown;
   type: PendingTransactionType;
   action: string;
 }

@@ -1,21 +1,19 @@
 import {
-  Component,
-  OnInit,
   ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
   Input,
   ViewChild,
-  ChangeDetectorRef,
 } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { PendingTransaction } from '@shared/interface/transactions';
-import Cropper from 'cropperjs';
-import imageCompression from 'browser-image-compression';
-import { ClientOptions } from 'ipfs-http-client/src/lib/core';
-import { map, pluck } from 'rxjs/operators';
 import { Contracts } from '@shared/interface/contracts';
-import { Observable } from 'rxjs';
-
+import { PendingTransaction, PendingTransactionType } from '@shared/interface/transactions';
+import { LoadingIndicatorService } from '@shared/services/loading-indicator.service';
+import imageCompression from 'browser-image-compression';
+import Cropper from 'cropperjs';
 import ipfsClient from 'ipfs-http-client';
+import { Observable } from 'rxjs';
+import { map, pluck } from 'rxjs/operators';
 
 const cropperOptions = {
   viewMode: 3,
@@ -44,13 +42,14 @@ export class ImageEditorComponent {
   ipfs: any;
   file: File | undefined;
   cropper: Cropper | undefined;
-
+  uploading = false;
   contracts$: Observable<Contracts>;
   imageSource$: Observable<string>;
 
   constructor(
     private router: Router,
     private activatedRoute: ActivatedRoute,
+    private loadingIndicator: LoadingIndicatorService,
     private cdref: ChangeDetectorRef
   ) {
     this.ipfs = ipfsClient({ protocol: 'https', host: 'ipfs.infura.io', port: 5001 });
@@ -114,13 +113,24 @@ export class ImageEditorComponent {
 
   next() {
     if (this.cropper) {
-      this.handleImageUpload(this.cropper.getCroppedCanvas() as HTMLCanvasElement)
-        .then((compressedFile: Blob) => {
-          return this.ipfs.add(compressedFile, {
-            progress: (prog: any) => console.log(`received: ${prog}`),
-          });
+      this.uploading = true;
+      this.loadingIndicator
+        .addPromise({
+          promise: this.handleImageUpload(
+            this.cropper.getCroppedCanvas() as HTMLCanvasElement
+          ).then((compressedFile: Blob) => {
+            console.log(compressedFile);
+
+            return this.ipfs.add(compressedFile, {
+              progress: (prog: any) => console.log(`received: ${prog}`),
+            });
+          }),
+          action: 'Uploading compressed image...',
+          type: PendingTransactionType.All,
         })
         .then((file: any) => {
+          console.log('LOADING::::DONE');
+          this.uploading = false;
           this.router.navigate(['../profile'], {
             relativeTo: this.activatedRoute,
             state: { imagePath: file.path },
