@@ -23,6 +23,10 @@ const routes: Routes = [
     component: OverviewComponent,
   },
   {
+    path: ':address/wallet',
+    component: OverviewWalletComponent,
+  },
+  {
     path: ':address',
     loadChildren: () =>
       import('../account-editor/account-editor.module').then((m) => m.AccountEditorModule),

@@ -23,34 +23,18 @@ mat-card {
 }
 
 .wrapper {
-  display: flex;
+  display: block;
   flex: 0 0 100%;
   align-self: stretch;
 }
 
 .wallet {
+  display: block;
   overflow: hidden;
-  background: rgba(#6e43b9, 0.7);
-  background-image: linear-gradient(
-    to right,
-    #b8868d,
-    #bc8b97,
-    #bf91a2,
-    #c197ac,
-    #c29db6,
-    #be98b6,
-    #b994b6,
-    #b390b6,
-    #a680ae,
-    #9870a6,
-    #89619e,
-    #795397
-  );
-  @include corners;
-  @include ambientShadow;
   padding: 20px 30px;
-  width: 70%;
-  color: white !important;
+  background: none;
+  box-shadow: none;
+  text-align: center;
 
   //   span {
   //     opacity: 0.5;
@@ -62,11 +46,14 @@ mat-card {
 
 .balances {
   line-height: 1.3;
+  padding-bottom: 50px;
 }
 
 .balance--lyx {
   font-weight: bold;
-  font-size: 40px;
+  font-size: 80px;
+  line-height: 1.2;
+  color: white;
 }
 
 .balance--dollar {
@@ -81,10 +68,6 @@ mat-card {
 .lyx-logo {
   height: 40px;
   width: 40px;
-}
-
-.balances {
-  height: 100px;
 }
 
 lukso-qr-code {

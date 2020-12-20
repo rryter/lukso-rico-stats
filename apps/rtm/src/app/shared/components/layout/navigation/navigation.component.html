@@ -14,7 +14,7 @@
   <nav class="nav" role="navigation">
     <a
       class="nav-link"
-      [routerLink]="['../', accountAddress]"
+      [routerLink]="['/accounts', accountAddress]"
       [routerLinkActive]="'nav-link--active'"
       [routerLinkActiveOptions]="{ exact: true }"
       [attr.data-cy]="'layout__nav__home'"
@@ -23,7 +23,7 @@
 
     <a
       class="nav-link nav-link"
-      [routerLink]="['../', accountAddress, 'wallet']"
+      [routerLink]="['/accounts', accountAddress, 'wallet']"
       [attr.data-cy]="'layout__nav__wallet'"
       >Wallet</a
     >
