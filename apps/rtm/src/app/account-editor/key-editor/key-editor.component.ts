@@ -6,13 +6,14 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Privileges } from '@shared/capabilities.enum';
 import { Contracts } from '@shared/interface/contracts';
 import { PendingTransactionType } from '@shared/interface/transactions';
+import { ContractService } from '@shared/services/contract.service';
 import { KeyManagerService } from '@shared/services/key-manager.service';
 import { LoadingIndicatorService } from '@shared/services/loading-indicator.service';
 import { Web3Service } from '@shared/services/web3.service';
 import { isETHAddressValidator } from '@shared/validators/web3-address.validator';
 import { flash } from 'ngx-animate/lib/attention-seekers';
 import { Observable } from 'rxjs';
-import { pluck, switchMap } from 'rxjs/operators';
+import { pluck, switchMap, withLatestFrom } from 'rxjs/operators';
 
 @Component({
   selector: 'lukso-key-editor',
@@ -53,7 +54,8 @@ export class KeyEditorComponent implements OnInit {
     private activatedRoute: ActivatedRoute,
     private web3Service: Web3Service,
     private keyManagerService: KeyManagerService,
-    private loadingIndicatorService: LoadingIndicatorService
+    private loadingIndicatorService: LoadingIndicatorService,
+    private contractService: ContractService
   ) {
     this.data.privileges = this.data.privileges || [Privileges.EXECUTION];
     this.newKeyForm = this.fb.group(
@@ -66,20 +68,26 @@ export class KeyEditorComponent implements OnInit {
       },
       { updateOn: 'blur' }
     );
-    this.contracts$ = this.activatedRoute.parent?.data.pipe(
-      pluck('contracts')
-    ) as Observable<Contracts>;
+    if (!this.activatedRoute.parent) {
+      throw Error('Data is missing');
+    }
+    this.contracts$ = this.activatedRoute.parent?.params.pipe(
+      pluck('address'),
+      switchMap((address) => {
+        return this.contractService.getContractsAndData(address);
+      })
+    );
   }
 
   ngOnInit(): void {
     this.saveTrigger$
       .pipe(
-        switchMap((address: string) => {
+        withLatestFrom(this.contracts$),
+        switchMap(([address, { accountContract, keyManagerContract }]) => {
           if (!this.activatedRoute.parent) {
             throw Error('Parent not available');
           }
-          const accountContract = this.activatedRoute.parent.snapshot.data.contracts
-            .accountContract;
+
           return this.loadingIndicatorService
             .addPromise({
               promise: this.keyManagerService.deploy(accountContract.address, address),

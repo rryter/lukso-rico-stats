@@ -13,7 +13,7 @@ import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/cor
       :host {
         display: block;
         text-align: center;
-        opacity: 0.4;
+        opacity: 0.8;
 
         &:hover {
           opacity: 1;
@@ -27,7 +27,7 @@ import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/cor
 })
 export class QrCodeComponent implements OnInit, OnChanges {
   @Input() address!: string;
-  @Input() size = 120;
+  @Input() size = 240;
   qrCode: Promise<string> | undefined;
 
   constructor() {}

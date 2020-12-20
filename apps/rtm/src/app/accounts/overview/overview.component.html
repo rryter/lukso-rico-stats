@@ -1,6 +1,6 @@
 <lukso-layout>
   <main class="grid-container" role="main">
-    <lukso-overview-account [accountContract]="accountContract"></lukso-overview-account>
+    <lukso-overview-account [accountContract]="accountContract$ | async"></lukso-overview-account>
     <lukso-overview-assets></lukso-overview-assets>
   </main>
 </lukso-layout>

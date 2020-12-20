@@ -8,12 +8,13 @@ import {
 import { ActivatedRoute, Router } from '@angular/router';
 import { Contracts } from '@shared/interface/contracts';
 import { PendingTransaction, PendingTransactionType } from '@shared/interface/transactions';
+import { ContractService } from '@shared/services/contract.service';
 import { LoadingIndicatorService } from '@shared/services/loading-indicator.service';
 import imageCompression from 'browser-image-compression';
 import Cropper from 'cropperjs';
 import ipfsClient from 'ipfs-http-client';
 import { Observable } from 'rxjs';
-import { map, pluck } from 'rxjs/operators';
+import { map, pluck, switchMap } from 'rxjs/operators';
 
 const cropperOptions = {
   viewMode: 3,
@@ -50,12 +51,19 @@ export class ImageEditorComponent {
     private router: Router,
     private activatedRoute: ActivatedRoute,
     private loadingIndicator: LoadingIndicatorService,
+    private contractService: ContractService,
     private cdref: ChangeDetectorRef
   ) {
     this.ipfs = ipfsClient({ protocol: 'https', host: 'ipfs.infura.io', port: 5001 });
-    this.contracts$ = this.activatedRoute.parent?.data.pipe(
-      pluck('contracts')
-    ) as Observable<Contracts>;
+    if (!this.activatedRoute.parent) {
+      throw Error('Data is missing');
+    }
+    this.contracts$ = this.activatedRoute.parent?.params.pipe(
+      pluck('address'),
+      switchMap((address) => {
+        return this.contractService.getContractsAndData(address);
+      })
+    );
     this.imageSource$ = this.contracts$.pipe(
       map(({ accountData }) => {
         if (accountData.image) {

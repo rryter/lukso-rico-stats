@@ -3,7 +3,6 @@
 :host {
   position: relative;
   display: flex;
-  height: 202px;
   margin-bottom: 30px;
   width: 100%;
 }
@@ -72,8 +71,8 @@ mat-card {
 
 lukso-qr-code {
   position: absolute;
-  right: 30px;
-  bottom: 25px;
+  right: 0px;
+  bottom: 0px;
 }
 
 .actions {

@@ -4,11 +4,16 @@ import { PendingTransactionType } from '@shared/interface/transactions';
 import { isContractDeployed } from '@shared/utils/contracts';
 import { ERC725Account, ERC734KeyManager } from '@twy-gmbh/erc725-playground';
 import { BytesLike, utils } from 'ethers';
-import { forkJoin } from 'rxjs';
+import { combineLatest, forkJoin, Observable, of } from 'rxjs';
 import { KeyManagerService } from './key-manager.service';
 import { LoadingIndicatorService } from './loading-indicator.service';
 import { ProxyAccountService } from './proxy-account.service';
-
+import { Web3Service } from './web3.service';
+//@ts-ignore
+import ERC725 from 'erc725.js';
+import schema from '../resolver/schema.json';
+import { Profile } from '../../account-editor/profile-editor/profile-editor.component';
+import { map } from 'rxjs/operators';
 @Injectable({
   providedIn: 'root',
 })
@@ -16,25 +21,17 @@ export class ContractService {
   constructor(
     private keyManagerService: KeyManagerService,
     private proxyAccountService: ProxyAccountService,
-    private loadingIndicatorService: LoadingIndicatorService
+    private loadingIndicatorService: LoadingIndicatorService,
+    private web3Service: Web3Service
   ) {}
 
   getAccountContract(address: string) {
     return this.proxyAccountService.getContract(address);
   }
 
-  getAccountDataStore(accountContract: ERC725Account) {
-    return forkJoin({
-      nickName: accountContract
-        ?.getData(utils.formatBytes32String('nickName'))
-        .then((result: BytesLike) => utils.toUtf8String(result)),
-      bio: accountContract
-        ?.getData(utils.formatBytes32String('bio'))
-        .then((result: BytesLike) => utils.toUtf8String(result)),
-      image: accountContract
-        ?.getData(utils.formatBytes32String('image'))
-        .then((result: BytesLike) => utils.toUtf8String(result)),
-    });
+  getAccountDataStore(accountAddress: string): Promise<Profile> {
+    const erc725 = new ERC725(schema, accountAddress, this.web3Service.provider);
+    return erc725.getAllData();
   }
 
   getKeyManagerContract(accountContract: ERC725Account) {
@@ -89,4 +86,24 @@ export class ContractService {
       action: 'Saving Profile',
     });
   };
+
+  getContractsAndData(address: string): Observable<Contracts> {
+    const _accountContract: ERC725Account = this.getAccountContract(address);
+    const _keyManagerContract = this.getKeyManagerContract(_accountContract);
+    const erc725 = new ERC725(schema, _accountContract.address, this.web3Service.provider);
+
+    return combineLatest([
+      of(_accountContract),
+      _keyManagerContract,
+      erc725.getAllData() as Promise<Profile>,
+    ]).pipe(
+      map(([accountContract, keyManagerContract, accountData]) => {
+        return {
+          accountData,
+          accountContract,
+          keyManagerContract,
+        };
+      })
+    );
+  }
 }

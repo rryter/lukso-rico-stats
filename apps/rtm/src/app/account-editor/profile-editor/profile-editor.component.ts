@@ -14,7 +14,7 @@ import { Contracts } from '@shared/interface/contracts';
 import { ContractService } from '@shared/services/contract.service';
 import { utils } from 'ethers';
 import { Observable, Subject } from 'rxjs';
-import { pluck, withLatestFrom } from 'rxjs/operators';
+import { pluck, shareReplay, switchMap, withLatestFrom } from 'rxjs/operators';
 
 export interface Profile {
   nickName: string;
@@ -59,7 +59,13 @@ export class ProfileEditorComponent implements OnInit, OnChanges {
     if (!this.route.parent) {
       throw Error('Parent not available');
     }
-    this.contracts$ = this.route.parent.data.pipe(pluck('contracts'));
+    this.contracts$ = this.route.parent.params.pipe(
+      switchMap((params) => {
+        console.log(params);
+        return this.contractService.getContractsAndData(params.address);
+      }),
+      shareReplay({ bufferSize: 1, refCount: true })
+    );
     this.uploadedImage = this.router.getCurrentNavigation()?.extras.state?.imagePath;
   }
 

@@ -2,7 +2,6 @@ import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { RouterModule, Routes } from '@angular/router';
-import { ContractsResolver } from '@shared/resolver/contracts.resolver';
 import { SharedModule } from '@shared/shared.module';
 import { AccountEditorComponent } from './account-editor.component';
 import { Erc725ExplainerComponent } from './erc725-explainer/erc725-explainer.component';
@@ -16,10 +15,6 @@ const routes: Routes = [
   {
     path: '',
     component: AccountEditorComponent,
-    runGuardsAndResolvers: 'always',
-    resolve: {
-      contracts: ContractsResolver,
-    },
     children: [
       { path: 'account', component: Erc725ExplainerComponent },
       { path: 'image', component: ImageEditorComponent },

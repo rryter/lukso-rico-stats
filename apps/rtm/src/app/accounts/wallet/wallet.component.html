@@ -2,6 +2,7 @@
 
 <ng-container *ngIf="account$ | async as account">
   <div class="wrapper" *ngIf="!loading">
+    <lukso-qr-code [address]="account.address"></lukso-qr-code>
     <mat-card class="wallet shadow">
       <lukso-pending-transaction
         [filter]="pendingTransactionsFilter"
@@ -13,11 +14,9 @@
             {{ account.balance | number: '0.0-3' }} LYX
           </div>
           <div class="balance balance--dollar">
-            $ {{ account.balance | cmcPrice | async | number: '0.0-2' }}
+            <span>$ {{ account.balance | cmcPrice | async | number: '0.0-2' }}</span>
           </div>
         </div>
-
-        <!-- <lukso-qr-code [address]="account.address"></lukso-qr-code> -->
 
         <div class="actions" *ngIf="account.isExecutable || account.isManagable">
           <button mat-stroked-button (click)="topUp(account)" [attr.data-cy]="'wallet__top-up'">
