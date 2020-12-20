@@ -13,7 +13,6 @@ h1 {
 .grid-container {
   position: relative;
   display: grid;
-  grid-template-columns: minmax(250px, 350px) minmax(350px, 500px);
   grid-auto-flow: row;
   gap: 40px;
 }

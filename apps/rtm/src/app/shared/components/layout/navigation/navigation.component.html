@@ -14,11 +14,11 @@
   <nav class="nav" role="navigation">
     <a
       class="nav-link"
-      [routerLink]="['/accounts', accountAddress]"
+      [routerLink]="['/accounts']"
       [routerLinkActive]="'nav-link--active'"
       [routerLinkActiveOptions]="{ exact: true }"
       [attr.data-cy]="'layout__nav__home'"
-      >Overview</a
+      >Profiles</a
     >
 
     <a
@@ -38,9 +38,12 @@
       </button>
     </div>
 
-    <div class="user__selection">
-      <img src="/assets/portrait-placeholder-small.jpg" matRipple [matMenuTriggerFor]="menu" />
-    </div>
+    <div
+      class="user__selection"
+      matRipple
+      [matMenuTriggerFor]="menu"
+      style="background-image: url('https://ipfs.io/ipfs/{{ (data | async)?.image }}')"
+    ></div>
     <mat-menu #menu="matMenu">
       <!-- <button mat-menu-item>
         <mat-icon>person</mat-icon>

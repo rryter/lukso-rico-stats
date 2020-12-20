@@ -1,21 +1,9 @@
 <section class="account" *ngIf="accountDetails$ | async as accountDetails">
-  <h1>Account</h1>
-  <div
-    [attr.data-cy]="'overview-account__go-to-account-detail'"
-    [routerLink]="!hideText ? ['/accounts', accountContract.address, 'profile'] : null"
-    [ngClass]="{ clickable: !hideText }"
-    class="profile"
-    style="background-image: linear-gradient(transparent, #00000099), url({{
-      accountDetails.image
-    }})"
-  >
-    <div *ngIf="!hideText && accountDetails" class="profile__details">
-      <h2>{{ accountDetails.nickName }}</h2>
-      <p>{{ accountDetails.bio }}</p>
-    </div>
-
-    <!-- <div *ngIf="!hideText" class="upload-instructions">
-      <button mat-raised-button color="primary">Edit Account <mat-icon>edit</mat-icon></button>
-    </div> -->
+  <div class="profile__details" *ngIf="!hideText && accountDetails">
+    <h1>{{ accountDetails.nickName }}</h1>
+    <p>{{ accountDetails.bio }}</p>
+  </div>
+  <div class="profile__image-wrapper">
+    <img class="profile__image" [src]="accountDetails.image" />
   </div>
 </section>

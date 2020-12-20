@@ -35,7 +35,9 @@
 
 .infos {
   display: grid;
-  padding: 200px 100px 100px;
+  padding-top: 200px;
+  grid-template-columns: 20px 1fr 20px;
+  grid-template-areas: '. content .';
 }
 
 .progressbar {

@@ -18,6 +18,7 @@ export class AddKeyComponent implements OnInit {
       selected: false,
     },
     { value: 2, label: 'Execution', selected: false },
+    { value: 3, label: 'Recovery', selected: false },
   ];
   constructor(
     @Inject(MAT_DIALOG_DATA)

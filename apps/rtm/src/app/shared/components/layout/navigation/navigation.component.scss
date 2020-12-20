@@ -2,6 +2,8 @@
 
 :host {
   display: block;
+  position: relative;
+  z-index: 1000;
 }
 
 mat-toolbar {
@@ -54,6 +56,7 @@ mat-toolbar {
 
 .user {
   display: flex;
+  align-items: center;
   grid-area: user;
   height: 100px;
 }
@@ -72,16 +75,16 @@ mat-toolbar {
   }
 }
 .user__selection {
-  width: 90px;
+  height: 50px;
+  border-radius: 100%;
+  background-size: contain;
+  background-position: center center;
+  filter: grayscale(1);
+  border: 3px solid white;
+  @include ambientShadow;
+  width: 50px;
   text-align: center;
   &:hover {
     cursor: pointer;
-  }
-  img {
-    margin-top: 25px;
-    margin-bottom: 25px;
-    height: 50px;
-    border-radius: 100%;
-    @include ambientShadow;
   }
 }

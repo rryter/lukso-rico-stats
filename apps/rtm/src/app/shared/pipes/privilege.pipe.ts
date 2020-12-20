@@ -11,6 +11,8 @@ export class PrivilegePipe implements PipeTransform {
         return 'Management';
       case Privileges.EXECUTION:
         return 'Execution';
+      case Privileges.RECOVERY:
+        return 'Recovery';
       default:
         return 'ERROR: Does not Match any existing Privilege.';
     }
