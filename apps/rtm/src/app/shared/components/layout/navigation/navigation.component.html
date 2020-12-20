@@ -14,16 +14,16 @@
   <nav class="nav" role="navigation">
     <a
       class="nav-link"
-      [routerLink]="['/accounts']"
+      [routerLink]="['../', accountAddress]"
       [routerLinkActive]="'nav-link--active'"
       [routerLinkActiveOptions]="{ exact: true }"
       [attr.data-cy]="'layout__nav__home'"
-      >Profiles</a
+      >Profile</a
     >
 
     <a
-      class="nav-link nav-link--deactivated"
-      [routerLink]="[accountAddress, 'wallet']"
+      class="nav-link nav-link"
+      [routerLink]="['../', accountAddress, 'wallet']"
       [attr.data-cy]="'layout__nav__wallet'"
       >Wallet</a
     >
@@ -32,11 +32,11 @@
   <div></div>
 
   <div class="user">
-    <div class="user__notifications">
+    <!-- <div class="user__notifications">
       <button mat-icon-button aria-label="Notifications">
         <mat-icon matBadgeColor="primary">notifications_none</mat-icon>
       </button>
-    </div>
+    </div> -->
 
     <div
       class="user__selection"
