@@ -19,7 +19,7 @@ describe('KeyEditorComponent', () => {
           provide: ActivatedRoute,
           useValue: {
             parent: {
-              data: of({}),
+              params: of({}),
             },
           },
         },

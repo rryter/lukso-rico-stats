@@ -1,9 +1,11 @@
 @import '/apps/rtm/src/style-mixins.scss';
 
 :host {
+  display: block;
   background: linear-gradient(101.3deg, #7b4397 8.02%, #dc2430 95.8%);
   z-index: 100;
   position: relative;
+
   &::after {
     position: absolute;
     bottom: -50px;
@@ -17,10 +19,9 @@
   }
 }
 
-h1,
-.input--nickname {
+h1 {
   font-family: Montserrat, Arial, Helvetica, sans-serif;
-  font-size: 80px;
+  font-size: 50px;
   font-weight: bold !important;
   line-height: 1;
   word-break: keep-all;
@@ -58,7 +59,7 @@ section {
 }
 
 .profile__details {
-  padding: 100px;
+  padding: 150px 100px 100px;
   word-wrap: break-word;
   color: white;
   display: flex;
@@ -66,64 +67,4 @@ section {
   align-items: flex-end;
   justify-content: center;
   text-align: right;
-}
-
-.input {
-  font-family: Montserrat, Arial, Helvetica, sans-serif;
-  background: rgba(255, 255, 255, 0.1);
-  border: 0;
-  caret-color: white;
-  width: 100%;
-  color: white;
-  text-align: right;
-  line-height: 1;
-  &::placeholder {
-    color: rgba(255, 255, 255, 0.3);
-  }
-
-  &:focus {
-    outline: 2px dashed white;
-  }
-}
-
-.property {
-  position: relative;
-}
-
-.propetry--editMode {
-  opacity: 0;
-}
-
-.propetry--bio p {
-  font-size: 18px;
-  line-height: 1.6;
-  padding: 10px;
-}
-
-.input--nickname {
-  position: absolute;
-  top: -9px;
-  left: -20px;
-  margin-bottom: 20px;
-}
-
-.input--bio {
-  box-sizing: border-box;
-  font-size: 18px;
-  letter-spacing: 0.0179em;
-
-  padding: 10px;
-  line-height: 1.6;
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  resize: none;
-}
-
-.page-actions {
-  z-index: 10000;
-  position: absolute;
-  bottom: 100px;
-  right: 50px;
 }

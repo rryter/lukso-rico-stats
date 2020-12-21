@@ -9,7 +9,6 @@ import { KeyManagerService } from './key-manager.service';
 import { LoadingIndicatorService } from './loading-indicator.service';
 import { ProxyAccountService } from './proxy-account.service';
 import { Web3Service } from './web3.service';
-//@ts-ignore
 import ERC725 from 'erc725.js';
 import schema from '../resolver/schema.json';
 import { Profile } from '../../account-editor/profile-editor/profile-editor.component';

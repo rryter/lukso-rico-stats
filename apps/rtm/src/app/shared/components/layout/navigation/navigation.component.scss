@@ -41,12 +41,25 @@ mat-toolbar {
   text-decoration: none;
   padding-right: 40px;
   color: white;
+  opacity: 0.5;
 }
 
+.nav-link:hover,
 .nav-link--active {
-  position: relative;
   opacity: 1;
-  font-weight: bold;
+  span {
+    position: relative;
+    display: inline-block;
+    &::after {
+      content: '';
+      position: absolute;
+      left: 0;
+      bottom: 0;
+      height: 3px;
+      width: 100%;
+      background: white;
+    }
+  }
 }
 
 .nav-link--deactivated {

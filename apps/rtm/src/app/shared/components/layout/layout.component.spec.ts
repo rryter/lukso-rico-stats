@@ -12,6 +12,7 @@ import { EthAddressShortPipe } from '@shared/pipes/eth-address-short.pipe';
 import { TimeAgoPipe } from '@shared/pipes/time-ago.pipe';
 import { LayoutComponent } from './layout.component';
 import { MatMenuModule } from '@angular/material/menu';
+import { provideMockStore } from '@ngrx/store/testing';
 
 describe('LayoutComponent', () => {
   let component: LayoutComponent;
@@ -20,7 +21,7 @@ describe('LayoutComponent', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       declarations: [LayoutComponent, EthAddressShortPipe, CmcPricePipe, TimeAgoPipe],
-      providers: [{ provide: Web3Service, useValue: web3ServiceMock }],
+      providers: [{ provide: Web3Service, useValue: web3ServiceMock }, provideMockStore({})],
       imports: [
         MatSidenavModule,
         MatIconModule,

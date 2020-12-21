@@ -6,6 +6,11 @@ import { HttpClientModule } from '@angular/common/http';
 import { SharedModule } from './shared/shared.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { StoreModule } from '@ngrx/store';
+import { StoreRouterConnectingModule } from '@ngrx/router-store';
+import { StoreDevtoolsModule } from '@ngrx/store-devtools';
+import { environment } from '../environments/environment';
+import { reducers } from './store/index';
 
 @NgModule({
   declarations: [AppComponent],
@@ -33,6 +38,9 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
       { initialNavigation: 'enabled', enableTracing: false }
     ),
     BrowserAnimationsModule,
+    StoreModule.forRoot(reducers),
+    StoreRouterConnectingModule.forRoot(),
+    StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: environment.production }),
   ],
   bootstrap: [AppComponent],
 })

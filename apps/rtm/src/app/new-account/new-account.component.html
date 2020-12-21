@@ -1,50 +1,56 @@
-<div class="grid-container">
-  <div class="image">
-    <!-- <img src="/assets/illustration.svg" alt="Illustration" /> -->
-  </div>
-  <div class="signup">
-    <img src="/assets/coaster_white.png" class="coaster-logo" />
-    <div class="signup-container">
-      <div class="box--header">
-        <h1 class="mat-display-1">Welcome to the future!</h1>
-        <h2 class="mat-h2 sub-title">Please create ot load you account!</h2>
-      </div>
-      <div
-        class="box box--new"
-        (click)="deployProxyAccount()"
-        matRipple
-        [attr.data-cy]="'new-account__create-account'"
-      >
-        <div class="icon">
-          <img src="assets/49.svg" alt="Account" />
+<lukso-layout>
+  <main class="grid-container" role="main">
+    <div class="signup">
+      <div class="signup-container">
+        <div class="box--header">
+          <h1 class="mat-display-1">Welcome to the future!</h1>
+          <h2 class="mat-h2 sub-title">Please create or load you account!</h2>
         </div>
-        <div class="call-to-action">
-          <h2>Create Your On-Chain Profile</h2>
-          <p>
-            This will deploy an ERC-725<br />
-            Account for you.
-          </p>
+        <div
+          class="box box--new"
+          (click)="deployProxyAccount()"
+          [attr.data-cy]="'new-account__create-account'"
+        >
+          <div class="icon">
+            <img src="assets/49.svg" alt="Account" />
+          </div>
+          <div class="call-to-action" matRipple>
+            <h2>Create Your On-Chain Account</h2>
+            <p>
+              This will deploy your personal ERC-725<br />
+              Account for you.
+            </p>
+          </div>
         </div>
-      </div>
-      <div class="box box--existing" matRipple [matMenuTriggerFor]="menu">
-        <div class="icon">
-          <img src="assets/10.svg" alt="Account" />
-        </div>
-        <div class="call-to-action">
-          <h2>Load Existing Account</h2>
-          <p>You have already created your account, and just want to access it.</p>
-          <mat-menu #menu="matMenu" [overlapTrigger]="true">
-            <button
-              mat-menu-item
-              *ngFor="let account of accounts; let i = index"
-              (click)="loadExistingAccount(i)"
-            >
-              {{ account.address | ethAddressShort }}
-            </button>
-          </mat-menu>
+        <div class="box box--existing" matRipple [matMenuTriggerFor]="menu">
+          <div class="icon">
+            <img src="assets/10.svg" alt="Account" />
+          </div>
+          <div class="call-to-action">
+            <h2>Load Existing Account</h2>
+            <p>You have already created your account, and just want to access it.</p>
+            <mat-menu #menu="matMenu" [overlapTrigger]="true">
+              <button
+                mat-menu-item
+                *ngFor="let account of accounts; let i = index"
+                (click)="loadExistingAccount(i)"
+              >
+                {{ account.address | ethAddressShort }}
+              </button>
+            </mat-menu>
+          </div>
         </div>
       </div>
+      <footer><small>2020 TWY GmbH - All rights reserved</small></footer>
     </div>
-    <footer><small>2020 TWY GmbH - All rights reserved</small></footer>
-  </div>
-</div>
+  </main>
+  <section class="info">
+    <h1 style="color: black">ERC-725</h1>
+
+    <p>
+      Lorem ipsum, dolor sit amet consectetur adipisicing elit. Dignissimos vel obcaecati dolor,
+      ullam neque eius nesciunt rem quam a, fugit porro in dolore repellat ipsam eum architecto est
+      magnam incidunt.
+    </p>
+  </section>
+</lukso-layout>

@@ -1,6 +1,6 @@
 <ng-container *ngIf="showWrongNetworkError$ | async as warn">
   <div class="" *ngIf="warn.showWarning === false">
-    <lukso-navigation [accountAddress]="accountAddress"></lukso-navigation>
+    <lukso-navigation [accountAddress]="accountAddress$ | async"></lukso-navigation>
     <div class="content">
       <div>
         <ng-content></ng-content>

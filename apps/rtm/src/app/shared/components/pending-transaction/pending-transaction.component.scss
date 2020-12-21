@@ -3,9 +3,7 @@
 :host {
   box-sizing: border-box;
   display: block;
-  position: absolute;
-  top: 70px;
-  right: 100px;
+  margin: 0 auto;
   color: black;
   font-size: 12px;
 }
@@ -15,8 +13,9 @@
 }
 
 :host(.inlined) {
-  top: 25px;
-  right: 20px;
+  > div {
+    display: inline-block;
+  }
 }
 
 div {

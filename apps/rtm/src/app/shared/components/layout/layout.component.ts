@@ -5,6 +5,10 @@ import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { ProxyAccountService } from '@shared/services/proxy-account.service';
 import { Account } from '@shared/interface/account';
+import { ActivatedRoute, Router } from '@angular/router';
+import { StoreRootState } from '../../../store';
+import { select, Store } from '@ngrx/store';
+import { selectRouteNestedParam } from '../../../store/selectors';
 @Component({
   selector: 'lukso-layout',
   templateUrl: './layout.component.html',
@@ -12,9 +16,15 @@ import { Account } from '@shared/interface/account';
 })
 export class LayoutComponent implements OnInit, DoCheck {
   accounts: Account[] = [];
+  accountAddress$: Observable<any>;
   showWrongNetworkError$: Observable<{ showWarning: boolean }>;
-  accountAddress: string | undefined;
-  constructor(private web3Service: Web3Service, private proxyAccountService: ProxyAccountService) {
+  constructor(
+    private web3Service: Web3Service,
+    private activatedRoute: ActivatedRoute,
+    private store: Store<StoreRootState>
+  ) {
+    this.accountAddress$ = this.store.pipe(select(selectRouteNestedParam('address')));
+
     this.showWrongNetworkError$ = this.web3Service.networkId$.pipe(
       map((networkId) => {
         if (environment.production) {
@@ -26,7 +36,6 @@ export class LayoutComponent implements OnInit, DoCheck {
   }
   ngOnInit(): void {}
   ngDoCheck() {
-    this.accountAddress = this.proxyAccountService.contract?.address;
     const accountsAsString = localStorage.getItem('accounts');
 
     if (!accountsAsString) {

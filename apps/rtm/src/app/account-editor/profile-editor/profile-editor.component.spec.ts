@@ -21,7 +21,7 @@ describe('ProfileEditorComponent', () => {
           provide: ActivatedRoute,
           useValue: {
             parent: {
-              data: of({}),
+              params: of({}),
             },
           },
         },

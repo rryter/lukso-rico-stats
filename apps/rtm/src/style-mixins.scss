@@ -1,5 +1,5 @@
-@mixin corners {
-  border-radius: 10px;
+@mixin corners($radius: 10px) {
+  border-radius: $radius;
 }
 
 @mixin paddedContent($radius: 40px, $bg: rgba(255, 255, 255, 0.3)) {

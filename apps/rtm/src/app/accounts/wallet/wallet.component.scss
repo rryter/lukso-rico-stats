@@ -4,7 +4,6 @@
   position: relative;
   display: flex;
   margin-bottom: 30px;
-  width: 100%;
 }
 
 mat-chip {
@@ -22,7 +21,9 @@ mat-card {
 }
 
 .wrapper {
-  display: block;
+  position: relative;
+  display: flex;
+  flex-direction: column;
   flex: 0 0 100%;
   align-self: stretch;
 }
@@ -50,14 +51,20 @@ mat-card {
 
 .balance--lyx {
   font-weight: bold;
-  font-size: 80px;
+  font-size: 72px;
   line-height: 1.2;
   color: white;
 }
 
 .balance--dollar {
-  font-size: 20px;
-  opacity: 0.5;
+  font-size: 35px;
+  font-weight: 600;
+  color: #10513a;
+  text-align: center;
+}
+
+mat-spinner {
+  margin: 0 auto;
 }
 
 .header {
@@ -72,7 +79,7 @@ mat-card {
 lukso-qr-code {
   position: absolute;
   right: 0px;
-  bottom: 0px;
+  top: 160px;
 }
 
 .actions {

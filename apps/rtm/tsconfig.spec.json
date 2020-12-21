@@ -2,8 +2,10 @@
   "extends": "./tsconfig.json",
   "compilerOptions": {
     "outDir": "../../dist/out-tsc",
-    "module": "commonjs",
-    "types": ["jest", "node"]
+    "module": "es2015",
+    "types": ["jest", "node"],
+    "typeRoots": ["./types", "../../node_modules/@types"],
+    "allowJs": true
   },
   "files": ["src/test-setup.ts"],
   "include": ["**/*.spec.ts", "**/*.d.ts"]

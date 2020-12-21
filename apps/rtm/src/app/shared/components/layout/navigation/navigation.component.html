@@ -14,18 +14,30 @@
   <nav class="nav" role="navigation">
     <a
       class="nav-link"
+      [routerLinkActive]="'nav-link--active'"
+      [routerLink]="'/'"
+      [routerLinkActiveOptions]="{ exact: true }"
+    >
+      <span>Home</span>
+    </a>
+    <a
+      class="nav-link"
+      *ngIf="accountAddress"
       [routerLink]="['/accounts', accountAddress]"
       [routerLinkActive]="'nav-link--active'"
       [routerLinkActiveOptions]="{ exact: true }"
       [attr.data-cy]="'layout__nav__home'"
-      >Profile</a
+      ><span>Profile</span></a
     >
 
     <a
       class="nav-link nav-link"
+      *ngIf="accountAddress"
       [routerLink]="['/accounts', accountAddress, 'wallet']"
+      [routerLinkActive]="'nav-link--active'"
+      [routerLinkActiveOptions]="{ exact: true }"
       [attr.data-cy]="'layout__nav__wallet'"
-      >Wallet</a
+      ><span>Wallet</span></a
     >
   </nav>
 

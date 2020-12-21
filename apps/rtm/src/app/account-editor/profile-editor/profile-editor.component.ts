@@ -61,7 +61,6 @@ export class ProfileEditorComponent implements OnInit, OnChanges {
     }
     this.contracts$ = this.route.parent.params.pipe(
       switchMap((params) => {
-        console.log(params);
         return this.contractService.getContractsAndData(params.address);
       }),
       shareReplay({ bufferSize: 1, refCount: true })

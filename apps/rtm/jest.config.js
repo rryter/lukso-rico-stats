@@ -1,3 +1,5 @@
+const esModules = ['erc725.js'].join('|');
+
 module.exports = {
   name: 'rtm',
   preset: '../../jest.config.js',
@@ -20,4 +22,5 @@ module.exports = {
     'jest-preset-angular/build/AngularSnapshotSerializer.js',
     'jest-preset-angular/build/HTMLCommentSerializer.js',
   ],
+  transformIgnorePatterns: [`/node_modules/(?!${esModules})`],
 };
