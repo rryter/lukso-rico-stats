@@ -18,18 +18,21 @@
   grid-template-columns: 600px minmax(350px, 1fr);
   gap: 40px;
   min-height: 100vh;
+  background: linear-gradient(136deg, #7b4397 8.02%, #dc2430 95.8%);
 }
 
 .account {
   position: relative;
   box-sizing: border-box;
   color: black;
-  background: white;
+  background: rgba(255, 255, 255, 0.95);
+  margin-top: 10px;
   display: grid;
   grid-template-columns: 20px 1fr 20px;
   grid-template-areas: '. content .';
   justify-content: center;
   padding: 140px 0 100px;
+  @include ambientShadow(black, 3);
 }
 
 .infos {
@@ -37,7 +40,6 @@
   padding-top: 200px;
   grid-template-columns: 50px 1fr 50px;
   grid-template-areas: '. content .';
-  background: linear-gradient(136deg, #7b4397 8.02%, #dc2430 95.8%);
 }
 
 .progressbar {

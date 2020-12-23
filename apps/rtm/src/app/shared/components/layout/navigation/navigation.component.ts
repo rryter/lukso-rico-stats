@@ -19,8 +19,7 @@ export class NavigationComponent implements OnChanges {
   constructor(private router: Router, private web3Service: Web3Service) {}
 
   ngOnChanges(changes: any): void {
-    console.log(changes);
-    if (this.accountAddress) {
+    if (changes.accountAddress.currentValue !== undefined) {
       const erc725 = new ERC725(schema, this.accountAddress, this.web3Service.provider);
       this.imageUrl = erc725.fetchData('LSP3Profile').then((data: any) => {
         if (data?.image) {

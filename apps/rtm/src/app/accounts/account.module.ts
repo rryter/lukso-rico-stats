@@ -16,6 +16,7 @@ import { LockButtonComponent } from './smart-vault/lock-button/lock-button.compo
 import { WithdrawButtonComponent } from './smart-vault/withdraw-button/withdraw-button.component';
 import { QrCodeComponent } from './wallet/qr-code/qr-code.component';
 import { WalletComponent } from './wallet/wallet.component';
+import { ManagementGuard } from '@shared/guards/management.guard';
 
 const routes: Routes = [
   {

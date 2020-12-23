@@ -2,6 +2,7 @@ import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { RouterModule, Routes } from '@angular/router';
+import { ManagementGuard } from '@shared/guards/management.guard';
 import { SharedModule } from '@shared/shared.module';
 import { AccountEditorComponent } from './account-editor.component';
 import { Erc725ExplainerComponent } from './erc725-explainer/erc725-explainer.component';
