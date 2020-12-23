@@ -43,9 +43,6 @@ export class KeyManagerComponent implements OnInit, OnChanges {
     private loadingIndicatorService: LoadingIndicatorService
   ) {
     this.error = null;
-    this.web3Service.provider.listAccounts().then((accounts) => {
-      console.log(accounts);
-    });
     this.keyManagerData$ = combineLatest([
       this.web3Service.reloadTrigger$,
       this.keyManagerContract$,
