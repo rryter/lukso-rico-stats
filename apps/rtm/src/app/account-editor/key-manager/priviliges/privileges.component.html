@@ -1,0 +1,36 @@
+<div class="cards">
+  <div class="card" *ngFor="let key of keys">
+    <mat-icon class="background-icon">vpn_key</mat-icon>
+    <h2>{{ key.address | ethAddressShort }}</h2>
+    <mat-chip-list>
+      <mat-chip
+        *ngFor="let privilege of key.privileges"
+        [ngClass]="'privilege privilege--' + (privilege | privilege)?.toLowerCase()"
+        >{{ privilege | privilege }}</mat-chip
+      >
+    </mat-chip-list>
+
+    <button
+      class="menu-button"
+      mat-icon-button
+      [matMenuTriggerFor]="menu"
+      aria-label="Example icon-button with a menu"
+    >
+      <mat-icon>more_vert</mat-icon>
+    </button>
+    <mat-menu #menu="matMenu" xPosition="before">
+      <button mat-menu-item (click)="onEditKey(key)">
+        <mat-icon>edit</mat-icon>
+        <span>Edit</span>
+      </button>
+      <button mat-menu-item (click)="onRemoveKey(key)">
+        <mat-icon>delete_outline</mat-icon>
+        <span>Delete</span>
+      </button>
+    </mat-menu>
+  </div>
+  <div class="card card--add-key" [attr.data-cy]="'keymanager__add-key'" (click)="addKey()">
+    <span>Add New Key</span>
+    <mat-icon>add_circle_outline</mat-icon>
+  </div>
+</div>

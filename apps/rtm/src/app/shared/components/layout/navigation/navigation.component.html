@@ -51,11 +51,11 @@
     </div> -->
 
     <div
-      *ngIf="(data | async)?.image as image"
+      *ngIf="imageUrl | async as image"
       class="user__selection"
       matRipple
       [matMenuTriggerFor]="menu"
-      style="background-image: url('https://ipfs.io/ipfs/{{ image }}')"
+      style="background-image: url('{{ image }}')"
     ></div>
     <mat-menu #menu="matMenu">
       <!-- <button mat-menu-item>

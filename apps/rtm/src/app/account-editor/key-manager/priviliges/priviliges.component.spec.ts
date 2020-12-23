@@ -5,20 +5,20 @@ import { MatSortModule } from '@angular/material/sort';
 import { MatTableModule } from '@angular/material/table';
 import { MatChipsModule } from '@angular/material/chips';
 
-import { PriviligesComponent } from './priviliges.component';
+import { PrivilegesComponent } from './privileges.component';
 import { MatIconModule } from '@angular/material/icon';
 import { PrivilegePipe } from '@shared/pipes/privilege.pipe';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { EthAddressShortPipe } from '@shared/pipes/eth-address-short.pipe';
 import { MatMenuModule } from '@angular/material/menu';
 
-describe('PriviligesComponent', () => {
-  let component: PriviligesComponent;
-  let fixture: ComponentFixture<PriviligesComponent>;
+describe('PrivilegesComponent', () => {
+  let component: PrivilegesComponent;
+  let fixture: ComponentFixture<PrivilegesComponent>;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      declarations: [PriviligesComponent, PrivilegePipe, EthAddressShortPipe],
+      declarations: [PrivilegesComponent, PrivilegePipe, EthAddressShortPipe],
       imports: [
         NoopAnimationsModule,
         MatPaginatorModule,
@@ -33,7 +33,7 @@ describe('PriviligesComponent', () => {
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(PriviligesComponent);
+    fixture = TestBed.createComponent(PrivilegesComponent);
     component = fixture.componentInstance;
     component.keys = [];
     fixture.detectChanges();

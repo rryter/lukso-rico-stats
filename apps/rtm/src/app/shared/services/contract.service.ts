@@ -1,28 +1,37 @@
 import { Injectable } from '@angular/core';
 import { Contracts } from '@shared/interface/contracts';
-import { PendingTransactionType } from '@shared/interface/transactions';
 import { isContractDeployed } from '@shared/utils/contracts';
 import { ERC725Account, ERC734KeyManager } from '@twy-gmbh/erc725-playground';
-import { BytesLike, utils } from 'ethers';
-import { combineLatest, forkJoin, Observable, of } from 'rxjs';
+import { utils } from 'ethers';
+import { combineLatest, Observable, of } from 'rxjs';
 import { KeyManagerService } from './key-manager.service';
 import { LoadingIndicatorService } from './loading-indicator.service';
 import { ProxyAccountService } from './proxy-account.service';
 import { Web3Service } from './web3.service';
-import ERC725 from 'erc725.js';
-import schema from '../resolver/schema.json';
 import { Profile } from '../../account-editor/profile-editor/profile-editor.component';
 import { map } from 'rxjs/operators';
+
+// @ts-ignore
+import ERC725 from 'erc725.js';
+import ipfsClient from 'ipfs-http-client';
+import schema from '../resolver/schema.json';
+import { PendingTransactionType } from '@shared/interface/transactions';
+
 @Injectable({
   providedIn: 'root',
 })
 export class ContractService {
+  ipfs: any;
+  uploading = false;
+
   constructor(
     private keyManagerService: KeyManagerService,
     private proxyAccountService: ProxyAccountService,
     private loadingIndicatorService: LoadingIndicatorService,
     private web3Service: Web3Service
-  ) {}
+  ) {
+    this.ipfs = ipfsClient({ protocol: 'https', host: 'ipfs.infura.io', port: 5001 });
+  }
 
   getAccountContract(address: string) {
     return this.proxyAccountService.getContract(address);
@@ -30,7 +39,7 @@ export class ContractService {
 
   getAccountDataStore(accountAddress: string): Promise<Profile> {
     const erc725 = new ERC725(schema, accountAddress, this.web3Service.provider);
-    return erc725.getAllData();
+    return erc725.fetchData('LSP3Profile');
   }
 
   getKeyManagerContract(accountContract: ERC725Account) {
@@ -72,16 +81,39 @@ export class ContractService {
       });
   }
 
-  updateProfile = ([keyValuePairs, { accountContract, keyManagerContract }]: [any, Contracts]) => {
-    const action = !keyManagerContract
-      ? accountContract.setDataWithArray(keyValuePairs)
-      : keyManagerContract.execute(
-          accountContract.interface.encodeFunctionData('setDataWithArray', [keyValuePairs])
-        );
+  updateProfile = ([JSONURLData, { accountContract, keyManagerContract }]: [
+    {
+      json: string;
+      hashFunctionStr: string;
+      hash: string;
+    },
+    Contracts
+  ]) => {
+    this.uploading = true;
+    const action = this.ipfs
+      .add(JSONURLData.json)
+      .then((result: any) => {
+        this.uploading = false;
+        const url = utils.hexlify(utils.toUtf8Bytes('ipfs://' + result.path));
+        return JSONURLData.hashFunctionStr + JSONURLData.hash.substring(2) + url.substring(2);
+      })
+      .then((value: any) => {
+        return !keyManagerContract
+          ? accountContract.setData(
+              '0x5ef83ad9559033e6e941db7d7c495acdce616347d28e90c7ce47cbfcfcad3bc5',
+              value
+            )
+          : keyManagerContract.execute(
+              accountContract.interface.encodeFunctionData('setData', [
+                '0x5ef83ad9559033e6e941db7d7c495acdce616347d28e90c7ce47cbfcfcad3bc5',
+                value,
+              ])
+            );
+      });
 
-    this.loadingIndicatorService.addPromise({
+    this.loadingIndicatorService.addTransactionPromise({
       promise: action,
-      type: PendingTransactionType.Profile,
+      type: PendingTransactionType.All,
       action: 'Saving Profile',
     });
   };
@@ -94,7 +126,7 @@ export class ContractService {
     return combineLatest([
       of(_accountContract),
       _keyManagerContract,
-      erc725.getAllData() as Promise<Profile>,
+      erc725.fetchData('LSP3Profile') as Promise<Profile>,
     ]).pipe(
       map(([accountContract, keyManagerContract, accountData]) => {
         return {

@@ -20,12 +20,9 @@ export class OverviewAccountComponent implements OnChanges {
 
   constructor(private contractService: ContractService) {
     this.contracts$ = this.contractChanged$.pipe(
-      switchMap((contract) => {
-        return this.contractService.getAccountDataStore(contract.address).then((result) => {
-          return result;
-        });
-      })
+      switchMap((contract) => this.contractService.getAccountDataStore(contract.address))
     );
+
     this.accountDetails$ = this.contracts$.pipe(
       map((result: Contracts) => {
         return result;

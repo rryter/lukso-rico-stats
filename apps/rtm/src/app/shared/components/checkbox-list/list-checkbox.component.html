@@ -1,20 +1,21 @@
 <section #parentElement [formGroup]="form" *ngIf="items?.length !== 0; else noItems">
   <ng-container *ngIf="!disabled && (filteredCheckboxes$ | async) as filteredCheckboxes">
     <div *ngIf="filteredCheckboxes.length > 0; else noMatches">
-      <p>
+      <div class="checkbox--all">
         <mat-checkbox
           color="primary"
           [attr.e2e-test-checkbox]="'all'"
           formControlName="allSelected"
           (change)="toggleAll(items, allSelected.value)"
         >
-          All ({{ items?.length }})
+          <!-- All ({{ items?.length }}) -->
+          All
         </mat-checkbox>
-      </p>
+      </div>
     </div>
     <div e2e>
       <ng-container *ngFor="let item of filteredCheckboxes" [formGroup]="item">
-        <div>
+        <div class="checkbox">
           <mat-checkbox
             color="primary"
             [attr.e2e-test-checkbox]="item.value.label"

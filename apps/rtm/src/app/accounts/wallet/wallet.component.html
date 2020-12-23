@@ -2,23 +2,19 @@
 
 <ng-container *ngIf="account$ | async as account">
   <div class="wrapper" *ngIf="!loading">
-    <lukso-pending-transaction
-      style="position: absolute"
-      [filter]="pendingTransactionsFilter"
-      class="inlined"
-    ></lukso-pending-transaction>
-    <lukso-qr-code [address]="account.address"></lukso-qr-code>
+    <!-- <lukso-qr-code [address]="account.address"></lukso-qr-code> -->
     <mat-card class="wallet shadow">
       <mat-card-content>
+        <div class="account-address">{{ account.address }}</div>
         <div class="balances">
           <div class="balance balance--lyx" [attr.data-cy]="'wallet__value'">
             {{ account.balance | number: '0.0-3' }} LYX
           </div>
           <div class="balance balance--dollar">
-            <div *ngIf="account.balance === 0">0</div>
+            <div *ngIf="account.balance === 0">$0</div>
             <div *ngIf="account.balance !== 0">
               <ng-container *ngIf="account.balance | cmcPrice | async as balance; else loading"
-                >$ {{ account.balance | cmcPrice | async }}
+                >${{ account.balance | cmcPrice | async }}
               </ng-container>
               <ng-template #loading>
                 <mat-spinner [diameter]="45"></mat-spinner>

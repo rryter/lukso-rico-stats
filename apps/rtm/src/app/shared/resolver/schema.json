@@ -1,23 +1,9 @@
 [
   {
-    "name": "nickName",
-    "key": "0x6e69636b4e616d65000000000000000000000000000000000000000000000000",
+    "name": "LSP3Profile",
+    "key": "0x5ef83ad9559033e6e941db7d7c495acdce616347d28e90c7ce47cbfcfcad3bc5",
     "keyType": "Singleton",
-    "valueContent": "String",
-    "valueType": "string"
-  },
-  {
-    "name": "bio",
-    "key": "0x62696f0000000000000000000000000000000000000000000000000000000000",
-    "keyType": "Singleton",
-    "valueContent": "String",
-    "valueType": "string"
-  },
-  {
-    "name": "image",
-    "key": "0x696d616765000000000000000000000000000000000000000000000000000000",
-    "keyType": "Singleton",
-    "valueContent": "String",
-    "valueType": "string"
+    "valueContent": "JSONURL",
+    "valueType": "bytes"
   }
 ]

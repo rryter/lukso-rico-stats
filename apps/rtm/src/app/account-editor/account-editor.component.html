@@ -2,17 +2,8 @@
   <img class="coaster-logo" src="/assets/coaster_white.png" />
   <main class="grid-container" role="main">
     <section class="account" [@routeAnimations]="prepareRoute(outlet)">
-      <lukso-pending-transaction></lukso-pending-transaction>
       <router-outlet #outlet="outlet"></router-outlet>
     </section>
-    <section class="infos">
-      <ng-container *ngIf="contracts$ | async as contracts">
-        <lukso-key-manager
-          *ngIf="contracts.keyManagerContract"
-          [keyManagerContract]="contracts.keyManagerContract"
-          [accountAddress]="contracts.accountContract.address"
-        ></lukso-key-manager>
-      </ng-container>
-    </section>
+    <section class="infos"></section>
   </main>
 </lukso-layout-reduced>

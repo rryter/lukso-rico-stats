@@ -2,23 +2,27 @@
   <div *ngIf="contracts.keyManagerContract">
     <h1>Manage Keys</h1>
     <span class="subtitle">Step 3 of 3</span>
-    <p>Use the Keymanager on the righthand side.</p>
+    <lukso-key-manager
+      *ngIf="contracts.keyManagerContract"
+      [keyManagerContract]="contracts.keyManagerContract"
+      [accountAddress]="contracts.accountContract.address"
+    ></lukso-key-manager>
     <div class="page-actions">
       <button
-        mat-stroked-button
+        mat-raised-button
+        color="primary"
         type="button"
         (click)="back()"
         [attr.data-cy]="'key-editor__previous'"
       >
-        Previous</button
+        Edit Profile</button
       >&nbsp;
       <button
-        mat-raised-button
-        color="primary"
+        mat-stroked-button
         (click)="backToProfile(contracts.accountContract.address)"
         [attr.data-cy]="'key-editor__go-to-profile'"
       >
-        Go to Profile
+        View Profile
       </button>
     </div>
   </div>

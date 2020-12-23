@@ -42,6 +42,7 @@
         mat-raised-button
         color="primary"
         type="submit"
+        [disabled]="!form.valid"
         [attr.data-cy]="'profile-editor__next'"
       >
         <!-- [disabled]="form.pristine" -->

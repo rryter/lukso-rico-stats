@@ -6,7 +6,8 @@
     "http": false,
     "https": false,
     "zlib": false,
-    "stream": false
+    "stream": false,
+    "os": false
   },
   "scripts": {
     "ng": "nx",
@@ -62,6 +63,7 @@
     "cropperjs": "^1.5.9",
     "date-fns": "2.16.1",
     "erc725.js": "^0.3.3",
+    "http-browserify": "^1.7.0",
     "ipfs-core": "^0.3.0",
     "ipfs-http-client": "^48.1.2",
     "ngx-animate": "^1.0.1",

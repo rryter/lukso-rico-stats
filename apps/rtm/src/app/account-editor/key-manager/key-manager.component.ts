@@ -11,7 +11,7 @@ import { ContractTransaction, utils } from 'ethers';
 import { LoadingIndicatorService } from '@shared/services/loading-indicator.service';
 import { ERC734KeyManager } from '@twy-gmbh/erc725-playground';
 import { PendingTransactionType } from '@shared/interface/transactions';
-import { PriviligesItem } from './priviliges/priviliges.component';
+import { PrivilegesItem } from './priviliges/privileges.component';
 
 export interface KeyManagerData {
   address: string;
@@ -43,6 +43,9 @@ export class KeyManagerComponent implements OnInit, OnChanges {
     private loadingIndicatorService: LoadingIndicatorService
   ) {
     this.error = null;
+    this.web3Service.provider.listAccounts().then((accounts) => {
+      console.log(accounts);
+    });
     this.keyManagerData$ = combineLatest([
       this.web3Service.reloadTrigger$,
       this.keyManagerContract$,
@@ -77,13 +80,13 @@ export class KeyManagerComponent implements OnInit, OnChanges {
       },
     });
 
-    dialogRef.afterClosed().subscribe((priviligesItem: PriviligesItem) => {
-      if (priviligesItem) {
-        const { address, privileges } = priviligesItem;
+    dialogRef.afterClosed().subscribe((privilegesItem: PrivilegesItem) => {
+      if (privilegesItem) {
+        const { address, privileges } = privilegesItem;
         if (!this.keyManagerService.contract) {
           throw Error('Keymanager Contract not available');
         }
-        this.loadingIndicatorService.addPromise({
+        this.loadingIndicatorService.addTransactionPromise({
           promise: this.keyManagerService.contract.setKey(address, privileges, KEY_TYPE.ECDSA),
           type: PendingTransactionType.KeyManager,
           action: 'Adding / Updating Key',
@@ -119,7 +122,7 @@ export class KeyManagerComponent implements OnInit, OnChanges {
   }
 
   onShowEditDialog(key: any) {
-    this.openDialog('Update Priviliges', 'Update', { ...key });
+    this.openDialog('Update Privileges', 'Update', { ...key });
   }
 
   onAddNewKey() {

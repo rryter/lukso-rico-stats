@@ -32,7 +32,7 @@ export class AddKeyComponent implements OnInit {
         address: [this.data.address, [Validators.required, isETHAddressValidator()]],
         privileges: [this.data.privileges, [Validators.required]],
       },
-      { updateOn: 'blur' }
+      { updateOn: 'change' }
     );
   }
 

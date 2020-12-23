@@ -24,7 +24,7 @@ export class LoadingIndicatorService {
     this.transactionInfo$.next(undefined);
   }
 
-  addPromise({
+  addTransactionPromise({
     promise,
     type,
     action,

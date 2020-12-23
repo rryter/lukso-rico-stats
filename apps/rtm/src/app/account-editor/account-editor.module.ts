@@ -9,7 +9,7 @@ import { ImageEditorComponent } from './image-editor/image-editor.component';
 import { KeyEditorComponent } from './key-editor/key-editor.component';
 import { AddKeyComponent } from './key-manager/add-key/add-key.component';
 import { KeyManagerComponent } from './key-manager/key-manager.component';
-import { PriviligesComponent } from './key-manager/priviliges/priviliges.component';
+import { PrivilegesComponent } from './key-manager/priviliges/privileges.component';
 import { ProfileEditorComponent } from './profile-editor/profile-editor.component';
 const routes: Routes = [
   {
@@ -32,7 +32,7 @@ const routes: Routes = [
     ProfileEditorComponent,
     Erc725ExplainerComponent,
     KeyManagerComponent,
-    PriviligesComponent,
+    PrivilegesComponent,
     AddKeyComponent,
   ],
   imports: [CommonModule, RouterModule.forChild(routes), ReactiveFormsModule, SharedModule],

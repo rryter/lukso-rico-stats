@@ -83,7 +83,8 @@ export class ProxyAccountService {
     const signer = this.web3Service.signer;
     this.contract = await new ERC725AccountFactory(signer)
       .deploy(this.web3Service.selectedAddress)
-      .catch(() => {
+      .catch((error) => {
+        console.error(error);
         this.router.navigate(['/']);
         return undefined;
       });

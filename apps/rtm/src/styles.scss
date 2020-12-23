@@ -362,3 +362,17 @@ mat-card {
     display: flex;
   }
 }
+
+::-webkit-scrollbar {
+  width: 4px;
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-track {
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+  border-radius: 10px;
+  background: rgba(black, 0.5);
+}

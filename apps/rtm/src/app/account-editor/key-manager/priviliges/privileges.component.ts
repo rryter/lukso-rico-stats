@@ -9,17 +9,17 @@ import {
 } from '@angular/core';
 import { KeyManagerData } from '../key-manager.component';
 
-export interface PriviligesItem {
+export interface PrivilegesItem {
   address: string;
   privileges: number[];
   keyType: string;
 }
 @Component({
-  selector: 'lukso-priviliges',
-  templateUrl: './priviliges.component.html',
-  styleUrls: ['./priviliges.component.scss'],
+  selector: 'lukso-privileges',
+  templateUrl: './privileges.component.html',
+  styleUrls: ['./privileges.component.scss'],
 })
-export class PriviligesComponent implements OnChanges {
+export class PrivilegesComponent implements OnChanges {
   @Output() removeKey = new EventEmitter();
   @Output() showEditDialog = new EventEmitter();
   @Output() addNewKey = new EventEmitter();
@@ -35,11 +35,11 @@ export class PriviligesComponent implements OnChanges {
     this.cdRef.detectChanges();
   }
 
-  onRemoveKey(privilege: PriviligesItem) {
+  onRemoveKey(privilege: PrivilegesItem) {
     this.removeKey.emit({ ...privilege });
   }
 
-  onEditKey(privilege: PriviligesItem) {
+  onEditKey(privilege: PrivilegesItem) {
     this.showEditDialog.emit({ ...privilege });
   }
 

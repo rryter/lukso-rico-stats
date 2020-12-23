@@ -8,7 +8,7 @@
   background: linear-gradient(101.3deg, #e7a116 8.02%, #e3404b 95.8%);
   z-index: 100;
   position: relative;
-  padding: 150px 200px 100px;
+  padding: 150px 120px 100px;
   &::after {
     position: absolute;
     bottom: -50px;
@@ -99,15 +99,5 @@
 }
 
 .info {
-  padding: 50px 200px 200px;
-}
-
-footer {
-  position: absolute;
-  bottom: 0;
-  left: 80px;
-  padding: 20px;
-  opacity: 0.3;
-  color: #000000;
-  font-size: 14px;
+  padding: 50px 120px 100px;
 }

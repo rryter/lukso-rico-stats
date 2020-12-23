@@ -1,9 +1,12 @@
 @import '/apps/rtm/src/style-mixins.scss';
 
 :host {
+  display: block;
+}
+
+.cards {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 300px));
-  grid-template-rows: 200px;
+  grid-template-columns: minmax(100px, 1fr);
   gap: 30px;
 }
 
@@ -26,11 +29,19 @@ mat-chip-list {
   display: inline-block;
 }
 
-mat-chip.mat-standard-chip {
-  background-color: #ec54a1;
+mat-chip.privilege {
   color: white;
   padding: 20px;
-  font-size: 16px;
+  font-size: 12px;
+  background: linear-gradient(136deg, #7b4397 8.02%, #dc2430 95.8%);
+}
+
+mat-chip.privilege--execution {
+  background: linear-gradient(90deg, #146347 0%, #39985d 100%);
+}
+
+mat-chip.privilege--recovery {
+  background: linear-gradient(90deg, #142263 0%, #396898 100%);
 }
 
 .card {
@@ -38,43 +49,45 @@ mat-chip.mat-standard-chip {
   position: relative;
   display: flex;
   flex-direction: column;
-  flex-flow: row wrap;
   align-content: space-between;
   overflow: hidden;
-  height: 200px;
   @include paddedContent(20px);
   @include corners;
+  @include ambientShadow(#000000, 2);
   background: white;
 }
 
 .card--add-key {
-  border: 2px dashed rgba(255, 255, 255, 0.4);
   @include paddedContent(20px, transparent);
   display: flex;
-  flex-flow: row;
-  flex-direction: column;
+  flex-direction: row;
   align-items: center;
   justify-content: center;
   font-size: 16px;
   line-height: 1.6;
+  background: white;
 
   &:hover {
     cursor: pointer;
-    background: rgba(255, 255, 255, 0.1);
+  }
+
+  span {
+    font-weight: 500;
   }
 }
 
 h2 {
   color: black;
+  opacity: 1;
+  font-weight: bold;
 }
 
 mat-icon.background-icon {
   position: absolute;
-  left: -100px;
-  top: -180px;
+  right: 100px;
+  top: -130px;
   width: 300px;
-  height: 200px;
-  font-size: 500px;
+  font-size: 400px;
   color: rgba(128, 128, 128, 0.05);
 }
 

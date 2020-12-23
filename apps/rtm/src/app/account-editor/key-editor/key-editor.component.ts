@@ -89,14 +89,14 @@ export class KeyEditorComponent implements OnInit {
           }
 
           return this.loadingIndicatorService
-            .addPromise({
+            .addTransactionPromise({
               promise: this.keyManagerService.deploy(accountContract.address, address),
               type: PendingTransactionType.All,
               action: 'Deploying Keymanager...',
             })
             .then((contract) => {
               return this.loadingIndicatorService
-                .addPromise({
+                .addTransactionPromise({
                   promise: accountContract.transferOwnership(contract.address),
                   type: PendingTransactionType.All,
                   action: 'Transfering Ownership...',

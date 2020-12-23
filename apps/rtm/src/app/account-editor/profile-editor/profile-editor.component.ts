@@ -15,7 +15,6 @@ import { ContractService } from '@shared/services/contract.service';
 import { utils } from 'ethers';
 import { Observable, Subject } from 'rxjs';
 import { pluck, shareReplay, switchMap, withLatestFrom } from 'rxjs/operators';
-
 export interface Profile {
   nickName: string;
   bio: string;
@@ -32,12 +31,12 @@ export class ProfileEditorComponent implements OnInit, OnChanges {
   uploadedImage: string;
   contracts$: Observable<Contracts>;
   form: FormGroup;
-  saveTrigger$ = new Subject<
-    {
-      key: string;
-      value: Uint8Array;
-    }[]
-  >();
+  ipfs: any;
+  saveTrigger$ = new Subject<{
+    json: string;
+    hashFunctionStr: string;
+    hash: string;
+  }>();
   @Output() saveing = new EventEmitter();
   @Input() profile: Profile = { nickName: '', bio: '', image: '' };
 
@@ -49,7 +48,7 @@ export class ProfileEditorComponent implements OnInit, OnChanges {
   ) {
     this.form = this.fb.group(
       {
-        image: [this.profile.image],
+        image: [this.profile.image || ''],
         nickName: [this.profile.nickName, [Validators.required]],
         bio: [this.profile.bio, [Validators.required]],
       },
@@ -59,10 +58,9 @@ export class ProfileEditorComponent implements OnInit, OnChanges {
     if (!this.route.parent) {
       throw Error('Parent not available');
     }
+
     this.contracts$ = this.route.parent.params.pipe(
-      switchMap((params) => {
-        return this.contractService.getContractsAndData(params.address);
-      }),
+      switchMap((params) => this.contractService.getContractsAndData(params.address)),
       shareReplay({ bufferSize: 1, refCount: true })
     );
     this.uploadedImage = this.router.getCurrentNavigation()?.extras.state?.imagePath;
@@ -70,7 +68,9 @@ export class ProfileEditorComponent implements OnInit, OnChanges {
 
   ngOnInit() {
     this.contracts$.subscribe(({ accountData }) => {
-      this.form.setValue(accountData);
+      if (accountData) {
+        this.form.setValue(accountData);
+      }
     });
 
     this.saveTrigger$
@@ -91,11 +91,14 @@ export class ProfileEditorComponent implements OnInit, OnChanges {
     }
 
     if (form.valid && form.dirty) {
-      const keyValuePairs = Object.entries(form.value).map((data: [string, any]) => {
-        return { key: utils.formatBytes32String(data[0]), value: utils.toUtf8Bytes(data[1]) };
+      const json = JSON.stringify(form.value);
+      let hashFunctionStr = utils.id('keccak256(utf8)').substr(0, 10);
+      let hash = utils.id(json);
+      this.saveTrigger$.next({
+        json,
+        hashFunctionStr,
+        hash,
       });
-
-      this.saveTrigger$.next(keyValuePairs);
     }
     this.router.navigate(['../keys'], { relativeTo: this.route });
   }

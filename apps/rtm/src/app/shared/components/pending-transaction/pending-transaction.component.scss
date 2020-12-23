@@ -2,10 +2,15 @@
 
 :host {
   box-sizing: border-box;
-  display: block;
   margin: 0 auto;
-  color: black;
   font-size: 12px;
+  display: flex;
+  position: absolute;
+  top: 15px;
+  left: 0;
+  right: 0;
+  z-index: 10000;
+  justify-content: center;
 }
 
 :host(.darkMode) {
@@ -22,6 +27,7 @@ div {
   padding: 5px 15px;
   background: rgba(255, 255, 255, 0.95);
   @include corners;
+  @include ambientShadow;
 }
 
 ul {

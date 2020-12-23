@@ -17,4 +17,8 @@
   bottom: 0;
   right: 0;
   padding: 0;
+
+  > div {
+    height: 100%;
+  }
 }

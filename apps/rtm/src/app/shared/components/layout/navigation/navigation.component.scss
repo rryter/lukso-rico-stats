@@ -8,14 +8,14 @@
 
 mat-toolbar {
   display: grid;
-  grid-template-columns: 60px 140px min-content 1fr 140px 60px;
-  grid-template-rows: 150px;
+  grid-template-columns: minmax(20px, 40px) 80px min-content 1fr 140px minmax(20px, 40px);
+  grid-template-rows: 100px;
   grid-template-areas: '. logo nav . user .';
   background: none;
   padding: 0;
-  height: 150px;
+
   a {
-    font-size: 18px;
+    font-size: 16px;
   }
 
   &.blue {
@@ -28,7 +28,6 @@ mat-toolbar {
 .coaster-logo {
   display: block;
   grid-area: logo;
-  padding: 10px;
   height: 40px;
 }
 
@@ -55,7 +54,7 @@ mat-toolbar {
       position: absolute;
       left: 0;
       bottom: 0;
-      height: 3px;
+      height: 2px;
       width: 100%;
       background: white;
     }
@@ -90,6 +89,7 @@ mat-toolbar {
 .user__selection {
   height: 50px;
   border-radius: 100%;
+  background: url('/assets/portrait-placeholder-small.png');
   background-size: contain;
   background-position: center center;
   filter: grayscale(1);

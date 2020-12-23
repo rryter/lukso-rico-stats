@@ -71,7 +71,7 @@ export class WalletComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe((dialogOutput: ConfirmDialogOutput) => {
       if (dialogOutput?.value) {
-        this.loadingIndicatorService.addPromise({
+        this.loadingIndicatorService.addTransactionPromise({
           promise: this.web3Service.signer.sendTransaction({
             to: account.address,
             value: utils.parseEther(dialogOutput.value),
@@ -113,7 +113,7 @@ export class WalletComponent implements OnInit {
         '0x00',
       ]);
 
-      this.loadingIndicatorService.addPromise({
+      this.loadingIndicatorService.addTransactionPromise({
         promise: this.keyManagerService.contract.execute(abi),
         type: PendingTransactionType.Wallet,
         action: `Withdrawing ${dialogOutput.value} LYX`,

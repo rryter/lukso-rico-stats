@@ -5,6 +5,7 @@
   background: linear-gradient(101.3deg, #7b4397 8.02%, #dc2430 95.8%);
   z-index: 100;
   position: relative;
+  min-height: 612px;
 
   &::after {
     position: absolute;

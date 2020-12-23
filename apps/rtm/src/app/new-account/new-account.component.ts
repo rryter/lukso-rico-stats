@@ -35,7 +35,7 @@ export class NewAccountComponent implements OnInit {
       return contract;
     });
 
-    this.loadingIndicatorService.addPromise({
+    this.loadingIndicatorService.addTransactionPromise({
       promise: action,
       type: PendingTransactionType.All,
       action: 'Deploying ERC-725 Account',

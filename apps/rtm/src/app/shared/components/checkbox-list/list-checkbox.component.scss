@@ -1,30 +1,32 @@
+@import '/apps/rtm/src/style-mixins.scss';
+
 :host {
-    display: block;
+  display: block;
 }
 
-.cdk-scrolling-viewport {
-    height: 200px;
-    width: 100%;
-    --scrollbar-size: 8px;
-    --scrollbar-thumb-color: gray;
-    --scrollbar-hover-size: 12px;
-    --scrollbar-track-color: rgba(0, 0, 0, 0.05);
-    --scrollbar-border-radius: 10px;
-    border-radius: 3px;
-    border: 2px solid rgba(0, 0, 0, 0.05);
+.checkbox {
+  background: white;
+  padding: 10px;
+  margin-bottom: 10px;
+  @include corners(5px);
+  @include ambientShadow;
+}
+
+.checkbox--all {
+  padding: 10px;
 }
 
 .page-title {
-    position: sticky;
-    top: 0;
-    width: 100%;
-    transition: 0.2s;
-    background: white;
-    h1 {
-        margin: 0;
-    }
+  position: sticky;
+  top: 0;
+  width: 100%;
+  transition: 0.2s;
+  background: white;
+  h1 {
+    margin: 0;
+  }
 }
 
 .error-message {
-    padding-top: 11px;
+  padding-top: 11px;
 }

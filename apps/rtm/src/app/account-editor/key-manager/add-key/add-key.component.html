@@ -1,5 +1,4 @@
 <h1 class="mat-headline">{{ data.title }}</h1>
-<p>Explanation text here.</p>
 <br />
 <form [formGroup]="newKeyForm" (submit)="saveNewKey(newKeyForm)">
   <ng-container *ngIf="!data.address">
@@ -30,6 +29,6 @@
     <button mat-button style="margin-right: 10px" type="button" (click)="onNoClick()">
       Cancel
     </button>
-    <lukso-button [text]="data.buttonText"></lukso-button>
+    <lukso-button [disabled]="!newKeyForm.valid" [text]="data.buttonText"></lukso-button>
   </div>
 </form>

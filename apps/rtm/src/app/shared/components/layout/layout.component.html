@@ -1,5 +1,6 @@
 <ng-container *ngIf="showWrongNetworkError$ | async as warn">
   <div class="" *ngIf="warn.showWarning === false">
+    <lukso-pending-transaction></lukso-pending-transaction>
     <lukso-navigation [accountAddress]="accountAddress$ | async"></lukso-navigation>
     <div class="content">
       <div>
