@@ -92,8 +92,8 @@ export class ProfileEditorComponent implements OnInit, OnChanges {
 
     if (form.valid && form.dirty) {
       const json = JSON.stringify(form.value);
-      let hashFunctionStr = utils.id('keccak256(utf8)').substr(0, 10);
-      let hash = utils.id(json);
+      const hashFunctionStr = utils.id('keccak256(utf8)').substr(0, 10);
+      const hash = utils.id(json);
       this.saveTrigger$.next({
         json,
         hashFunctionStr,
