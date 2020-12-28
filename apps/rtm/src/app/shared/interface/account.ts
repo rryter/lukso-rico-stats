@@ -9,6 +9,6 @@ export interface Account {
 }
 
 export interface AccountData {
-  nickName: string;
-  bio: string;
+  name: string;
+  description: string;
 }

@@ -95,15 +95,9 @@ img {
 }
 
 .image-file + label {
-  color: #f1e5e6;
-  background-color: var(--primary-color);
   margin-bottom: 50px;
-}
-
-.image-file:focus + label,
-.image-file.has-focus + label,
-.image-file + label:hover {
-  background-color: var(--primary-color);
+  background: white;
+  @include ambientShadow;
 }
 
 .uploading {

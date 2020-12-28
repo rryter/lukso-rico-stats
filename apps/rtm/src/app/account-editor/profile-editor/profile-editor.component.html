@@ -1,31 +1,32 @@
 <h1>Who are you?</h1>
 <span class="subtitle">Step 2 of 3</span>
 <form [formGroup]="form" (submit)="submit(form)">
+  <pre>{{ form.value | json }}</pre>
   <p>Enter personal info</p>
   <p>
     <mat-form-field class="form-field" [floatLabel]="'always'">
-      <mat-label>Nickname</mat-label>
-      <input matInput formControlName="nickName" [attr.data-cy]="'profile-editor__nickName'" />
-      <mat-error>Nickname is required.</mat-error>
+      <mat-label>Name</mat-label>
+      <input matInput formControlName="name" [attr.data-cy]="'profile-editor__name'" />
+      <mat-error>Name is required.</mat-error>
     </mat-form-field>
   </p>
   <p>
     <mat-form-field class="form-field" [floatLabel]="'always'">
-      <mat-label>Bio</mat-label>
+      <mat-label>Description</mat-label>
       <textarea
         rows="3"
         matInput
-        #bio
-        formControlName="bio"
+        #description
+        formControlName="description"
         maxlength="256"
-        [attr.data-cy]="'profile-editor__bio'"
+        [attr.data-cy]="'profile-editor__description'"
       ></textarea>
-      <mat-hint align="end">{{ bio.value.length }} / 256</mat-hint>
-      <mat-error> Bio is required. </mat-error>
+      <mat-hint align="end">{{ description.value.length }} / 256</mat-hint>
+      <mat-error> Description is required. </mat-error>
     </mat-form-field>
   </p>
 
-  <input matInput formControlName="image" style="display: none" />
+  <input matInput formControlName="profileImage" style="display: none" />
 
   <br /><br />
   <div class="page-actions">

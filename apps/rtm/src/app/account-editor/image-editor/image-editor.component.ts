@@ -66,8 +66,8 @@ export class ImageEditorComponent {
     );
     this.imageSource$ = this.contracts$.pipe(
       map(({ accountData }) => {
-        if (accountData?.image) {
-          return 'https://ipfs.io/ipfs/' + accountData.image;
+        if (accountData?.profileImage) {
+          return accountData.profileImage[0].url;
         } else {
           return '/assets/portrait-placeholder.png';
         }
@@ -121,14 +121,14 @@ export class ImageEditorComponent {
 
   next() {
     if (this.cropper) {
+      console.log(this.cropper?.getData());
+
       this.uploading = true;
       this.loadingIndicator
         .addTransactionPromise({
           promise: this.handleImageUpload(
             this.cropper.getCroppedCanvas() as HTMLCanvasElement
           ).then((compressedFile: Blob) => {
-            console.log(compressedFile);
-
             return this.ipfs.add(compressedFile, {
               progress: (prog: any) => console.log(`received: ${prog}`),
             });

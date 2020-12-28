@@ -24,7 +24,12 @@ export class OverviewAccountComponent implements OnChanges {
     );
 
     this.accountDetails$ = this.contracts$.pipe(
-      map((result: Contracts) => {
+      map((result: any) => {
+        return result['LSP3Profile'];
+      }),
+      map((result: any) => {
+        result.profileImage[2].url =
+          'https://ipfs.io/ipfs/' + result.profileImage[2].url.replace('ipfs://', '');
         return result;
       })
     );

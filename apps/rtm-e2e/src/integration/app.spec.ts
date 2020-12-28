@@ -11,8 +11,8 @@ describe('ERC 725 Home', () => {
     getCreateAccountButton().click();
     cy.getByAttr('image-editor__next-key').click();
 
-    cy.getByAttr('profile-editor__nickName').type('Coaster');
-    cy.getByAttr('profile-editor__bio').type('Web Developer located in Switzerland.');
+    cy.getByAttr('profile-editor__name').type('Coaster');
+    cy.getByAttr('profile-editor__description').type('Web Developer located in Switzerland.');
     cy.getByAttr('profile-editor__next').click();
 
     cy.getByAttr('key-editor__add-key').click();

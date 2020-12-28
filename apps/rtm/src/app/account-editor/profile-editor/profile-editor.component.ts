@@ -16,9 +16,20 @@ import { utils } from 'ethers';
 import { Observable, Subject } from 'rxjs';
 import { pluck, shareReplay, switchMap, withLatestFrom } from 'rxjs/operators';
 export interface Profile {
-  nickName: string;
-  bio: string;
-  image: string;
+  name: string;
+  description: string;
+  links?: {
+    title: 'string';
+    url: 'string';
+  }[];
+  // below each image type SHOULD have different size of the same image, so that interfaces can choose which one to load for better loading performance
+  profileImage?: {
+    width: number;
+    height: number;
+    hashFunction: string;
+    hash: string;
+    url: string;
+  }[];
 }
 
 @Component({
@@ -38,7 +49,7 @@ export class ProfileEditorComponent implements OnInit, OnChanges {
     hash: string;
   }>();
   @Output() saveing = new EventEmitter();
-  @Input() profile: Profile = { nickName: '', bio: '', image: '' };
+  @Input() profile: Profile = { name: '', description: '', profileImage: [] };
 
   constructor(
     private router: Router,
@@ -48,9 +59,9 @@ export class ProfileEditorComponent implements OnInit, OnChanges {
   ) {
     this.form = this.fb.group(
       {
-        image: [this.profile.image || ''],
-        nickName: [this.profile.nickName, [Validators.required]],
-        bio: [this.profile.bio, [Validators.required]],
+        profileImage: [this.profile.profileImage || ''],
+        name: [this.profile.name, [Validators.required]],
+        description: [this.profile.description, [Validators.required]],
       },
       { updateOn: 'change' }
     );

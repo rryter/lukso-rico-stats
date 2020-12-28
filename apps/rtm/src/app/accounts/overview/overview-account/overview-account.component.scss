@@ -38,12 +38,18 @@ section {
   display: grid;
   grid-template-columns: 1fr 1fr;
   max-width: 1400px;
+  height: 100%;
   margin: 0 auto;
+  overflow: hidden;
 }
 
 .profile__image-wrapper {
   text-align: right;
   overflow: hidden;
+  mix-blend-mode: darken;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: left top;
 }
 
 .profile__image {

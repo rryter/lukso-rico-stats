@@ -1,12 +1,17 @@
 <section class="account" *ngIf="accountDetails$ | async as accountDetails">
   <div class="profile__details" *ngIf="!hideText && accountDetails">
-    <h1>{{ accountDetails.nickName }}</h1>
+    <h1>{{ accountDetails.name }}</h1>
     <p>
-      {{ accountDetails.bio }}
+      {{ accountDetails.description }}
     </p>
   </div>
-  <div class="profile__image-wrapper">
-    <img
+  <div
+    class="profile__image-wrapper"
+    [ngStyle]="{
+      'background-image': 'url(' + accountDetails?.profileImage[2].url + ')'
+    }"
+  >
+    <!-- <img
       class="profile__image"
       [src]="'https://ipfs.io/ipfs/' + accountDetails.image"
       *ngIf="accountDetails.image"
@@ -15,6 +20,6 @@
       *ngIf="accountDetails.image === null"
       class="profile__image profile__image--placeholder"
       src="/assets/portrait-placeholder.png"
-    />
+    /> -->
   </div>
 </section>

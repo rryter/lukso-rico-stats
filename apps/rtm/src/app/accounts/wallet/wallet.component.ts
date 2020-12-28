@@ -23,7 +23,7 @@ import { KeyManagerService } from '@shared/services/key-manager.service';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class WalletComponent implements OnInit {
-  nickName = new FormControl();
+  name = new FormControl();
   account$: Observable<Account>;
   qrCode: any;
   loading = true;

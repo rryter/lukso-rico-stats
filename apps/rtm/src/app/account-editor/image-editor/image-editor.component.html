@@ -20,7 +20,7 @@
   (change)="fileBrowseHandler($event.target.files)"
 />
 
-<label for="fileDropRef" class="mat-raised-button mat-button-base mat-primary">
+<label for="fileDropRef" class="mat-button mat-button-base">
   <ng-container *ngIf="file">{{ file.name }}</ng-container>
   <ng-container *ngIf="!file">Choose a file</ng-container>
 </label>
